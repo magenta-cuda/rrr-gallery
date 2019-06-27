@@ -1,30 +1,27 @@
-Backbone Bootstrap Gallery
+REST React Redux Gallery
 ==========================
 
 ## About
 
-A plug-compatible replacement for the built-in WordPress gallery shortcode implemented with Backbone.js collections and models that are synchronized with the WordPress database using the WordPress REST API v2.
+A plug-compatible replacement for the built-in WordPress gallery shortcode implemented with React, Redux and the WordPress REST API v2.
 The front-end is made mobile-friendly by using components from Bootstrap and jQuery Mobile.
+
+This was forked from [Backbone Bootstrap Gallery](https://github.com/magenta-cuda/bb-gallery)
 
 ## Demo
 
-A sample working page using this plugin can be found on [my portfolio website](http://magentacuda.com/).
+A sample working page using this plugin will eventually be found on [my portfolio website](http://magentacuda.com/).
 
 ## Requirements
 
-WordPress 4.6
-
-[WordPress REST API (Version 2) plugin](https://wordpress.org/plugins/rest-api/)
+WordPress 5.0
 
 ## Installation
 
-This plugin can use its own proprietary API or the WordPress REST API to populate the Backbone.js collections.
-If the [WordPress REST API (Version 2) plugin](https://wordpress.org/plugins/rest-api/) is installed and activated it will use the WordPress REST API otherwise it will use its own proprietary API.
-
+Download from [GitHub](https://github.com/magenta-cuda/rrr-gallery/archive/master.zip) and extract to you WordPress plugin folder.
+**Currently no working version exists.**
+ 
 ## Documentation
 
-The documentation for this plugin can be found [here](https://bbfgallery.wordpress.com/).
+The documentation for this plugin can be found [here](http://docs.magentacuda.com/).
 
-## Warning
-
-The proprietary API and the WordPress REST API may give different search results with respect to order and under some conditions with respect to items.
