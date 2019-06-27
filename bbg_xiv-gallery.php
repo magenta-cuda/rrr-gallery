@@ -318,7 +318,11 @@ class BBG_XIV_Gallery {
             #$request->set_default_params( $defaults );
             self::add_additional_rest_fields( );
             $controller = new WP_REST_Attachments_Controller( "attachment" );
-            $attachments = $controller->get_items( $request )->data;
+            error_log( 'bb_gallery_shortcode():$request=' . print_r( $request, true ) );
+            // $attachments = $controller->get_items( $request )->data;
+            $attachments = $controller->get_items( $request );
+            error_log( 'bb_gallery_shortcode():$attachments=' . print_r( $attachments, true ) );
+            $attachments = $attachments->data;
             if ( !empty( $get_first ) ) {
                 ob_end_clean( );
                 return reset( $attachments );
@@ -969,7 +973,7 @@ EOD
             if ( self::$wp_rest_api_available && self::$use_wp_rest_api_if_available ) {
                 $deps[ ] = 'wp-api';
             }
-            // wp_enqueue_script( 'bbg_xiv-gallery',   plugins_url( "js/bbg_xiv-gallery{$min}.js",   __FILE__ ), $deps,        FALSE, TRUE );
+            wp_enqueue_script( 'bbg_xiv-gallery',   plugins_url( "js/bbg_xiv-gallery-extra.js",   __FILE__ ), $deps,        FALSE, TRUE );
             // wp_enqueue_script( 'react',             'https://unpkg.com/react@16/umd/react.development.js'         );
             // wp_enqueue_script( 'react-dom',         'https://unpkg.com/react-dom@16/umd/react-dom.development.js' );
         } );

@@ -1,3 +1,5 @@
+// Gallery Item Template
+
 var GalleryItem = ( data ) => {
     return (
         <div className="bbg_xiv-flex_item col-sm-6 col-md-4 col-lg-3">
