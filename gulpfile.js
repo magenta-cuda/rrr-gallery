@@ -14,7 +14,14 @@ gulp.task('sass', function(){
 
 gulp.task('js', function(){
     return gulp.src(['js/*.js', '!js/*.min.js'])
+        .pipe(sourcemaps.init())
         .pipe(uglify())
+        .pipe(sourcemaps.write('.'))
         .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest('js'))
+});
+
+gulp.task('watch', function(){
+    gulp.watch('css/*.scss', gulp.series('sass')); 
+    gulp.watch(['js/*.js', '!js/*.min.js'], gulp.series('js'));
 });

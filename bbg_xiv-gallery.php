@@ -970,6 +970,8 @@ EOD
                 $deps[ ] = 'wp-api';
             }
             wp_enqueue_script( 'bbg_xiv-gallery',   plugins_url( "js/bbg_xiv-gallery{$min}.js",   __FILE__ ), $deps,        FALSE, TRUE );
+            wp_enqueue_script( 'react',             'https://unpkg.com/react@16/umd/react.development.js'         );
+            wp_enqueue_script( 'react-dom',         'https://unpkg.com/react-dom@16/umd/react-dom.development.js' );
         } );
 
         add_action( 'admin_init', function( ) {
