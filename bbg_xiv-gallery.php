@@ -969,11 +969,23 @@ EOD
             if ( self::$wp_rest_api_available && self::$use_wp_rest_api_if_available ) {
                 $deps[ ] = 'wp-api';
             }
-            wp_enqueue_script( 'bbg_xiv-gallery',   plugins_url( "js/bbg_xiv-gallery{$min}.js",   __FILE__ ), $deps,        FALSE, TRUE );
-            wp_enqueue_script( 'react',             'https://unpkg.com/react@16/umd/react.development.js'         );
-            wp_enqueue_script( 'react-dom',         'https://unpkg.com/react-dom@16/umd/react-dom.development.js' );
+            // wp_enqueue_script( 'bbg_xiv-gallery',   plugins_url( "js/bbg_xiv-gallery{$min}.js",   __FILE__ ), $deps,        FALSE, TRUE );
+            // wp_enqueue_script( 'react',             'https://unpkg.com/react@16/umd/react.development.js'         );
+            // wp_enqueue_script( 'react-dom',         'https://unpkg.com/react-dom@16/umd/react-dom.development.js' );
         } );
 
+        add_action( 'wp_head', function( ) {
+?>
+<script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<script type="text/babel">
+    const hello = <h1>Hello World</h1>
+</script>
+<script src="<?php echo plugins_url( "js/components/GalleryItem.js", __FILE__ ); ?>" type="text/babel"></script>
+<script src="<?php echo plugins_url( "js/bbg_xiv-gallery.js",        __FILE__ ); ?>" type="text/babel"></script>
+<?php
+        } );
         add_action( 'admin_init', function( ) {
             add_settings_section( 'bbg_xiv_setting_section', 'BB Gallery', function( ) {
                 echo '<p id="bbg_xiv-conf_section"><a href="http://docs.magentacuda.com/" target="_blank">BB Gallery</a>'
