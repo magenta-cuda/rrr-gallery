@@ -8,6 +8,7 @@
   font-family: 'Glyphicons Halflings';
   src: url("../fonts/glyphicons-halflings-regular.eot");
   src: url("../fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/glyphicons-halflings-regular.woff2") format("woff2"), url("../fonts/glyphicons-halflings-regular.woff") format("woff"), url("../fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg"); }
+
 div.bbg_xiv-bootstrap {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
@@ -750,7 +751,7 @@ div.bbg_xiv-bootstrap {
     box-sizing: border-box; }
   div.bbg_xiv-bootstrap html {
     font-size: 10px;
-    -webkit-tap-highlight-color: transparent; }
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
   div.bbg_xiv-bootstrap body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
@@ -3912,16 +3913,19 @@ div.bbg_xiv-bootstrap {
     border-top-color: #e4b9c0; }
   div.bbg_xiv-bootstrap .alert-danger .alert-link {
     color: #843534; }
+
 @-webkit-keyframes progress-bar-stripes {
   from {
     background-position: 40px 0; }
   to {
     background-position: 0 0; } }
+
 @-o-keyframes progress-bar-stripes {
   from {
     background-position: 40px 0; }
   to {
     background-position: 0 0; } }
+
 @keyframes progress-bar-stripes {
   from {
     background-position: 40px 0; }
@@ -4908,7 +4912,7 @@ div.bbg_xiv-bootstrap {
     color: #fff;
     text-align: center;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
-    background-color: transparent;
+    background-color: rgba(0, 0, 0, 0);
     filter: alpha(opacity=50);
     opacity: .5; }
   div.bbg_xiv-bootstrap .carousel-control.left {
@@ -4979,7 +4983,7 @@ div.bbg_xiv-bootstrap {
     text-indent: -999px;
     cursor: pointer;
     background-color: #000 \9;
-    background-color: transparent;
+    background-color: rgba(0, 0, 0, 0);
     border: 1px solid #fff;
     border-radius: 10px; }
   div.bbg_xiv-bootstrap .carousel-indicators .active {
@@ -5096,6 +5100,7 @@ div.bbg_xiv-bootstrap {
     display: none !important; }
   div.bbg_xiv-bootstrap .affix {
     position: fixed; }
+
 @-ms-viewport {
   div.bbg_xiv-bootstrap {
     width: device-width; } }
@@ -5235,7 +5240,5 @@ div.bbg_xiv-bootstrap {
   @media print {
     div.bbg_xiv-bootstrap .hidden-print {
       display: none !important; } }
-
-/*# sourceMappingURL=bootstrap.css.map */
 
 /*# sourceMappingURL=bootstrap.css.map */

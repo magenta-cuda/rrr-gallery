@@ -39,7 +39,7 @@ div.bbg_xiv-bootstrap div.bbg_xiv-jquery_mobile {
   /* Resolves issue #5166: Added to support issue introduced in Firefox 15. We can likely remove this in the future. */
   /* Same for IE10 */
   /* Resolves issue #5131: Width of textinput depends on its type,
-  for Android 4.1 */
+for Android 4.1 */
   /* Resolves issue #5756: Textinput in IE10 has a default clear button */ }
   div.bbg_xiv-bootstrap div.bbg_xiv-jquery_mobile .ui-mobile,
   div.bbg_xiv-bootstrap div.bbg_xiv-jquery_mobile .ui-mobile body {
@@ -53,6 +53,7 @@ div.bbg_xiv-bootstrap div.bbg_xiv-jquery_mobile {
     border-width: 0; }
   div.bbg_xiv-bootstrap div.bbg_xiv-jquery_mobile .ui-mobile fieldset {
     min-width: 0; }
+
 @-moz-document url-prefix() {
   div.bbg_xiv-bootstrap div.bbg_xiv-jquery_mobile .ui-mobile fieldset {
     display: table-column;
@@ -62,7 +63,7 @@ div.bbg_xiv-bootstrap div.bbg_xiv-jquery_mobile {
     overflow-x: visible;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: none;
-    -webkit-tap-highlight-color: transparent; }
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
   div.bbg_xiv-bootstrap div.bbg_xiv-jquery_mobile body.ui-mobile-viewport,
   div.bbg_xiv-bootstrap div.bbg_xiv-jquery_mobile div.ui-mobile-viewport {
     overflow-x: hidden; }
@@ -594,5 +595,3 @@ div.bbg_xiv-bootstrap div.bbg_xiv-jquery_mobile {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none; }
-
-/*# sourceMappingURL=jquery-mobile-structure.css.map */

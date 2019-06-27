@@ -1,0 +1,23 @@
+{
+  "name": "rrr-gallery",
+  "version": "1.0.0",
+  "description": "Fork of bb-gallery to use React and Redux",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/magenta-cuda/rrr-gallery.git"
+  },
+  "author": "Magenta Cuda",
+  "license": "GPL-2.0-only",
+  "bugs": {
+    "url": "https://github.com/magenta-cuda/rrr-gallery/issues"
+  },
+  "homepage": "https://github.com/magenta-cuda/rrr-gallery#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-sass": "^4.0.2"
+  }
+}
