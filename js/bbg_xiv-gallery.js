@@ -80,34 +80,19 @@
                 imagesHtml+='<br class="clearfix visible-sm-block">';
             }
         } );
- */ 
-        var jsx = [];
-        collection.forEach( function( model, index ) {
-            jsx.push( GalleryItem( model.attributes ) );
-            if(index%4===3){
-                jsx.push( <br className="clearfix visible-lg-block" /> );
-            }
-            if(index%3===2){
-                jsx.push( <br className="clearfix visible-md-block" /> );
-            }
-            if(index%2===1){
-                jsx.push( <br className="clearfix visible-sm-block" /> );
-            }
-        } );
-        var outer = <div className="mc-rrr-jsx-container">{ jsx }</div>;
-        console.log( 'jsx=', jsx );
         var galleryView=new bbg_xiv.GalleryView({
             model:{
                 attributes:{
-                    // TODO: for JSX testing only
-                    // items:imagesHtml
+                    items:imagesHtml
                 }
             }
         } );
         galleryView.template=_.template(jQuery("script#bbg_xiv-template_gallery_container").html(),null,bbg_xiv.templateOptions);
         container.empty();
-        // container.append(galleryView.render().$el.find("div.container"));
-        ReactDOM.render( outer, container.get(0) );
+        container.append(galleryView.render().$el.find("div.container"));
+ */
+        container.empty();
+        ReactDOM.render( GalleryContainer( collection ), container.get( 0 ) );
     };
 
     bbg_xiv.renderFlex=function(container,collection){
