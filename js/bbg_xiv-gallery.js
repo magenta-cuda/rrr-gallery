@@ -63,6 +63,7 @@
     bbg_xiv.renderBootstrapGallery=function(container,collection){
         var imageView=new bbg_xiv.ImageView();
         // attach template to imageView not ImageView.prototype since template is specific to imageView
+/*
         imageView.template=_.template( jQuery("script#bbg_xiv-template_gallery_item").html(),null,bbg_xiv.templateOptions);
         var imagesHtml="";
         collection.forEach(function(model,index){
@@ -79,16 +80,34 @@
                 imagesHtml+='<br class="clearfix visible-sm-block">';
             }
         } );
+ */ 
+        var jsx = [];
+        collection.forEach( function( model, index ) {
+            jsx.push( GalleryItem( model.attributes ) );
+            if(index%4===3){
+                jsx.push( <br className="clearfix visible-lg-block" /> );
+            }
+            if(index%3===2){
+                jsx.push( <br className="clearfix visible-md-block" /> );
+            }
+            if(index%2===1){
+                jsx.push( <br className="clearfix visible-sm-block" /> );
+            }
+        } );
+        var outer = <div className="mc-rrr-jsx-container">{ jsx }</div>;
+        console.log( 'jsx=', jsx );
         var galleryView=new bbg_xiv.GalleryView({
             model:{
                 attributes:{
-                    items:imagesHtml
+                    // TODO: for JSX testing only
+                    // items:imagesHtml
                 }
             }
         } );
         galleryView.template=_.template(jQuery("script#bbg_xiv-template_gallery_container").html(),null,bbg_xiv.templateOptions);
         container.empty();
-        container.append(galleryView.render().$el.find("div.container"));
+        // container.append(galleryView.render().$el.find("div.container"));
+        ReactDOM.render( outer, container.get(0) );
     };
 
     bbg_xiv.renderFlex=function(container,collection){
@@ -634,9 +653,12 @@
                 bbg_xiv.renderTiles(jqGallery,images,flags);
                 constructOverlay();
                 titlesButton.show();
+// TODO: renderFlex commented out to force renderBootstrapGallery for testing JSX code - uncomment!
+/*
             } else if ( Modernizr.flexbox && Modernizr.flexwrap && ! window.bbg_xiv.bbg_xiv_disable_flexbox ) {
                 bbg_xiv.renderFlex(jqGallery,images);
                 constructOverlay();
+*/ 
             }else{
                 bbg_xiv.renderBootstrapGallery(jqGallery,images);
             }
