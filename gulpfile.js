@@ -1,8 +1,11 @@
-var gulp = require('gulp');
-var sass = require('gulp-sass');
+var gulp       = require('gulp');
+var sass       = require('gulp-sass');
+var sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('sass', function(){
-  return gulp.src('css/*.scss')
-    .pipe(sass())
-    .pipe(gulp.dest('css'))
+    return gulp.src('css/*.scss')
+        .pipe(sourcemaps.init())
+        .pipe(sass())
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest('css'))
 });
