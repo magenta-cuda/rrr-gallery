@@ -4,6 +4,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var uglify     = require('gulp-uglify');
 var gulpif     = require('gulp-if');
 var rename     = require('gulp-rename');
+var chmod      = require('gulp-chmod');
 
 gulp.task('sass', function(){
     return gulp.src('css/*.scss')
@@ -26,10 +27,14 @@ gulp.task('js', function(){
 
 gulp.task('dev', function(){
     return gulp.src(['*.php', 'css/*.css', 'css/images/*.*', 'js/**/*.js', 'fonts/*.*', '!js/**/*.min.js'], {"base":"."})
+        .pipe(chmod(0644))
         .pipe(gulp.dest('/var/www/html/wp-content/plugins/rrr-gallery'))
 });
 
 gulp.task('watch', function(){
+    // TODO: currently 'dev' must be run as sudo -u www-data; Can gulp chown?
+    // gulp.watch('css/*.scss', gulp.series('sass','dev')); 
+    // gulp.watch(['js/*.js', '!js/*.min.js'], gulp.series('js','dev'));
     gulp.watch('css/*.scss', gulp.series('sass')); 
     gulp.watch(['js/*.js', '!js/*.min.js'], gulp.series('js'));
 });

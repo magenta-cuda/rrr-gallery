@@ -33,15 +33,15 @@
         variable:    'data'
     };
     
-    bbg_xiv.images={};
-    bbg_xiv.search={};      // state info for multi part search results
-    bbg_xiv.galleries={};   // state info for alternate galleries
+    bbg_xiv.images    = {};
+    bbg_xiv.search    = {};   // state info for multi part search results
+    bbg_xiv.galleries = {};   // state info for alternate galleries
     
-    bbg_xiv.Image=Backbone.Model.extend({idAttribute:window.bbg_xiv.bbg_xiv_wp_rest_api?"id":"ID"});
+    bbg_xiv.Image     = Backbone.Model.extend( { idAttribute: "id" } );
     
-    bbg_xiv.Images=Backbone.Collection.extend({model:bbg_xiv.Image});
+    bbg_xiv.Images    = Backbone.Collection.extend( {model: bbg_xiv.Image } );
     
-    bbg_xiv.ImageView=Backbone.View.extend({
+    bbg_xiv.ImageView = Backbone.View.extend( {
         render:function(srcOnly){
             var html=this.template(this.model.attributes);
             if(srcOnly){
@@ -414,21 +414,11 @@
         container.append(galleryView.render().$el.find("div.bbg_xiv-table"));
     };
     
-    bbg_xiv.constructImages=function(gallery){
+    bbg_xiv.constructImages = function( gallery ) {
         var images;
-        if(window.bbg_xiv.bbg_xiv_wp_rest_api){
-            images = bbg_xiv.images[ gallery.id ];
-        }else{
-            images = bbg_xiv.images[ gallery.id ] = new bbg_xiv.Images();
-            try{
-                images.reset(JSON.parse(window.bbg_xiv[gallery.id+"-data"]));
-            }catch(e){
-                console.log("reset(JSON.parse()) failed:",e);
-                return images;
-            }
-        }
-        images.id=gallery.id;
-        images.constructed=true;
+        images             = bbg_xiv.images[ gallery.id ];
+        images.id          = gallery.id;
+        images.constructed = true;
         return images;
     };
     
@@ -1081,10 +1071,10 @@
     // getSrc() sets the src attribute of <img> HTML elements which will be ignored on modern browsers that support the srcset attribute
     // i.e. the source selection logic of getSrc() will only be used on older browsers
 
-    bbg_xiv.getSrc=function(data,fullSize,icon){
-        switch(bbg_xiv.bandwidth){
+    bbg_xiv.getSrc = function( data, fullSize,icon ) {
+        switch ( bbg_xiv.bandwidth ) {
         case "normal":
-            return bbg_xiv.bbg_xiv_wp_rest_api?data.source_url:data.url;
+            return data.source_url;
         case "low":
             if(icon){
                 return data.bbg_thumbnail_src[0];
@@ -1118,31 +1108,31 @@
     };
 
     bbg_xiv.getTitle=function(data){
-        return (bbg_xiv.bbg_xiv_wp_rest_api?data.title.rendered:data.post_title).trim();
+        return data.title.rendered.trim();
     };
 
-    bbg_xiv.getCaption=function(data,noAlt){
-        var caption=bbg_xiv.bbg_xiv_wp_rest_api?jQuery(data.caption.rendered).text():data.post_excerpt;
-        if(!caption&&!noAlt){
-            caption=bbg_xiv.getAlt(data,true);
+    bbg_xiv.getCaption = function( data, noAlt ) {
+        var caption = jQuery(data.caption.rendered).text();
+        if ( ! caption && ! noAlt ) {
+            caption = bbg_xiv.getAlt( data, true );
         }
         return caption.trim();
     };
 
-    bbg_xiv.getAlt=function(data,noCaption){
-        var alt=bbg_xiv.bbg_xiv_wp_rest_api?data.alt_text:data.image_alt;
-        if(!alt&&!noCaption){
-            alt=bbg_xiv.getCaption(data,true);
+    bbg_xiv.getAlt = function( data, noCaption ) {
+        var alt = data.alt_text;
+        if (! alt && ! noCaption ) {
+            alt = bbg_xiv.getCaption( data, true );
         }
         return alt.trim();
     };
 
-    bbg_xiv.getPostContent=function(data){
-        var postContent=bbg_xiv.bbg_xiv_wp_rest_api?data.bbg_post_content:data.post_content;
-        if(postContent){
+    bbg_xiv.getPostContent = function( data ) {
+        var postContent = data.bbg_post_content;
+        if( postContent ) {
             return postContent;
         }
-        return bbg_xiv.getCaption(data);
+        return bbg_xiv.getCaption( data );
     };
     
     bbg_xiv.getSizes=function(data,fullSize,icon){
@@ -1297,10 +1287,8 @@
         }else{
             bbg_xiv.guiInterface = bbg_xiv.bbg_xiv_interface;
         }
-        if(bbg_xiv.bbg_xiv_wp_rest_api){
-            // WP REST API requires that per_page be between 1 and 100 inclusive
-            bbg_xiv.wpRestApiMaxPerPage=100;
-        }
+        // WP REST API requires that per_page be between 1 and 100 inclusive
+        bbg_xiv.wpRestApiMaxPerPage=100;
     };
     
     bbg_xiv.getOptionsFromCookie();
@@ -1389,19 +1377,14 @@
             var defaultView=bbg_xiv.getDefaultView(jQuery(gallery),null);
             // prettify Galleries tabs
             bbg_xiv.prettifyTabs(jQuery(gallery.parentNode).find("div.bbg_xiv-container"),true);
-            if(bbg_xiv.bbg_xiv_wp_rest_api){
-                // If the schema is not in sessionStorage it will be loaded asynchronously so must use wp.api.loadPromise.done()
-                wp.api.loadPromise.done(function(){
-                    var images=bbg_xiv.images[gallery.id]=new wp.api.collections.Media();
-                    images.reset(JSON.parse(bbg_xiv[gallery.id+"-data"]));
-                    bbg_xiv.renderGallery(gallery,defaultView,["initial"]);
-                    jQuery( gallery ).closest( 'div.bbg_xiv-gallery' ).addClass( 'bbg_xiv-home_gallery' );
-                    jQuery(window).resize();
-                });
-            }else{
+            // If the schema is not in sessionStorage it will be loaded asynchronously so must use wp.api.loadPromise.done()
+            wp.api.loadPromise.done(function(){
+                var images=bbg_xiv.images[gallery.id]=new wp.api.collections.Media();
+                images.reset(JSON.parse(bbg_xiv[gallery.id+"-data"]));
                 bbg_xiv.renderGallery(gallery,defaultView,["initial"]);
                 jQuery( gallery ).closest( 'div.bbg_xiv-gallery' ).addClass( 'bbg_xiv-home_gallery' );
-            }
+                jQuery(window).resize();
+            });
         });
 
         // wireup the event handlers
@@ -1484,77 +1467,50 @@
                 }
                 var specifiers=this.dataset.specifiers;
                 // extract individual gallery parameters
-                if(bbg_xiv.bbg_xiv_wp_rest_api){
-                    // translation maps for gallery shortcode parameter names and values to WP REST API option names and values
-                    var nameMap={
-                        id:"parent",
-                        ids:"include",
-                        bb_tags:"bb-tags"
-                    };
-                    // really should have a value map per parameter name but fortunately there are no overlaps
-                    var valueMap={
-                        ASC:"asc",
-                        DESC:"desc"
-                    };
-                }
-                var matches=specifiers.match(/(\w+)="([^"]+)"/g);
-                var parameters={};
-                var ids=false;
-                matches.forEach(function(match){
-                    var specifier=match.match(/(\w+)="([^"]+)"/);
-                    if(bbg_xiv.bbg_xiv_wp_rest_api){
-                        // translate gallery shortcode parameters to WP REST API options
-                        parameters[nameMap[specifier[1]]?nameMap[specifier[1]]:specifier[1]]=valueMap[specifier[2]]?valueMap[specifier[2]]:specifier[2];
-                        if(specifier[1]==="ids"){
-                            ids=true;
-                        }
-                    }else{
-                        parameters[specifier[1]]=specifier[2];
+                // translation maps for gallery shortcode parameter names and values to WP REST API option names and values
+                var nameMap={
+                    id:"parent",
+                    ids:"include",
+                    bb_tags:"bb-tags"
+                };
+                // really should have a value map per parameter name but fortunately there are no overlaps
+                var valueMap={
+                    ASC:"asc",
+                    DESC:"desc"
+                };
+                var matches    = specifiers.match( /(\w+)="([^"]+)"/g );
+                var parameters = {};
+                var ids        = false;
+                matches.forEach( function( match ) {
+                    var specifier = match.match( /(\w+)="([^"]+)"/ );
+                    // translate gallery shortcode parameters to WP REST API options
+                    parameters[nameMap[specifier[1]]?nameMap[specifier[1]]:specifier[1]]=valueMap[specifier[2]]?valueMap[specifier[2]]:specifier[2];
+                    if ( specifier[1] === "ids" ) {
+                        ids = true;
                     }
                 });
-                if ( bbg_xiv.bbg_xiv_wp_rest_api && ids && ! parameters.orderby ) {
+                if ( ids && ! parameters.orderby ) {
                     // for ids use the explicit order in ids
                     parameters.orderby = 'include';
                 }
                 var form=jqThis.parents("div.navbar-collapse").first().find("form[role='search']");
-                if(bbg_xiv.bbg_xiv_wp_rest_api){
-                    // uses the WP REST API - requires the WP REST API plugin
-                    var images=bbg_xiv.images[divGallery.id]=new wp.api.collections.Media();
-                    images.once("sync",function(){
-                        // the sync event will occur once only on the Backbone fetch of the collection
-                        handleResponse(!!this.length);
-                    },images);
-                    // get the collection specified by the parameters
-                    parameters.per_page=bbg_xiv.wpRestApiMaxPerPage;
-                    images.fetch({
-                        data:parameters,
-                        success: function() {
-                        },
-                        error: function( c, r ) {
-                            console.log("error:r=",r);
-                            handleResponse(false);
-                        }
-                    });
-                }else{
-                    // old proprietary non REST way to load the Backbone image collection - does not require the WP REST API plugin
-                    var postData={
-                        action:"bbg_xiv_search_media",
-                        _wpnonce:form.find("input[name='_wpnonce']").val(),
-                        _wp_http_referer:form.find("input[name='_wp_http_referer']").val()
-                    };
-                    // add individual gallery parameters to post data
-                    for(var parameter in parameters){
-                        postData[parameter]=parameters[parameter];
+                // uses the WP REST API - requires the WP REST API plugin
+                var images=bbg_xiv.images[divGallery.id]=new wp.api.collections.Media();
+                images.once("sync",function(){
+                    // the sync event will occur once only on the Backbone fetch of the collection
+                    handleResponse(!!this.length);
+                },images);
+                // get the collection specified by the parameters
+                parameters.per_page=bbg_xiv.wpRestApiMaxPerPage;
+                images.fetch({
+                    data:parameters,
+                    success: function() {
+                    },
+                    error: function( c, r ) {
+                        console.log("error:r=",r);
+                        handleResponse(false);
                     }
-                    jQuery.post(bbg_xiv.ajaxurl,postData,function(r){
-                        if(r==="-1"){
-                            r="";
-                        }
-                        bbg_xiv.images[divGallery.id]=null;
-                        bbg_xiv[divGallery.id+"-data"]=r;
-                        handleResponse(!!r);
-                    });
-                }
+                });
                 // update active in gallery tabs
                 jqThis.parents("div.bbg_xiv-bootstrap.bbg_xiv-gallery").find("div.bbg_xiv-gallery_tabs_container nav.navbar ul.nav-tabs li").removeClass("active")
                     .find("a[data-view='"+view+"']").parent().addClass("active");
@@ -1587,8 +1543,8 @@
             var pages=Number.MAX_SAFE_INTEGER;
             jQuery(this).click(function(e){
                 var searchLimit = parseInt( bbg_xiv.bbg_xiv_max_search_results, 10 );
-                if(bbg_xiv.bbg_xiv_wp_rest_api&&searchLimit>bbg_xiv.wpRestApiMaxPerPage){
-                    searchLimit=bbg_xiv.wpRestApiMaxPerPage;
+                if ( searchLimit > bbg_xiv.wpRestApiMaxPerPage ) {
+                    searchLimit = bbg_xiv.wpRestApiMaxPerPage;
                 }
                 var searchBtn=jQuery(this);
                 searchBtn.prop("disabled",true);
@@ -1606,18 +1562,6 @@
                     page=1;
                     // start new search history
                     bbg_xiv.search[divGallery.id]={history:[],index:-1,done:false};
-                    // get count
-                    if(!window.bbg_xiv.bbg_xiv_wp_rest_api){
-                        postData = {
-                            action:"bbg_xiv_search_media_count",
-                            query:query,
-                            _wpnonce:form.find("input[name='_wpnonce']").val(),
-                            _wp_http_referer:form.find("input[name='_wp_http_referer']").val()
-                        };
-                        jQuery.post(bbg_xiv.ajaxurl,postData,function(r){
-                            count = parseInt( r, 10 );
-                        });
-                    }
                 }else if(typeof query==="undefined"){
                     e.preventDefault();
                     return;
@@ -1647,12 +1591,12 @@
                         var prevQuery=query;
                         var heading=jQuery("div#"+divGallery.id+"-heading");
                         var search=bbg_xiv.search[divGallery.id];
-                        if((window.bbg_xiv.bbg_xiv_wp_rest_api&&page<=pages)||(!window.bbg_xiv.bbg_xiv_wp_rest_api&&offset+images.models.length<count)){
+                        if (page <= pages ) {
                             // this search has more images
                             offset+=searchLimit;
                             input.val("").attr("placeholder",continueSearch);
                             heading.find("button.bbg_xiv-search_scroll_right").attr("disabled",false);
-                        }else{
+                        } else {
                             // all search results have been returned
                             search.done=true;
                             input.attr("placeholder",startSearch).val(query);
@@ -1663,12 +1607,7 @@
                         // search results uses a heading to show status
                         heading.find("span.bbg_xiv-search_heading_first").text(bbg_xiv_lang["Search Results for"]+" \""+prevQuery+"\"");
                         var title;
-                        if(window.bbg_xiv.bbg_xiv_wp_rest_api){
-                            title = bbg_xiv_lang.Page + ' ' + ( page - 1 ) + ' ' + bbg_xiv_lang.of + ' ' + ( pages !== Number.MAX_SAFE_INTEGER ? pages : '?' );
-                        }else{
-                            title = bbg_xiv_lang.Images + ' ' + ( prevOffset + 1 ) + ' ' + bbg_xiv_lang.to + ' ' + ( prevOffset + images.models.length ) + ' ' + bbg_xiv_lang.of +
-                                ' ' + ( count !== Number.MAX_SAFE_INTEGER ? count: '?' );
-                        }
+                        title = bbg_xiv_lang.Page + ' ' + ( page - 1 ) + ' ' + bbg_xiv_lang.of + ' ' + ( pages !== Number.MAX_SAFE_INTEGER ? pages : '?' );
                         heading.find("span.bbg_xiv-search_heading_second").text(title);
                         // maintain a history of all images returned by this search
                         search.history.push({images:images,title:title});
@@ -1684,60 +1623,42 @@
                     liSelectView.find("a.bbg_xiv-selected_view span").text(liFirst.text());
                     searchBtn.prop("disabled",false);
                 }
-                if(window.bbg_xiv.bbg_xiv_wp_rest_api){
-                    // uses the WP REST API - requires the WP REST API plugin
-                    var images=bbg_xiv.images[divGallery.id]=new wp.api.collections.Media();
-                    images.once("sync",function(){
-                        // the sync event will occur once only on the Backbone fetch of the collection
-                        handleResponse(!!this.length);
-                    },images);
-                    // get the next part of the multi-part search result as specified by page
-                    images.fetch({
-                        data:{
-                            search:query,
-                            // 'bb-tags':query,
-                            page:page++,
-                            per_page:searchLimit
-                        },
-                        success:function(c,r,o){
-                            // set the page variable from the page query parameter of the next page url in the HTTP header field "Link"
-                            var link=o.xhr.getResponseHeader("link");
-                            if(link){
-                                var matches=link.match(/(\?|&)page=(\d+)(&[^>]+>;|>;)\s+rel="next"/);
-                                if(matches&&matches.length===4&&jQuery.isNumeric(matches[2])){
-                                    page = parseInt( matches[2], 10 );
-                                }else{
-                                    // no next page means search is complete
-                                }
+                // uses the WP REST API
+                var images=bbg_xiv.images[divGallery.id]=new wp.api.collections.Media();
+                images.once("sync",function(){
+                    // the sync event will occur once only on the Backbone fetch of the collection
+                    handleResponse(!!this.length);
+                },images);
+                // get the next part of the multi-part search result as specified by page
+                images.fetch({
+                    data:{
+                        search:query,
+                        // 'bb-tags':query,
+                        page:page++,
+                        per_page:searchLimit
+                    },
+                    success:function(c,r,o){
+                        // set the page variable from the page query parameter of the next page url in the HTTP header field "Link"
+                        var link=o.xhr.getResponseHeader("link");
+                        if(link){
+                            var matches=link.match(/(\?|&)page=(\d+)(&[^>]+>;|>;)\s+rel="next"/);
+                            if(matches&&matches.length===4&&jQuery.isNumeric(matches[2])){
+                                page = parseInt( matches[2], 10 );
                             }else{
-                                // no HTTP "Link" header field means only one page so search is complete
+                                // no next page means search is complete
                             }
-                            // get count and pages from the HTTP header fields: "X-WP-Total", "X-WP-TotalPages" via wp-api.js
-                            count=images.state.totalObjects;
-                            pages=images.state.totalPages;
-                        },
-                        error: function( c, r ) {
-                            console.log("error:r=",r);
-                            handleResponse(false);
+                        }else{
+                            // no HTTP "Link" header field means only one page so search is complete
                         }
-                    });
-                }else{
-                    // old proprietary non REST way to load the Backbone image collection - does not require the WP REST API plugin
-                    // get the next part of the multi-part search result
-                    postData = {
-                        action:"bbg_xiv_search_media",
-                        query:query,
-                        limit:searchLimit,
-                        offset:offset,
-                        _wpnonce:form.find("input[name='_wpnonce']").val(),
-                        _wp_http_referer:form.find("input[name='_wp_http_referer']").val()
-                    };
-                    jQuery.post(bbg_xiv.ajaxurl,postData,function(r){
-                        bbg_xiv.images[divGallery.id]=null;
-                        bbg_xiv[divGallery.id+"-data"]=r;
-                        handleResponse(!!r);
-                    });
-                }
+                        // get count and pages from the HTTP header fields: "X-WP-Total", "X-WP-TotalPages" via wp-api.js
+                        count=images.state.totalObjects;
+                        pages=images.state.totalPages;
+                    },
+                    error: function( c, r ) {
+                        console.log("error:r=",r);
+                        handleResponse(false);
+                    }
+                });
                 searchBtn.closest( 'div.bbg_xiv-gallery' ).removeClass( 'bbg_xiv-home_gallery' );
                 e.preventDefault();
             });
@@ -1831,9 +1752,9 @@
             var jqThis=jQuery(this);
             var max     = parseInt( jqThis.val(), 10 );
             var attrMax = parseInt( jqThis.attr( 'max' ), 10 );
-            if(bbg_xiv.bbg_xiv_wp_rest_api&&attrMax>bbg_xiv.wpRestApiMaxPerPage){
+            if ( attrMax > bbg_xiv.wpRestApiMaxPerPage ) {
                 // WP REST API requires that per_page be between 1 and 100 inclusive
-                attrMax=bbg_xiv.wpRestApiMaxPerPage;
+                attrMax = bbg_xiv.wpRestApiMaxPerPage;
             }
             if(max>attrMax){
                 jqThis.val(attrMax);
@@ -1984,10 +1905,7 @@
                 bbg_xiv.resetGallery(jQuery(this));
             });
         });
-        if(!bbg_xiv.bbg_xiv_wp_rest_api){
-            // if using the REST API cannot do resize here since the models may be asynchronously created
-            jQuery(window).resize();
-        }
+
         // If TwentySixteen theme has border then add class to body element to indicate this.
         var $body            = jQuery( 'body' );
         var bodyBeforeStyle  = window.getComputedStyle( $body[0], ':before' );

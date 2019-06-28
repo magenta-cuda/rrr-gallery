@@ -29,8 +29,9 @@ License: GPL2
 */
 
 # This is a plug compatible replacement for the built-in WordPress gallery shortcode.
-# It uses user definable Backbone.js templates styled with a Twitter Bootstrap stylesheets.
-# The user definable templates are in the file ".../js/bbg_xiv-gallery_templates_wp_rest.php".
+# This was forked from BB Gallery - https://github.com/magenta-cuda/bb-gallery.
+# It replaces the user definable Backbone.js templates with React components.
+# The React components use the same Twitter Bootstrap stylesheets.
 
 class BBG_XIV_Gallery {
 
