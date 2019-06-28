@@ -96,6 +96,7 @@
     };
 
     bbg_xiv.renderFlex=function(container,collection){
+/*
         var containerWidth=container.width();
         var imageView=new bbg_xiv.ImageView();
         // attach template to imageView not ImageView.prototype since template is specific to imageView
@@ -117,6 +118,9 @@
         galleryView.template=_.template(jQuery("script#bbg_xiv-template_flex_container").html(),null,bbg_xiv.templateOptions);
         container.empty();
         container.append(galleryView.render().$el.find("div.bbg_xiv-flex_container"));
+ */ 
+        container.empty();
+        ReactDOM.render(FlexContainer(collection),container.get(0));
         if ( bbg_xiv.guiInterface === 'touch' ) {
             container.find("div.bbg_xiv-flex_container div.bbg_xiv-flex_item div.bbg_xiv-dense_full_btn").addClass("bbg_xiv-touch");
         }

@@ -988,6 +988,8 @@ EOD
 </script>
 <script src="<?php echo plugins_url( "js/components/GalleryItem.js",      __FILE__ ); ?>" type="text/babel"></script>
 <script src="<?php echo plugins_url( "js/components/GalleryContainer.js", __FILE__ ); ?>" type="text/babel"></script>
+<script src="<?php echo plugins_url( "js/components/FlexItem.js",         __FILE__ ); ?>" type="text/babel"></script>
+<script src="<?php echo plugins_url( "js/components/FlexContainer.js",    __FILE__ ); ?>" type="text/babel"></script>
 <script src="<?php echo plugins_url( "js/bbg_xiv-gallery.js",             __FILE__ ); ?>" type="text/babel"></script>
 <?php
         } );
