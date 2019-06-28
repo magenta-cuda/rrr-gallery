@@ -24,6 +24,11 @@ gulp.task('js', function(){
         .pipe(gulpif('*.min.js',gulp.dest('dist/js')))
 });
 
+gulp.task('dev', function(){
+    return gulp.src(['*.php', 'css/*.css', 'css/images/*.*', 'js/**/*.js', 'fonts/*.*', '!js/**/*.min.js'], {"base":"."})
+        .pipe(gulp.dest('/var/www/html/wp-content/plugins/rrr-gallery'))
+});
+
 gulp.task('watch', function(){
     gulp.watch('css/*.scss', gulp.series('sass')); 
     gulp.watch(['js/*.js', '!js/*.min.js'], gulp.series('js'));

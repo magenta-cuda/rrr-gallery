@@ -1,10 +1,10 @@
 <?php
 
 /*
-Plugin Name: BB Gallery
+Plugin Name: RRR Gallery
 Plugin URI: http://docs.magentacuda.com/
-Description: Gallery using Backbone.js, Bootstrap 3 and CSS3 Flexbox
-Version: 1.8.2.4.5.2
+Description: Gallery using REST, React, Redux, Backbone, Bootstrap and CSS3 Flexbox
+Version: 2.0
 Author: Magenta Cuda
 Author URI: http://magentacuda.com/
 License: GPL2
