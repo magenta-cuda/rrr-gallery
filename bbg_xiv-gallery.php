@@ -35,9 +35,7 @@ License: GPL2
 
 class BBG_XIV_Gallery {
 
-    public static $nonce_action = 'bbg_xiv-search';
-    private static $wp_rest_api_available = FALSE;
-    private static $use_wp_rest_api_if_available = TRUE;
+    public  static $nonce_action             = 'bbg_xiv-search';
     private static $gallery_menu_items_count = 5;
   
     # excerpted from the WordPress function gallery_shortcode() of .../wp-includes/media.php
@@ -94,7 +92,6 @@ class BBG_XIV_Gallery {
         $bbg_xiv_data[ 'bbg_xiv_carousel_interval' ]                 = get_option( 'bbg_xiv_carousel_interval', 2500 );
         $bbg_xiv_data[ 'bbg_xiv_disable_flexbox' ]                   = get_option( 'bbg_xiv_disable_flexbox', FALSE );
         $bbg_xiv_data[ 'bbg_xiv_default_view' ]                      = get_option( 'bbg_xiv_default_view', 'Gallery' );
-        $bbg_xiv_data[ 'bbg_xiv_wp_rest_api' ]                       = self::$wp_rest_api_available && self::$use_wp_rest_api_if_available;
         # translations for JavaScript side
         $bbg_xiv_lang[ 'expand gallery to full-screen' ]             = __( 'expand gallery to full-screen',   'bb_gallery' );
         $bbg_xiv_lang[ 'shrink gallery from full-screen' ]           = __( 'shrink gallery from full-screen', 'bb_gallery' );
@@ -197,7 +194,7 @@ class BBG_XIV_Gallery {
                                 $gallery_attr[ $matches[ 1 ] ] = $matches[ 3 ];
                             }, $gallery->specifiers );
                             $attachment = self::bb_gallery_shortcode( $gallery_attr );
-                            $gallery->image = ( self::$wp_rest_api_available && self::$use_wp_rest_api_if_available ) ? $attachment[ 'id' ] : $attachment->ID;
+                            $gallery->image = $attachment[ 'id' ];
                         }
                         if ( empty( $gallery->caption ) ) {
                             $gallery->caption = $gallery->title;
@@ -257,152 +254,95 @@ class BBG_XIV_Gallery {
 
         $selector = "gallery-{$instance}";
 
-        if ( self::$wp_rest_api_available && self::$use_wp_rest_api_if_available ) {
-            # map gallery shortcode parameters to WP REST API parameters
-            $orderby_map = [
-                'menu_order' => 'menu_order',
-                'title'      => 'title',
-                'post_date'  => 'date',
-                'rand'       => 'rand',
-                'ID'         => 'id',
-                'post__in'   => 'include'
-            ];
-            $order_map = [
-                'ASC'  => 'asc',
-                'DESC' => 'desc'
-            ];
-            # Initialize the Backbone.js collection using data from the WP REST API for the WP REST API model
-            $attributes = [
-                'author'         => [ ],
-                'author_exclude' => [ ],
-                'menu_order'     => '', 
-                'offset'         => '',
-                'order'          => $order_map[ $atts[ 'order' ] ],
-                'orderby'        => $orderby_map[ $atts[ 'orderby' ] ],
-                'page'           => 1,
-                'include'        => [ ],
-                'exclude'        => [ ],
-                'per_page'       => 10,
-                'slug'           => '',
-                'parent'         => '',
-                'parent_exclude' => '',
-                'status'         => 'any',
-                'search'         => ''
-            ];
-            if ( ! empty( $atts['bb_tags'] ) ) {
-                // Translate the terms of the proprietary 'bb_tags' attribute to ids
-                $bb_tags = array_map( 'trim', explode( ',', $atts['bb_tags'] ) );
-                $attributes[ 'bb-tags'  ] = get_terms( [ 'taxonomy' => 'bb_tags', 'slug' => $bb_tags, 'name' => $bb_tags, 'fields' => 'ids', 'hide_empty' => FALSE ] );
-            } else if ( ! empty( $atts[ 'include' ] ) ) {
-                $attributes[ 'include'  ] = explode( ',', $atts[ 'include' ] );
-                $attributes[ 'per_page' ] = count( $attributes[ 'include' ] );
-            } elseif ( !empty( $atts[ 'exclude' ] ) ) {
-                $attributes[ 'parent'   ] = [ $id ];
-                $attributes[ 'exclude'  ] = explode( ',', $atts[ 'exclude' ] );
-                $attributes[ 'per_page' ] = 1024;
-            } else {
-                $attributes[ 'parent'   ] = [ $id ];
-                $attributes[ 'per_page' ] = 1024;
-            }
-            if ( !empty( $get_first ) ) {
-                $attributes[ 'per_page' ] = 1;
-            }
-            $request = new WP_REST_Request( 'GET', '/wp/v2/media' );
-            $request->set_query_params( $attributes );
-            # TODO: $request may need to set some of the params below
-            #$request->set_body_params( wp_unslash( $_POST ) );
-            #$request->set_file_params( $_FILES );
-            #$request->set_headers( $this->get_headers( wp_unslash( $_SERVER ) ) );
-            #$request->set_body( $this->get_raw_data() );
-            #$request->set_url_params( $args );
-            #$request->set_attributes( $handler );
-            #$request->set_default_params( $defaults );
-            self::add_additional_rest_fields( );
-            $controller = new WP_REST_Attachments_Controller( "attachment" );
-            error_log( 'bb_gallery_shortcode():$request=' . print_r( $request, true ) );
-            // $attachments = $controller->get_items( $request )->data;
-            $attachments = $controller->get_items( $request );
-            error_log( 'bb_gallery_shortcode():$attachments=' . print_r( $attachments, true ) );
-            $attachments = $attachments->data;
-            if ( !empty( $get_first ) ) {
-                ob_end_clean( );
-                return reset( $attachments );
-            }
-            if ( !empty( $gallery_icons_mode ) ) {
-                # replace title and caption for image with title and caption for gallery and also remember the gallery index
-                foreach ( $galleries as $i => $gallery ) {
-                    if ( empty( $attachments[ $i ] ) ) {
-                        # this is an error probably caused by a duplicate image id
-                        continue;
-                    }
-                    $attachment =& $attachments[ $i ];
-                    if ( (integer) $gallery->image === (integer) $attachment[ 'id' ] ) {
-                        # if this is not true then there probably is a duplicate image id
-                        $attachment[ 'gallery_index' ]       = $i;
-                        $attachment[ 'title' ][ 'rendered' ] = $gallery->title;
-                        $attachment[ 'caption' ]             = $gallery->caption;
-                        $attachment[ 'description' ]         = '';
-                    }
-                }
-            }
-
-            $bbg_xiv_data[ "$selector-data" ] = json_encode( $attachments );
+        # map gallery shortcode parameters to WP REST API parameters
+        $orderby_map = [
+            'menu_order' => 'menu_order',
+            'title'      => 'title',
+            'post_date'  => 'date',
+            'rand'       => 'rand',
+            'ID'         => 'id',
+            'post__in'   => 'include'
+        ];
+        $order_map = [
+            'ASC'  => 'asc',
+            'DESC' => 'desc'
+        ];
+        # Initialize the Backbone.js collection using data from the WP REST API for the WP REST API model
+        $attributes = [
+            'author'         => [ ],
+            'author_exclude' => [ ],
+            'menu_order'     => '', 
+            'offset'         => '',
+            'order'          => $order_map[ $atts[ 'order' ] ],
+            'orderby'        => $orderby_map[ $atts[ 'orderby' ] ],
+            'page'           => 1,
+            'include'        => [ ],
+            'exclude'        => [ ],
+            'per_page'       => 10,
+            'slug'           => '',
+            'parent'         => '',
+            'parent_exclude' => '',
+            'status'         => 'any',
+            'search'         => ''
+        ];
+        if ( ! empty( $atts['bb_tags'] ) ) {
+            // Translate the terms of the proprietary 'bb_tags' attribute to ids
+            $bb_tags = array_map( 'trim', explode( ',', $atts['bb_tags'] ) );
+            $attributes[ 'bb-tags'  ] = get_terms( [ 'taxonomy' => 'bb_tags', 'slug' => $bb_tags, 'name' => $bb_tags, 'fields' => 'ids', 'hide_empty' => FALSE ] );
+        } else if ( ! empty( $atts[ 'include' ] ) ) {
+            $attributes[ 'include'  ] = explode( ',', $atts[ 'include' ] );
+            $attributes[ 'per_page' ] = count( $attributes[ 'include' ] );
+        } elseif ( !empty( $atts[ 'exclude' ] ) ) {
+            $attributes[ 'parent'   ] = [ $id ];
+            $attributes[ 'exclude'  ] = explode( ',', $atts[ 'exclude' ] );
+            $attributes[ 'per_page' ] = 1024;
         } else {
-            // initialize the Backbone.js collection using data for my proprietary model
-            // Handle the proprietary 'bb_tags' attribute - this specifies a gallery by a taxonomy expression
-            if ( ! empty( $atts['bb_tags'] ) ) {
-              $bb_tags = explode( ',', $atts['bb_tags'] );
-              $tax_query = array( );
-              // search by both slug and name
-              $tax_query['relation'] = 'OR'; 
-              $tax_query[ ] = array( 'taxonomy' => 'bb_tags', 'field' => 'slug', 'terms' => $bb_tags );
-              $tax_query[ ] = array( 'taxonomy' => 'bb_tags', 'field' => 'name', 'terms' => $bb_tags );
-              $_attachments = get_posts( array( 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $atts['order'], 'orderby' => $atts['orderby'],
-                                                'tax_query' => $tax_query, 'posts_per_page' => ( empty( $get_first ) ? -1 : 1 ), 'offset' => 0 ) );
-              $attachments = array();
-              foreach ( $_attachments as $key => $val ) {
-                $attachments[$val->ID] = $_attachments[$key];
-              }
-            } elseif ( ! empty( $atts['include'] ) ) {
-              $_attachments = get_posts( array( 'include' => ( empty( $get_first ) ? $atts['include'] : (string) (explode( ',', $atts['include'] )[0]) ), 'post_status' => 'inherit',
-                                                'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $atts['order'], 'orderby' => $atts['orderby'] ) );
-              $attachments = array();
-              foreach ( $_attachments as $key => $val ) {
-                $attachments[$val->ID] = $_attachments[$key];
-              }
-            } elseif ( ! empty( $atts['exclude'] ) ) {
-              $attachments = get_children( array( 'post_parent' => $id, 'exclude' => $atts['exclude'], 'post_status' => 'inherit', 'post_type' => 'attachment',
-                                                  'post_mime_type' => 'image', 'order' => $atts['order'], 'orderby' => $atts['orderby'], 
-                                                  'numberposts' => ( empty( $get_first ) ? -1 : 1 ) ) );
-            } else {
-              $attachments = get_children( array( 'post_parent' => $id, 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image',
-                                                  'order' => $atts['order'], 'orderby' => $atts['orderby'],  'numberposts' => ( empty( $get_first ) ? -1 : 1 ) ) );
-            }
-
-            if ( !empty( $get_first ) ) {
-                ob_end_clean( );
-                return reset( $attachments );
-            }
-
-            #if ( empty( $attachments ) ) {
-            #  return '';
-            #}
-
-            self::bbg_xiv_do_attachments( $attachments );
-
-            if ( !empty( $gallery_icons_mode ) ) {
-                # replace title and caption for image with title and caption for gallery and also remember the gallery index
-                foreach ( $galleries as $i => $gallery ) {
-                    $attachment = $attachments[ $gallery->image ];
-                    $attachment->gallery_index = $i;
-                    $attachment->post_title    = $gallery->title;
-                    $attachment->post_excerpt  = $gallery->caption;
-                    $attachment->post_content  = '';
+            $attributes[ 'parent'   ] = [ $id ];
+            $attributes[ 'per_page' ] = 1024;
+        }
+        if ( !empty( $get_first ) ) {
+            $attributes[ 'per_page' ] = 1;
+        }
+        $request = new WP_REST_Request( 'GET', '/wp/v2/media' );
+        $request->set_query_params( $attributes );
+        # TODO: $request may need to set some of the params below
+        #$request->set_body_params( wp_unslash( $_POST ) );
+        #$request->set_file_params( $_FILES );
+        #$request->set_headers( $this->get_headers( wp_unslash( $_SERVER ) ) );
+        #$request->set_body( $this->get_raw_data() );
+        #$request->set_url_params( $args );
+        #$request->set_attributes( $handler );
+        #$request->set_default_params( $defaults );
+        self::add_additional_rest_fields( );
+        $controller = new WP_REST_Attachments_Controller( "attachment" );
+        error_log( 'bb_gallery_shortcode():$request=' . print_r( $request, true ) );
+        // $attachments = $controller->get_items( $request )->data;
+        $attachments = $controller->get_items( $request );
+        error_log( 'bb_gallery_shortcode():$attachments=' . print_r( $attachments, true ) );
+        $attachments = $attachments->data;
+        if ( !empty( $get_first ) ) {
+            ob_end_clean( );
+            return reset( $attachments );
+        }
+        if ( !empty( $gallery_icons_mode ) ) {
+            # replace title and caption for image with title and caption for gallery and also remember the gallery index
+            foreach ( $galleries as $i => $gallery ) {
+                if ( empty( $attachments[ $i ] ) ) {
+                    # this is an error probably caused by a duplicate image id
+                    continue;
+                }
+                $attachment =& $attachments[ $i ];
+                if ( (integer) $gallery->image === (integer) $attachment[ 'id' ] ) {
+                    # if this is not true then there probably is a duplicate image id
+                    $attachment[ 'gallery_index' ]       = $i;
+                    $attachment[ 'title' ][ 'rendered' ] = $gallery->title;
+                    $attachment[ 'caption' ]             = $gallery->caption;
+                    $attachment[ 'description' ]         = '';
                 }
             }
-
-            $bbg_xiv_data[ "$selector-data" ] = json_encode( array_values( $attachments ) );
         }
+
+        $bbg_xiv_data[ "$selector-data" ] = json_encode( $attachments );
  
         wp_localize_script( 'bbg_xiv-gallery', 'bbg_xiv', $bbg_xiv_data );
         wp_localize_script( 'bbg_xiv-gallery', 'bbg_xiv_lang', $bbg_xiv_lang );
@@ -786,9 +726,6 @@ EOD;
     }
 
     public static function add_additional_rest_fields( ) {
-        if ( !self::$wp_rest_api_available || !self::$use_wp_rest_api_if_available ) {
-            return;
-        }
         register_rest_field( 'attachment', 'bbg_srcset', [
             'get_callback' => [ 'BBG_XIV_Gallery', 'get_additional_rest_field' ],
             'update_callback' => null,
@@ -900,8 +837,6 @@ EOD;
         } );
 
         add_action( 'init', function( ) {
-            self::$wp_rest_api_available        = class_exists( 'WP_REST_Attachments_Controller' );
-            self::$use_wp_rest_api_if_available = get_option( 'bbg_xiv_wp_rest', TRUE );
             register_taxonomy( 'bb_tags', 'attachment', [
                 'label'                 => __( 'BB Tags' ),
                 'show_ui'               => TRUE,
@@ -915,28 +850,26 @@ EOD;
                 'rest_controller_class' => 'WP_REST_Terms_Controller'
             ] );
 
-            if ( self::$wp_rest_api_available && self::$use_wp_rest_api_if_available ) {
-                # add_filter( 'rest_pre_dispatch', function( $null, $server, $request ) {
-                #     error_log( 'FILTER::rest_pre_dispatch():$request=' . print_r( $request, true ) );
-                #     return NULL;
-                # }, 10, 3 );
-                add_filter( 'rest_attachment_query', function( $args, $request ) {
-                    if ( !empty( $args[ 's' ] ) ) {
-                        $terms = get_terms( [ 'taxonomy' => 'bb_tags', 'slug' => $args[ 's' ], 'name' => $args[ 's' ], 'fields' => 'ids', 'hide_empty' => FALSE ] );
-                        if ( $terms ) {
-                            # taxonomy has a higher priority than search 
-                            unset( $args[ 's' ] );
-                            $args['tax_query'][] = [
-                                                       'taxonomy'         => 'bb_tags',
-                                                       'field'            => 'term_id',
-                                                       'terms'            => $terms,
-                                                       'include_children' => FALSE,
-                                                   ];
-                       }
-                    }
-                    return $args;
-                }, 10, 2 );
-            }
+            # add_filter( 'rest_pre_dispatch', function( $null, $server, $request ) {
+            #     error_log( 'FILTER::rest_pre_dispatch():$request=' . print_r( $request, true ) );
+            #     return NULL;
+            # }, 10, 3 );
+            add_filter( 'rest_attachment_query', function( $args, $request ) {
+                if ( !empty( $args[ 's' ] ) ) {
+                    $terms = get_terms( [ 'taxonomy' => 'bb_tags', 'slug' => $args[ 's' ], 'name' => $args[ 's' ], 'fields' => 'ids', 'hide_empty' => FALSE ] );
+                    if ( $terms ) {
+                        # taxonomy has a higher priority than search 
+                        unset( $args[ 's' ] );
+                        $args['tax_query'][] = [
+                                                   'taxonomy'         => 'bb_tags',
+                                                   'field'            => 'term_id',
+                                                   'terms'            => $terms,
+                                                   'include_children' => FALSE,
+                                               ];
+                   }
+                }
+                return $args;
+            }, 10, 2 );
         } );
 
         add_action( 'rest_api_init', [ 'BBG_XIV_Gallery', 'add_additional_rest_fields' ] );
@@ -971,9 +904,7 @@ EOD
             }
             $deps[ ] = 'jquery-mobile';
             $deps[ ] = 'justified-gallery';
-            if ( self::$wp_rest_api_available && self::$use_wp_rest_api_if_available ) {
-                $deps[ ] = 'wp-api';
-            }
+            $deps[ ] = 'wp-api';
             wp_enqueue_script( 'bbg_xiv-gallery',   plugins_url( "js/bbg_xiv-gallery-extra.js",   __FILE__ ), $deps,        FALSE, TRUE );
             // wp_enqueue_script( 'react',             'https://unpkg.com/react@16/umd/react.development.js'         );
             // wp_enqueue_script( 'react-dom',         'https://unpkg.com/react-dom@16/umd/react-dom.development.js' );
@@ -1031,7 +962,7 @@ EOD
             }, 'media',	'bbg_xiv_setting_section' );
             add_settings_field( 'bbg_xiv_max_search_results', __( 'Maximum Number of Images Returned by Search', 'bb_gallery' ), function( ) {
                 echo '<input name="bbg_xiv_max_search_results" id="bbg_xiv_max_search_results" type="number" value="' . get_option( 'bbg_xiv_max_search_results', 100 )
-                    . '" class="small-text" min="1" ' . ( self::$use_wp_rest_api_if_available ? 'max="100" ' : '' ) . '/> '
+                    . '" class="small-text" min="1" max="100" /> '
                     . __( 'The browser user can lower this limit. (For the WP REST API this limit must be <= 100.)', 'bb_gallery' );
             }, 'media',	'bbg_xiv_setting_section' );
             add_settings_field( 'bbg_xiv_flex_number_of_dense_view_columns', __( 'Columns in Dense View', 'bb_gallery' ), function( ) {

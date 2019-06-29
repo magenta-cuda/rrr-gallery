@@ -5,6 +5,8 @@ var uglify     = require('gulp-uglify');
 var gulpif     = require('gulp-if');
 var rename     = require('gulp-rename');
 var chmod      = require('gulp-chmod');
+var webpack    = require('webpack');
+var path       = require('path');
 
 gulp.task('sass', function(){
     return gulp.src('css/*.scss')
@@ -38,3 +40,34 @@ gulp.task('watch', function(){
     gulp.watch('css/*.scss', gulp.series('sass')); 
     gulp.watch(['js/*.js', '!js/*.min.js'], gulp.series('js'));
 });
+
+let webpackconfig = {
+    entry:'js/rr-main.js',
+    output:{
+        filename:'js/bundle.js',
+        path:'.'
+    },
+    context:'.'
+}
+
+gulp.task('webpack', function(){
+    return new Promise((resolve,reject) => {
+        return webpack({
+            mode:'development',
+            entry:'./rr-main.js',
+            resolve:{extensions:['.js']},
+            output:{
+                filename:'./bundle.js',
+                path:path.join(__dirname, 'js')
+            },
+            context:path.join(__dirname, 'js')
+        }, (error, status) => {
+            if (error) {
+                console.log(error)
+            }
+            console.log(status.toString())
+            resolve()
+        })
+    })
+});
+
