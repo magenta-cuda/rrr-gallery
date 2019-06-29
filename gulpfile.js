@@ -51,6 +51,11 @@ gulp.task('webpack', function(){
                 filename:'./bundle.js',
                 path:path.join(__dirname, 'js')
             },
+            optimization:{
+                splitChunks:{
+                    chunks:'all'
+                }
+            },
             context:path.join(__dirname, 'js')
         }, (error, status) => {
             if (error) {
