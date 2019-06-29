@@ -34,7 +34,8 @@ gulp.task('dev', function(){
 });
 
 gulp.task('backup', function(){
-    return gulp.src(['*.php', 'css/*.scss', 'css/images/*.*', 'js/**/*.js', 'fonts/*.*', '!js/**/*.min.js', '!js/*bundle.js'], {"base":"."})
+    return gulp.src(['*.php', 'css/*.scss', 'css/images/*.*', 'js/**/*.js', 'fonts/*.*', 'package.json', 'languages/*.*', '!js/**/*.min.js', '!js/*bundle.js'],
+        {"base":"."})
         .pipe(chmod(0644))
         .pipe(gulp.dest('/home/omega-turtle/backup/rrr-gallery'))
 });
@@ -62,7 +63,19 @@ gulp.task('webpack', function(){
                     chunks:'all'
                 }
             },
-            context:path.join(__dirname, 'js')
+            context:path.join(__dirname, 'js'),
+            module:{
+                rules:[
+                    {
+                        test: /\.jsx?$/,
+                        loader: 'babel-loader',
+                        exclude: /node_modules/,
+                        query:{
+                            presets:['env', 'react']
+                        }
+                    }
+                ]
+            }
         }, (error, status) => {
             if (error) {
                 console.log(error)

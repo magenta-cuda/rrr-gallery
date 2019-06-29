@@ -918,6 +918,11 @@ EOD
 <script type="text/babel">
     const hello = <h1>Hello World</h1>
 </script>
+<!-- TODO: 'js/components/*.js' will eventually be in 'js/bundle.js' but not true for now. -->
+<script src="<?php echo plugins_url( "js/components/GalleryItem.js",      __FILE__ ); ?>" type="text/babel"></script>
+<script src="<?php echo plugins_url( "js/components/GalleryContainer.js", __FILE__ ); ?>" type="text/babel"></script>
+<script src="<?php echo plugins_url( "js/components/FlexItem.js",         __FILE__ ); ?>" type="text/babel"></script>
+<script src="<?php echo plugins_url( "js/components/FlexContainer.js",    __FILE__ ); ?>" type="text/babel"></script>
 <script src="<?php echo plugins_url( "js/vendors~main.bundle.js",         __FILE__ ); ?>" type="text/babel"></script>
 <script src="<?php echo plugins_url( "js/bundle.js",                      __FILE__ ); ?>" type="text/babel"></script>
 <script src="<?php echo plugins_url( "js/bbg_xiv-gallery.js",             __FILE__ ); ?>" type="text/babel"></script>

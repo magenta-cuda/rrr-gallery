@@ -159,11 +159,23 @@
 /*!**************************!*\
   !*** ./actions/index.js ***!
   \**************************/
-/*! exports provided: GET_IMAGES, getImages, LOAD_IMAGES, loadImages */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"GET_IMAGES\", function() { return GET_IMAGES; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getImages\", function() { return getImages; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"LOAD_IMAGES\", function() { return LOAD_IMAGES; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"loadImages\", function() { return loadImages; });\n/* harmony import */ var _middleware_rest__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../middleware/rest */ \"./middleware/rest.js\");\n\n\nconst GET_IMAGES = 'GET-IMAGES'\n\nconst getImages = attributes => ({\n    [_middleware_rest__WEBPACK_IMPORTED_MODULE_0__[\"REST\"]]:{\n        attributes:attributes\n    }\n})\n\nconst LOAD_IMAGES = 'LOAD-IMAGES'\n\nconst loadImages = response => ({\n    type:LOAD_IMAGES,\n    response:response\n})\n\n\n\n//# sourceURL=webpack:///./actions/index.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nexports.loadImages = exports.LOAD_IMAGES = exports.getImagesBySearchParms = exports.getImagesByGallerySpecs = undefined;\n\nvar _rest = __webpack_require__(/*! ../middleware/rest */ \"./middleware/rest.js\");\n\nfunction _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }\n\nvar getImagesByGallerySpecs = exports.getImagesByGallerySpecs = function getImagesByGallerySpecs(specs) {\n    return _defineProperty({}, _rest.REST, {\n        specs: specs\n    });\n};\n\nvar getImagesBySearchParms = exports.getImagesBySearchParms = function getImagesBySearchParms(parms) {\n    return _defineProperty({}, _rest.REST, {\n        parms: parms\n    });\n};\n\nvar LOAD_IMAGES = exports.LOAD_IMAGES = 'LOAD-IMAGES';\n\nvar loadImages = exports.loadImages = function loadImages(response) {\n    return {\n        type: LOAD_IMAGES,\n        response: response\n    };\n};\n\n//# sourceURL=webpack:///./actions/index.js?");
+
+/***/ }),
+
+/***/ "./containers/DevTools.js":
+/*!********************************!*\
+  !*** ./containers/DevTools.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _react = __webpack_require__(/*! react */ \"../node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _reduxDevtools = __webpack_require__(/*! redux-devtools */ \"../node_modules/redux-devtools/lib/index.js\");\n\nvar _reduxDevtoolsLogMonitor = __webpack_require__(/*! redux-devtools-log-monitor */ \"../node_modules/redux-devtools-log-monitor/lib/index.js\");\n\nvar _reduxDevtoolsLogMonitor2 = _interopRequireDefault(_reduxDevtoolsLogMonitor);\n\nvar _reduxDevtoolsDockMonitor = __webpack_require__(/*! redux-devtools-dock-monitor */ \"../node_modules/redux-devtools-dock-monitor/lib/index.js\");\n\nvar _reduxDevtoolsDockMonitor2 = _interopRequireDefault(_reduxDevtoolsDockMonitor);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nexports.default = (0, _reduxDevtools.createDevTools)(_react2.default.createElement(\n  _reduxDevtoolsDockMonitor2.default,\n  { toggleVisibilityKey: 'ctrl-h', changePositionKey: 'ctrl-w' },\n  _react2.default.createElement(_reduxDevtoolsLogMonitor2.default, null)\n));\n\n//# sourceURL=webpack:///./containers/DevTools.js?");
 
 /***/ }),
 
@@ -171,11 +183,11 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /*!****************************!*\
   !*** ./middleware/rest.js ***!
   \****************************/
-/*! exports provided: REST, default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"REST\", function() { return REST; });\nconst REST = 'REST'\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (store => next => action => {\n    const rest = action['REST']\n    if (typeof rest === 'undefined') {\n        next(action)\n        return\n    }\n});\n\n\n//# sourceURL=webpack:///./middleware/rest.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nvar REST = exports.REST = 'REST';\n\nexports.default = function (store) {\n    return function (next) {\n        return function (action) {\n            var rest = action['REST'];\n            if (typeof rest === 'undefined') {\n                return next(action);\n            }\n        };\n    };\n};\n\n//# sourceURL=webpack:///./middleware/rest.js?");
 
 /***/ }),
 
@@ -183,11 +195,11 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /*!***************************!*\
   !*** ./reducers/index.js ***!
   \***************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions */ \"./actions/index.js\");\n\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ((state = {}, action) => {\n    switch (action.type) {\n    case _actions__WEBPACK_IMPORTED_MODULE_0__[\"LOAD_IMAGES\"]:\n    default:\n        return state\n    }\n});\n\n\n//# sourceURL=webpack:///./reducers/index.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _actions = __webpack_require__(/*! ../actions */ \"./actions/index.js\");\n\nexports.default = function () {\n    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};\n    var action = arguments[1];\n\n    switch (action.type) {\n        case _actions.LOAD_IMAGES:\n        default:\n            return state;\n    }\n};\n\n//# sourceURL=webpack:///./reducers/index.js?");
 
 /***/ }),
 
@@ -195,11 +207,11 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _act
 /*!********************!*\
   !*** ./rr-main.js ***!
   \********************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"../node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ \"../node_modules/react-dom/index.js\");\n/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! redux */ \"../node_modules/redux/es/redux.js\");\n/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux-thunk */ \"../node_modules/redux-thunk/es/index.js\");\n/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! redux-logger */ \"../node_modules/redux-logger/dist/redux-logger.js\");\n/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(redux_logger__WEBPACK_IMPORTED_MODULE_4__);\n/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-redux */ \"../node_modules/react-redux/es/index.js\");\n/* harmony import */ var _reducers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./reducers */ \"./reducers/index.js\");\n\n\n\n\n\n\n\n\nconst store = Object(redux__WEBPACK_IMPORTED_MODULE_2__[\"createStore\"])( _reducers__WEBPACK_IMPORTED_MODULE_6__[\"default\"], {}, Object(redux__WEBPACK_IMPORTED_MODULE_2__[\"compose\"])( Object(redux__WEBPACK_IMPORTED_MODULE_2__[\"applyMiddleware\"])( redux_thunk__WEBPACK_IMPORTED_MODULE_3__[\"default\"], rest) ) )\n\n\n\n\n//# sourceURL=webpack:///./rr-main.js?");
+eval("\n\nvar _react = __webpack_require__(/*! react */ \"../node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _reactDom = __webpack_require__(/*! react-dom */ \"../node_modules/react-dom/index.js\");\n\nvar _reactDom2 = _interopRequireDefault(_reactDom);\n\nvar _redux = __webpack_require__(/*! redux */ \"../node_modules/redux/es/redux.js\");\n\nvar _reduxThunk = __webpack_require__(/*! redux-thunk */ \"../node_modules/redux-thunk/es/index.js\");\n\nvar _reduxThunk2 = _interopRequireDefault(_reduxThunk);\n\nvar _reduxLogger = __webpack_require__(/*! redux-logger */ \"../node_modules/redux-logger/dist/redux-logger.js\");\n\nvar _reactRedux = __webpack_require__(/*! react-redux */ \"../node_modules/react-redux/es/index.js\");\n\nvar _reducers = __webpack_require__(/*! ./reducers */ \"./reducers/index.js\");\n\nvar _reducers2 = _interopRequireDefault(_reducers);\n\nvar _rest = __webpack_require__(/*! ./middleware/rest */ \"./middleware/rest.js\");\n\nvar _rest2 = _interopRequireDefault(_rest);\n\nvar _DevTools = __webpack_require__(/*! ./containers/DevTools */ \"./containers/DevTools.js\");\n\nvar _DevTools2 = _interopRequireDefault(_DevTools);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nvar store = (0, _redux.createStore)(_reducers2.default, {}, (0, _redux.compose)((0, _redux.applyMiddleware)(_reduxThunk2.default, _rest2.default, (0, _reduxLogger.createLogger)()), _DevTools2.default.instrument()));\n\n//# sourceURL=webpack:///./rr-main.js?");
 
 /***/ })
 

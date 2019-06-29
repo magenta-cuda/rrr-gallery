@@ -17,6 +17,10 @@
   },
   "homepage": "https://github.com/magenta-cuda/rrr-gallery#readme",
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
     "gulp": "^4.0.2",
     "gulp-chmod": "^3.0.0",
     "gulp-if": "^2.0.2",
