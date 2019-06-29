@@ -1,10 +1,14 @@
 import {REST} from '../middleware/rest'
 
-export const GET_IMAGES = 'GET-IMAGES'
-
-export const getImages = attributes => ({
+export const getImagesByGallerySpecs = specs => ({
     [REST]:{
-        attributes:attributes
+        specs:specs
+    }
+})
+
+export const getImagesBySearchParms = parms => ({
+    [REST]:{
+        parms:parms
     }
 })
 

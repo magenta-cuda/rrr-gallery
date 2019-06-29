@@ -18,7 +18,7 @@ gulp.task('sass', function(){
 });
 
 gulp.task('js', function(){
-    return gulp.src(['js/*.js', '!js/*.min.js', '!js/bbg_xiv-gallery-extra.js'])
+    return gulp.src(['js/*.js', '!js/*.min.js', '!js/*bundle.js', '!js/bbg_xiv-gallery-extra.js', '!js/rr-main.js'])
         .pipe(sourcemaps.init())
         .pipe(uglify())
         .pipe(sourcemaps.write('.'))
@@ -31,6 +31,12 @@ gulp.task('dev', function(){
     return gulp.src(['*.php', 'css/*.css', 'css/images/*.*', 'js/**/*.js', 'fonts/*.*', '!js/**/*.min.js'], {"base":"."})
         .pipe(chmod(0644))
         .pipe(gulp.dest('/var/www/html/wp-content/plugins/rrr-gallery'))
+});
+
+gulp.task('backup', function(){
+    return gulp.src(['*.php', 'css/*.scss', 'css/images/*.*', 'js/**/*.js', 'fonts/*.*', '!js/**/*.min.js', '!js/*bundle.js'], {"base":"."})
+        .pipe(chmod(0644))
+        .pipe(gulp.dest('/home/omega-turtle/backup/rrr-gallery'))
 });
 
 gulp.task('watch', function(){

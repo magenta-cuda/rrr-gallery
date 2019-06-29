@@ -918,10 +918,6 @@ EOD
 <script type="text/babel">
     const hello = <h1>Hello World</h1>
 </script>
-<script src="<?php echo plugins_url( "js/components/GalleryItem.js",      __FILE__ ); ?>" type="text/babel"></script>
-<script src="<?php echo plugins_url( "js/components/GalleryContainer.js", __FILE__ ); ?>" type="text/babel"></script>
-<script src="<?php echo plugins_url( "js/components/FlexItem.js",         __FILE__ ); ?>" type="text/babel"></script>
-<script src="<?php echo plugins_url( "js/components/FlexContainer.js",    __FILE__ ); ?>" type="text/babel"></script>
 <script src="<?php echo plugins_url( "js/vendors~main.bundle.js",         __FILE__ ); ?>" type="text/babel"></script>
 <script src="<?php echo plugins_url( "js/bundle.js",                      __FILE__ ); ?>" type="text/babel"></script>
 <script src="<?php echo plugins_url( "js/bbg_xiv-gallery.js",             __FILE__ ); ?>" type="text/babel"></script>
