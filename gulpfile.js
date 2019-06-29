@@ -41,20 +41,11 @@ gulp.task('watch', function(){
     gulp.watch(['js/*.js', '!js/*.min.js'], gulp.series('js'));
 });
 
-let webpackconfig = {
-    entry:'js/rr-main.js',
-    output:{
-        filename:'js/bundle.js',
-        path:'.'
-    },
-    context:'.'
-}
-
 gulp.task('webpack', function(){
     return new Promise((resolve,reject) => {
         return webpack({
             mode:'development',
-            entry:'./rr-main.js',
+            entry:'./rr-main.js',                   // N.B. 'rr-main.js' does not work
             resolve:{extensions:['.js']},
             output:{
                 filename:'./bundle.js',
