@@ -1381,6 +1381,53 @@
         return defaultView;
     };
     
+    // TODO: some of these arguments belong in an object or should be computed.
+    bbg_xiv.handleSearchResponse = function( divGallery, r, query, page, pages, offset, input, searchBtn, jqueryLoading ) {
+        if(jqueryLoading){
+            jQuery.mobile.loading("hide");
+            jQuery(divGallery).children().detach();
+        }
+        if ( r ) {
+            var images         = bbg_xiv.constructImages(divGallery);
+            var prevOffset     = offset;
+            var prevQuery      = query;
+            var heading        = jQuery("div#"+divGallery.id+"-heading");
+            var search         = bbg_xiv.search[divGallery.id];
+            var startSearch    = "search images on site";
+            var continueSearch = "continue current search";
+            if ( page <= pages ) {
+                // this search has more images
+                offset+=searchLimit;
+                input.val("").attr("placeholder",continueSearch);
+                heading.find("button.bbg_xiv-search_scroll_right").attr("disabled",false);
+            } else {
+                // all search results have been returned
+                search.done=true;
+                input.attr("placeholder",startSearch).val(query);
+                query=undefined;
+                offset=undefined;
+                heading.find("button.bbg_xiv-search_scroll_right").attr("disabled",true);
+            }
+            // search results uses a heading to show status
+            heading.find("span.bbg_xiv-search_heading_first").text(bbg_xiv_lang["Search Results for"]+" \""+prevQuery+"\"");
+            var title;
+            title = bbg_xiv_lang.Page + ' ' + ( page - 1 ) + ' ' + bbg_xiv_lang.of + ' ' + ( pages !== Number.MAX_SAFE_INTEGER ? pages : '?' );
+            heading.find("span.bbg_xiv-search_heading_second").text(title);
+            // maintain a history of all images returned by this search
+            search.history.push({images:images,title:title});
+            search.index=search.history.length-1;
+            var defaultView = bbg_xiv.getDefaultView( jQuery( divGallery ), null );
+            bbg_xiv.renderGallery( divGallery, defaultView );
+            heading.find("button.bbg_xiv-search_scroll_left").attr("disabled",search.index===0);
+        }else{
+            jQuery(divGallery).empty().append('<h1 class="bbg_xiv-warning">'+bbg_xiv_lang["Nothing Found"]+'</h1>');
+        }
+        var liSelectView=jQuery(divGallery.parentNode).find("nav.bbg_xiv-gallery_navbar ul.nav li.bbg_xiv-select_view");
+        var liFirst=liSelectView.find("ul.bbg_xiv-view_menu li.bbg_xiv-view").removeClass("active").filter(".bbg_xiv-view_gallery").addClass("active");
+        liSelectView.find("a.bbg_xiv-selected_view span").text(liFirst.text());
+        searchBtn.prop("disabled",false);
+    }   // bbg_xiv.handleSearchResponse = function( divGallery, r, query, page, pages, offset, input, searchBtn, jqueryLoading ) {
+
     jQuery(document).ready(function(){
         jQuery("div.bbg_xiv-gallery_envelope").each(function(){
             var gallery=this;
@@ -1558,8 +1605,6 @@
                 }
                 var searchBtn=jQuery(this);
                 searchBtn.prop("disabled",true);
-                var startSearch="search images on site";
-                var continueSearch="continue current search";
                 var divGallery=searchBtn.parents("div.bbg_xiv-gallery").find("div.bbg_xiv-gallery_envelope")[0];
                 var form=searchBtn.parents("form[role='search']");
                 var input=form.find("input[type='text']");
@@ -1590,49 +1635,6 @@
                     jqueryLoading=false;
                 }
                 jQuery(divGallery).parent().find("div.bbg_xiv-search_header").hide();
-                function handleResponse(r){
-                    if(jqueryLoading){
-                        jQuery.mobile.loading("hide");
-                        jQuery(divGallery).children().detach();
-                    }
-                    if(r){
-                        var images=bbg_xiv.constructImages(divGallery);
-                        var prevOffset=offset;
-                        var prevQuery=query;
-                        var heading=jQuery("div#"+divGallery.id+"-heading");
-                        var search=bbg_xiv.search[divGallery.id];
-                        if (page <= pages ) {
-                            // this search has more images
-                            offset+=searchLimit;
-                            input.val("").attr("placeholder",continueSearch);
-                            heading.find("button.bbg_xiv-search_scroll_right").attr("disabled",false);
-                        } else {
-                            // all search results have been returned
-                            search.done=true;
-                            input.attr("placeholder",startSearch).val(query);
-                            query=undefined;
-                            offset=undefined;
-                            heading.find("button.bbg_xiv-search_scroll_right").attr("disabled",true);
-                        }
-                        // search results uses a heading to show status
-                        heading.find("span.bbg_xiv-search_heading_first").text(bbg_xiv_lang["Search Results for"]+" \""+prevQuery+"\"");
-                        var title;
-                        title = bbg_xiv_lang.Page + ' ' + ( page - 1 ) + ' ' + bbg_xiv_lang.of + ' ' + ( pages !== Number.MAX_SAFE_INTEGER ? pages : '?' );
-                        heading.find("span.bbg_xiv-search_heading_second").text(title);
-                        // maintain a history of all images returned by this search
-                        search.history.push({images:images,title:title});
-                        search.index=search.history.length-1;
-                        var defaultView = bbg_xiv.getDefaultView( jQuery( divGallery ), null );
-                        bbg_xiv.renderGallery( divGallery, defaultView );
-                        heading.find("button.bbg_xiv-search_scroll_left").attr("disabled",search.index===0);
-                    }else{
-                        jQuery(divGallery).empty().append('<h1 class="bbg_xiv-warning">'+bbg_xiv_lang["Nothing Found"]+'</h1>');
-                    }
-                    var liSelectView=jQuery(divGallery.parentNode).find("nav.bbg_xiv-gallery_navbar ul.nav li.bbg_xiv-select_view");
-                    var liFirst=liSelectView.find("ul.bbg_xiv-view_menu li.bbg_xiv-view").removeClass("active").filter(".bbg_xiv-view_gallery").addClass("active");
-                    liSelectView.find("a.bbg_xiv-selected_view span").text(liFirst.text());
-                    searchBtn.prop("disabled",false);
-                }
                 // uses the WP REST API
                 // TODO: quick hack to check middleware
                 let parms = {
@@ -1645,7 +1647,7 @@
                 var images=bbg_xiv.images[divGallery.id]=new wp.api.collections.Media();
                 images.once("sync",function(){
                     // the sync event will occur once only on the Backbone fetch of the collection
-                    handleResponse(!!this.length);
+                    bbg_xiv.handleSearchResponse(divGallery, !!this.length, query, page, pages, offset, input, searchBtn, jqueryLoading);
                 },images);
                 // get the next part of the multi-part search result as specified by page
                 images.fetch({
@@ -1669,7 +1671,7 @@
                     },
                     error: function( c, r ) {
                         console.log("error:r=",r);
-                        handleResponse(false);
+                        bbg_xiv.handleSearchResponse(divGallery, false);
                     }
                 });
                 searchBtn.closest( 'div.bbg_xiv-gallery' ).removeClass( 'bbg_xiv-home_gallery' );
