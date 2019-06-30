@@ -1628,7 +1628,13 @@
                 }
                 // uses the WP REST API
                 // TODO: quick hack to check middleware
-                window.mcRrr.store.dispatch( mcRrr.getImagesBySearchParms( query ) );
+                let parms = {
+                    search:query,
+                    // 'bb-tags':query,
+                    page:page++,
+                    per_page:searchLimit
+                }
+                window.mcRrr.store.dispatch( mcRrr.getImagesBySearchParms( divGallery.id, parms ) );
                 var images=bbg_xiv.images[divGallery.id]=new wp.api.collections.Media();
                 images.once("sync",function(){
                     // the sync event will occur once only on the Backbone fetch of the collection
@@ -1636,13 +1642,8 @@
                 },images);
                 // get the next part of the multi-part search result as specified by page
                 images.fetch({
-                    data:{
-                        search:query,
-                        // 'bb-tags':query,
-                        page:page++,
-                        per_page:searchLimit
-                    },
-                    success:function(c,r,o){
+                    data: parms,
+                    success: function( c, r, o ) {
                         // set the page variable from the page query parameter of the next page url in the HTTP header field "Link"
                         var link=o.xhr.getResponseHeader("link");
                         if(link){
