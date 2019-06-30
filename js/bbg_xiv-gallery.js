@@ -1381,14 +1381,24 @@
         return defaultView;
     };
     
-    // TODO: some of these arguments belong in an object or should be computed.
-    bbg_xiv.handleSearchResponse = function( divGallery, r, query, page, pages, offset, input, searchBtn, jqueryLoading ) {
+    bbg_xiv.handleSearchResponse = function( r, parms ) {
+        let query         = parms.query;
+        let page          = parms.page;
+        let offset        = parms.offset;
+        let searchLimit   = parms.searchLimit;
+        let jqueryLoading = parms.jqueryLoading;
+        // TODO: the references to UI elements input and searchBtn will not be needed after the navbar is Reactified
+        //       but for now we need these as action parameters.
+        let divGallery    = parms.divGallery;
+        let input         = parms.input;
+        let searchBtn     = parms.searchBtn;
         if(jqueryLoading){
             jQuery.mobile.loading("hide");
             jQuery(divGallery).children().detach();
         }
         if ( r ) {
             var images         = bbg_xiv.constructImages(divGallery);
+            let pages          = images.state.totalPages;
             var prevOffset     = offset;
             var prevQuery      = query;
             var heading        = jQuery("div#"+divGallery.id+"-heading");
@@ -1426,7 +1436,7 @@
         var liFirst=liSelectView.find("ul.bbg_xiv-view_menu li.bbg_xiv-view").removeClass("active").filter(".bbg_xiv-view_gallery").addClass("active");
         liSelectView.find("a.bbg_xiv-selected_view span").text(liFirst.text());
         searchBtn.prop("disabled",false);
-    }   // bbg_xiv.handleSearchResponse = function( divGallery, r, query, page, pages, offset, input, searchBtn, jqueryLoading ) {
+    }   // bbg_xiv.handleSearchResponse = function( divGallery, r, parms ) {
 
     jQuery(document).ready(function(){
         jQuery("div.bbg_xiv-gallery_envelope").each(function(){
@@ -1638,12 +1648,19 @@
                 // uses the WP REST API
                 // TODO: quick hack to check middleware
                 let parms = {
-                    search:query,
-                    // 'bb-tags':query,
-                    page:page++,
-                    per_page:searchLimit
+                    query:         query,
+                    page:          page++,
+                    searchLimit:   searchLimit,
+                    offset:        offset,
+                    jqueryLoading: jqueryLoading,
+                    // TODO: the references to UI elements divGallery, input and searchBtn will not be needed after these are Reactified
+                    //       but for now we need these as action parameters
+                    divGallery:    divGallery,
+                    input:         input,
+                    searchBtn:     searchBtn
                 }
                 window.mcRrr.store.dispatch( mcRrr.getImagesBySearchParms( divGallery.id, parms ) );
+/*
                 var images=bbg_xiv.images[divGallery.id]=new wp.api.collections.Media();
                 images.once("sync",function(){
                     // the sync event will occur once only on the Backbone fetch of the collection
@@ -1674,6 +1691,7 @@
                         bbg_xiv.handleSearchResponse(divGallery, false);
                     }
                 });
+ */ 
                 searchBtn.closest( 'div.bbg_xiv-gallery' ).removeClass( 'bbg_xiv-home_gallery' );
                 e.preventDefault();
             });

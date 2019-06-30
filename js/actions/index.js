@@ -16,10 +16,11 @@ export const getImagesBySearchParms = (id, parms) => ({
 
 export const LOAD_IMAGES = 'LOAD-IMAGES'
 
-export const loadImages = (id, images) => ({
-    type:LOAD_IMAGES,
-    id:id,
-    images:images
+export const loadImages = (id, images, parms) => ({
+    type:   LOAD_IMAGES,
+    id:     id,
+    images: images,
+    parms:  parms
 })
 
 export const HANDLE_LOAD_FAILED = 'HANDLE-LOAD-FAILED'
