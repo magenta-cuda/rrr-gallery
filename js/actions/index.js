@@ -1,4 +1,4 @@
-import {REST} from '../middleware/rest'
+import {REST} from '../middleware/rest.js'
 
 export const getImagesByGallerySpecs = specs => ({
     [REST]:{

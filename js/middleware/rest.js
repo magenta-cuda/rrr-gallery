@@ -5,4 +5,6 @@ export default store => next => action => {
     if (typeof rest === 'undefined') {
         return next(action)
     }
+    console.log('rest.js:action=', action)
+    debugger
 }

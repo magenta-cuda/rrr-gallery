@@ -1,3 +1,6 @@
+// TODO: Cannot make this into a module as that changes the load order.
+// import { getImagesByGallerySpecs, getImagesBySearchParms } from './actions/index.js'
+
 // Backbone.js Model View Presenter for the 'gallery' shortcode
 
 /*
@@ -1624,6 +1627,8 @@
                     searchBtn.prop("disabled",false);
                 }
                 // uses the WP REST API
+                // TODO: quick hack to check middleware
+                window.mcRrr.store.dispatch( mcRrr.getImagesBySearchParms( query ) );
                 var images=bbg_xiv.images[divGallery.id]=new wp.api.collections.Media();
                 images.once("sync",function(){
                     // the sync event will occur once only on the Backbone fetch of the collection
