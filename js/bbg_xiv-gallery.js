@@ -122,8 +122,15 @@
         container.empty();
         container.append(galleryView.render().$el.find("div.bbg_xiv-flex_container"));
  */ 
+        // For now we must rerender into a new DOM element because if we rerender into an existing DOM element React will
+        // try and diff the React elements of the tree of the existing DOM element against the new React elements. Since,
+        // currently the existing DOM element may have changes from non-React actions this will confuse React and it will
+        // not render.
         container.empty();
-        ReactDOM.render(FlexContainer(collection),container.get(0));
+        container.append( '<div></div>' );
+        ReactDOM.render(FlexContainer(collection),container.children().get(0));
+        // The Babel transpiled code does not initially show in the debugger, but the debugger command will force it to show. 
+        // debugger;
         if ( bbg_xiv.guiInterface === 'touch' ) {
             container.find("div.bbg_xiv-flex_container div.bbg_xiv-flex_item div.bbg_xiv-dense_full_btn").addClass("bbg_xiv-touch");
         }
