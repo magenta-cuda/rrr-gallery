@@ -760,8 +760,7 @@ div.bbg_xiv-flex_container{
 
 /* The butt joined square image tiles gallery use the same HTML elements as the Flex gallery but has its own CSS */
 
-div.bbg_xiv-tiles_container{
-  div.bbg_xiv-flex_container{
+div.bbg_xiv-tiles_container div.bbg_xiv-flex_container, div.bbg_xiv-tiles_container.bbg_xiv-flex_container{
     display:block;
     div.bbg_xiv-flex_item{
       position:relative;
@@ -831,7 +830,6 @@ div.bbg_xiv-tiles_container{
     div.bbg_xiv-flex_footer{
         clear:both;
     }
-  }
 }
 div.bbg_xiv-tiles_container.bbg_xiv-contain{
   div.bbg_xiv-flex_container{

@@ -1306,7 +1306,7 @@
     
     jQuery(window).resize(function(){
         var breakpoints=bbg_xiv.breakpoints;
-        debugger;
+        // debugger;
         jQuery("div.bbg_xiv-flex_container,div.bbg_xiv-gallery_container").each(function(){
             var jqThis=jQuery(this);
             var width=jqThis.width();

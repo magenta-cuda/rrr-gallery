@@ -577,19 +577,19 @@ div.bbg_xiv-flex_container.bbg_xiv-flex_width_8_3333 div.bbg_xiv-flex_item {
   width: 8.3333%; }
 
 /* The butt joined square image tiles gallery use the same HTML elements as the Flex gallery but has its own CSS */
-div.bbg_xiv-tiles_container div.bbg_xiv-flex_container {
+div.bbg_xiv-tiles_container div.bbg_xiv-flex_container, div.bbg_xiv-tiles_container.bbg_xiv-flex_container {
   display: block; }
-  div.bbg_xiv-tiles_container div.bbg_xiv-flex_container div.bbg_xiv-flex_item {
+  div.bbg_xiv-tiles_container div.bbg_xiv-flex_container div.bbg_xiv-flex_item, div.bbg_xiv-tiles_container.bbg_xiv-flex_container div.bbg_xiv-flex_item {
     position: relative;
     float: left;
     padding: 0;
     margin: 0;
     overflow: hidden; }
-    div.bbg_xiv-tiles_container div.bbg_xiv-flex_container div.bbg_xiv-flex_item figure {
+    div.bbg_xiv-tiles_container div.bbg_xiv-flex_container div.bbg_xiv-flex_item figure, div.bbg_xiv-tiles_container.bbg_xiv-flex_container div.bbg_xiv-flex_item figure {
       position: relative;
       width: 100%;
       height: 100%; }
-      div.bbg_xiv-tiles_container div.bbg_xiv-flex_container div.bbg_xiv-flex_item figure figcaption {
+      div.bbg_xiv-tiles_container div.bbg_xiv-flex_container div.bbg_xiv-flex_item figure figcaption, div.bbg_xiv-tiles_container.bbg_xiv-flex_container div.bbg_xiv-flex_item figure figcaption {
         display: block;
         position: absolute;
         left: 5%;
@@ -606,7 +606,7 @@ div.bbg_xiv-tiles_container div.bbg_xiv-flex_container {
         border-radius: 5px;
         opacity: 0.6;
         overflow: hidden; }
-      div.bbg_xiv-tiles_container div.bbg_xiv-flex_container div.bbg_xiv-flex_item figure img {
+      div.bbg_xiv-tiles_container div.bbg_xiv-flex_container div.bbg_xiv-flex_item figure img, div.bbg_xiv-tiles_container.bbg_xiv-flex_container div.bbg_xiv-flex_item figure img {
         position: absolute;
         left: 50%;
         top: 50%;
@@ -614,12 +614,12 @@ div.bbg_xiv-tiles_container div.bbg_xiv-flex_container {
         height: 100%;
         width: auto;
         max-width: none; }
-        div.bbg_xiv-tiles_container div.bbg_xiv-flex_container div.bbg_xiv-flex_item figure img.bbg_xiv-portrait {
+        div.bbg_xiv-tiles_container div.bbg_xiv-flex_container div.bbg_xiv-flex_item figure img.bbg_xiv-portrait, div.bbg_xiv-tiles_container.bbg_xiv-flex_container div.bbg_xiv-flex_item figure img.bbg_xiv-portrait {
           width: 100%;
           height: auto;
           max-height: none; }
       @supports (object-fit: cover) {
-        div.bbg_xiv-tiles_container div.bbg_xiv-flex_container div.bbg_xiv-flex_item figure img {
+        div.bbg_xiv-tiles_container div.bbg_xiv-flex_container div.bbg_xiv-flex_item figure img, div.bbg_xiv-tiles_container.bbg_xiv-flex_container div.bbg_xiv-flex_item figure img {
           position: static;
           left: auto;
           top: auto;
@@ -627,13 +627,13 @@ div.bbg_xiv-tiles_container div.bbg_xiv-flex_container {
           height: 100%;
           object-fit: cover;
           transform: none; } }
-    div.bbg_xiv-tiles_container div.bbg_xiv-flex_container div.bbg_xiv-flex_item div.bbg_xiv-dense_full_btn:hover {
+    div.bbg_xiv-tiles_container div.bbg_xiv-flex_container div.bbg_xiv-flex_item div.bbg_xiv-dense_full_btn:hover, div.bbg_xiv-tiles_container.bbg_xiv-flex_container div.bbg_xiv-flex_item div.bbg_xiv-dense_full_btn:hover {
       color: cyan;
       border-color: cyan; }
-    div.bbg_xiv-tiles_container div.bbg_xiv-flex_container div.bbg_xiv-flex_item div.bbg_xiv-dense_full_btn.bbg_xiv-touch {
+    div.bbg_xiv-tiles_container div.bbg_xiv-flex_container div.bbg_xiv-flex_item div.bbg_xiv-dense_full_btn.bbg_xiv-touch, div.bbg_xiv-tiles_container.bbg_xiv-flex_container div.bbg_xiv-flex_item div.bbg_xiv-dense_full_btn.bbg_xiv-touch {
       color: cyan;
       border-color: cyan; }
-  div.bbg_xiv-tiles_container div.bbg_xiv-flex_container div.bbg_xiv-flex_footer {
+  div.bbg_xiv-tiles_container div.bbg_xiv-flex_container div.bbg_xiv-flex_footer, div.bbg_xiv-tiles_container.bbg_xiv-flex_container div.bbg_xiv-flex_footer {
     clear: both; }
 
 div.bbg_xiv-tiles_container.bbg_xiv-contain div.bbg_xiv-flex_container div.bbg_xiv-flex_item figure {
