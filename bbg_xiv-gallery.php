@@ -539,6 +539,7 @@ EOD;
     </div>
     <div id="$selector" class="gallery galleryid-{$id} gallery-size-{$size_class} bbg_xiv-gallery_envelope{$class_gallery_icons_mode}{$class_default_view}" data-flags="{$flags}">
         <div class="ui-loader"><span class="ui-icon-loading"></span></div>
+        <div id="mc-rrr-react-root"></div>
    </div>
     <div class="bbg_xiv-configure_outer">
     </div>
@@ -912,17 +913,23 @@ EOD
 
         add_action( 'wp_head', function( ) {
 ?>
+<!--
 <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+ -->
 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<!--
 <script type="text/babel">
     const hello = <h1>Hello World</h1>
 </script>
+ -->
 <!-- TODO: 'js/components/*.js' will eventually be in 'js/bundle.js' but not true for now. -->
+<!--
 <script src="<?php echo plugins_url( "js/components/GalleryItem.js",      __FILE__ ); ?>" type="text/babel"></script>
 <script src="<?php echo plugins_url( "js/components/GalleryContainer.js", __FILE__ ); ?>" type="text/babel"></script>
 <script src="<?php echo plugins_url( "js/components/FlexItem.js",         __FILE__ ); ?>" type="text/babel"></script>
 <script src="<?php echo plugins_url( "js/components/FlexContainer.js",    __FILE__ ); ?>" type="text/babel"></script>
+ -->
 <script src="<?php echo plugins_url( "js/vendors~main.bundle.js",         __FILE__ ); ?>" type="text/babel"></script>
 <script src="<?php echo plugins_url( "js/bundle.js",                      __FILE__ ); ?>" type="text/babel"></script>
 <script src="<?php echo plugins_url( "js/bbg_xiv-gallery.js",             __FILE__ ); ?>" type="text/babel"></script>

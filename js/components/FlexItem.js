@@ -1,6 +1,8 @@
 // Flex Item Template
 
-var FlexItem = ( data ) => {
+import React from 'react'
+
+export default data => {
     let className        = ''
     let dataGalleryIndex = ''
     if (typeof data.gallery_index !== 'undefined') {

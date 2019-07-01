@@ -1,7 +1,11 @@
 // Flex Container
 
-var FlexContainer = (collection) => {
-    var jsx = [];
+import React from 'react'
+import FlexItem from '../components/FlexItem.js'
+
+export default props => {
+    let collection = props.images
+    let jsx        = [];
     collection.forEach(function(model) {
          jsx.push(FlexItem(model.attributes));        
     })

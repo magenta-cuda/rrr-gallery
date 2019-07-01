@@ -95,7 +95,7 @@
         container.append(galleryView.render().$el.find("div.container"));
  */
         container.empty();
-        ReactDOM.render( GalleryContainer( collection ), container.get( 0 ) );
+        mcRrr.ReactDOM.render( GalleryContainer( collection ), container.get( 0 ) );
     };
 
     bbg_xiv.renderFlex=function(container,collection){
@@ -128,7 +128,7 @@
         // not render.
         container.empty();
         container.append( '<div></div>' );
-        ReactDOM.render(FlexContainer(collection),container.children().get(0));
+        mcRrr.ReactDOM.render(mcRrr.FlexContainer({images: collection}),container.children().get(0));
         // The Babel transpiled code does not initially show in the debugger, but the debugger command will force it to show. 
         // debugger;
         if ( bbg_xiv.guiInterface === 'touch' ) {
@@ -1439,6 +1439,13 @@
     }   // bbg_xiv.handleSearchResponse = function( divGallery, r, parms ) {
 
     jQuery(document).ready(function(){
+        const React = mcRrr.React;
+        mcRrr.ReactDOM.render(
+            <mcRrr.Provider store={mcRrr.store}>
+                <mcRrr.Frame />
+            </mcRrr.Provider>,
+            document.getElementById('mc-rrr-react-root')
+        );
         jQuery("div.bbg_xiv-gallery_envelope").each(function(){
             var gallery=this;
             var defaultView=bbg_xiv.getDefaultView(jQuery(gallery),null);
