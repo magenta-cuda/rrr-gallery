@@ -4,7 +4,7 @@ export default (state = {}, action) => {
     switch (action.type) {
     case LOAD_GALLERY_IMAGES:
         console.log('reducers:LOAD_GALLERY_IMAGES:action=', action)
-        debugger
+        // debugger
         let images = state.images
         images = {...images, [action.id]: action.images}
         return {...state, images: images}

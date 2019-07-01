@@ -3,7 +3,7 @@ import FlexContainer from '../components/FlexContainer.js'
 
 export default props => {
     console.log('Gallery.js:props=', props)
-    debugger
+    // debugger
     return (
         // <div>TODO: show FlexContainer</div>
         <FlexContainer images={props.images}></FlexContainer>

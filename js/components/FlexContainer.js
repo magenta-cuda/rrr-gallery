@@ -13,8 +13,12 @@ export default props => {
          jsx.push(<FlexItem data={model.attributes} />);        
     })
     console.log( 'FlexContainer():jsx=', jsx );
+    window.setTimeout(function() {
+        jQuery(window).resize();
+    }, 100);
     return (
-        <div className="bbg_xiv-container bbg_xiv-flex_container mc-rrr-jsx-container" data-bbg_xiv-gallery-id={collection.id}>
+        <div className="bbg_xiv-container bbg_xiv-flex_container bbg_xiv-tiles_container mc-rrr-jsx-container"
+            data-bbg_xiv-gallery-id={collection.id}>
             {jsx}
             <div className="bbg_xiv-flex_footer"></div>
             <div className="bbg_xiv-dense_outer">
