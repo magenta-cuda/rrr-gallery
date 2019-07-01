@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { createStore, applyMiddleware, compose } from 'redux'
+import {createStore, applyMiddleware, compose} from 'redux'
 import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import { Provider } from 'react-redux'
@@ -9,8 +9,7 @@ import rest from './middleware/rest.js'
 import Frame from './components/Frame.js'
 import FlexContainer from './components/FlexContainer.js'
 import DevTools from './containers/DevTools.js'
-
-import { getImagesByGallerySpecs, getImagesBySearchParms } from './actions/index.js'
+import {getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages} from './actions/index.js'
 
 console.log( 'rr-main.js loaded' )
 
@@ -26,6 +25,7 @@ window.mcRrr = {
     Provider:                Provider,
     Frame:                   Frame,
     FlexContainer:           FlexContainer,
+    loadGalleryImages:       loadGalleryImages,
     getImagesByGallerySpecs: getImagesByGallerySpecs,
     getImagesBySearchParms:  getImagesBySearchParms
 }

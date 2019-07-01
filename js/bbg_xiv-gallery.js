@@ -1455,6 +1455,7 @@
             wp.api.loadPromise.done(function(){
                 var images=bbg_xiv.images[gallery.id]=new wp.api.collections.Media();
                 images.reset(JSON.parse(bbg_xiv[gallery.id+"-data"]));
+                mcRrr.store.dispatch(mcRrr.loadGalleryImages(gallery.id, images));
                 bbg_xiv.renderGallery(gallery,defaultView,["initial"]);
                 jQuery( gallery ).closest( 'div.bbg_xiv-gallery' ).addClass( 'bbg_xiv-home_gallery' );
                 jQuery(window).resize();

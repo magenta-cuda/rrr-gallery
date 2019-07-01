@@ -71,7 +71,7 @@ gulp.task('webpack', function(){
                         loader: 'babel-loader',
                         exclude: /node_modules/,
                         query:{
-                            presets:['env', 'react']
+                            presets:['env', 'stage-2', 'react']
                         }
                     }
                 ]

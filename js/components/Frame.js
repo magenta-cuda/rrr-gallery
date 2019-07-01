@@ -4,7 +4,7 @@ import DevTools from '../containers/DevTools.js'
 
 export default () => (
     <div>
-        <Gallery />
+        <Gallery id="gallery-10001"/>
         <DevTools />
     </div>
 )

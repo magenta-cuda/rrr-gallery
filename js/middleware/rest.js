@@ -1,4 +1,4 @@
-import {loadImages, handleLoadFailed} from '../actions/index.js'
+import {loadSearchImages, handleLoadFailed} from '../actions/index.js'
 
 export const REST = 'REST'
 
@@ -16,7 +16,7 @@ export default store => next => action => {
         let images = new wp.api.collections.Media()
         images.once("sync", function() {
             // the sync event will occur once only on the Backbone fetch of the collection
-            next(loadImages(id, images, parms));
+            next(loadSearchImages(id, images, parms));
         });
         // get the next part of the multi-part search result as specified by page
         images.fetch({

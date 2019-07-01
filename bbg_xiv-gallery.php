@@ -537,9 +537,9 @@ EOD;
     <div id="$selector-alt_gallery_heading" class="bbg_xiv-alt_gallery_header">
         <span class="bbg_xiv-alt_gallery_heading"></span>
     </div>
+    <div id="mc-rrr-react-root"></div>
     <div id="$selector" class="gallery galleryid-{$id} gallery-size-{$size_class} bbg_xiv-gallery_envelope{$class_gallery_icons_mode}{$class_default_view}" data-flags="{$flags}">
         <div class="ui-loader"><span class="ui-icon-loading"></span></div>
-        <div id="mc-rrr-react-root"></div>
    </div>
     <div class="bbg_xiv-configure_outer">
     </div>

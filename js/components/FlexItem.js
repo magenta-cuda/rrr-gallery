@@ -2,7 +2,8 @@
 
 import React from 'react'
 
-export default data => {
+export default props => {
+    let data             = props.data
     let className        = ''
     let dataGalleryIndex = ''
     if (typeof data.gallery_index !== 'undefined') {
@@ -10,21 +11,21 @@ export default data => {
         dataGalleryIndex = data.gallery_index
     }
     return (
-        <div class="bbg_xiv-flex_item">
+        <div className="bbg_xiv-flex_item">
             <figure>
                 <figcaption>{bbg_xiv.getTitle(data)}</figcaption>
-                <a href={data.link} target="_blank" className={className} dataGalleryIndex={dataGalleryIndex}>
+                <a href={data.link} target="_blank" className={className} data-gallery-index={dataGalleryIndex}>
                     <img src={bbg_xiv.getSrc(data,'viewport',true)} srcset={bbg_xiv.getSrcset(data)} sizes={bbg_xiv.getSizes(data,'viewport',true)}
-                        alt={bbg_xiv.getAlt(data)} title={bbg_xiv.getTitle(data)} dataBbgXivImageId={data.id} />
+                        alt={bbg_xiv.getAlt(data)} title={bbg_xiv.getTitle(data)} data-bbg_xiv-image-id={data.id} />
                 </a>
             </figure>
-            <a href={data.link} target="_blank" className={className} dataGalleryIndex={dataGalleryIndex}>
-                <div class="bbg_xiv-dense_full_btn" title={bbg_xiv.getCaption(data)}>
-                    <button class="bbg_xiv-dense_alt_btn bbg_xiv-flex_from_image btn">
-                        <span class="glyphicon glyphicon-info-sign"></span>
+            <a href={data.link} target="_blank" className={className} data-gallery-index={dataGalleryIndex}>
+                <div className="bbg_xiv-dense_full_btn" title={bbg_xiv.getCaption(data)}>
+                    <button className="bbg_xiv-dense_alt_btn bbg_xiv-flex_from_image btn">
+                        <span className="glyphicon glyphicon-info-sign"></span>
                     </button>
-                    <button class="bbg_xiv-dense_full_btn bbg_xiv-flex_from_image btn">
-                        <span class="glyphicon glyphicon-fullscreen"></span>
+                    <button className="bbg_xiv-dense_full_btn bbg_xiv-flex_from_image btn">
+                        <span className="glyphicon glyphicon-fullscreen"></span>
                     </button>
                 </div>
             </a>

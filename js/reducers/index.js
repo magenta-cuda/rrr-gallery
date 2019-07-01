@@ -1,9 +1,15 @@
-import {LOAD_IMAGES,HANDLE_LOAD_FAILED} from '../actions'
+import {LOAD_GALLERY_IMAGES, LOAD_SEARCH_IMAGES, HANDLE_LOAD_FAILED} from '../actions/index.js'
 
 export default (state = {}, action) => {
     switch (action.type) {
-    case LOAD_IMAGES:
-        console.log('reducers:LOAD_IMAGES:action=', action)
+    case LOAD_GALLERY_IMAGES:
+        console.log('reducers:LOAD_GALLERY_IMAGES:action=', action)
+        debugger
+        let images = state.images
+        images = {...images, [action.id]: action.images}
+        return {...state, images: images}
+    case LOAD_SEARCH_IMAGES:
+        console.log('reducers:LOAD_SEARCH_IMAGES:action=', action)
         debugger
         window.bbg_xiv.images[action.id] = action.images
         // TODO:  For now directly call the renderer - it should be indirectly called from a Redux container after its props changes.
