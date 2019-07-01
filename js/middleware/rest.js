@@ -8,7 +8,7 @@ export default store => next => action => {
         return next(action)
     }
     console.log('rest.js:action=', action)
-    debugger
+    // debugger
     if (typeof rest.specs !== 'undefined') {
     } else if (typeof rest.parms !== 'undefined') {
         let id     = rest.id
