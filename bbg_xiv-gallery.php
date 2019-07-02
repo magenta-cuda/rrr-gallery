@@ -315,10 +315,10 @@ class BBG_XIV_Gallery {
         #$request->set_default_params( $defaults );
         self::add_additional_rest_fields( );
         $controller = new WP_REST_Attachments_Controller( "attachment" );
-        error_log( 'bb_gallery_shortcode():$request=' . print_r( $request, true ) );
+        # error_log( 'bb_gallery_shortcode():$request=' . print_r( $request, true ) );
         // $attachments = $controller->get_items( $request )->data;
         $attachments = $controller->get_items( $request );
-        error_log( 'bb_gallery_shortcode():$attachments=' . print_r( $attachments, true ) );
+        # error_log( 'bb_gallery_shortcode():$attachments=' . print_r( $attachments, true ) );
         $attachments = $attachments->data;
         if ( !empty( $get_first ) ) {
             ob_end_clean( );
@@ -415,80 +415,88 @@ EOD;
         $output = $templates;
         $output .= <<<EOD
 <div class="bbg_xiv-bootstrap bbg_xiv-gallery">
-    <nav role="navigation" class="navbar navbar-inverse bbg_xiv-gallery_navbar">
-        <div class="navbar-header">
-            <button type="button" data-target="#$selector-navbarCollapse" data-toggle="collapse" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a href="#" class="navbar-brand bbg_xiv-images_brand">{$translations['GALLERY MENU']}</a>
-        </div>
-        <div id="$selector-navbarCollapse" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li class="dropdown bbg_xiv-select_view">
-                    <a data-toggle="dropdown" class="dropdown-toggle bbg_xiv-selected_view" href="#"><span>$translations[View]</span> <b class="caret"></b></a>
-                    <ul role="menu" class="dropdown-menu bbg_xiv-view_menu">
-                        <li class="dropdown-header">{$translations['VIEWS']}</li>
-                        <li class="bbg_xiv-view bbg_xiv-view_gallery active"><a data-view="Gallery" href="#">$translations[Gallery]</a></li>
-                        <li class="bbg_xiv-view bbg_xiv-view_carousel bbg_xiv-hide_for_gallery_icons"><a data-view="Carousel" href="#">$translations[Carousel]</a></li>
-                        <li class="bbg_xiv-view bbg_xiv-view_justified bbg_xiv-hide_for_gallery_icons"><a data-view="Justified" href="#">$translations[Justified]</a></li>
-                        <li class="bbg_xiv-view bbg_xiv-view_tabs"><a data-view="Tabs" href="#">$translations[Tabs]</a></li>
-                        <li class="bbg_xiv-view bbg_xiv-hide_for_gallery_icons bbg_xiv-large_viewport_only"><a data-view="Dense" href="#">$translations[Dense]</a></li>
-                        <!-- TODO: Add entry for new views here. -->
-                        $table_nav_item
+<!-- start of navbar JSX -->
+<script type="text/babel">
+    window.bbg_xiv = window.bbg_xiv || {};
+    window.bbg_xiv.NavBar = props => (
+        <nav role="navigation" className="navbar navbar-inverse bbg_xiv-gallery_navbar">
+            <div className="navbar-header">
+                <button type="button" data-target="#$selector-navbarCollapse" data-toggle="collapse" className="navbar-toggle">
+                    <span className="sr-only">Toggle navigation</span>
+                    <span className="icon-bar"></span>
+                    <span className="icon-bar"></span>
+                    <span className="icon-bar"></span>
+                </button>
+                <a href="#" className="navbar-brand bbg_xiv-images_brand">{$translations['GALLERY MENU']}</a>
+            </div>
+            <div id="$selector-navbarCollapse" className="collapse navbar-collapse">
+                <ul className="nav navbar-nav">
+                    <li className="dropdown bbg_xiv-select_view">
+                        <a data-toggle="dropdown" className="dropdown-toggle bbg_xiv-selected_view" href="#"><span>$translations[View]</span> <b className="caret"></b></a>
+                        <ul role="menu" className="dropdown-menu bbg_xiv-view_menu">
+                            <li className="dropdown-header">{$translations['VIEWS']}</li>
+                            <li className="bbg_xiv-view bbg_xiv-view_gallery active"><a data-view="Gallery" href="#">$translations[Gallery]</a></li>
+                            <li className="bbg_xiv-view bbg_xiv-view_carousel bbg_xiv-hide_for_gallery_icons"><a data-view="Carousel" href="#">$translations[Carousel]</a></li>
+                            <li className="bbg_xiv-view bbg_xiv-view_justified bbg_xiv-hide_for_gallery_icons"><a data-view="Justified" href="#">$translations[Justified]</a></li>
+                            <li className="bbg_xiv-view bbg_xiv-view_tabs"><a data-view="Tabs" href="#">$translations[Tabs]</a></li>
+                            <li className="bbg_xiv-view bbg_xiv-hide_for_gallery_icons bbg_xiv-large_viewport_only"><a data-view="Dense" href="#">$translations[Dense]</a></li>
+                            {/* TODO: Add entry for new views here. */}
+                            $table_nav_item
 EOD;
-        if ( $galleries ) {
-            # output menu items for dynamically loaded galleries
-            $output .= <<<EOD
-                        <li class="divider"></li>
-                        <li class="dropdown-header">{$translations['GALLERIES']}</li>
-                        <li class="bbg_xiv-alt_gallery bbg_xiv-alt_gallery_home active"><a data-view="gallery_home" data-specifiers='' href="#">{$translations['Home']}</a></li>
-EOD;
-            foreach ( $galleries as $i => $gallery ) {
+            if ( $galleries ) {
+                # output menu items for dynamically loaded galleries
                 $output .= <<<EOD
-                        <li class="bbg_xiv-alt_gallery"><a data-view="gallery_$i" data-specifiers='$gallery->specifiers' href="#">$gallery->title</a></li>
+                            <li className="divider"></li>
+                            <li className="dropdown-header">{$translations['GALLERIES']}</li>
+                            <li className="bbg_xiv-alt_gallery bbg_xiv-alt_gallery_home active"><a data-view="gallery_home" data-specifiers='' href="#">{$translations['Home']}</a></li>
 EOD;
+                foreach ( $galleries as $i => $gallery ) {
+                    $output .= <<<EOD
+                            <li className="bbg_xiv-alt_gallery"><a data-view="gallery_$i" data-specifiers='$gallery->specifiers' href="#">$gallery->title</a></li>
+EOD;
+                }
             }
-        }
-        $output .= <<<EOD
-                    </ul>
-                </li>
-            </ul>
-            <form role="search" class="navbar-form navbar-left bbg_xiv-search_form">
-                <div class="form-group">
-                    <div class="input-group">
-                        <input type="text" placeholder="{$translations['Search Images on Site']}" class="form-control">
-                        <span class="input-group-btn">
-                            <button type="submit" class="btn btn-default bbg_xiv-search" title="start search"><span class="glyphicon glyphicon-search"></span></button>
-                        </span>
+            $output .= <<<EOD
+                        </ul>
+                    </li>
+                </ul>
+                <form role="search" className="navbar-form navbar-left bbg_xiv-search_form">
+                    <div className="form-group">
+                        <div className="input-group">
+                            <input type="text" placeholder="{$translations['Search Images on Site']}" className="form-control" />
+                            <span className="input-group-btn">
+                                <button type="submit" className="btn btn-default bbg_xiv-search" title="start search"><span className="glyphicon glyphicon-search"></span></button>
+                            </span>
+                        </div>
                     </div>
-                </div>
-                $nonce_field
-            </form>
-            <button type="button" class="btn btn-info bbg_xiv-help" title="{$translations['get help']}">
-                <span class="glyphicon glyphicon-question-sign"></span>
-                <span class="bbg_xiv-navbar_button_text">{$translations['Help']}</span>
-            </button>
-            <button type="button" class="btn btn-info bbg_xiv-configure" title="{$translations['configure bandwidth, carousel interval, ...']}">
-                <span class="glyphicon glyphicon-cog"></span>
-                <span class="bbg_xiv-navbar_button_text">{$translations['Options']}</span>
-            </button>
-            <button type="button" class="btn btn-info bbg_xiv-home" title="{$translations['return to home gallery']}">
-                <span class="glyphicon glyphicon-home"></span>
-                <span class="bbg_xiv-navbar_button_text">{$translations['Home']}</span>
-            </button>
-            <button type="button" class="btn btn-info bbg_xiv-fullscreen" title="{$translations['toggle fullscreen']}">
-                <span class="glyphicon glyphicon-fullscreen"></span>
-                <span class="bbg_xiv-navbar_button_text">{$translations['Fullscreen']}</span>
-            </button>
-            <button type="button" class="btn btn-info bbg_xiv-titles" title="{$translations['show/hide image titles']}">
-                <span class="glyphicon glyphicon-subtitles"></span>
-                <span class="bbg_xiv-navbar_button_text">{$translations['Titles']}</span>
-            </button>
-        </div>
-    </nav>
+                    $nonce_field
+                </form>
+                <button type="button" className="btn btn-info bbg_xiv-help" title="{$translations['get help']}">
+                    <span className="glyphicon glyphicon-question-sign"></span>
+                    <span className="bbg_xiv-navbar_button_text">{$translations['Help']}</span>
+                </button>
+                <button type="button" className="btn btn-info bbg_xiv-configure" title="{$translations['configure bandwidth, carousel interval, ...']}">
+                    <span className="glyphicon glyphicon-cog"></span>
+                    <span className="bbg_xiv-navbar_button_text">{$translations['Options']}</span>
+                </button>
+                <button type="button" className="btn btn-info bbg_xiv-home" title="{$translations['return to home gallery']}">
+                    <span className="glyphicon glyphicon-home"></span>
+                    <span className="bbg_xiv-navbar_button_text">{$translations['Home']}</span>
+                </button>
+                <button type="button" className="btn btn-info bbg_xiv-fullscreen" title="{$translations['toggle fullscreen']}">
+                    <span className="glyphicon glyphicon-fullscreen"></span>
+                    <span className="bbg_xiv-navbar_button_text">{$translations['Fullscreen']}</span>
+                </button>
+                <button type="button" className="btn btn-info bbg_xiv-titles" title="{$translations['show/hide image titles']}">
+                    <span className="glyphicon glyphicon-subtitles"></span>
+                    <span className="bbg_xiv-navbar_button_text">{$translations['Titles']}</span>
+                </button>
+            </div>
+        </nav>
+    )
+    console.log(window.bbg_xiv.NavBar)
+</script>
+<!-- end of navbar JSX -->
 EOD;
         # Optionally show titles of dynamically loadable galleries as tab items
         if ( $galleries && empty( $gallery_icons_mode ) && get_option( 'bbg_xiv_use_gallery_tabs', TRUE ) ) {

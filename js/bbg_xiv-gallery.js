@@ -1457,12 +1457,19 @@
 
     jQuery(document).ready(function(){
         const React = mcRrr.React;
-        mcRrr.ReactDOM.render(
-            <mcRrr.Provider store={mcRrr.store}>
-                <mcRrr.Frame />
-            </mcRrr.Provider>,
-            document.getElementById('mc-rrr-react-root')
-        );
+        window.setTimeout( function renderReactRoot() {
+            if ( typeof window.bbg_xiv.NavBar !== 'undefined' ) {
+                mcRrr.ReactDOM.render(
+                    <mcRrr.Provider store={mcRrr.store}>
+                        <window.bbg_xiv.NavBar />
+                        <mcRrr.Frame />
+                    </mcRrr.Provider>,
+                    document.getElementById('mc-rrr-react-root')
+                );
+            } else {
+                setTimeout( renderReactRoot, 1000 );
+            }
+        }, 0 );
         jQuery("div.bbg_xiv-gallery_envelope").each(function(){
             var gallery=this;
             var defaultView=bbg_xiv.getDefaultView(jQuery(gallery),null);
