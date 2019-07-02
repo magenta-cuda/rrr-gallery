@@ -312,11 +312,12 @@
         // not rerender.
         container.empty();
         container.append( '<div></div>' );
-        mcRrr.ReactDOM.render(JustifiedGalleryContainer({images: collection}),container.children().get(0));
+        // mcRrr.ReactDOM.render(JustifiedGalleryContainer({images: collection}),container.children().get(0));
+        mcRrr.ReactDOM.render( <JustifiedGalleryContainer images={collection} />, container.children().get(0) );
         var justifiedContainer = container.find("div.bbg_xiv-justified_container");
         var $justifiedGallery  = justifiedContainer.find( 'div.bbg_xiv-justified_gallery' );
         // The Babel transpiled code does not initially show in the debugger, but the debugger command will force it to show. 
-        debugger;
+        // debugger;
         $justifiedGallery.justifiedGallery({margins: 5, rowHeight: bbg_xiv.bbg_xiv_miro_row_height, lastRow: 'nojustify', refreshSensitivity: 0, refreshTime: 250 })
             .on( 'jg.complete jg.resize', function() {
             // Why are there negative margins on the img - anyway remove them
