@@ -24,7 +24,7 @@ class JustifiedGalleryContainer extends React.Component {
                 <div className="bbg_xiv-justified_gallery">
                     {jsx}
                 </div>
-                // Full Browser Viewport View of an Image
+                {/* Full Browser Viewport View of an Image */}
                 <div className="bbg_xiv-dense_outer">
                 </div>
                 <div className="bbg_xiv-dense_inner">
@@ -44,8 +44,10 @@ class JustifiedGalleryContainer extends React.Component {
     }
     componentDidMount() {
         console.log('componentDidMount():this.container=', this.container)
+        window.bbg_xiv.postRenderJustified(this.container)
     }
     componentDidUpdate(prevProps, prevState, snapshot){
         console.log('componentDidUpdate():this.container=', this.container)
+        window.bbg_xiv.postRenderJustified(this.container)
     }
 }

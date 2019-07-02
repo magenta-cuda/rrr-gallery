@@ -21,7 +21,7 @@ export default props => {
             data-bbg_xiv-gallery-id={collection.id}>
             {jsx}
             <div className="bbg_xiv-flex_footer"></div>
-            // Full Browser Viewport View of an Image
+            {/* Full Browser Viewport View of an Image */}
             <div className="bbg_xiv-dense_outer">
             </div>
             <div className="bbg_xiv-dense_inner">

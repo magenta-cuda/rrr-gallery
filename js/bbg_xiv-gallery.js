@@ -314,7 +314,10 @@
         container.append( '<div></div>' );
         // mcRrr.ReactDOM.render(JustifiedGalleryContainer({images: collection}),container.children().get(0));
         mcRrr.ReactDOM.render( <JustifiedGalleryContainer images={collection} />, container.children().get(0) );
-        var justifiedContainer = container.find("div.bbg_xiv-justified_container");
+        // bbg_xiv.postRenderJustified( container.find("div.bbg_xiv-justified_container").get(0) );
+    }
+    bbg_xiv.postRenderJustified=function(container){
+        var justifiedContainer = jQuery(container);
         var $justifiedGallery  = justifiedContainer.find( 'div.bbg_xiv-justified_gallery' );
         // The Babel transpiled code does not initially show in the debugger, but the debugger command will force it to show. 
         // debugger;
@@ -330,7 +333,6 @@
             });
             justifiedContainer.addClass( window.matchMedia( '(max-aspect-ratio:1/1)' ).matches ? 'bbg_xiv-portrait' : 'bbg_xiv-landscape' );
         }
-        justifiedContainer   = container.find( 'div.bbg_xiv-justified_container' );
         var galleryContainer = justifiedContainer.closest( 'div.bbg_xiv-gallery' ).removeClass( 'bbg_xiv-caption_visible' );
         galleryContainer.find( 'button.bbg_xiv-titles' ).attr( 'title',  bbg_xiv_lang['show captions'] );
         // if CC has been set to visible then override Justified Gallery's hover handlers
