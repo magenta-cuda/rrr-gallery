@@ -125,7 +125,7 @@
         // For now we must rerender into a new DOM element because if we rerender into an existing DOM element React will
         // try and diff the React elements of the tree of the existing DOM element against the new React elements. Since,
         // currently the existing DOM element may have changes from non-React actions this will confuse React and it will
-        // not render.
+        // not rerender.
         container.empty();
         container.append( '<div></div>' );
         mcRrr.ReactDOM.render(mcRrr.FlexContainer({images: collection}),container.children().get(0));
@@ -284,6 +284,7 @@
     };
     
     bbg_xiv.renderJustified=function(container,collection){
+/*
         var imageView=new bbg_xiv.ImageView();
         // attach template to imageView not ImageView.prototype since template is specific to imageView
         imageView.template=_.template( jQuery("script#bbg_xiv-template_justified_item").html(),null,bbg_xiv.templateOptions);
@@ -304,7 +305,18 @@
         container.empty();
         var justifiedContainer=galleryView.render().$el.find("div.bbg_xiv-justified_container");
         container.append(justifiedContainer);
-        var $justifiedGallery = justifiedContainer.find( 'div.bbg_xiv-justified_gallery' );
+*/ 
+        // For now we must rerender into a new DOM element because if we rerender into an existing DOM element React will
+        // try and diff the React elements of the tree of the existing DOM element against the new React elements. Since,
+        // currently the existing DOM element may have changes from non-React actions this will confuse React and it will
+        // not rerender.
+        container.empty();
+        container.append( '<div></div>' );
+        mcRrr.ReactDOM.render(JustifiedGalleryContainer({images: collection}),container.children().get(0));
+        var justifiedContainer = container.find("div.bbg_xiv-justified_container");
+        var $justifiedGallery  = justifiedContainer.find( 'div.bbg_xiv-justified_gallery' );
+        // The Babel transpiled code does not initially show in the debugger, but the debugger command will force it to show. 
+        debugger;
         $justifiedGallery.justifiedGallery({margins: 5, rowHeight: bbg_xiv.bbg_xiv_miro_row_height, lastRow: 'nojustify', refreshSensitivity: 0, refreshTime: 250 })
             .on( 'jg.complete jg.resize', function() {
             // Why are there negative margins on the img - anyway remove them
