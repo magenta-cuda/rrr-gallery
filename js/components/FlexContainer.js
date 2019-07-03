@@ -10,7 +10,7 @@ export default props => {
     }
     let jsx = [];
     collection.forEach(function(model) {
-         jsx.push(<FlexItem data={model.attributes} key={model.attributes.id} />);        
+         jsx.push(<FlexItem data={model.attributes} key={model.attributes.id} />);
     })
     console.log( 'FlexContainer():jsx=', jsx );
     window.setTimeout(function() {

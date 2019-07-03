@@ -1,4 +1,5 @@
-//Justified Gallery Container Template
+// Justified Gallery Container Template
+
 // TODO: remove React = - don't need this when we use webpack
 const React = window.mcRrr.React
 
