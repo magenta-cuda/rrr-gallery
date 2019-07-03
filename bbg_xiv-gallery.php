@@ -37,6 +37,9 @@ class BBG_XIV_Gallery {
 
     public  static $nonce_action             = 'bbg_xiv-search';
     private static $gallery_menu_items_count = 5;
+    private static $translations             = NULL;
+    private static $bbg_xiv_data             = NULL;
+    private static $bbg_xiv_lang             = NULL;
   
     # excerpted from the WordPress function gallery_shortcode() of .../wp-includes/media.php
 
@@ -79,47 +82,6 @@ class BBG_XIV_Gallery {
         static $instance = 10000;    # not 0 to create a different space from the WordPress "gallery" shortcode
         $instance++;
         
-        static $bbg_xiv_data = [
-            'version' => '1.0'
-        ];
-        $bbg_xiv_data[ 'ajaxurl' ]                                   = admin_url( 'admin-ajax.php' );
-        $bbg_xiv_data[ 'bbg_xiv_flex_min_width' ]                    = get_option( 'bbg_xiv_flex_min_width', 128 );
-        $bbg_xiv_data[ 'bbg_xiv_miro_row_height' ]                   = get_option( 'bbg_xiv_miro_row_height', 128 );
-        $bbg_xiv_data[ 'bbg_xiv_flex_min_width_for_caption' ]        = get_option( 'bbg_xiv_flex_min_width_for_caption', 96 );
-        $bbg_xiv_data[ 'bbg_xiv_max_search_results' ]                = get_option( 'bbg_xiv_max_search_results', 250 );
-        $bbg_xiv_data[ 'bbg_xiv_flex_min_width_for_dense_view' ]     = get_option( 'bbg_xiv_flex_min_width_for_dense_view', 1280 );
-        $bbg_xiv_data[ 'bbg_xiv_flex_number_of_dense_view_columns' ] = get_option( 'bbg_xiv_flex_number_of_dense_view_columns', 10 );
-        $bbg_xiv_data[ 'bbg_xiv_carousel_interval' ]                 = get_option( 'bbg_xiv_carousel_interval', 2500 );
-        $bbg_xiv_data[ 'bbg_xiv_disable_flexbox' ]                   = get_option( 'bbg_xiv_disable_flexbox', FALSE );
-        $bbg_xiv_data[ 'bbg_xiv_default_view' ]                      = get_option( 'bbg_xiv_default_view', 'Gallery' );
-        # translations for JavaScript side
-        $bbg_xiv_lang[ 'expand gallery to full-screen' ]             = __( 'expand gallery to full-screen',   'bb_gallery' );
-        $bbg_xiv_lang[ 'shrink gallery from full-screen' ]           = __( 'shrink gallery from full-screen', 'bb_gallery' );
-        $bbg_xiv_lang[ 'show captions' ]                             = __( 'show captions',                   'bb_gallery' );
-        $bbg_xiv_lang[ 'hide captions' ]                             = __( 'hide captions',                   'bb_gallery' );
-        $bbg_xiv_lang[ 'show titles' ]                               = __( 'show titles',                     'bb_gallery' );
-        $bbg_xiv_lang[ 'hide titles' ]                               = __( 'hide titles',                     'bb_gallery' );
-        $bbg_xiv_lang[ 'Show Image Info' ]                           = __( 'Show Image Info',    'bb_gallery' );
-        $bbg_xiv_lang[ 'Previous' ]                                  = __( 'Previous',           'bb_gallery' );
-        $bbg_xiv_lang[ 'Go To First' ]                               = __( 'Go To First',        'bb_gallery' );
-        $bbg_xiv_lang[ 'Pause' ]                                     = __( 'Pause',              'bb_gallery' );
-        $bbg_xiv_lang[ 'Play' ]                                      = __( 'Play',               'bb_gallery' );
-        $bbg_xiv_lang[ 'Close' ]                                     = __( 'Close',              'bb_gallery' );
-        $bbg_xiv_lang[ 'Next' ]                                      = __( 'Next',               'bb_gallery' );
-        $bbg_xiv_lang[ 'Go To Last' ]                                = __( 'Go To Last',         'bb_gallery' );
-        $bbg_xiv_lang[ 'Get Help' ]                                  = __( 'Get Help',           'bb_gallery' );
-        $bbg_xiv_lang[ 'Nothing Found' ]                             = __( 'Nothing Found',      'bb_gallery' );
-        $bbg_xiv_lang[ 'Search Results for' ]                        = __( 'Search Results for', 'bb_gallery' );
-        $bbg_xiv_lang[ 'Page' ]                                      = __( 'Page',               'bb_gallery' );
-        $bbg_xiv_lang[ 'of' ]                                        = __( 'of',                 'bb_gallery' );
-        $bbg_xiv_lang[ 'Images' ]                                    = __( 'Images',             'bb_gallery' );
-        $bbg_xiv_lang[ 'to' ]                                        = __( 'to',                 'bb_gallery' );
-        $bbg_xiv_lang[ 'galleryOfGalleriesTitle' ]                   = __(
-            'Each image below represents a gallery. Please click on an image to load its gallery.',
-                                                                                                 'bb_gallery' );
-        $bbg_xiv_lang[ 'Click anywhere to lock the display of this popup.' ]
-                                                                     = __(
-            'Click anywhere to lock the display of this popup.',                                 'bb_gallery' );
         $default_flags = [ ];
         switch ( get_option( 'bbg_xiv_use_tiles', 'Cover' ) ) {
         case 'Cover':
@@ -342,10 +304,11 @@ class BBG_XIV_Gallery {
             }
         }
 
+        $bbg_xiv_data                     = self::$bbg_xiv_data;
         $bbg_xiv_data[ "$selector-data" ] = json_encode( $attachments );
  
         wp_localize_script( 'bbg_xiv-gallery', 'bbg_xiv', $bbg_xiv_data );
-        wp_localize_script( 'bbg_xiv-gallery', 'bbg_xiv_lang', $bbg_xiv_lang );
+        wp_localize_script( 'bbg_xiv-gallery', 'bbg_xiv_lang', self::$bbg_xiv_lang );
 
         $float = is_rtl() ? 'right' : 'left';
 
@@ -358,47 +321,6 @@ class BBG_XIV_Gallery {
                         <li><a href="#">Table</a></li>
 EOD;
         }
-        $translations = [
-            'GALLERY MENU'                                => __( 'GALLERY MENU',                                'bb_gallery' ),
-            'IMAGES:'                                     => __( 'IMAGES:',                                     'bb_gallery' ),
-            'GALLERIES:'                                  => __( 'GALLERIES:',                                  'bb_gallery' ),            
-            'View'                                        => __( 'View',                                        'bb_gallery' ),
-            'Initial View'                                => __( 'Initial View',                                'bb_gallery' ),
-            'Gallery'                                     => __( 'Gallery',                                     'bb_gallery' ),
-            'Carousel'                                    => __( 'Carousel',                                    'bb_gallery' ),
-            'Justified'                                   => __( 'Justified',                                   'bb_gallery' ),
-            'Tabs'                                        => __( 'Tabs',                                        'bb_gallery' ),
-            'Dense'                                       => __( 'Dense',                                       'bb_gallery' ),
-            'VIEWS'                                       => __( 'VIEWS',                                       'bb_gallery' ),
-            'GALLERIES'                                   => __( 'GALLERIES',                                   'bb_gallery' ),
-            'Home'                                        => __( 'Home',                                        'bb_gallery' ),
-            'Fullscreen'                                  => __( 'Fullscreen',                                  'bb_gallery' ),
-            'Titles'                                      => __( 'Titles',                                      'bb_gallery' ),
-            'Search Images on Site'                       => __( 'Search Images on Site',                       'bb_gallery' ),
-            'Options'                                     => __( 'Options',                                     'bb_gallery' ),
-            'Help'                                        => __( 'Help',                                        'bb_gallery' ),
-            'get help'                                    => __( 'get help',                                    'bb_gallery' ),
-            'configure bandwidth, carousel interval, ...' => __( 'configure bandwidth, carousel interval, ...', 'bb_gallery' ),
-            'return to home gallery'                      => __( 'return to home gallery',                      'bb_gallery' ),
-            'toggle fullscreen'                           => __( 'toggle fullscreen',                           'bb_gallery' ),
-            'show/hide image titles'                      => __( 'show/hide image titles',                      'bb_gallery' ),
-            'Carousel Time Interval in ms'                => __( 'Carousel Time Interval in ms',                'bb_gallery' ),
-            'Minimum Width for Gallery Images in px'      => __( 'Minimum Width for Gallery Images in px',      'bb_gallery' ),
-            'Preferred Row Height for Justified Images in px' => __( 'Preferred Row Height for Justified Images in px', 'bb_gallery' ),
-            'Maximum Number of Images Returned by Search' => __( 'Maximum Number of Images Returned by Search', 'bb_gallery' ),
-            'Number of Columns in the Dense View'         => __( 'Number of Columns in the Dense View',         'bb_gallery' ),
-            'Bandwidth'                                   => __( 'Bandwidth',                                   'bb_gallery' ),
-            'Auto'                                        => __( 'Auto',                                        'bb_gallery' ),
-            'High'                                        => __( 'High',                                        'bb_gallery' ),
-            'Medium'                                      => __( 'Medium',                                      'bb_gallery' ),
-            'Low'                                         => __( 'Low',                                         'bb_gallery' ),
-            'Interface'                                   => __( 'Interface',                                   'bb_gallery' ),
-            'Mouse'                                       => __( 'Mouse',                                       'bb_gallery' ),
-            'Touch'                                       => __( 'Touch',                                       'bb_gallery' ),
-            'Save'                                        => __( 'Save',                                        'bb_gallery' ),
-            'Cancel'                                      => __( 'Cancel',                                      'bb_gallery' ),
-            'Help'                                        => __( 'Help',                                        'bb_gallery' )
-        ];
 
         if ( !$galleries ) {
             for ( $i = 1; $i <= self::$gallery_menu_items_count; $i++ ) {
@@ -411,9 +333,10 @@ EOD;
 
         ob_start( );
         wp_nonce_field( self::$nonce_action );
-        $nonce_field = ob_get_clean( );
-        $output = $templates;
-        $output .= <<<EOD
+        $nonce_field  = ob_get_clean( );
+        $translations = self::$translations;
+        $output       = $templates;
+        $output      .= <<<EOD
 <div class="bbg_xiv-bootstrap bbg_xiv-gallery">
 <!-- start of navbar JSX -->
 <script type="text/babel">
@@ -825,6 +748,92 @@ EOD;
     }
     
     public static function init( ) {
+        $bbg_xiv_data                                                =& self::$bbg_xiv_data;
+        $bbg_xiv_data                                                = [];
+        $bbg_xiv_data[ 'version' ]                                   = '1.0';
+        $bbg_xiv_data[ 'ajaxurl' ]                                   = admin_url( 'admin-ajax.php' );
+        $bbg_xiv_data[ 'bbg_xiv_flex_min_width' ]                    = get_option( 'bbg_xiv_flex_min_width', 128 );
+        $bbg_xiv_data[ 'bbg_xiv_miro_row_height' ]                   = get_option( 'bbg_xiv_miro_row_height', 128 );
+        $bbg_xiv_data[ 'bbg_xiv_flex_min_width_for_caption' ]        = get_option( 'bbg_xiv_flex_min_width_for_caption', 96 );
+        $bbg_xiv_data[ 'bbg_xiv_max_search_results' ]                = get_option( 'bbg_xiv_max_search_results', 250 );
+        $bbg_xiv_data[ 'bbg_xiv_flex_min_width_for_dense_view' ]     = get_option( 'bbg_xiv_flex_min_width_for_dense_view', 1280 );
+        $bbg_xiv_data[ 'bbg_xiv_flex_number_of_dense_view_columns' ] = get_option( 'bbg_xiv_flex_number_of_dense_view_columns', 10 );
+        $bbg_xiv_data[ 'bbg_xiv_carousel_interval' ]                 = get_option( 'bbg_xiv_carousel_interval', 2500 );
+        $bbg_xiv_data[ 'bbg_xiv_disable_flexbox' ]                   = get_option( 'bbg_xiv_disable_flexbox', FALSE );
+        $bbg_xiv_data[ 'bbg_xiv_default_view' ]                      = get_option( 'bbg_xiv_default_view', 'Gallery' );
+
+        self::$translations = [
+            'GALLERY MENU'                                => __( 'GALLERY MENU',                                'bb_gallery' ),
+            'IMAGES:'                                     => __( 'IMAGES:',                                     'bb_gallery' ),
+            'GALLERIES:'                                  => __( 'GALLERIES:',                                  'bb_gallery' ),
+            'View'                                        => __( 'View',                                        'bb_gallery' ),
+            'Initial View'                                => __( 'Initial View',                                'bb_gallery' ),
+            'Gallery'                                     => __( 'Gallery',                                     'bb_gallery' ),
+            'Carousel'                                    => __( 'Carousel',                                    'bb_gallery' ),
+            'Justified'                                   => __( 'Justified',                                   'bb_gallery' ),
+            'Tabs'                                        => __( 'Tabs',                                        'bb_gallery' ),
+            'Dense'                                       => __( 'Dense',                                       'bb_gallery' ),
+            'VIEWS'                                       => __( 'VIEWS',                                       'bb_gallery' ),
+            'GALLERIES'                                   => __( 'GALLERIES',                                   'bb_gallery' ),
+            'Home'                                        => __( 'Home',                                        'bb_gallery' ),
+            'Fullscreen'                                  => __( 'Fullscreen',                                  'bb_gallery' ),
+            'Titles'                                      => __( 'Titles',                                      'bb_gallery' ),
+            'Search Images on Site'                       => __( 'Search Images on Site',                       'bb_gallery' ),
+            'Options'                                     => __( 'Options',                                     'bb_gallery' ),
+            'Help'                                        => __( 'Help',                                        'bb_gallery' ),
+            'get help'                                    => __( 'get help',                                    'bb_gallery' ),
+            'configure bandwidth, carousel interval, ...' => __( 'configure bandwidth, carousel interval, ...', 'bb_gallery' ),
+            'return to home gallery'                      => __( 'return to home gallery',                      'bb_gallery' ),
+            'toggle fullscreen'                           => __( 'toggle fullscreen',                           'bb_gallery' ),
+            'show/hide image titles'                      => __( 'show/hide image titles',                      'bb_gallery' ),
+            'Carousel Time Interval in ms'                => __( 'Carousel Time Interval in ms',                'bb_gallery' ),
+            'Minimum Width for Gallery Images in px'      => __( 'Minimum Width for Gallery Images in px',      'bb_gallery' ),
+            'Preferred Row Height for Justified Images in px' => __( 'Preferred Row Height for Justified Images in px', 'bb_gallery' ),
+            'Maximum Number of Images Returned by Search' => __( 'Maximum Number of Images Returned by Search', 'bb_gallery' ),
+            'Number of Columns in the Dense View'         => __( 'Number of Columns in the Dense View',         'bb_gallery' ),
+            'Bandwidth'                                   => __( 'Bandwidth',                                   'bb_gallery' ),
+            'Auto'                                        => __( 'Auto',                                        'bb_gallery' ),
+            'High'                                        => __( 'High',                                        'bb_gallery' ),
+            'Medium'                                      => __( 'Medium',                                      'bb_gallery' ),
+            'Low'                                         => __( 'Low',                                         'bb_gallery' ),
+            'Interface'                                   => __( 'Interface',                                   'bb_gallery' ),
+            'Mouse'                                       => __( 'Mouse',                                       'bb_gallery' ),
+            'Touch'                                       => __( 'Touch',                                       'bb_gallery' ),
+            'Save'                                        => __( 'Save',                                        'bb_gallery' ),
+            'Cancel'                                      => __( 'Cancel',                                      'bb_gallery' ),
+            'Help'                                        => __( 'Help',                                        'bb_gallery' )
+        ];
+
+        # translations for JavaScript side
+        $bbg_xiv_lang                                                =& self::$bbg_xiv_lang;
+        $bbg_xiv_lang[ 'expand gallery to full-screen' ]             = __( 'expand gallery to full-screen',   'bb_gallery' );
+        $bbg_xiv_lang[ 'shrink gallery from full-screen' ]           = __( 'shrink gallery from full-screen', 'bb_gallery' );
+        $bbg_xiv_lang[ 'show captions' ]                             = __( 'show captions',                   'bb_gallery' );
+        $bbg_xiv_lang[ 'hide captions' ]                             = __( 'hide captions',                   'bb_gallery' );
+        $bbg_xiv_lang[ 'show titles' ]                               = __( 'show titles',                     'bb_gallery' );
+        $bbg_xiv_lang[ 'hide titles' ]                               = __( 'hide titles',                     'bb_gallery' );
+        $bbg_xiv_lang[ 'Show Image Info' ]                           = __( 'Show Image Info',    'bb_gallery' );
+        $bbg_xiv_lang[ 'Previous' ]                                  = __( 'Previous',           'bb_gallery' );
+        $bbg_xiv_lang[ 'Go To First' ]                               = __( 'Go To First',        'bb_gallery' );
+        $bbg_xiv_lang[ 'Pause' ]                                     = __( 'Pause',              'bb_gallery' );
+        $bbg_xiv_lang[ 'Play' ]                                      = __( 'Play',               'bb_gallery' );
+        $bbg_xiv_lang[ 'Close' ]                                     = __( 'Close',              'bb_gallery' );
+        $bbg_xiv_lang[ 'Next' ]                                      = __( 'Next',               'bb_gallery' );
+        $bbg_xiv_lang[ 'Go To Last' ]                                = __( 'Go To Last',         'bb_gallery' );
+        $bbg_xiv_lang[ 'Get Help' ]                                  = __( 'Get Help',           'bb_gallery' );
+        $bbg_xiv_lang[ 'Nothing Found' ]                             = __( 'Nothing Found',      'bb_gallery' );
+        $bbg_xiv_lang[ 'Search Results for' ]                        = __( 'Search Results for', 'bb_gallery' );
+        $bbg_xiv_lang[ 'Page' ]                                      = __( 'Page',               'bb_gallery' );
+        $bbg_xiv_lang[ 'of' ]                                        = __( 'of',                 'bb_gallery' );
+        $bbg_xiv_lang[ 'Images' ]                                    = __( 'Images',             'bb_gallery' );
+        $bbg_xiv_lang[ 'to' ]                                        = __( 'to',                 'bb_gallery' );
+        $bbg_xiv_lang[ 'galleryOfGalleriesTitle' ]                   = __(
+            'Each image below represents a gallery. Please click on an image to load its gallery.',
+                                                                                                 'bb_gallery' );
+        $bbg_xiv_lang[ 'Click anywhere to lock the display of this popup.' ]
+                                                                     = __(
+            'Click anywhere to lock the display of this popup.',                                 'bb_gallery' );
+
         add_action( 'admin_enqueue_scripts', function( $hook ) {
             if ( $hook === 'options-media.php' ) {
                 wp_enqueue_script( "bbg_xiv-admin", plugins_url( 'js/bbg_xiv-admin.js', __FILE__ ) );
