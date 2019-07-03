@@ -11,7 +11,7 @@ import FlexContainer from './components/FlexContainer.js'
 import DevTools from './containers/DevTools.js'
 import {getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages} from './actions/index.js'
 
-console.log( 'rr-main.js loaded' )
+console.log( 'rr-main.js loading...' )
 
 const store = createStore(reducer, {images: {}}, compose(applyMiddleware( thunk, rest, createLogger()), DevTools.instrument()))
 
@@ -29,5 +29,4 @@ window.mcRrr = {
     getImagesByGallerySpecs: getImagesByGallerySpecs,
     getImagesBySearchParms:  getImagesBySearchParms
 }
-
-
+console.log( 'rr-main.js loaded.' )

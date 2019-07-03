@@ -20,7 +20,7 @@
 
     Copyright 2015  Magenta Cuda
 */
-
+console.log('bbg_xiv-gallery.js:loading...');
 (function(){
     var bbg_xiv=window.bbg_xiv=window.bbg_xiv||{};
     // URLs
@@ -1459,9 +1459,10 @@
         const React = mcRrr.React;
         window.setTimeout( function renderReactRoot() {
             if ( typeof window.bbg_xiv.NavBar !== 'undefined' ) {
+                console.log('bbg_xiv-gallery.js:renderReactRoot():mcRrr.ReactDOM.render():');
                 mcRrr.ReactDOM.render(
                     <mcRrr.Provider store={mcRrr.store}>
-                        <window.bbg_xiv.NavBar />
+                        <window.bbg_xiv.NavBar galleries={window.bbg_xiv.menu_galleries} />
                         <mcRrr.Frame />
                     </mcRrr.Provider>,
                     document.getElementById('mc-rrr-react-root')
@@ -1479,6 +1480,7 @@
             wp.api.loadPromise.done(function(){
                 var images=bbg_xiv.images[gallery.id]=new wp.api.collections.Media();
                 images.reset(JSON.parse(bbg_xiv[gallery.id+"-data"]));
+                console.log('bbg_xiv-gallery.js:mcRrr.store.dispatch(mcRrr.loadGalleryImages()):');
                 mcRrr.store.dispatch(mcRrr.loadGalleryImages(gallery.id, images));
                 bbg_xiv.renderGallery(gallery,defaultView,["initial"]);
                 jQuery( gallery ).closest( 'div.bbg_xiv-gallery' ).addClass( 'bbg_xiv-home_gallery' );
@@ -1990,4 +1992,4 @@
     //window.alert("bbg_xiv_test="+bbg_xiv.getCookie("bbg_xiv_test"));
     //bbg_xiv.setCookie("bbg_xiv_test",window.prompt("bbg_xiv_test","null"));
 }());
-
+console.log('bbg_xiv-gallery.js:loaded.');

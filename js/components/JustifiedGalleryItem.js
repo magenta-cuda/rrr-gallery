@@ -17,3 +17,5 @@ const JustifiedGalleryItem = props => {
         </div>
     )
 }
+
+console.log('JustifiedGalleryItem.js:loaded.');
