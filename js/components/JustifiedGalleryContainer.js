@@ -16,7 +16,7 @@ class JustifiedGalleryContainer extends React.Component {
         }
         let jsx = [];
         collection.forEach(function(model) {
-             jsx.push(<JustifiedGalleryItem data={model.attributes} />);        
+             jsx.push(<JustifiedGalleryItem data={model.attributes} key={model.attributes.id} />);        
         })
         console.log( 'JustifiedGalleryContainer():jsx=', jsx );
         return (

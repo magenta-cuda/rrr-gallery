@@ -15,7 +15,7 @@ export default props => {
             <figure>
                 <figcaption>{bbg_xiv.getTitle(data)}</figcaption>
                 <a href={data.link} target="_blank" className={className} data-gallery-index={dataGalleryIndex}>
-                    <img src={bbg_xiv.getSrc(data,'viewport',true)} srcset={bbg_xiv.getSrcset(data)} sizes={bbg_xiv.getSizes(data,'viewport',true)}
+                    <img src={bbg_xiv.getSrc(data,'viewport',true)} srcSet={bbg_xiv.getSrcset(data)} sizes={bbg_xiv.getSizes(data,'viewport',true)}
                         alt={bbg_xiv.getAlt(data)} title={bbg_xiv.getTitle(data)} data-bbg_xiv-image-id={data.id} />
                 </a>
             </figure>
