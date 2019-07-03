@@ -344,6 +344,7 @@ EOD;
 <script type="text/babel">
     window.bbg_xiv = window.bbg_xiv || {};
     window.bbg_xiv.NavBar = props => {
+        let selector  = 'gallery-' + props.id
         let galleries = ''
         if ( typeof props.galleries !== 'undefined' ) {
             galleries = [
@@ -358,7 +359,7 @@ EOD;
         return (
             <nav role="navigation" className="navbar navbar-inverse bbg_xiv-gallery_navbar">
                 <div className="navbar-header">
-                    <button type="button" data-target="#$selector-navbarCollapse" data-toggle="collapse" className="navbar-toggle">
+                    <button type="button" data-target={"#" + selector + "-navbarCollapse"} data-toggle="collapse" className="navbar-toggle">
                         <span className="sr-only">Toggle navigation</span>
                         <span className="icon-bar"></span>
                         <span className="icon-bar"></span>
@@ -366,7 +367,7 @@ EOD;
                     </button>
                     <a href="#" className="navbar-brand bbg_xiv-images_brand">{$translations['GALLERY MENU']}</a>
                 </div>
-                <div id="$selector-navbarCollapse" className="collapse navbar-collapse">
+                <div id={selector + "-navbarCollapse"} className="collapse navbar-collapse">
                     <ul className="nav navbar-nav">
                         <li className="dropdown bbg_xiv-select_view">
                             <a data-toggle="dropdown" className="dropdown-toggle bbg_xiv-selected_view" href="#"><span>$translations[View]</span> <b className="caret"></b></a>
@@ -470,7 +471,7 @@ EOD;
     <div id="$selector-alt_gallery_heading" class="bbg_xiv-alt_gallery_header">
         <span class="bbg_xiv-alt_gallery_heading"></span>
     </div>
-    <div id="mc-rrr-react-root"></div>
+    <div id="mc-rrr-react-root-$selector"></div>
     <div id="$selector" class="gallery galleryid-{$id} gallery-size-{$size_class} bbg_xiv-gallery_envelope{$class_gallery_icons_mode}{$class_default_view}" data-flags="{$flags}">
         <div class="ui-loader"><span class="ui-icon-loading"></span></div>
    </div>
