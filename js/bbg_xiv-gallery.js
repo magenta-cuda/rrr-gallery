@@ -1470,7 +1470,7 @@ console.log('bbg_xiv-gallery.js:loading...');
                 console.log('bbg_xiv-gallery.js:renderReactRoot():mcRrr.ReactDOM.render():');
                 mcRrr.ReactDOM.render(
                     <mcRrr.Provider store={mcRrr.store}>
-                        <window.bbg_xiv.NavBar id={id} galleries={window.bbg_xiv.menu_galleries} />
+                        <bbg_xiv.NavBarContainer id={id} galleries={window.bbg_xiv.menu_galleries} />
                         <mcRrr.Frame id={id} />
                     </mcRrr.Provider>,
                     document.getElementById('mc-rrr-react-root-gallery-' + id)
@@ -1493,7 +1493,7 @@ console.log('bbg_xiv-gallery.js:loading...');
                 window.setTimeout(() => {
                     console.log('bbg_xiv-gallery.js:mcRrr.store.dispatch(mcRrr..setView("Justified")):dispatching...');
                     mcRrr.store.dispatch(mcRrr.setView('Justified'));
-                }, 5000);
+                }, 10000);
                 // bbg_xiv.renderGallery(gallery,defaultView,["initial"]);
                 // jQuery( gallery ).closest( 'div.bbg_xiv-gallery' ).addClass( 'bbg_xiv-home_gallery' );
                 // jQuery(window).resize();
