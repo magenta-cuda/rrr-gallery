@@ -253,6 +253,8 @@ console.log('bbg_xiv-gallery.js:loading...');
 
     bbg_xiv.renderDense=function(container,collection,id,mode){
         var containerWidth=container.width();
+        // TODO: how is containerWidth used?
+/*
         var titleView=new bbg_xiv.ImageView();
         titleView.template=_.template(jQuery("script#bbg_xiv-template_dense_title").html(),null,bbg_xiv.templateOptions);
         var imageView=new bbg_xiv.ImageView();
@@ -281,6 +283,8 @@ console.log('bbg_xiv-gallery.js:loading...');
         galleryView.template=_.template(jQuery("script#bbg_xiv-template_dense_container").html(),null,bbg_xiv.templateOptions);
         container.empty();
         container.append(galleryView.render().$el.find("div.bbg_xiv-dense_container"));
+ */
+        mcRrr.ReactDOM.render(<DenseContainer images={collection} mode={mode} />, container.get(0) );
     };
     
     bbg_xiv.renderJustified=function(container,collection){
@@ -1390,6 +1394,9 @@ console.log('bbg_xiv-gallery.js:loading...');
                     defaultView="Carousel";
                 }else if(gallery.hasClass("bbg_xiv-default_view_tabs")){
                     defaultView="Tabs";
+                // TODO: below for testing only, emove dense case as default view should not be dense
+                }else if(gallery.hasClass("bbg_xiv-default_view_Dense")){
+                    defaultView="Dense";
                 }
             }
             gallery.parents("div.bbg_xiv-bootstrap.bbg_xiv-gallery").find("nav.bbg_xiv-gallery_navbar ul.nav li.bbg_xiv-select_view ul.bbg_xiv-view_menu li.bbg_xiv-view")
@@ -1483,6 +1490,7 @@ console.log('bbg_xiv-gallery.js:loading...');
                 images.reset(JSON.parse(bbg_xiv[gallery.id+"-data"]));
                 console.log('bbg_xiv-gallery.js:mcRrr.store.dispatch(mcRrr.loadGalleryImages()):');
                 mcRrr.store.dispatch(mcRrr.loadGalleryImages(gallery.id, images));
+                // debugger;
                 bbg_xiv.renderGallery(gallery,defaultView,["initial"]);
                 jQuery( gallery ).closest( 'div.bbg_xiv-gallery' ).addClass( 'bbg_xiv-home_gallery' );
                 jQuery(window).resize();

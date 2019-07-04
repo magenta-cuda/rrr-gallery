@@ -1,9 +1,10 @@
 // Dense Image Template
 
 const DenseImage = props => {
-    const data = props.data
+    const data  = props.data
+    const index = props.index
     return (
-        <div id={`bbg_xiv-dense_image_${data.index}` class="bbg_xiv-dense_flex_item" title={bbg_xiv.getTitle(data)}>
+        <div id={`bbg_xiv-dense_image_${index}`} className="bbg_xiv-dense_flex_item" title={bbg_xiv.getTitle(data)}>
             <img src={bbg_xiv.getSrc(data,'viewport',true)} srcSet={bbg_xiv.getSrcset(data)}
                     sizes={bbg_xiv.getSizes(data,'viewport',true)} alt={bbg_xiv.getAlt(data)}
                     title={bbg_xiv.getTitle(data)} data-bbg_xiv-image-id={data.id} />
