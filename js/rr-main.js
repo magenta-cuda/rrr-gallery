@@ -9,11 +9,11 @@ import rest from './middleware/rest.js'
 import Frame from './components/Frame.js'
 import FlexContainer from './components/FlexContainer.js'
 import DevTools from './containers/DevTools.js'
-import {getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages} from './actions/index.js'
+import {getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages, setView} from './actions/index.js'
 
 console.log( 'rr-main.js loading...' )
 
-const store = createStore(reducer, {images: {}}, compose(applyMiddleware( thunk, rest, createLogger()), DevTools.instrument()))
+const store = createStore(reducer, {images: {}, view: 'Gallery'}, compose(applyMiddleware( thunk, rest, createLogger()), DevTools.instrument()))
 
 // TODO: need store in global scope for now to do testing; remove for production.
 // TODO: need actions in global scope for now as cannot import yet; remove for production.
@@ -25,6 +25,7 @@ window.mcRrr = {
     Provider:                Provider,
     Frame:                   Frame,
     FlexContainer:           FlexContainer,
+    setView:                 setView,
     loadGalleryImages:       loadGalleryImages,
     getImagesByGallerySpecs: getImagesByGallerySpecs,
     getImagesBySearchParms:  getImagesBySearchParms

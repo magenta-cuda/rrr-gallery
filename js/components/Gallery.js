@@ -3,9 +3,21 @@ import FlexContainer from '../components/FlexContainer.js'
 
 export default props => {
     console.log('Gallery.js:props=', props)
-    // debugger
-    return (
-        // <div>TODO: show FlexContainer</div>
-        <FlexContainer images={props.images}></FlexContainer>
-    )
+    let Container = FlexContainer
+    switch (props.view) {
+    case 'Gallery':
+        Container = FlexContainer
+        break
+    case 'Carousel':
+        break
+    case 'Justified':
+        Container = JustifiedGalleryContainer
+        break
+    case 'Tabs':
+        break
+    case 'Dense':
+        Container = DenseContainer
+        break
+    }
+    return <Container images={props.images}></Container>
 }

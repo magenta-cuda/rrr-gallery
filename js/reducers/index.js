@@ -1,4 +1,4 @@
-import {LOAD_GALLERY_IMAGES, LOAD_SEARCH_IMAGES, HANDLE_LOAD_FAILED} from '../actions/index.js'
+import {LOAD_GALLERY_IMAGES, LOAD_SEARCH_IMAGES, HANDLE_LOAD_FAILED, SET_VIEW} from '../actions/index.js'
 
 export default (state = {}, action) => {
     switch (action.type) {
@@ -21,6 +21,9 @@ export default (state = {}, action) => {
         return {...state, images: images}
     }
     case HANDLE_LOAD_FAILED:
+        return state
+    case SET_VIEW:
+        return {...state, view: action.view}
     default:
         return state
     }
