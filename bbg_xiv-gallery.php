@@ -346,8 +346,12 @@ EOD;
 <script type="text/babel">
     window.bbg_xiv = window.bbg_xiv || {};
     window.bbg_xiv.NavBar = props => {
-        const selector  = 'gallery-' + props.id
-        const view      = props.view
+        function handleViewClick(e) {
+            e.preventDefault()
+            setView(e.target.dataset.view)
+        }
+        const {id, view, setView} = props
+        const selector  = 'gallery-' + id
         let   galleries = ''
         if ( typeof props.galleries !== 'undefined' ) {
             galleries = [
@@ -403,23 +407,23 @@ EOD;
                                 <li className="dropdown-header">{$translations['VIEWS']}</li>
                                 <li className={"bbg_xiv-view bbg_xiv-view_gallery"
                                         + (view === "Gallery" ? " active" : "")}>
-                                    <a data-view="Gallery" href="#">{$translations['Gallery']}</a>
+                                    <a data-view="Gallery" href="#" onClick={handleViewClick}>{$translations['Gallery']}</a>
                                 </li>
                                 <li className={"bbg_xiv-view bbg_xiv-view_carousel bbg_xiv-hide_for_gallery_icons"
                                         + (view === "Carousel" ? " active" : "")}>
-                                    <a data-view="Carousel" href="#">{$translations['Carousel']}</a>
+                                    <a data-view="Carousel" href="#" onClick={handleViewClick}>{$translations['Carousel']}</a>
                                 </li>
                                 <li className={"bbg_xiv-view bbg_xiv-view_justified bbg_xiv-hide_for_gallery_icons"
                                         + (view === "Justified" ? " active" : "")}>
-                                    <a data-view="Justified" href="#">{$translations['Justified']}</a>
+                                    <a data-view="Justified" href="#" onClick={handleViewClick}>{$translations['Justified']}</a>
                                 </li>
                                 <li className={"bbg_xiv-view bbg_xiv-view_tabs"
                                         + (view === "Tabs" ? " active" : "")}>
-                                    <a data-view="Tabs" href="#">{$translations['Tabs']}</a>
+                                    <a data-view="Tabs" href="#" onClick={handleViewClick}>{$translations['Tabs']}</a>
                                 </li>
                                 <li className={"bbg_xiv-view bbg_xiv-hide_for_gallery_icons bbg_xiv-large_viewport_only"
                                         + (view === "Dense" ? " active" : "")}>
-                                    <a data-view="Dense" href="#">{$translations['Dense']}</a>
+                                    <a data-view="Dense" href="#" onClick={handleViewClick}>{$translations['Dense']}</a>
                                 </li>
                                 {/* TODO: Add entry for new views here. */}
                                 $table_nav_item
@@ -475,7 +479,10 @@ EOD;
     const mapStateToProps = (state, ownProps) => {
         return {id: ownProps.id, galleries: ownProps.galleries, view: state.view}
     }
-    window.bbg_xiv.NavBarContainer = mcRrr.connect(mapStateToProps)(window.bbg_xiv.NavBar)
+    const mapDispatchToProps = dispatch => ({
+        setView: view => dispatch(mcRrr.setView(view))
+    })
+    window.bbg_xiv.NavBarContainer = mcRrr.connect(mapStateToProps, mapDispatchToProps)(window.bbg_xiv.NavBar)
 </script>
 <!-- end of navbar JSX -->
 EOD;
