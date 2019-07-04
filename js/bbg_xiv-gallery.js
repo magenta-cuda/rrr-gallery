@@ -1500,6 +1500,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             });
         });
 
+/*
         // wireup the event handlers
         // wireup the handler for view selection
         jQuery("nav.bbg_xiv-gallery_navbar ul.nav li.dropdown ul.bbg_xiv-view_menu li > a").click(function(e){
@@ -1635,6 +1636,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             }
             e.preventDefault();
         });
+ */
         // wireup Galleries tabs 
         jQuery("div.bbg_xiv-gallery_tabs_container nav.navbar ul.nav-tabs li a[data-view^='gallery_']").click(function(e){
             jQuery(this).parents("div.bbg_xiv-bootstrap.bbg_xiv-gallery")

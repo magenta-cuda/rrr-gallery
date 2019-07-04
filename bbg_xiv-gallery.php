@@ -363,6 +363,24 @@ EOD;
                 </li>
             )))
         }
+        let dropdownText= "{$translations['View']}"
+        switch (view) {
+            case 'Gallery':
+                dropdownText = "{$translations['Gallery']}"
+                break;
+            case 'Carousel':
+                dropdownText = "{$translations['Carousel']}"
+                break;
+            case 'Justified':
+                dropdownText = "{$translations['Justified']}"
+                break;
+            case 'Tabs':
+                dropdownText = "{$translations['Tabs']}"
+                break;
+            case 'Dense':
+                dropdownText = "{$translations['Dense']}"
+                break;
+        }
         return (
             <nav role="navigation" className="navbar navbar-inverse bbg_xiv-gallery_navbar">
                 <div className="navbar-header">
@@ -379,7 +397,7 @@ EOD;
                     <ul className="nav navbar-nav">
                         <li className="dropdown bbg_xiv-select_view">
                             <a data-toggle="dropdown" className="dropdown-toggle bbg_xiv-selected_view" href="#">
-                                <span>{$translations['View']}</span> <b className="caret"></b>
+                                <span>{dropdownText}</span> <b className="caret"></b>
                             </a>
                             <ul role="menu" className="dropdown-menu bbg_xiv-view_menu">
                                 <li className="dropdown-header">{$translations['VIEWS']}</li>
