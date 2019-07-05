@@ -1,4 +1,4 @@
-import {loadSearchImages, handleLoadFailed} from '../actions/index.js'
+import {loadSearchImages, loadGalleryImages, handleLoadFailed} from '../actions/index.js'
 
 export const REST = 'REST'
 
@@ -10,6 +10,20 @@ export default store => next => action => {
     console.log('rest.js:action=', action)
     // debugger
     if (typeof rest.specs !== 'undefined') {
+        const {id, specs} = rest
+        const images = new wp.api.collections.Media()
+        images.once("sync", function() {
+            // the sync event will occur once only on the Backbone fetch of the collection
+            next(loadGalleryImages(id, images));
+        });
+        images.fetch({
+            data:    specs,
+            success: function(c, r, o) {
+            },
+            error:   function(c, r) {
+                next(handleLoadFailed(id, images, specs));
+            }
+        })
     } else if (typeof rest.parms !== 'undefined') {
         let id     = rest.id
         let parms  = rest.parms

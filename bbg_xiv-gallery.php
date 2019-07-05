@@ -350,7 +350,40 @@ EOD;
             e.preventDefault()
             setView(e.target.dataset.view)
         }
-        const {id, view, setView} = props
+        function handleGalleryClick(e) {
+            e.preventDefault()
+            const specifiers = e.target.dataset.specifiers;
+            // extract individual gallery parameters
+            // translation maps for gallery shortcode parameter names and values to WP REST API option names and values
+            var nameMap = {
+                id:      "parent",
+                ids:     "include",
+                bb_tags: "bb-tags"
+            }
+            // really should have a value map per parameter name but fortunately there are no overlaps
+            var valueMap = {
+                ASC:  "asc",
+                DESC: "desc"
+            }
+            const matches    = specifiers.match(/(\w+)="([^"]+)"/g)
+            const parameters = {}
+            var ids          = false
+            matches.forEach(function(match) {
+                var specifier = match.match(/(\w+)="([^"]+)"/);
+                // translate gallery shortcode parameters to WP REST API options
+                parameters[nameMap[specifier[1]] ? nameMap[specifier[1]] : specifier[1]]
+                    = valueMap[specifier[2]] ? valueMap[specifier[2]] : specifier[2]
+                if (specifier[1] === "ids") {
+                    ids = true;
+                }
+            });
+            if (ids && !parameters.orderby) {
+                // for ids use the explicit order in ids
+                parameters.orderby = 'include'
+            }
+            getImagesByGallerySpecs(selector, parameters)
+        }
+        const {id, view, setView, getImagesByGallerySpecs} = props
         const selector  = 'gallery-' + id
         let   galleries = ''
         if ( typeof props.galleries !== 'undefined' ) {
@@ -363,7 +396,9 @@ EOD;
             ]
             galleries = galleries.concat(JSON.parse(props.galleries).map((gallery, i) => (
                 <li className="bbg_xiv-alt_gallery">
-                    <a data-view={"gallery_" + i} data-specifiers={gallery.specifiers} href="#">{gallery.title}</a>
+                    <a data-view={"gallery_" + i} data-specifiers={gallery.specifiers} href="#" onClick={handleGalleryClick}>
+                        {gallery.title}
+                    </a>
                 </li>
             )))
         }
@@ -480,7 +515,8 @@ EOD;
         return {id: ownProps.id, galleries: ownProps.galleries, view: state.view}
     }
     const mapDispatchToProps = dispatch => ({
-        setView: view => dispatch(mcRrr.setView(view))
+        setView:                 view        => dispatch(mcRrr.setView(view)),
+        getImagesByGallerySpecs: (id, specs) => dispatch(mcRrr.getImagesByGallerySpecs(id, specs))
     })
     window.bbg_xiv.NavBarContainer = mcRrr.connect(mapStateToProps, mapDispatchToProps)(window.bbg_xiv.NavBar)
 </script>
