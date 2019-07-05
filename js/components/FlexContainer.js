@@ -18,9 +18,6 @@ export default class FlexContainer extends React.Component {
              jsx.push(<FlexItem data={model.attributes} key={model.attributes.id} />);
         })
         console.log( 'FlexContainer():jsx=', jsx );
-        window.setTimeout(function() {
-            jQuery(window).resize();
-        }, 100);
         return (
             <div className="bbg_xiv-container bbg_xiv-flex_container bbg_xiv-tiles_container mc-rrr-jsx-container"
                 data-bbg_xiv-gallery-id={collection.id} ref={node => {this.container = node}}>
@@ -46,6 +43,14 @@ export default class FlexContainer extends React.Component {
     }
     componentDidMount() {
         window.bbg_xiv.postRenderFlexContainer(this.container)
+        window.setTimeout(function() {
+            jQuery(window).resize();
+        }, 100);
+    }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        window.setTimeout(function() {
+            jQuery(window).resize();
+        }, 100);
     }
 }
 

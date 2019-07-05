@@ -20,6 +20,12 @@
 
     Copyright 2015  Magenta Cuda
 */
+
+/*
+ * React Redux primarily handles changes to the image data. Changes to how the images are rendered,
+ * e.g. whether captions are visible or not are handled directly by JavaScript code manipulating CSS.
+ */
+ 
 console.log('bbg_xiv-gallery.js:loading...');
 (function(){
     var bbg_xiv=window.bbg_xiv=window.bbg_xiv||{};
@@ -135,10 +141,9 @@ console.log('bbg_xiv-gallery.js:loading...');
 */
 
     bbg_xiv.postRenderFlexContainer = container => {
-        // TODO: container in original code is the parent of the argument container - this probably can be simplified.
-        container = jQuery( container.parentNode )
-        if ( bbg_xiv.guiInterface === 'touch' ) {
-            container.find("div.bbg_xiv-flex_container div.bbg_xiv-flex_item div.bbg_xiv-dense_full_btn").addClass("bbg_xiv-touch");
+        const $flexContainer = jQuery(container)
+        if (bbg_xiv.guiInterface === 'touch') {
+            $flexContainer.find("div.bbg_xiv-flex_item div.bbg_xiv-dense_full_btn").addClass("bbg_xiv-touch");
         }
 /*
         TODO: flags needs to passed as prop on Gallery
@@ -151,34 +156,31 @@ console.log('bbg_xiv-gallery.js:loading...');
             });
         }
  */
-        var flexContainer    = container.find( 'div.bbg_xiv-flex_container');
-        var galleryContainer = flexContainer.closest( 'div.bbg_xiv-gallery' ).addClass( 'bbg_xiv-caption_visible' );
-        galleryContainer.find( 'button.bbg_xiv-titles' ).attr( 'title', bbg_xiv_lang['hide titles'] );
+        // const $galleryContainer = $flexContainer.closest('div.bbg_xiv-gallery').addClass('bbg_xiv-caption_visible')
+        // TODO: caption visible shoul be default
+        const $galleryContainer = $flexContainer.closest('div.bbg_xiv-gallery').removeClass('bbg_xiv-caption_visible')
+        $galleryContainer.find('button.bbg_xiv-titles').attr('title', bbg_xiv_lang['hide titles'])
         // flip display state of caption on hover
-        container.find("div.bbg_xiv-dense_full_btn").hover(
+        $flexContainer.find("div.bbg_xiv-dense_full_btn").hover(
             function() {
-                if ( ! galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
-                    jQuery(this).parents("div.bbg_xiv-flex_item").find("figure figcaption").each(function(){
-                        jQuery(this).show();
-                    });
+                if (!$galleryContainer.hasClass('bbg_xiv-caption_visible')) {
+                    jQuery(this).parents("div.bbg_xiv-flex_item").find("figure figcaption").show()
                 }
             },
             function() {
-                if ( ! galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
-                    jQuery(this).parents("div.bbg_xiv-flex_item").find("figure figcaption").each(function(){
-                        jQuery(this).hide();
-                    });
+                if (!$galleryContainer.hasClass( 'bbg_xiv-caption_visible')) {
+                    jQuery(this).parents("div.bbg_xiv-flex_item").find("figure figcaption").hide()
                 }
             }
-        );
-        if ( bbg_xiv.guiInterface === 'touch' ) {
-            container.find("div.bbg_xiv-flex_item a").click(function(e){
-                if ( ! galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
-                    var caption=jQuery(this.parentNode).find("figure figcaption");
-                    if(!caption.data("visible")){
-                        container.find("div.bbg_xiv-flex_item figure figcaption").data("visible",false);
-                        caption.data("visible",true);
-                        e.preventDefault();
+        )
+        if (bbg_xiv.guiInterface === 'touch') {
+            $flexContainer.find("div.bbg_xiv-flex_item a").click(function(e) {
+                if (!$galleryContainer.hasClass( 'bbg_xiv-caption_visible')) {
+                    const $caption = jQuery(this.parentNode).find("figure figcaption")
+                    if (!$caption.data("visible")) {
+                        $flexContainer.find("div.bbg_xiv-flex_item figure figcaption").data("visible", false)
+                        $caption.data("visible", true)
+                        e.preventDefault()
                     }
                 }
             });
