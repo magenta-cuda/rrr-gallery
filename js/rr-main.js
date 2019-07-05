@@ -8,7 +8,6 @@ import { Provider } from 'react-redux'
 import reducer from './reducers/index.js'
 import rest from './middleware/rest.js'
 import Frame from './components/Frame.js'
-import FlexContainer from './components/FlexContainer.js'
 //import NavBar from './containers/NavBar.js'
 import DevTools from './containers/DevTools.js'
 import {getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages, setView} from './actions/index.js'
@@ -28,7 +27,6 @@ window.mcRrr = {
     Provider:                Provider,
     Frame:                   Frame,
 //    NavBar:                  NavBar,
-    FlexContainer:           FlexContainer,
     setView:                 setView,
     loadGalleryImages:       loadGalleryImages,
     getImagesByGallerySpecs: getImagesByGallerySpecs,

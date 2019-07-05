@@ -63,10 +63,10 @@ console.log('bbg_xiv-gallery.js:loading...');
         }
     });
     
+/*
     bbg_xiv.renderBootstrapGallery=function(container,collection){
         var imageView=new bbg_xiv.ImageView();
         // attach template to imageView not ImageView.prototype since template is specific to imageView
-/*
         imageView.template=_.template( jQuery("script#bbg_xiv-template_gallery_item").html(),null,bbg_xiv.templateOptions);
         var imagesHtml="";
         collection.forEach(function(model,index){
@@ -93,13 +93,11 @@ console.log('bbg_xiv-gallery.js:loading...');
         galleryView.template=_.template(jQuery("script#bbg_xiv-template_gallery_container").html(),null,bbg_xiv.templateOptions);
         container.empty();
         container.append(galleryView.render().$el.find("div.container"));
- */
         container.empty();
         mcRrr.ReactDOM.render( GalleryContainer( collection ), container.get( 0 ) );
     };
 
     bbg_xiv.renderFlex=function(container,collection){
-/*
         var containerWidth=container.width();
         var imageView=new bbg_xiv.ImageView();
         // attach template to imageView not ImageView.prototype since template is specific to imageView
@@ -121,7 +119,6 @@ console.log('bbg_xiv-gallery.js:loading...');
         galleryView.template=_.template(jQuery("script#bbg_xiv-template_flex_container").html(),null,bbg_xiv.templateOptions);
         container.empty();
         container.append(galleryView.render().$el.find("div.bbg_xiv-flex_container"));
- */ 
         // For now we must rerender into a new DOM element because if we rerender into an existing DOM element React will
         // try and diff the React elements of the tree of the existing DOM element against the new React elements. Since,
         // currently the existing DOM element may have changes from non-React actions this will confuse React and it will
@@ -135,7 +132,60 @@ console.log('bbg_xiv-gallery.js:loading...');
             container.find("div.bbg_xiv-flex_container div.bbg_xiv-flex_item div.bbg_xiv-dense_full_btn").addClass("bbg_xiv-touch");
         }
     };
+*/
 
+    bbg_xiv.postRenderFlexContainer = container => {
+        // TODO: container in original code is the parent of the argument container - this probably can be simplified.
+        container = jQuery( container.parentNode )
+        if ( bbg_xiv.guiInterface === 'touch' ) {
+            container.find("div.bbg_xiv-flex_container div.bbg_xiv-flex_item div.bbg_xiv-dense_full_btn").addClass("bbg_xiv-touch");
+        }
+/*
+        TODO: flags needs to passed as prop on Gallery
+        if(!Modernizr.objectfit||flags.indexOf("contain")!==-1){
+            // IE and Edge do not support objectfit so we set a class to differentiate between landscape and portrait mode which will let our CSS rules simulate object-fit:cover
+            container.find("div.bbg_xiv-flex_item img").load(function(){
+                if(this.naturalWidth<this.naturalHeight){
+                    jQuery(this).addClass("bbg_xiv-portrait");
+                }
+            });
+        }
+ */
+        var flexContainer    = container.find( 'div.bbg_xiv-flex_container');
+        var galleryContainer = flexContainer.closest( 'div.bbg_xiv-gallery' ).addClass( 'bbg_xiv-caption_visible' );
+        galleryContainer.find( 'button.bbg_xiv-titles' ).attr( 'title', bbg_xiv_lang['hide titles'] );
+        // flip display state of caption on hover
+        container.find("div.bbg_xiv-dense_full_btn").hover(
+            function() {
+                if ( ! galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
+                    jQuery(this).parents("div.bbg_xiv-flex_item").find("figure figcaption").each(function(){
+                        jQuery(this).show();
+                    });
+                }
+            },
+            function() {
+                if ( ! galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
+                    jQuery(this).parents("div.bbg_xiv-flex_item").find("figure figcaption").each(function(){
+                        jQuery(this).hide();
+                    });
+                }
+            }
+        );
+        if ( bbg_xiv.guiInterface === 'touch' ) {
+            container.find("div.bbg_xiv-flex_item a").click(function(e){
+                if ( ! galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
+                    var caption=jQuery(this.parentNode).find("figure figcaption");
+                    if(!caption.data("visible")){
+                        container.find("div.bbg_xiv-flex_item figure figcaption").data("visible",false);
+                        caption.data("visible",true);
+                        e.preventDefault();
+                    }
+                }
+            });
+        }
+    }
+
+/*
     bbg_xiv.renderTiles=function(container,collection,flags){
         // gallery tiles have exactly the same HTML elements as the gallery Flex items but we will use CSS specificity to override the Flex container CSS
         container.addClass("bbg_xiv-tiles_container");
@@ -189,6 +239,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             });
         }
     };
+ */
 
     bbg_xiv.renderCarousel=function(container,collection,id){
         var containerWidth=container.width();
@@ -1493,6 +1544,10 @@ console.log('bbg_xiv-gallery.js:loading...');
         this.blur();
         e.preventDefault();
         // debugger
+    }
+
+    bbg_xiv.handleTitlesClick = function(e) {
+        // TODO:
     }
 
     jQuery(document).ready(function(){
