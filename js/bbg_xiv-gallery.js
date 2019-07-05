@@ -22,8 +22,17 @@
 */
 
 /*
+ * This is a Reactified and Reduxed version of BB Gallery.
+ * 
  * React Redux primarily handles changes to the image data. Changes to how the images are rendered,
  * e.g. whether captions are visible or not are handled directly by JavaScript code manipulating CSS.
+ * I think this is more efficient than keeping CSS state in the store since changes to that CSS state
+ * would need to be propagated to the props of React element, then the React elements would need to
+ * rerendered from the changed props and then the DOM elements would need to be rerendered from the
+ * changed React elements. Directly manipulating the CSS skips all these intermediate steps. Of 
+ * course the major disadvantage is the logic isn't as structured but I think it will be reasonably
+ * understandable. The other reason is the original BB Gallery was written that way and I am too lazy
+ * to rewrite all that code.
  */
  
 console.log('bbg_xiv-gallery.js:loading...');
@@ -1549,7 +1558,49 @@ console.log('bbg_xiv-gallery.js:loading...');
     }
 
     bbg_xiv.handleTitlesClick = function(e) {
-        // TODO:
+        const  $this            = jQuery(this);
+        const $galleryContainer = $this.closest('div.bbg_xiv-bootstrap.bbg_xiv-gallery');
+        let   $container        = $galleryContainer.find('div.bbg_xiv-flex_container');
+        if ( $container.length ) {
+            var $figure  = $container.find( 'div.bbg_xiv-flex_item figure' );
+            var $caption = $figure.find( 'figcaption' );
+            if ( $galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
+                $caption.hide( 1000 );
+                $galleryContainer.removeClass( 'bbg_xiv-caption_visible' );
+                $this.attr( 'title', bbg_xiv_lang['show titles'] );
+            } else {
+                $caption.show( 1000 );
+                $galleryContainer.addClass( 'bbg_xiv-caption_visible' );
+                $this.attr( 'title', bbg_xiv_lang['hide titles'] );
+            }
+            if ( $container.hasClass( 'bbg_xiv-contain' ) ) {
+                // in tiles contain mode center image if title not displayed
+                if ( $galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
+                    $figure.find( 'img' ).removeClass( 'bbg_xiv-vertical_center' );
+                }else{
+                    $figure.find( 'img' ).addClass( 'bbg_xiv-vertical_center' );
+                }
+            }
+            return;
+        }
+        $container = $galleryContainer.find( 'div.bbg_xiv-justified_container' );
+        if ( $container.length ) {
+            if ( $galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
+                $galleryContainer.removeClass( 'bbg_xiv-caption_visible' );
+                $this.attr( 'title', bbg_xiv_lang['show captions'] );
+            } else {
+                $galleryContainer.addClass( 'bbg_xiv-caption_visible' );
+                $this.attr( 'title', bbg_xiv_lang['hide captions'] );
+            }
+            window.setTimeout( function() {
+                var $caption = $container.find( 'div.caption' );
+                if ( $galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
+                    $caption.css( { display: 'block', opacity: '0.7' } );
+                } else {
+                    $caption.css( { display: 'none',  opacity: '0.0' } );
+                }
+            }, 1000 );
+        }
     }
 
     jQuery(document).ready(function(){
@@ -1850,6 +1901,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             }
             jQuery( window ).resize();
         });
+/*
         jQuery( 'button.bbg_xiv-titles' ).click(function() {
             var $this             = jQuery( this );
             var $galleryContainer = $this.closest( 'div.bbg_xiv-bootstrap.bbg_xiv-gallery' );
@@ -1896,7 +1948,6 @@ console.log('bbg_xiv-gallery.js:loading...');
             }
         });
         // wireup the handler for setting options
-/*
         jQuery("button.bbg_xiv-configure").click(function(e){
             divConfigure.find("input#bbg_xiv-carousel_delay").val(bbg_xiv.bbg_xiv_carousel_interval);
             divConfigure.find("input#bbg_xiv-min_image_width").val(bbg_xiv.bbg_xiv_flex_min_width);

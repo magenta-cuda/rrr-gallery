@@ -503,7 +503,8 @@ EOD;
                         <span className="bbg_xiv-navbar_button_text">{$translations['Fullscreen']}</span>
                     </button>
                     <button type="button" className="btn btn-info bbg_xiv-titles"
-                            title="{$translations['show/hide image titles']}">
+                            title="{$translations['show/hide image titles']}"
+                            onClick={e => {bbg_xiv.handleTitlesClick.call(e.currentTarget, e)}}>
                         <span className="glyphicon glyphicon-subtitles"></span>
                         <span className="bbg_xiv-navbar_button_text">{$translations['Titles']}</span>
                     </button>
