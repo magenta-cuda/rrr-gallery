@@ -481,12 +481,14 @@ EOD;
                         </div>
                         $nonce_field
                     </form>
-                    <button type="button" className="btn btn-info bbg_xiv-help" title="{$translations['get help']}">
+                    <button type="button" className="btn btn-info bbg_xiv-help" title="{$translations['get help']}"
+                            onClick={e => {bbg_xiv.handleHelpClick.call(e.currentTarget, e)}}>
                         <span className="glyphicon glyphicon-question-sign"></span>
                         <span className="bbg_xiv-navbar_button_text">{$translations['Help']}</span>
                     </button>
                     <button type="button" className="btn btn-info bbg_xiv-configure"
-                            title="{$translations['configure bandwidth, carousel interval, ...']}">
+                            title="{$translations['configure bandwidth, carousel interval, ...']}"
+                            onClick={e => {bbg_xiv.handleConfigureClick.call(e.currentTarget, e)}}>
                         <span className="glyphicon glyphicon-cog"></span>
                         <span className="bbg_xiv-navbar_button_text">{$translations['Options']}</span>
                     </button>

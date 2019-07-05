@@ -1462,6 +1462,39 @@ console.log('bbg_xiv-gallery.js:loading...');
         searchBtn.prop("disabled",false);
     }   // bbg_xiv.handleSearchResponse = function( divGallery, r, parms ) {
 
+    bbg_xiv.handleConfigureClick = function(e) {
+        const divConfigure = jQuery(".bbg_xiv-configure_inner");
+        divConfigure.find("input#bbg_xiv-carousel_delay").val(bbg_xiv.bbg_xiv_carousel_interval);
+        divConfigure.find("input#bbg_xiv-min_image_width").val(bbg_xiv.bbg_xiv_flex_min_width);
+        divConfigure.find( 'input#bbg_xiv-miro_row_height' ).val( bbg_xiv.bbg_xiv_miro_row_height );
+        divConfigure.find("input#bbg_xiv-max_search_results").val(bbg_xiv.bbg_xiv_max_search_results);
+        divConfigure.find("input#bbg_xiv-columns_in_dense_view").val(bbg_xiv.bbg_xiv_flex_number_of_dense_view_columns);
+        divConfigure.find("input[name='bbg_xiv-default_view']").prop("checked",false);
+        if(bbg_xiv.usingServerDefaultView===false){
+            divConfigure.find("input[name='bbg_xiv-default_view'][value='"+bbg_xiv.bbg_xiv_default_view+"']").prop("checked",true);
+        }
+        divConfigure.find("input[name='bbg_xiv-bandwidth']").prop("checked",false);
+        divConfigure.find("input[name='bbg_xiv-bandwidth'][value='"+bbg_xiv.bbg_xiv_bandwidth+"']").prop("checked",true);
+        divConfigure.find("input[name='bbg_xiv-interface']").prop("checked",false);
+        divConfigure.find("input[name='bbg_xiv-interface'][value='"+bbg_xiv.bbg_xiv_interface+"']").prop("checked",true);
+        var gallery=jQuery(this).parents("div.bbg_xiv-gallery");
+        var outer=gallery.find("div.bbg_xiv-configure_outer");
+        outer.show();
+        var inner=gallery.find("div.bbg_xiv-configure_inner");
+        inner.show();
+        e.preventDefault();
+        // debugger
+    }
+
+    bbg_xiv.handleHelpClick = function(e) {
+        var view = jQuery( this ).closest( 'div.navbar-collapse' )
+            .find( 'ul.navbar-nav li.bbg_xiv-select_view ul.bbg_xiv-view_menu li.bbg_xiv-view.active a' ).data( 'view' );
+        window.open( bbg_xiv.docUrl + '#view-' + view.toLowerCase(), '_blank' );
+        this.blur();
+        e.preventDefault();
+        // debugger
+    }
+
     jQuery(document).ready(function(){
         const React = mcRrr.React;
         const id    = '10001'
@@ -1490,10 +1523,10 @@ console.log('bbg_xiv-gallery.js:loading...');
                 images.reset(JSON.parse(bbg_xiv[gallery.id+"-data"]));
                 console.log('bbg_xiv-gallery.js:mcRrr.store.dispatch(mcRrr.loadGalleryImages()):dispatching...');
                 mcRrr.store.dispatch(mcRrr.loadGalleryImages(gallery.id, images));
-                window.setTimeout(() => {
-                    console.log('bbg_xiv-gallery.js:mcRrr.store.dispatch(mcRrr..setView("Justified")):dispatching...');
-                    mcRrr.store.dispatch(mcRrr.setView('Justified'));
-                }, 10000);
+                // window.setTimeout(() => {
+                //     console.log('bbg_xiv-gallery.js:mcRrr.store.dispatch(mcRrr..setView("Justified")):dispatching...');
+                //     mcRrr.store.dispatch(mcRrr.setView('Justified'));
+                // }, 10000);
                 // bbg_xiv.renderGallery(gallery,defaultView,["initial"]);
                 // jQuery( gallery ).closest( 'div.bbg_xiv-gallery' ).addClass( 'bbg_xiv-home_gallery' );
                 // jQuery(window).resize();
@@ -1806,6 +1839,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             }
         });
         // wireup the handler for setting options
+/*
         jQuery("button.bbg_xiv-configure").click(function(e){
             divConfigure.find("input#bbg_xiv-carousel_delay").val(bbg_xiv.bbg_xiv_carousel_interval);
             divConfigure.find("input#bbg_xiv-min_image_width").val(bbg_xiv.bbg_xiv_flex_min_width);
@@ -1827,6 +1861,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             inner.show();
             e.preventDefault();
         });
+ */ 
         var divConfigure=jQuery(".bbg_xiv-configure_inner");
         divConfigure.find( 'input[type="number"]#bbg_xiv-max_search_results' ).change(function() {
             // max seems to be broken so fix with javascript
@@ -1893,12 +1928,14 @@ console.log('bbg_xiv-gallery.js:loading...');
             bbg_xiv.resetGallery(jQuery(this).parents("div.bbg_xiv-gallery"));
             e.preventDefault();
         });
+/*
         jQuery("button.bbg_xiv-help").click(function(e){
             var view = jQuery( this ).closest( 'div.navbar-collapse' ).find( 'ul.navbar-nav li.bbg_xiv-select_view ul.bbg_xiv-view_menu li.bbg_xiv-view.active a' ).data( 'view' );
             window.open( bbg_xiv.docUrl + '#view-' + view.toLowerCase(), '_blank' );
             this.blur();
             e.preventDefault();
         });
+ */
         // wireup the handler for scrolling through search results
         jQuery( 'div.bbg_xiv-search_header button.bbg_xiv-search_scroll_left,div.bbg_xiv-search_header button.bbg_xiv-search_scroll_right' ).click(function() {
             var jqThis = jQuery( this );
