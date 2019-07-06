@@ -473,7 +473,8 @@ EOD;
                                 <input type="text" placeholder="{$translations['Search Images on Site']}"
                                         className="form-control" />
                                 <span className="input-group-btn">
-                                    <button type="submit" className="btn btn-default bbg_xiv-search" title="start search">
+                                    <button type="submit" className="btn btn-default bbg_xiv-search" title="start search"
+                                            onClick={e => {bbg_xiv.handleSearchClick.call(e.currentTarget, e)}}>
                                         <span className="glyphicon glyphicon-search"></span>
                                     </button>
                                 </span>

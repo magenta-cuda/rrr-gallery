@@ -1468,7 +1468,8 @@ console.log('bbg_xiv-gallery.js:loading...');
         }
         return defaultView;
     };
-    
+
+/*    
     bbg_xiv.handleSearchResponse = function( r, parms ) {
         let query         = parms.query;
         let page          = parms.page;
@@ -1525,6 +1526,7 @@ console.log('bbg_xiv-gallery.js:loading...');
         liSelectView.find("a.bbg_xiv-selected_view span").text(liFirst.text());
         searchBtn.prop("disabled",false);
     }   // bbg_xiv.handleSearchResponse = function( divGallery, r, parms ) {
+ */
 
     bbg_xiv.handleConfigureClick = function(e) {
         const divConfigure = jQuery(".bbg_xiv-configure_inner");
@@ -1604,6 +1606,71 @@ console.log('bbg_xiv-gallery.js:loading...');
             }, 1000 );
         }
     }
+
+{
+    // TODO: the vars below should be in Redux store.
+    var query;
+    var offset;
+    var page;
+    var count=Number.MAX_SAFE_INTEGER;
+    var pages=Number.MAX_SAFE_INTEGER;
+
+    bbg_xiv.handleSearchClick = function(e) {
+        var searchLimit = parseInt( bbg_xiv.bbg_xiv_max_search_results, 10 );
+        if ( searchLimit > bbg_xiv.wpRestApiMaxPerPage ) {
+            searchLimit = bbg_xiv.wpRestApiMaxPerPage;
+        }
+        var searchBtn=jQuery(this);
+        searchBtn.prop("disabled",true);
+        var divGallery=searchBtn.parents("div.bbg_xiv-gallery").find("div.bbg_xiv-gallery_envelope")[0];
+        var form=searchBtn.parents("form[role='search']");
+        var input=form.find("input[type='text']");
+        var value=input.val();
+        var postData;
+        if(value){
+            // new search
+            query=value;
+            offset=0;
+            page=1;
+            // start new search history
+            bbg_xiv.search[divGallery.id]={history:[],index:-1,done:false};
+        }else if(typeof query==="undefined"){
+            e.preventDefault();
+            return;
+        }
+        // setup headings
+        jQuery("div#"+divGallery.id+"-alt_gallery_heading").hide();
+        var jqueryLoading=true;
+        try {
+            // There is a very rare failure of the following
+            jQuery(divGallery).empty().append(jQuery.mobile.loading("show",{text:"Loading... please wait.",textVisible:true,textonly:false}));
+        } catch ( error) {
+            console.log( error );
+            //console.log("jQuery.mobile.loading._widget=",jQuery.mobile.loading._widget);
+            jQuery(divGallery).empty().append('<h1 class="bbg_xiv-info">Loading... please wait.</h1>');
+            jQuery.mobile.loading._widget=undefined;
+            jqueryLoading=false;
+        }
+        jQuery(divGallery).parent().find("div.bbg_xiv-search_header").hide();
+        // uses the WP REST API
+        // TODO: quick hack to check middleware
+        let parms = {
+            query:         query,
+            page:          page++,
+            searchLimit:   searchLimit,
+            offset:        offset,
+            jqueryLoading: jqueryLoading,
+            // TODO: the references to UI elements divGallery, input and searchBtn will not be needed after these are Reactified
+            //       but for now we need these as action parameters
+            divGallery:    divGallery,
+            input:         input,
+            searchBtn:     searchBtn
+        }
+        window.mcRrr.store.dispatch( mcRrr.getImagesBySearchParms( divGallery.id, parms ) );
+        searchBtn.closest( 'div.bbg_xiv-gallery' ).removeClass( 'bbg_xiv-home_gallery' );
+        e.preventDefault();
+    }
+}
 
     jQuery(document).ready(function(){
         const React = mcRrr.React;
@@ -1793,6 +1860,7 @@ console.log('bbg_xiv-gallery.js:loading...');
                 jQuery(this).blur();
             }
         });
+/*
         jQuery("form.bbg_xiv-search_form button").each(function(){
             var query;
             var offset;
@@ -1851,7 +1919,6 @@ console.log('bbg_xiv-gallery.js:loading...');
                     searchBtn:     searchBtn
                 }
                 window.mcRrr.store.dispatch( mcRrr.getImagesBySearchParms( divGallery.id, parms ) );
-/*
                 var images=bbg_xiv.images[divGallery.id]=new wp.api.collections.Media();
                 images.once("sync",function(){
                     // the sync event will occur once only on the Backbone fetch of the collection
@@ -1882,11 +1949,11 @@ console.log('bbg_xiv-gallery.js:loading...');
                         bbg_xiv.handleSearchResponse(divGallery, false);
                     }
                 });
- */ 
                 searchBtn.closest( 'div.bbg_xiv-gallery' ).removeClass( 'bbg_xiv-home_gallery' );
                 e.preventDefault();
             });
         });
+ */
         jQuery("button.bbg_xiv-home").click(function(e){
             jQuery(this).parents("div.bbg_xiv-bootstrap.bbg_xiv-gallery")
                 .find("nav.bbg_xiv-gallery_navbar ul.nav li.dropdown ul.bbg_xiv-view_menu li > a[data-view='gallery_home']").click();
