@@ -31,9 +31,8 @@ window.mcRrr = {
     setView:                 setView,
     loadGalleryImages:       loadGalleryImages,
     getImagesByGallerySpecs: getImagesByGallerySpecs,
-    getImagesBySearchParms:  getImagesBySearchParms
+    getImagesBySearchParms:  getImagesBySearchParms,
+    CssReducer:              new JqueryProxy().getCssReducer()
 }
-// window.mcRrr must exists before new JqueryProxy() is called.
-window.mcRrr.CssReducer = new JqueryProxy().getCssReducer()
 
 console.log( 'rr-main.js loaded.' )

@@ -44,7 +44,7 @@ class BBG_XIV_Gallery {
     # excerpted from the WordPress function gallery_shortcode() of .../wp-includes/media.php
 
     public static function bb_gallery_shortcode( $attr, $content = '' ) {
-        error_log( 'bb_gallery_shortcode():called' );
+        # error_log( 'bb_gallery_shortcode():called' );
         if (  is_feed( ) || ( is_array( $attr ) && !empty( $attr[ 'mode' ] ) && $attr[ 'mode' ] === 'wordpress' ) ) {
             # invoke the standard WordPress gallery shortcode function
             unset( $attr[ 'mode' ] );
@@ -1038,7 +1038,7 @@ EOD
                 # only emit bb_gallery's styles and scripts if the post content has the bb_gallery shortcode
                 return;
             }
-            error_log( 'ACTION::wp_head():called' );
+            # error_log( 'ACTION::wp_head():called' );
 ?>
 <script src="<?php echo plugins_url( "js/vendors~main.bundle.js",                  __FILE__ ); ?>" type="text/javascript"></script>
 <script src="<?php echo plugins_url( "js/bundle.js",                               __FILE__ ); ?>" type="text/javascript"></script>

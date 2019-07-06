@@ -14,7 +14,7 @@ This is a hybrid solution. Basically I have divided the state of the application
 2. The class and style attributes of DOM elements
 
 Changes to the state in domain 1 are handled by React/Redux. Changes to the state in domain 2 are handled directly by JavaScript.
-However, I have tried to duplicate the reducer feature of React for changes in domain 2 by forcing those changes to pass through
+However, I have tried to duplicate the reducer feature of Redux for changes in domain 2 by forcing those changes to pass through
 my CSS reducer - CssReducer. This was implemented by monkey patching the addClass(), removeClass(), toggleClass() and css() methods
 of jQuery to wrappers in my CssReducer. Thus my CssReducer provides a single point for logging and debugging all changes to the
 class and style attributes of DOM elements.

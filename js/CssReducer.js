@@ -1,4 +1,4 @@
-// An advantage of React is that all changes to state are handled by the reducer.
+// An advantage of Redux is that all changes to state are handled by the reducer.
 // CssReducer handles all className and CSS changes to HTML elements - i.e.
 // works like React setState except for class names and CSS attributes. This
 // provides a single point for logging and debugging changes to class names and 
@@ -51,45 +51,31 @@ export class CssReducer {
             this.jqueryToggleClass       = jQuery.prototype.toggleClass
         }
     }
-    addClass($elements, className) {
+    doClass(method, name, $elements, className) {
         if (this.classNameRegEx && this.classNameRegEx.test(className)) {
             debugger
         }
-        console.log('ADD-CLASS:before')
+        console.log(name + ':before')
         CssReducer.printElements($elements)
-        this.jqueryAddClass.call($elements, className)
-        console.log('ADD-CLASS:after')
+        method.call($elements, className)
+        console.log(name + ':after')
         CssReducer.printElements($elements)
         // support chaining
         return $elements
+    }
+    addClass($elements, className) {
+        return this.doClass(this.jqueryAddClass, 'ADD-CLASS', $elements, className)
     }
     removeClass($elements, className) {
-        if (this.classNameRegEx && this.classNameRegEx.test(className)) {
-            debugger
-        }
-        console.log('REMOVE-CLASS:before')
-        CssReducer.printElements($elements)
-        this.jqueryRemoveClass.call($elements, className)
-        console.log('REMOVE-CLASS:after')
-        CssReducer.printElements($elements)
-        // support chaining
-        return $elements
+        return this.doClass(this.jqueryRemoveClass, 'REMOVE-CLASS', $elements, className)
     }
     toggleClass($elements, className) {
-        if (this.classNameRegEx && this.classNameRegEx.test(className)) {
-            debugger
-        }
-        console.log('TOGGLE-CLASS:before')
-        CssReducer.printElements($elements)
-        this.jqueryToggleClass.call($elements, className)
-        console.log('TOGGLE-CLASS:after')
-        CssReducer.printElements($elements)
-        // support chaining
-        return $elements
+        return this.doClass(this.jqueryToggleClass, 'TOGGLE-CLASS', $elements, className)
     }
     static printElements($element) {
         $element.each(function(i) {
             if (i === this.max) {
+                console.log('    .....')
                 return false
             }
             console.log(`    ${i}: "${this.className}"`)
