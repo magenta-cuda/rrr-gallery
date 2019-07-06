@@ -33,6 +33,9 @@
  * course the major disadvantage is the logic isn't as structured but I think it will be reasonably
  * understandable. The other reason is the original BB Gallery was written that way and I am too lazy
  * to rewrite all that code.
+ *
+ * An advantage of React is that all changes to state are handled by the reducer. I have tried to
+ * do this for CSS by handling all changes to CSS by a CSS reducer - CssReducer. 
  */
  
 console.log('bbg_xiv-gallery.js:loading...');
@@ -1566,11 +1569,11 @@ console.log('bbg_xiv-gallery.js:loading...');
             var $caption = $figure.find( 'figcaption' );
             if ( $galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
                 $caption.hide( 1000 );
-                $galleryContainer.removeClass( 'bbg_xiv-caption_visible' );
+                mcRrr.CssReducer.removeClass($galleryContainer, 'bbg_xiv-caption_visible')
                 $this.attr( 'title', bbg_xiv_lang['show titles'] );
             } else {
                 $caption.show( 1000 );
-                $galleryContainer.addClass( 'bbg_xiv-caption_visible' );
+                mcRrr.CssReducer.addClass($galleryContainer, 'bbg_xiv-caption_visible')
                 $this.attr( 'title', bbg_xiv_lang['hide titles'] );
             }
             if ( $container.hasClass( 'bbg_xiv-contain' ) ) {
