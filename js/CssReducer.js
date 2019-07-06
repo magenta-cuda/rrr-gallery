@@ -17,20 +17,20 @@ export class JqueryProxy {
         jQuery.prototype.addClass    = this.addClass
         jQuery.prototype.removeClass = this.removeClass
         jQuery.prototype.toggleClass = this.toggleClass
-        this.cssReducer = new CssReducer(max, classNameRegEx, this)
+        this.cssReducer              = new CssReducer(max, classNameRegEx, this)
+        JqueryProxy.cssReducer       = this.cssReducer
     }
     addClass(className) {
-        // TODO: window.mcRrr.CssReducer is ugly 
-        return window.mcRrr.CssReducer.addClass.call(window.mcRrr.CssReducer, this, className)
+        return JqueryProxy.cssReducer.addClass.call(JqueryProxy.cssReducer, this, className)
     }
     removeClass(className) {
-        return window.mcRrr.CssReducer.removeClass.call(window.mcRrr.CssReducer, this, className)
+        return JqueryProxy.cssReducer.removeClass.call(JqueryProxy.cssReducer, this, className)
     }
     toggleClass(className) {
-        return window.mcRrr.CssReducer.toggleClass.call(window.mcRrr.CssReducer, this, className)
+        return JqueryProxy.cssReducer.toggleClass.call(JqueryProxy.cssReducer, this, className)
     }
     getCssReducer() {
-        return this.cssReducer;
+        return this.cssReducer
     }
 }
 
@@ -39,7 +39,7 @@ export class CssReducer {
         this.max                     = max
         this.classNameRegEx          = classNameRegEx
         // this.jquery*Class methods must reference the real jQuery.*Class methods
-        // This is neccessary as I want to support the original interface i.e.,
+        // The if is is neccessary as I want to support the original interface i.e.,
         // directly calling the cssReducer.*Class methods
         if (jqueryProxy) {
             this.jqueryAddClass          = jqueryProxy.jqueryAddClass
