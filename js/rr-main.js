@@ -11,7 +11,7 @@ import Frame from './components/Frame.js'
 //import NavBar from './containers/NavBar.js'
 import DevTools from './containers/DevTools.js'
 import {getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages, setView} from './actions/index.js'
-import CssReducer from './CssReducer.js'
+import {CssReducer, JqueryProxy} from './CssReducer.js'
 
 console.log( 'rr-main.js loading...' )
 
@@ -31,7 +31,9 @@ window.mcRrr = {
     setView:                 setView,
     loadGalleryImages:       loadGalleryImages,
     getImagesByGallerySpecs: getImagesByGallerySpecs,
-    getImagesBySearchParms:  getImagesBySearchParms,
-    CssReducer:              new CssReducer()
+    getImagesBySearchParms:  getImagesBySearchParms
 }
+// window.mcRrr must exists before new JqueryProxy() is called.
+window.mcRrr.CssReducer = new JqueryProxy().getCssReducer()
+
 console.log( 'rr-main.js loaded.' )

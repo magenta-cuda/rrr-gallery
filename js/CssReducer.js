@@ -6,23 +6,60 @@
 //
 // The $elements argument should be a jQuery object.
 //
-// TODO: This is not the best way - better to monkey patch jQuery's addClass,
-// removeClass, toogleClass methods.
+// JqueryProxy monkey patches jQuery's addClass, removeClass and toggleClass methods
+// to call CssReducer's addClass, removeClass and toggleClass methods.
 
-export default class CssReducer {
+export class JqueryProxy {
     constructor(max = 4, classNameRegEx = null) {
-        this.max            = max
-        this.classNameRegEx = classNameRegEx
+        this.jqueryAddClass          = jQuery.prototype.addClass
+        this.jqueryRemoveClass       = jQuery.prototype.removeClass
+        this.jqueryToggleClass       = jQuery.prototype.toggleClass
+        jQuery.prototype.addClass    = this.addClass
+        jQuery.prototype.removeClass = this.removeClass
+        jQuery.prototype.toggleClass = this.toggleClass
+        this.cssReducer = new CssReducer(max, classNameRegEx, this)
+    }
+    addClass(className) {
+        // TODO: window.mcRrr.CssReducer is ugly 
+        return window.mcRrr.CssReducer.addClass.call(window.mcRrr.CssReducer, this, className)
+    }
+    removeClass(className) {
+        return window.mcRrr.CssReducer.removeClass.call(window.mcRrr.CssReducer, this, className)
+    }
+    toggleClass(className) {
+        return window.mcRrr.CssReducer.toggleClass.call(window.mcRrr.CssReducer, this, className)
+    }
+    getCssReducer() {
+        return this.cssReducer;
+    }
+}
+
+export class CssReducer {
+    constructor(max = 4, classNameRegEx = null, jqueryProxy = null) {
+        this.max                     = max
+        this.classNameRegEx          = classNameRegEx
+        // this.jquery*Class methods must reference the real jQuery.*Class methods
+        // This is neccessary as I want to support the original interface i.e.,
+        // directly calling the cssReducer.*Class methods
+        if (jqueryProxy) {
+            this.jqueryAddClass          = jqueryProxy.jqueryAddClass
+            this.jqueryRemoveClass       = jqueryProxy.jqueryRemoveClass
+            this.jqueryToggleClass       = jqueryProxy.jqueryToggleClass
+        } else {
+            this.jqueryAddClass          = jQuery.prototype.addClass
+            this.jqueryRemoveClass       = jQuery.prototype.removeClass
+            this.jqueryToggleClass       = jQuery.prototype.toggleClass
+        }
     }
     addClass($elements, className) {
         if (this.classNameRegEx && this.classNameRegEx.test(className)) {
             debugger
         }
         console.log('ADD-CLASS:before')
-        this.printElements($elements)
-        $elements.addClass(className)
+        CssReducer.printElements($elements)
+        this.jqueryAddClass.call($elements, className)
         console.log('ADD-CLASS:after')
-        this.printElements($elements)
+        CssReducer.printElements($elements)
         // support chaining
         return $elements
     }
@@ -31,10 +68,10 @@ export default class CssReducer {
             debugger
         }
         console.log('REMOVE-CLASS:before')
-        this.printElements($elements)
-        $elements.removeClass(className)
+        CssReducer.printElements($elements)
+        this.jqueryRemoveClass.call($elements, className)
         console.log('REMOVE-CLASS:after')
-        this.printElements($elements)
+        CssReducer.printElements($elements)
         // support chaining
         return $elements
     }
@@ -43,14 +80,14 @@ export default class CssReducer {
             debugger
         }
         console.log('TOGGLE-CLASS:before')
-        this.printElements($elements)
-        $elements.toggleClass(className)
+        CssReducer.printElements($elements)
+        this.jqueryToggleClass.call($elements, className)
         console.log('TOGGLE-CLASS:after')
-        this.printElements($elements)
+        CssReducer.printElements($elements)
         // support chaining
         return $elements
     }
-    printElements($element) {
+    static printElements($element) {
         $element.each(function(i) {
             if (i === this.max) {
                 return false

@@ -1568,7 +1568,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             var $caption = $figure.find( 'figcaption' );
             if ( $galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
                 $caption.hide( 1000 );
-                mcRrr.CssReducer.removeClass($galleryContainer, 'bbg_xiv-caption_visible')
+                $galleryContainer.removeClass('bbg_xiv-caption_visible')
                 $this.attr( 'title', bbg_xiv_lang['show titles'] );
             } else {
                 $caption.show( 1000 );
