@@ -168,9 +168,8 @@ console.log('bbg_xiv-gallery.js:loading...');
             });
         }
  */
-        // const $galleryContainer = $flexContainer.closest('div.bbg_xiv-gallery').addClass('bbg_xiv-caption_visible')
-        // TODO: caption visible shoul be default
-        const $galleryContainer = $flexContainer.closest('div.bbg_xiv-gallery').removeClass('bbg_xiv-caption_visible')
+        const $galleryContainer = mcRrr.CssReducer.addClass($flexContainer.closest('div.bbg_xiv-gallery'),'bbg_xiv-caption_visible')
+        // const $galleryContainer = mcRrr.CssReducer.removeClass($flexContainer.closest('div.bbg_xiv-gallery'),'bbg_xiv-caption_visible')
         $galleryContainer.find('button.bbg_xiv-titles').attr('title', bbg_xiv_lang['hide titles'])
         // flip display state of caption on hover
         $flexContainer.find("div.bbg_xiv-dense_full_btn").hover(
@@ -402,7 +401,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             });
             justifiedContainer.addClass( window.matchMedia( '(max-aspect-ratio:1/1)' ).matches ? 'bbg_xiv-portrait' : 'bbg_xiv-landscape' );
         }
-        var galleryContainer = justifiedContainer.closest( 'div.bbg_xiv-gallery' ).removeClass( 'bbg_xiv-caption_visible' );
+        var galleryContainer = mcRrr.CssReducer.removeClass(justifiedContainer.closest('div.bbg_xiv-gallery'), 'bbg_xiv-caption_visible')
         galleryContainer.find( 'button.bbg_xiv-titles' ).attr( 'title',  bbg_xiv_lang['show captions'] );
         // if CC has been set to visible then override Justified Gallery's hover handlers
         justifiedContainer.find("div.bbg_xiv-justified_gallery div.bbg_xiv-justified_item").each(function(){
@@ -1589,10 +1588,10 @@ console.log('bbg_xiv-gallery.js:loading...');
         $container = $galleryContainer.find( 'div.bbg_xiv-justified_container' );
         if ( $container.length ) {
             if ( $galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
-                $galleryContainer.removeClass( 'bbg_xiv-caption_visible' );
+                mcRrr.CssReducer.removeClass($galleryContainer, 'bbg_xiv-caption_visible')
                 $this.attr( 'title', bbg_xiv_lang['show captions'] );
             } else {
-                $galleryContainer.addClass( 'bbg_xiv-caption_visible' );
+                mcRrr.CssReducer.addClass($galleryContainer, 'bbg_xiv-caption_visible')
                 $this.attr( 'title', bbg_xiv_lang['hide captions'] );
             }
             window.setTimeout( function() {

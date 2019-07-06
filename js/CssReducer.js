@@ -5,25 +5,51 @@
 // CSS attributes.
 //
 // The $elements argument should be a jQuery object.
+//
+// TODO: This is not the best way - better to monkey patch jQuery's addClass,
+// removeClass, toogleClass methods.
 
 export default class CssReducer {
-    constructor(max = 4) {
-        this.max = max
+    constructor(max = 4, classNameRegEx = null) {
+        this.max            = max
+        this.classNameRegEx = classNameRegEx
     }
     addClass($elements, className) {
-        console.log('ADDCLASS:before')
+        if (this.classNameRegEx && this.classNameRegEx.test(className)) {
+            debugger
+        }
+        console.log('ADD-CLASS:before')
         this.printElements($elements)
         $elements.addClass(className)
-        console.log('ADDCLASS:after')
-         this.printElements($elements)
+        console.log('ADD-CLASS:after')
+        this.printElements($elements)
+        // support chaining
+        return $elements
     }
     removeClass($elements, className) {
-        console.log('REMOVECLASS:before')
+        if (this.classNameRegEx && this.classNameRegEx.test(className)) {
+            debugger
+        }
+        console.log('REMOVE-CLASS:before')
         this.printElements($elements)
         $elements.removeClass(className)
-        console.log('REMOVECLASS:after')
+        console.log('REMOVE-CLASS:after')
         this.printElements($elements)
-     }
+        // support chaining
+        return $elements
+    }
+    toggleClass($elements, className) {
+        if (this.classNameRegEx && this.classNameRegEx.test(className)) {
+            debugger
+        }
+        console.log('TOGGLE-CLASS:before')
+        this.printElements($elements)
+        $elements.toggleClass(className)
+        console.log('TOGGLE-CLASS:after')
+        this.printElements($elements)
+        // support chaining
+        return $elements
+    }
     printElements($element) {
         $element.each(function(i) {
             if (i === this.max) {
