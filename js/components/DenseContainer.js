@@ -6,7 +6,7 @@ class DenseContainer extends React.Component {
         this.container = null
     }
     render() {
-        const {images: collection, mode} = this.props
+        const {images: collection, mode = 'title'} = this.props
         if ( typeof collection === 'string' ) {
             return <h1>{collection}</h1>
         }
@@ -21,13 +21,15 @@ class DenseContainer extends React.Component {
                     ref={node => {this.container = node}}>
                 <button type="button" id="bbg_xiv-highlight_color"></button>
                 <button type="button" id="bbg_xiv-normal_color"></button>
+                {/* Changes to mode radio button state is handled directly by my JavaScript handler,
+                  * i.e., this is not a change to React's state - it is in state Domain 2 */}
                 <div className="bbg_xiv-dense_button_box">
                     <input type="radio" name="bbg_xiv-dense_li_mode" className="bbg_xiv-dense_li_mode" value="title"
-                            checked={mode === "title"} onChange={()=>alert('title')} />&nbsp;Title&nbsp;&nbsp;&nbsp;&nbsp;
+                            defaultChecked={mode === "title"} />&nbsp;Title&nbsp;&nbsp;&nbsp;&nbsp;
                     <input type="radio" name="bbg_xiv-dense_li_mode" className="bbg_xiv-dense_li_mode" value="caption"
-                            checked={mode === "caption"} onChange={()=>alert('caption')} />&nbsp;Caption&nbsp;&nbsp;&nbsp;&nbsp;
+                            defaultChecked={mode === "caption"}  />&nbsp;Caption&nbsp;&nbsp;&nbsp;&nbsp;
                     <input type="radio" name="bbg_xiv-dense_li_mode" className="bbg_xiv-dense_li_mode" value="alt"
-                            checked={mode === "alt"} onChange={()=>alert('alt')} />&nbsp;Alt
+                            defaultChecked={mode === "alt"}  />&nbsp;Alt
                 </div>
                 <div className="bbg_xiv-dense_right_btns">
                     <button type="button" className="bbg_xiv-dense_info_btn btn" title="get help">
