@@ -4,16 +4,18 @@ export default (state = {}, action) => {
     switch (action.type) {
     case LOAD_GALLERY_IMAGES:{
         console.log('reducers:LOAD_GALLERY_IMAGES:action=', action)
-        // debugger
-        let images = state.images
-        images = {...images, [action.id]: action.images}
+        action.images.id = action.id
+        let images       = state.images
+        images           = {...images, [action.id]: action.images}
         return {...state, images: images}
     }
     case LOAD_SEARCH_IMAGES:{
         console.log('reducers:LOAD_SEARCH_IMAGES:action=', action)
-        window.bbg_xiv.images[action.id] = action.images
-        let images = state.images
-        images = {...images, [action.id]: action.images}
+        // window.bbg_xiv.images[action.id] = action.images
+        action.images.id = action.id
+        let images       = state.images
+        images           = {...images, [action.id]: action.images}
+        // TODO: search also has multi page state
         return {...state, images: images}
     }
     case HANDLE_LOAD_FAILED:

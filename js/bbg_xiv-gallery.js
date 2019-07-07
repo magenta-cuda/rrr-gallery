@@ -1,8 +1,6 @@
 // TODO: Cannot make this into a module as that changes the load order.
 // import { getImagesByGallerySpecs, getImagesBySearchParms } from './actions/index.js'
 
-// Backbone.js Model View Presenter for the 'gallery' shortcode
-
 /*
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -24,6 +22,18 @@
 /*
  * This is a Reactified and Reduxed version of BB Gallery.
  * 
+ * This is a hybrid solution. Basically I have divided the state of the application into two domains:
+ *
+ *    1. The vector of images in the gallery and the view selection
+ *    2. The class and style attributes of DOM elements
+ *
+ * Changes to the state in domain 1 are handled by React/Redux. Changes to the state in domain 2 are
+ * handled directly by JavaScript. However, I have tried to duplicate the reducer feature of Redux
+ * for changes in domain 2 by forcing those changes to pass through my CSS reducer - CssReducer. This
+ * was implemented by monkey patching the addClass(), removeClass(), toggleClass() and css() methods
+ * of jQuery to wrappers in my CssReducer. Thus my CssReducer provides a single point for logging and
+ * debugging all changes to the class and style attributes of DOM elements.
+ * 
  * React Redux primarily handles changes to the image data. Changes to how the images are rendered,
  * e.g. whether captions are visible or not are handled directly by JavaScript code manipulating CSS.
  * I think this is more efficient than keeping CSS state in the store since changes to that CSS state
@@ -33,10 +43,7 @@
  * course the major disadvantage is the logic isn't as structured but I think it will be reasonably
  * understandable. The other reason is the original BB Gallery was written that way and I am too lazy
  * to rewrite all that code.
- *
- * An advantage of React is that all changes to state are handled by the reducer. I have tried to
- * do this for CSS by handling all changes to CSS by a CSS reducer - CssReducer. 
- */
+  */
  
 console.log('bbg_xiv-gallery.js:loading...');
 (function(){
