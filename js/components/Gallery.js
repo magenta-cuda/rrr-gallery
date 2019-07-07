@@ -14,6 +14,7 @@ export default props => {
         Container = JustifiedGalleryContainer
         break
     case 'Tabs':
+        Container = TabsContainer
         break
     case 'Dense':
         Container = DenseContainer

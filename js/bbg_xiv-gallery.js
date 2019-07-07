@@ -285,6 +285,7 @@ console.log('bbg_xiv-gallery.js:loading...');
         container.append(galleryView.render().$el.find( "div.carousel.slide"));
     };
 
+/*
     bbg_xiv.renderTabs=function(container,collection,id){
         var containerWidth=container.width();
         var tabView=new bbg_xiv.ImageView();
@@ -318,7 +319,6 @@ console.log('bbg_xiv-gallery.js:loading...');
     bbg_xiv.renderDense=function(container,collection,id,mode){
         var containerWidth=container.width();
         // TODO: how is containerWidth used?
-/*
         var titleView=new bbg_xiv.ImageView();
         titleView.template=_.template(jQuery("script#bbg_xiv-template_dense_title").html(),null,bbg_xiv.templateOptions);
         var imageView=new bbg_xiv.ImageView();
@@ -347,12 +347,10 @@ console.log('bbg_xiv-gallery.js:loading...');
         galleryView.template=_.template(jQuery("script#bbg_xiv-template_dense_container").html(),null,bbg_xiv.templateOptions);
         container.empty();
         container.append(galleryView.render().$el.find("div.bbg_xiv-dense_container"));
- */
         mcRrr.ReactDOM.render(<DenseContainer images={collection} mode={mode} />, container.get(0) );
     };
-    
+  
     bbg_xiv.renderJustified=function(container,collection){
-/*
         var imageView=new bbg_xiv.ImageView();
         // attach template to imageView not ImageView.prototype since template is specific to imageView
         imageView.template=_.template( jQuery("script#bbg_xiv-template_justified_item").html(),null,bbg_xiv.templateOptions);
@@ -373,7 +371,6 @@ console.log('bbg_xiv-gallery.js:loading...');
         container.empty();
         var justifiedContainer=galleryView.render().$el.find("div.bbg_xiv-justified_container");
         container.append(justifiedContainer);
-*/ 
         // For now we must rerender into a new DOM element because if we rerender into an existing DOM element React will
         // try and diff the React elements of the tree of the existing DOM element against the new React elements. Since,
         // currently the existing DOM element may have changes from non-React actions this will confuse React and it will
@@ -384,6 +381,8 @@ console.log('bbg_xiv-gallery.js:loading...');
         mcRrr.ReactDOM.render( <JustifiedGalleryContainer images={collection} />, container.children().get(0) );
         // bbg_xiv.postRenderJustified( container.find("div.bbg_xiv-justified_container").get(0) );
     }
+ */
+
     bbg_xiv.postRenderJustified=function(container){
         var justifiedContainer = jQuery(container);
         var $justifiedGallery  = justifiedContainer.find( 'div.bbg_xiv-justified_gallery' );
