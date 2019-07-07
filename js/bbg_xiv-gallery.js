@@ -383,6 +383,91 @@ console.log('bbg_xiv-gallery.js:loading...');
     }
  */
 
+    bbg_xiv.postRenderDense = container => {
+        const jqGallery = jQuery(container)
+        jqGallery.find("div.bbg_xiv-dense_images div.bbg_xiv-dense_flex_images div.bbg_xiv-dense_flex_item")
+            .css("width",100/bbg_xiv.bbg_xiv_flex_number_of_dense_view_columns+"%");
+        var normal=jQuery("div.bbg_xiv-dense_container button#bbg_xiv-normal_color").css("background-color");
+        var highlight=jQuery("div.bbg_xiv-dense_container button#bbg_xiv-highlight_color").css("background-color");
+        jqGallery.find("div.bbg_xiv-dense_titles ul li").hover(
+            function() {
+                // highlight matching image
+                jQuery(this).css({"background-color":highlight});
+                var img=jQuery("div#"+this.id.replace("title","image")).css({"border-color":highlight});
+                // scroll images view if matching image is hidden
+                var top=img.position().top;
+                var height=img.height();
+                var bottom=top+height;
+                var div = img.parents( 'div.bbg_xiv-dense_images' );
+                var scrollTop=div.scrollTop();
+                var scrollHeight=div.height();
+                if(top<0){
+                    div.scrollTop(scrollTop+top-scrollHeight/2-height/2);
+                }else if(bottom>scrollHeight){
+                    div.scrollTop(scrollTop+(bottom-scrollHeight)+scrollHeight/2-height/2);
+                }
+            },
+            function() {
+                jQuery(this).css({"background-color":normal});
+                jQuery("div#"+this.id.replace("title","image")).css({"border-color":normal});
+            }
+        );
+        jqGallery.find("div.bbg_xiv-dense_flex_item").hover(
+            function() {
+                jQuery(this).css({"border-color":highlight});
+                // highlight matching title
+                var li=jQuery("li#"+this.id.replace("image","title")).css({"background-color":highlight});
+                // scroll titles view if matching title is hidden
+                var top=li.position().top;
+                var height=li.height();
+                var bottom=top+height;
+                var div = li.parents( 'div.bbg_xiv-dense_titles' );
+                var scrollTop=div.scrollTop();
+                var scrollHeight=div.height();
+                if(top<0){
+                    div.scrollTop(scrollTop+top-scrollHeight/2-height/2);
+                }else if(bottom>scrollHeight){
+                    div.scrollTop(scrollTop+(bottom-scrollHeight)+scrollHeight/2-height/2);
+                }
+            },
+            function() {
+                jQuery(this).css({"border-color":normal});
+                jQuery("li#"+this.id.replace("image","title")).css({"background-color":normal});
+            }
+        );
+        jqGallery.find( 'input.bbg_xiv-dense_li_mode' ).change(function() {
+            // show titles or captions depending on the radio buttons 
+            if(this.checked){
+                var div=jQuery("div.bbg_xiv-dense_container div.bbg_xiv-dense_titles");
+                if(this.value==="title"){
+                    div.find("span.bbg_xiv-dense_li_caption").hide();
+                    div.find("span.bbg_xiv-dense_li_title").show();
+                    div.find("span.bbg_xiv-dense_li_alt").hide();
+                }else if(this.value==="caption"){
+                    div.find("span.bbg_xiv-dense_li_title").hide();
+                    div.find("span.bbg_xiv-dense_li_caption").show();
+                    div.find("span.bbg_xiv-dense_li_alt").hide();
+                }else if(this.value==="alt"){
+                    div.find("span.bbg_xiv-dense_li_title").hide();
+                    div.find("span.bbg_xiv-dense_li_caption").hide();
+                    div.find("span.bbg_xiv-dense_li_alt").show();
+                }
+            }
+        });
+        jqGallery.find( 'button.bbg_xiv-dense_info_btn' ).click( function( e ) {
+            window.open( bbg_xiv.docUrl + '#view-dense', '_blank' );
+            e.preventDefault();      
+        } );
+        jqGallery.find("button.bbg_xiv-dense_close_btn").click(function(e){
+            // restore "Gallery View"
+            bbg_xiv.resetGallery(jQuery(this).parents("div.bbg_xiv-gallery"));
+            jQuery( 'html' ).css( 'overflow-y', '' );
+            e.preventDefault();      
+        });
+        bbg_xiv.constructOverlay(container)
+    }   //     bbg_xiv.postRenderDense = container => {
+
+
     bbg_xiv.postRenderJustified=function(container){
         var justifiedContainer = jQuery(container);
         var $justifiedGallery  = justifiedContainer.find( 'div.bbg_xiv-justified_gallery' );
@@ -514,6 +599,197 @@ console.log('bbg_xiv-gallery.js:loading...');
         return images;
     };
     
+///////
+    bbg_xiv.constructOverlay = container => {
+        const jqGallery = jQuery(container)
+        // gallery or dense view shows a full browser viewport view of an image when its fullscreen glyph is clicked
+        var outer          = jqGallery.find( 'div.bbg_xiv-dense_outer' );
+        var inner          = jqGallery.find( 'div.bbg_xiv-dense_inner' );
+        var $altInner      = jqGallery.find( 'div.bbg_xiv-dense_alt_inner' );
+        var overlayShowing = false;
+        var overlayLocked  = false;
+        var mouseX         = NaN;
+        var mouseY         = NaN;
+        var $caption       = null;
+        function hideOverlay( e ) {
+            if ( ! overlayShowing ) {
+                // ignore events when overlay is transitioning to hide
+                return;
+            }
+            if ( e.type !== 'click' ) {
+                if ( overlayLocked ) {
+                    return;
+                }
+                if ( Math.abs( e.screenX - mouseX ) < 10 && Math.abs( e.screenY - mouseY ) < 10 ) {
+                    // ignore a small mouse movement
+                    return;
+                }
+            } else {
+                if ( ! overlayLocked ) {
+                    // An unlocked overlay must be the alt overlay.
+                    // When the alt overlay is showing from a hover use the first click in the inner to lock the alt overlay.
+                    overlayLocked = true;
+                    $altInner.addClass( 'bbg_xiv-locked' );
+                    return;
+                }
+            }
+            // This is either a click event on a locked overlay or a large mouse move event on an unlocked alt overlay
+            var $inner = jQuery( this );
+            if ( $inner.hasClass( 'bbg_xiv-dense_outer' ) ) {
+                // $inner really is outer so ...
+                $inner = $altInner;
+            }   
+            overlayShowing = overlayLocked = false;
+            $altInner.removeClass( 'bbg_xiv-locked' );
+            mouseX = mouseY = NaN;
+            // fade out and hide overlay
+            $inner.css("opacity","0.0");
+            outer.css("opacity","0.0");
+            // workaround for a bug? in Chrome where navbar is not visible after an overlay is closed
+            var $navbar = jQuery( 'div.bbg_xiv-gallery nav.bbg_xiv-gallery_navbar' ).css( 'opacity', '0.99' );
+            window.setTimeout(function(){
+                $inner.hide();
+                outer.hide();
+                $navbar.css( 'opacity', '1.0' );
+            }, $inner !== $altInner ? 2000 : 500 );
+            // $caption.css( { display: 'block', opacity: '0.7' } );
+        }   // function hideOverlay( e ) {
+        inner.add( $altInner ).click( hideOverlay );
+        outer.add( $altInner ).mousemove( hideOverlay );
+        // when overlay is showing from hover use a click in the outer to lock the overlay
+        outer.click( function( e ) {
+            if ( !overlayLocked ) {
+                // The overlay must be the alt overlay.
+                overlayLocked = true;
+                $altInner.addClass( 'bbg_xiv-locked' );
+            } else {
+                hideOverlay.call( this, e );
+            }
+        } );
+        var fullImg     = inner.find( 'img' );
+        var fullTitle   = inner.find( 'h1.bbg_xiv-dense_title' );
+        var fullCaption = inner.find( 'h1.bbg_xiv-dense_caption' );
+        if( typeof bbg_xiv.titleColor === 'undefined' ) {
+            // save the initial values of title color and shadow as these will be changed
+            bbg_xiv.titleColor  = fullTitle.css( 'color' );
+            bbg_xiv.titleShadow = fullTitle.css( 'text-shadow' );
+        }
+        if ( bbg_xiv.guiInterface === 'mouse' ) {
+            // only show title on mouseover
+            fullImg.hover(
+                function() {
+                    fullTitle.css({   color: bbg_xiv.titleColor, textShadow: bbg_xiv.titleShadow});
+                    fullCaption.css({ color: bbg_xiv.titleColor, textShadow: bbg_xiv.titleShadow});
+                },
+                function() {
+                    fullTitle.css({   color: 'transparent', textShadow: 'none' });
+                    fullCaption.css({ color: 'transparent', textShadow: 'none' });
+                }
+            );
+        }
+        var altOverlayView      = new bbg_xiv.ImageView();
+        altOverlayView.template = _.template( jQuery( 'script#bbg_xiv-template_justified_alt_overlay' ).html(), null, bbg_xiv.templateOptions );
+        function showOverlay( e ) {
+            var $button;
+            if ( this.tagName === 'A' ) {
+                // click from carousel info button
+                $button = jQuery( this );
+            } else if ( this.tagName === 'SPAN' ) {
+                $button = jQuery( this.parentNode );
+            } else {
+                $button = jQuery( this );
+            }
+            if ( parseFloat( $button.closest( 'div.caption' ).css( 'opacity' ) ) < 0.1 ) {
+                // click was on an invisible button so ignore it
+                return;
+            }
+            overlayShowing = true;
+            overlayLocked  = e.type === 'click';
+            mouseX         = e.screenX;
+            mouseY         = e.screenY;
+            $caption       = $button.parent( 'div.caption' );
+            var alt        = $button.hasClass( 'bbg_xiv-carousel_info' ) || $button.hasClass( 'bbg_xiv-dense_alt_btn' );   // use the alternate overlay view
+            if ( alt && overlayLocked ) {
+                $altInner.addClass( 'bbg_xiv-locked' );
+            }
+            var img;
+            // the buttons are of four different types so the associated image is found differently depending on the type
+            if ( $button.hasClass( 'bbg_xiv-carousel_info' ) ) {
+                // click from carousel info button
+                img = $button.closest( 'div.carousel' ).find( 'div.carousel-inner figure.item.active img' )[0];
+            } else if ( $button.hasClass( 'bbg_xiv-dense_from_image' ) ) {
+                img = $button.parents( 'div.bbg_xiv-dense_flex_item' ).find( 'img' )[0];
+            } else if ( $button.hasClass( 'bbg_xiv-dense_from_title' ) ) {
+                img = jQuery( 'div#' + this.parentNode.id.replace( 'title', 'image' ) ).find( 'img' )[0];
+            } else if ( $button.hasClass( 'bbg_xiv-flex_from_image' ) ) {
+                img = $button.parents( 'div.bbg_xiv-flex_item' ).find( 'img' )[0];
+            } else if ( $button.hasClass( 'bbg_xiv-dense_from_justified') ) {
+                img = $button.parents( 'div.bbg_xiv-justified_item' ).find( 'img' )[0];
+            }
+            var data;
+            try {
+                var galleryId=jQuery(img).parents("div[data-bbg_xiv-gallery-id]")[0].dataset.bbg_xivGalleryId;
+                data = bbg_xiv.images[ galleryId ].get( img.dataset.bbg_xivImageId ).attributes;
+                if ( ! alt ) {
+                    fullImg[0].src=bbg_xiv.getSrc(data,"viewport",false);
+                    if(data.bbg_srcset){
+                        fullImg[0].srcset=bbg_xiv.getSrcset(data);
+                    }else{
+                        fullImg[0].removeAttribute("sizes");
+                    }
+                    fullTitle[0].textContent=bbg_xiv.getTitle(data);
+                    fullCaption[0].textContent=bbg_xiv.getCaption(data);
+                } else {
+                    // instantiate the alternate overlay
+                    altOverlayView.model = { attributes: data };
+                    $altInner.find( 'div.bbg_xiv-dense_alt_items' ).html( altOverlayView.render( true ) );
+                    $altInner.find( 'span.bbg_xiv-item_value a' ).click( function( e ) {
+                        // click on a elements should be ignored if the overlay is not locked, propagation will then lock the overlay as expected
+                        if ( ! jQuery( this ).parents( 'div.bbg_xiv-dense_alt_inner' ).hasClass( 'bbg_xiv-locked' ) ) {
+                            e.preventDefault();
+                        }
+                    } );
+                }
+            } catch ( error ) {
+                console.log('##### broken 1');
+                if ( ! alt ) {
+                    fullImg[0].src = img.src;
+                }
+            }
+            // show and fade in overlay
+            outer.show();
+            if ( ! alt ) {
+                // show full image overlay
+                $altInner.hide();
+                inner.show();
+            } else {
+                // show alternate overlay
+                inner.hide();
+                $altInner.show();
+            }
+            if ( bbg_xiv.guiInterface === 'touch' ) {
+                // force hover effects on touchscreen
+                fullTitle.css({   color: bbg_xiv.titleColor, textShadow: bbg_xiv.titleShadow});
+                fullCaption.css({ color: bbg_xiv.titleColor, textShadow: bbg_xiv.titleShadow});
+            }
+            window.setTimeout(function(){
+                ( ! alt ? inner : $altInner ).css( 'opacity', '1.0' );
+                outer.css("opacity","0.93");
+            },100);
+            $caption.css( { display: 'block', opacity: '0.7' } );
+            e.preventDefault();
+            e.stopPropagation();
+        }  // function showOverlay( e ) {
+        jqGallery.find( 'a.bbg_xiv-carousel_info' ).click( function( e ) {
+            pause( this );
+            // show alt overlay
+            showOverlay.call( this, e );
+        } );
+        jqGallery.find( 'button.bbg_xiv-dense_full_btn, button.bbg_xiv-dense_alt_btn' ).click( showOverlay );
+        jqGallery.find( 'button.bbg_xiv-dense_alt_btn span.glyphicon' ).mouseenter( showOverlay );
+    }   //     bbg_xiv.constructOverlay = container => {
+///////
+
     bbg_xiv.renderGallery=function(gallery,view,flags){
         if(!flags){
             flags=[];
@@ -530,193 +806,6 @@ console.log('bbg_xiv-gallery.js:loading...');
         }
         // remember the initial statically loaded gallery so we can efficiently return to it
         bbg_xiv.galleries[gallery.id]=bbg_xiv.galleries[gallery.id]||{images:{"gallery_home":images},view:"gallery_home"};
-        function constructOverlay() {
-            // gallery or dense view shows a full browser viewport view of an image when its fullscreen glyph is clicked
-            var outer          = jqGallery.find( 'div.bbg_xiv-dense_outer' );
-            var inner          = jqGallery.find( 'div.bbg_xiv-dense_inner' );
-            var $altInner      = jqGallery.find( 'div.bbg_xiv-dense_alt_inner' );
-            var overlayShowing = false;
-            var overlayLocked  = false;
-            var mouseX         = NaN;
-            var mouseY         = NaN;
-            var $caption       = null;
-            function hideOverlay( e ) {
-                if ( ! overlayShowing ) {
-                    // ignore events when overlay is transitioning to hide
-                    return;
-                }
-                if ( e.type !== 'click' ) {
-                    if ( overlayLocked ) {
-                        return;
-                    }
-                    if ( Math.abs( e.screenX - mouseX ) < 10 && Math.abs( e.screenY - mouseY ) < 10 ) {
-                        // ignore a small mouse movement
-                        return;
-                    }
-                } else {
-                    if ( ! overlayLocked ) {
-                        // An unlocked overlay must be the alt overlay.
-                        // When the alt overlay is showing from a hover use the first click in the inner to lock the alt overlay.
-                        overlayLocked = true;
-                        $altInner.addClass( 'bbg_xiv-locked' );
-                        return;
-                    }
-                }
-                // This is either a click event on a locked overlay or a large mouse move event on an unlocked alt overlay
-                var $inner = jQuery( this );
-                if ( $inner.hasClass( 'bbg_xiv-dense_outer' ) ) {
-                    // $inner really is outer so ...
-                    $inner = $altInner;
-                }   
-                overlayShowing = overlayLocked = false;
-                $altInner.removeClass( 'bbg_xiv-locked' );
-                mouseX = mouseY = NaN;
-                // fade out and hide overlay
-                $inner.css("opacity","0.0");
-                outer.css("opacity","0.0");
-                // workaround for a bug? in Chrome where navbar is not visible after an overlay is closed
-                var $navbar = jQuery( 'div.bbg_xiv-gallery nav.bbg_xiv-gallery_navbar' ).css( 'opacity', '0.99' );
-                window.setTimeout(function(){
-                    $inner.hide();
-                    outer.hide();
-                    $navbar.css( 'opacity', '1.0' );
-                }, $inner !== $altInner ? 2000 : 500 );
-                // $caption.css( { display: 'block', opacity: '0.7' } );
-            }   // function hideOverlay( e ) {
-            inner.add( $altInner ).click( hideOverlay );
-            outer.add( $altInner ).mousemove( hideOverlay );
-            // when overlay is showing from hover use a click in the outer to lock the overlay
-            outer.click( function( e ) {
-                if ( !overlayLocked ) {
-                    // The overlay must be the alt overlay.
-                    overlayLocked = true;
-                    $altInner.addClass( 'bbg_xiv-locked' );
-                } else {
-                    hideOverlay.call( this, e );
-                }
-            } );
-            var fullImg     = inner.find( 'img' );
-            var fullTitle   = inner.find( 'h1.bbg_xiv-dense_title' );
-            var fullCaption = inner.find( 'h1.bbg_xiv-dense_caption' );
-            if( typeof bbg_xiv.titleColor === 'undefined' ) {
-                // save the initial values of title color and shadow as these will be changed
-                bbg_xiv.titleColor  = fullTitle.css( 'color' );
-                bbg_xiv.titleShadow = fullTitle.css( 'text-shadow' );
-            }
-            if ( bbg_xiv.guiInterface === 'mouse' ) {
-                // only show title on mouseover
-                fullImg.hover(
-                    function() {
-                        fullTitle.css({   color: bbg_xiv.titleColor, textShadow: bbg_xiv.titleShadow});
-                        fullCaption.css({ color: bbg_xiv.titleColor, textShadow: bbg_xiv.titleShadow});
-                    },
-                    function() {
-                        fullTitle.css({   color: 'transparent', textShadow: 'none' });
-                        fullCaption.css({ color: 'transparent', textShadow: 'none' });
-                    }
-                );
-            }
-            var altOverlayView      = new bbg_xiv.ImageView();
-            altOverlayView.template = _.template( jQuery( 'script#bbg_xiv-template_justified_alt_overlay' ).html(), null, bbg_xiv.templateOptions );
-            function showOverlay( e ) {
-                var $button;
-                if ( this.tagName === 'A' ) {
-                    // click from carousel info button
-                    $button = jQuery( this );
-                } else if ( this.tagName === 'SPAN' ) {
-                    $button = jQuery( this.parentNode );
-                } else {
-                    $button = jQuery( this );
-                }
-                if ( parseFloat( $button.closest( 'div.caption' ).css( 'opacity' ) ) < 0.1 ) {
-                    // click was on an invisible button so ignore it
-                    return;
-                }
-                overlayShowing = true;
-                overlayLocked  = e.type === 'click';
-                mouseX         = e.screenX;
-                mouseY         = e.screenY;
-                $caption       = $button.parent( 'div.caption' );
-                var alt        = $button.hasClass( 'bbg_xiv-carousel_info' ) || $button.hasClass( 'bbg_xiv-dense_alt_btn' );   // use the alternate overlay view
-                if ( alt && overlayLocked ) {
-                    $altInner.addClass( 'bbg_xiv-locked' );
-                }
-                var img;
-                // the buttons are of four different types so the associated image is found differently depending on the type
-                if ( $button.hasClass( 'bbg_xiv-carousel_info' ) ) {
-                    // click from carousel info button
-                    img = $button.closest( 'div.carousel' ).find( 'div.carousel-inner figure.item.active img' )[0];
-                } else if ( $button.hasClass( 'bbg_xiv-dense_from_image' ) ) {
-                    img = $button.parents( 'div.bbg_xiv-dense_flex_item' ).find( 'img' )[0];
-                } else if ( $button.hasClass( 'bbg_xiv-dense_from_title' ) ) {
-                    img = jQuery( 'div#' + this.parentNode.id.replace( 'title', 'image' ) ).find( 'img' )[0];
-                } else if ( $button.hasClass( 'bbg_xiv-flex_from_image' ) ) {
-                    img = $button.parents( 'div.bbg_xiv-flex_item' ).find( 'img' )[0];
-                } else if ( $button.hasClass( 'bbg_xiv-dense_from_justified') ) {
-                    img = $button.parents( 'div.bbg_xiv-justified_item' ).find( 'img' )[0];
-                }
-                var data;
-                try {
-                    var galleryId=jQuery(img).parents("div[data-bbg_xiv-gallery-id]")[0].dataset.bbg_xivGalleryId;
-                    data = bbg_xiv.images[ galleryId ].get( img.dataset.bbg_xivImageId ).attributes;
-                    if ( ! alt ) {
-                        fullImg[0].src=bbg_xiv.getSrc(data,"viewport",false);
-                        if(data.bbg_srcset){
-                            fullImg[0].srcset=bbg_xiv.getSrcset(data);
-                        }else{
-                            fullImg[0].removeAttribute("sizes");
-                        }
-                        fullTitle[0].textContent=bbg_xiv.getTitle(data);
-                        fullCaption[0].textContent=bbg_xiv.getCaption(data);
-                    } else {
-                        // instantiate the alternate overlay
-                        altOverlayView.model = { attributes: data };
-                        $altInner.find( 'div.bbg_xiv-dense_alt_items' ).html( altOverlayView.render( true ) );
-                        $altInner.find( 'span.bbg_xiv-item_value a' ).click( function( e ) {
-                            // click on a elements should be ignored if the overlay is not locked, propagation will then lock the overlay as expected
-                            if ( ! jQuery( this ).parents( 'div.bbg_xiv-dense_alt_inner' ).hasClass( 'bbg_xiv-locked' ) ) {
-                                e.preventDefault();
-                            }
-                        } );
-                    }
-                } catch ( error ) {
-                    console.log('##### broken 1');
-                    if ( ! alt ) {
-                        fullImg[0].src = img.src;
-                    }
-                }
-                // show and fade in overlay
-                outer.show();
-                if ( ! alt ) {
-                    // show full image overlay
-                    $altInner.hide();
-                    inner.show();
-                } else {
-                    // show alternate overlay
-                    inner.hide();
-                    $altInner.show();
-                }
-                if ( bbg_xiv.guiInterface === 'touch' ) {
-                    // force hover effects on touchscreen
-                    fullTitle.css({   color: bbg_xiv.titleColor, textShadow: bbg_xiv.titleShadow});
-                    fullCaption.css({ color: bbg_xiv.titleColor, textShadow: bbg_xiv.titleShadow});
-                }
-                window.setTimeout(function(){
-                    ( ! alt ? inner : $altInner ).css( 'opacity', '1.0' );
-                    outer.css("opacity","0.93");
-                },100);
-                $caption.css( { display: 'block', opacity: '0.7' } );
-                e.preventDefault();
-                e.stopPropagation();
-            }  // function showOverlay( e ) {
-            jqGallery.find( 'a.bbg_xiv-carousel_info' ).click( function( e ) {
-                pause( this );
-                // show alt overlay
-                showOverlay.call( this, e );
-            } );
-            jqGallery.find( 'button.bbg_xiv-dense_full_btn, button.bbg_xiv-dense_alt_btn' ).click( showOverlay );
-            jqGallery.find( 'button.bbg_xiv-dense_alt_btn span.glyphicon' ).mouseenter( showOverlay );
-        }   // function constructOverlay() {
         var titlesButton=jqGallery.parents("div.bbg_xiv-gallery").find("nav.navbar button.bbg_xiv-titles").hide();
         switch(view){
         case "Gallery":
@@ -982,9 +1071,11 @@ console.log('bbg_xiv-gallery.js:loading...');
                 });
             }
             break;
+/*
         case "Dense":
             jQuery("html").css("overflow-y","hidden");
             bbg_xiv.renderDense(jqGallery,images,"bbg_xiv-dense_"+gallery.id,"title");
+            // TODO: move to postRenderDense()
             jqGallery.find("div.bbg_xiv-dense_images div.bbg_xiv-dense_flex_images div.bbg_xiv-dense_flex_item")
                 .css("width",100/bbg_xiv.bbg_xiv_flex_number_of_dense_view_columns+"%");
             var normal=jQuery("div.bbg_xiv-dense_container button#bbg_xiv-normal_color").css("background-color");
@@ -1066,6 +1157,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             });
             constructOverlay();
             break;
+ */ 
         // TODO: Add entry for new views here
         case "Table":
             bbg_xiv.renderTable(jqGallery,images);

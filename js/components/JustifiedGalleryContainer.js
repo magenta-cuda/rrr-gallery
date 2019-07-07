@@ -5,8 +5,8 @@ const React = window.mcRrr.React
 
 class JustifiedGalleryContainer extends React.Component {
     constructor(props) {
-        super(props);
-        this.container = null;
+        super(props)
+        this.container = null
     }
     render() {
         // TODO: remove React = - don't need this when we use webpack

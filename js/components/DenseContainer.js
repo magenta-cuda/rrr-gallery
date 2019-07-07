@@ -2,8 +2,8 @@
 
 class DenseContainer extends React.Component {
     constructor(props) {
-        super(props);
-        this.container = null;
+        super(props)
+        this.container = null
     }
     render() {
         const {images: collection, mode} = this.props
