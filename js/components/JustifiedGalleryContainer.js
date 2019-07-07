@@ -21,7 +21,8 @@ class JustifiedGalleryContainer extends React.Component {
         })
         console.log( 'JustifiedGalleryContainer():jsx=', jsx );
         return (
-            <div className="bbg_xiv-container bbg_xiv-justified_container" data-bbg_xiv-gallery-id={collection.id} ref={node => {this.container = node}}>
+            <div className="bbg_xiv-container bbg_xiv-justified_container" data-bbg_xiv-gallery-id={collection.id}
+                    ref={node => {this.container = node}}>
                 <div className="bbg_xiv-justified_gallery">
                     {jsx}
                 </div>
