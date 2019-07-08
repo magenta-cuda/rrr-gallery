@@ -3,7 +3,7 @@
 import React from 'react'
 
 export default props => {
-    let data             = props.data
+    const data           = props.data
     let className        = ''
     let dataGalleryIndex = ''
     if (typeof data.gallery_index !== 'undefined') {

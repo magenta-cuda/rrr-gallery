@@ -203,7 +203,11 @@ console.log('bbg_xiv-gallery.js:loading...');
                 }
             });
         }
-    }
+        bbg_xiv.constructOverlay(container)
+        window.setTimeout(function() {
+            jQuery(window).resize()
+        }, 100)
+    }   // bbg_xiv.postRenderFlexContainer = container => {
 
 /*
     bbg_xiv.renderTiles=function(container,collection,flags){
@@ -606,7 +610,6 @@ console.log('bbg_xiv-gallery.js:loading...');
         return images;
     };
     
-///////
     bbg_xiv.constructOverlay = container => {
         const jqGallery = jQuery(container)
         // gallery or dense view shows a full browser viewport view of an image when its fullscreen glyph is clicked
@@ -795,7 +798,6 @@ console.log('bbg_xiv-gallery.js:loading...');
         jqGallery.find( 'button.bbg_xiv-dense_full_btn, button.bbg_xiv-dense_alt_btn' ).click( showOverlay );
         jqGallery.find( 'button.bbg_xiv-dense_alt_btn span.glyphicon' ).mouseenter( showOverlay );
     }   //     bbg_xiv.constructOverlay = container => {
-///////
 
     bbg_xiv.renderGallery=function(gallery,view,flags){
         if(!flags){
