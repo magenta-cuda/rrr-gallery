@@ -699,7 +699,10 @@ console.log('bbg_xiv-gallery.js:loading...');
         }
         var altOverlayView      = new bbg_xiv.ImageView();
         altOverlayView.template = _.template( jQuery( 'script#bbg_xiv-template_justified_alt_overlay' ).html(), null, bbg_xiv.templateOptions );
-        function showOverlay( e ) {
+        function showOverlay(e, alt = null, img = null, data = null) {
+            console.log('showOverlay():alt=', alt, 'img=', img, 'data=', data)
+            // TODO: alt and img code can be set in a click handler which would then call showOverlay(e, alt, img, data)
+            // TODO: Is img necessary if data is provided?
             var $button;
             if ( this.tagName === 'A' ) {
                 // click from carousel info button
@@ -718,23 +721,26 @@ console.log('bbg_xiv-gallery.js:loading...');
             mouseX         = e.screenX;
             mouseY         = e.screenY;
             $caption       = $button.parent( 'div.caption' );
-            var alt        = $button.hasClass( 'bbg_xiv-carousel_info' ) || $button.hasClass( 'bbg_xiv-dense_alt_btn' );   // use the alternate overlay view
+            // alt selects the alternate overlay view
+            alt            = alt !== null ? alt
+                                          : $button.hasClass('bbg_xiv-carousel_info') || $button.hasClass('bbg_xiv-dense_alt_btn')
             if ( alt && overlayLocked ) {
                 $altInner.addClass( 'bbg_xiv-locked' );
             }
-            var img;
-            // the buttons are of four different types so the associated image is found differently depending on the type
-            if ( $button.hasClass( 'bbg_xiv-carousel_info' ) ) {
-                // click from carousel info button
-                img = $button.closest( 'div.carousel' ).find( 'div.carousel-inner figure.item.active img' )[0];
-            } else if ( $button.hasClass( 'bbg_xiv-dense_from_image' ) ) {
-                img = $button.parents( 'div.bbg_xiv-dense_flex_item' ).find( 'img' )[0];
-            } else if ( $button.hasClass( 'bbg_xiv-dense_from_title' ) ) {
-                img = jQuery( 'div#' + this.parentNode.id.replace( 'title', 'image' ) ).find( 'img' )[0];
-            } else if ( $button.hasClass( 'bbg_xiv-flex_from_image' ) ) {
-                img = $button.parents( 'div.bbg_xiv-flex_item' ).find( 'img' )[0];
-            } else if ( $button.hasClass( 'bbg_xiv-dense_from_justified') ) {
-                img = $button.parents( 'div.bbg_xiv-justified_item' ).find( 'img' )[0];
+            if (img === null) {
+                // the buttons are of four different types so the associated image is found differently depending on the type
+                if ( $button.hasClass( 'bbg_xiv-carousel_info' ) ) {
+                    // click from carousel info button
+                    img = $button.closest( 'div.carousel' ).find( 'div.carousel-inner figure.item.active img' )[0];
+                } else if ( $button.hasClass( 'bbg_xiv-dense_from_image' ) ) {
+                    img = $button.parents( 'div.bbg_xiv-dense_flex_item' ).find( 'img' )[0];
+                } else if ( $button.hasClass( 'bbg_xiv-dense_from_title' ) ) {
+                    img = jQuery( 'div#' + this.parentNode.id.replace( 'title', 'image' ) ).find( 'img' )[0];
+                } else if ( $button.hasClass( 'bbg_xiv-flex_from_image' ) ) {
+                    img = $button.parents( 'div.bbg_xiv-flex_item' ).find( 'img' )[0];
+                } else if ( $button.hasClass( 'bbg_xiv-dense_from_justified') ) {
+                    img = $button.parents( 'div.bbg_xiv-justified_item' ).find( 'img' )[0];
+                }
             }
             var data;
             try {
@@ -790,13 +796,16 @@ console.log('bbg_xiv-gallery.js:loading...');
             e.preventDefault();
             e.stopPropagation();
         }  // function showOverlay( e ) {
+        bbg_xiv.showOverlay = showOverlay;
         jqGallery.find( 'a.bbg_xiv-carousel_info' ).click( function( e ) {
             pause( this );
             // show alt overlay
             showOverlay.call( this, e );
         } );
-        jqGallery.find( 'button.bbg_xiv-dense_full_btn, button.bbg_xiv-dense_alt_btn' ).click( showOverlay );
-        jqGallery.find( 'button.bbg_xiv-dense_alt_btn span.glyphicon' ).mouseenter( showOverlay );
+        if (!jqGallery.hasClass('bbg_xiv-flex_container')) {
+            jqGallery.find( 'button.bbg_xiv-dense_full_btn, button.bbg_xiv-dense_alt_btn' ).click( showOverlay );
+            jqGallery.find( 'button.bbg_xiv-dense_alt_btn span.glyphicon' ).mouseenter( showOverlay );
+        }
     }   //     bbg_xiv.constructOverlay = container => {
 
     bbg_xiv.renderGallery=function(gallery,view,flags){
