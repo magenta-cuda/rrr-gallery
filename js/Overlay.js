@@ -31,6 +31,13 @@ class Overlay extends React.Component {
         console.log('Overlay:', error)
         return {}
     }
+    componentDidMount() {
+        if(typeof bbg_xiv.titleColor === 'undefined') {
+            // save the initial values of title color and shadow as these will be changed
+            bbg_xiv.titleColor  = jQuery(this.title).css('color')
+            bbg_xiv.titleShadow = jQuery(this.title).css('text-shadow')
+        }
+    }
     connect(container) {
         // TODO: connect() still needs reactification
         const $container = jQuery(container)
@@ -49,11 +56,6 @@ class Overlay extends React.Component {
                 hideOverlay.call( this, e );
             }
         } );
-        if( typeof bbg_xiv.titleColor === 'undefined' ) {
-            // save the initial values of title color and shadow as these will be changed
-            bbg_xiv.titleColor  = fullTitle.css( 'color' );
-            bbg_xiv.titleShadow = fullTitle.css( 'text-shadow' );
-        }
     }   // connect(container) {
     showOverlay(e, alt = null, img = null, data = null) {
         console.log('Overlay::showOverlay():alt=', alt, 'img=', img, 'data=', data)
@@ -161,15 +163,17 @@ class Overlay extends React.Component {
         return (
             <div style={{display: data === null ? 'none' : 'block'}}>
                 {/* Full Browser Viewport View of an Image */}
-                <div className="bbg_xiv-dense_outer" style={{display: data ? 'block' : 'none'}} ref={node => {this.outer = node}} />
+                <div className="bbg_xiv-dense_outer" style={{display: data ? 'block' : 'none'}}
+                        ref={node => {this.outer = node}} />
                 <div className="bbg_xiv-dense_inner" style={{display: data && !alt ? 'block' : 'none'}}
                         ref={node => {this.inner = node}}>
                     <button className="bbg_xiv-dense_close"><span className="glyphicon glyphicon-remove"></span></button>
                     <h1 className="bbg_xiv-dense_title" ref={node => {this.title = node}}>
                         {!alt && data ? bbg_xiv.getTitle(data) : ''}
                     </h1>
-                    <img className="img-rounded bbg_xiv-img_overlay" src={data && !alt ? bbg_xiv.getSrc(data,"viewport", false) : ''}
-                            srcSet={srcSet} sizes={sizes} onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut} />
+                    <img className="img-rounded bbg_xiv-img_overlay"
+                            src={data && !alt ? bbg_xiv.getSrc(data,"viewport", false) : ''} srcSet={srcSet} sizes={sizes}
+                            onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut} />
                     <h1 className="bbg_xiv-dense_caption" ref={node => {this.caption = node}}>
                         {!alt && data ? bbg_xiv.getCaption(data) : ''}
                     </h1>
