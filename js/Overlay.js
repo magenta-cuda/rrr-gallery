@@ -28,7 +28,7 @@ class Overlay extends React.Component {
         window.bbg_xiv.showOverlay   = this.showOverlay.bind(this)
     }
     static getDerivedStateFromError(error) {
-        console.log('JustifiedGalleryItem:', error)
+        console.log('Overlay:', error)
         return {}
     }
     connect(container) {
@@ -66,13 +66,11 @@ class Overlay extends React.Component {
         this.mouseX         = e.screenX;
         this.mouseY         = e.screenY;
         // this.$caption       = $button.parent( 'div.caption' );   // $caption is not in the overlay but in the view
-        if ( alt && overlayLocked ) {
+        if ( alt && this.overlayLocked ) {
             jQuery(this.altInner).addClass( 'bbg_xiv-locked' );
         }
-        if ( alt ) {
+        if ( alt && false ) { // TODO:
             // instantiate the alternate overlay
-            altOverlayView.model = { attributes: data };
-            $altInner.find( 'div.bbg_xiv-dense_alt_items' ).html( altOverlayView.render( true ) );
             $altInner.find( 'span.bbg_xiv-item_value a' ).click( function( e ) {
                 // click on a elements should be ignored if the overlay is not locked, propagation will then lock the overlay as expected
                 if ( ! jQuery( this ).parents( 'div.bbg_xiv-dense_alt_inner' ).hasClass( 'bbg_xiv-locked' ) ) {
@@ -87,7 +85,7 @@ class Overlay extends React.Component {
             fullCaption.css({ color: bbg_xiv.titleColor, textShadow: bbg_xiv.titleShadow});
         }
         window.setTimeout(() => {
-            (!alt ? jQuery(this.inner) : jQuery(this.altInner )).css( 'opacity', '1.0' )
+            (!alt ? jQuery(this.inner) : jQuery(this.altInner)).css('opacity', '1.0')
             jQuery(this.outer).css("opacity","0.93");
         }, 100)
         // this.$caption.css( { display: 'block', opacity: '0.7' } );   // $caption is not in the overlay but in the view
@@ -151,31 +149,39 @@ class Overlay extends React.Component {
         }
     }
     render() {
-        const alt    = this.state.alt
-        const data   = this.state.data
-        const srcSet = !alt && data && data.bbg_srcset ? bbg_xiv.getSrcset(data)                  : ''
-        const sizes  = !alt && data && data.bbg_srcset ? bbg_xiv.getSizes(null,'viewport', false) : ''
+        const alt     = this.state.alt
+        const data    = this.state.data
+        const srcSet  = !alt && data && data.bbg_srcset ? bbg_xiv.getSrcset(data)                  : ''
+        const sizes   = !alt && data && data.bbg_srcset ? bbg_xiv.getSizes(null,'viewport', false) : ''
+        let   altHtml = {__html: ''}
+        if (alt) {
+            this.altOverlayView.model = {attributes: data}
+            altHtml                   = {__html: this.altOverlayView.render(true)}
+        }
         return (
             <div style={{display: data === null ? 'none' : 'block'}}>
                 {/* Full Browser Viewport View of an Image */}
-                <div className="bbg_xiv-dense_outer">
-                </div>
-                <div className="bbg_xiv-dense_inner" style={{display: alt ? 'none' : 'block'}} ref={node => {this.inner = node}}>
+                <div className="bbg_xiv-dense_outer" style={{display: data ? 'block' : 'none'}} ref={node => {this.outer = node}} />
+                <div className="bbg_xiv-dense_inner" style={{display: data && !alt ? 'block' : 'none'}}
+                        ref={node => {this.inner = node}}>
                     <button className="bbg_xiv-dense_close"><span className="glyphicon glyphicon-remove"></span></button>
                     <h1 className="bbg_xiv-dense_title" ref={node => {this.title = node}}>
                         {!alt && data ? bbg_xiv.getTitle(data) : ''}
                     </h1>
-                    <img className="img-rounded bbg_xiv-img_overlay" src={!alt && data ? bbg_xiv.getSrc(data,"viewport", false) : ''}
+                    <img className="img-rounded bbg_xiv-img_overlay" src={data && !alt ? bbg_xiv.getSrc(data,"viewport", false) : ''}
                             srcSet={srcSet} sizes={sizes} onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut} />
                     <h1 className="bbg_xiv-dense_caption" ref={node => {this.caption = node}}>
                         {!alt && data ? bbg_xiv.getCaption(data) : ''}
                     </h1>
                 </div>
-                <div className="bbg_xiv-dense_alt_inner"  style={{display: alt ? 'block' : 'none'}} ref={node => {this.altInner = node}}>
-                    <span className="bbg_xiv-click_to_lock_comment">{bbg_xiv_lang['Click anywhere to lock the display of this popup.']}</span>
+                <div className="bbg_xiv-dense_alt_inner" style={{display: data && alt ? 'block' : 'none'}}
+                        ref={node => {this.altInner = node}}>
+                    <span className="bbg_xiv-click_to_lock_comment">
+                        {bbg_xiv_lang['Click anywhere to lock the display of this popup.']}
+                    </span>
                     <span>&nbsp;</span>
                     <button className="bbg_xiv-dense_close"><span className="glyphicon glyphicon-remove"></span></button>
-                    <div className="bbg_xiv-dense_alt_items"></div>
+                    <div className="bbg_xiv-dense_alt_items" dangerouslySetInnerHTML={altHtml} />
                 </div>
             </div>
         )
