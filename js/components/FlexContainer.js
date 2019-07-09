@@ -25,6 +25,7 @@ export default class FlexContainer extends React.Component {
                 <div className="bbg_xiv-flex_footer"></div>
                 {/* Full Browser Viewport View of an Image */}
                 <div className="mc-rrr-react-overlay-root" />
+{/*
                 <div className="bbg_xiv-dense_outer">
                 </div>
                 <div className="bbg_xiv-dense_inner">
@@ -39,6 +40,7 @@ export default class FlexContainer extends React.Component {
                     <button className="bbg_xiv-dense_close"><span className="glyphicon glyphicon-remove"></span></button>
                     <div className="bbg_xiv-dense_alt_items"></div>
                 </div>
+*/}
             </div>
         )
     }

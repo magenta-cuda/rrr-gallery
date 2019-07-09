@@ -50,6 +50,8 @@ class DenseContainer extends React.Component {
                     </div>
                 </div>
                 {/* Full Browser Viewport View of an Image */}
+                <div className="mc-rrr-react-overlay-root" />
+{/*
                 <div className="bbg_xiv-dense_outer">
                 </div>
                 <div className="bbg_xiv-dense_inner">
@@ -58,6 +60,7 @@ class DenseContainer extends React.Component {
                     <img className="img-rounded bbg_xiv-img_overlay" sizes={bbg_xiv.getSizes(null,'viewport',false)} />
                     <h1 className="bbg_xiv-dense_caption"></h1>
                 </div>
+*/}
             </div>
         )
     }

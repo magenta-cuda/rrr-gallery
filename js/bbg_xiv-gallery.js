@@ -43,7 +43,10 @@
  * course the major disadvantage is the logic isn't as structured but I think it will be reasonably
  * understandable. The other reason is the original BB Gallery was written that way and I am too lazy
  * to rewrite all that code.
-  */
+ *
+ * The Overlay is a React component but it is not part of the main React Redux tree. It is rendered
+ * independently with its own DOM root.
+ */
 
 /* MUCH OF THE CODE IN THIS FILE IS NOW DEAD CODE */
  
@@ -478,7 +481,8 @@ console.log('bbg_xiv-gallery.js:loading...');
             jQuery( 'html' ).css( 'overflow-y', '' );
             e.preventDefault();      
         });
-        bbg_xiv.constructOverlay(container)
+        // bbg_xiv.constructOverlay(container)
+        mcRrr.ReactDOM.render(<Overlay />, jQuery(container).find('div.mc-rrr-react-overlay-root').get(0))
     }   //     bbg_xiv.postRenderDense = container => {
 
 
@@ -533,7 +537,8 @@ console.log('bbg_xiv-gallery.js:loading...');
           } );
         });
         // titlesButton.show();
-        bbg_xiv.constructOverlay(container)
+        // bbg_xiv.constructOverlay(container)
+        mcRrr.ReactDOM.render(<Overlay />, jQuery(container).find('div.mc-rrr-react-overlay-root').get(0))
     }   // bbg_xiv.postRenderJustified = container => {
 
     // renderGeneric() may work unmodified with your template.
@@ -615,6 +620,9 @@ console.log('bbg_xiv-gallery.js:loading...');
         return images;
     };
     
+    // constructOverlay is now replaced by the React component Overlay
+
+/*
     bbg_xiv.constructOverlay = container => {
         const jqGallery = jQuery(container)
         // gallery or dense view shows a full browser viewport view of an image when its fullscreen glyph is clicked
@@ -812,6 +820,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             jqGallery.find( 'button.bbg_xiv-dense_alt_btn span.glyphicon' ).mouseenter( showOverlay );
         }
     }   //     bbg_xiv.constructOverlay = container => {
+ */
 
     bbg_xiv.renderGallery=function(gallery,view,flags){
         if(!flags){

@@ -71,7 +71,7 @@ class Overlay extends React.Component {
         }
         window.setTimeout(() => {
             (alt ? this.$altInner : this.$inner).css('opacity', '1.0')
-            this.$outer.css("opacity","0.93");
+            this.$outer.css('opacity', '0.93')
         }, 100)
         // this.$caption.css( { display: 'block', opacity: '0.7' } );   // $caption is not in the overlay but in the view
         e.preventDefault();
@@ -89,7 +89,7 @@ class Overlay extends React.Component {
         // This is either a click event on a locked overlay or a large mouse move event on an unlocked alt overlay
         this.overlayShowing = this.overlayLocked = false
         this.mouseX         = this.mouseY        = NaN
-        this.$altInner.removeClass('bbg_xiv-locked');
+        this.$altInner.removeClass('bbg_xiv-locked');   // ; is necessary here otherwise it is f()(e) instead of f();(e)
         // fade out and hide overlay
         (this.alt ? this.$altInner : this.$inner).css('opacity', '0.0')
         this.$outer.css('opacity', '0.0')
