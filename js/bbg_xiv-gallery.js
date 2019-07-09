@@ -479,9 +479,9 @@ console.log('bbg_xiv-gallery.js:loading...');
     }   //     bbg_xiv.postRenderDense = container => {
 
 
-    bbg_xiv.postRenderJustified=function(container){
-        var justifiedContainer = jQuery(container);
-        var $justifiedGallery  = justifiedContainer.find( 'div.bbg_xiv-justified_gallery' );
+    bbg_xiv.postRenderJustified = container => {
+        const justifiedContainer = jQuery(container);
+        const $justifiedGallery  = justifiedContainer.find( 'div.bbg_xiv-justified_gallery' );
         // The Babel transpiled code does not initially show in the debugger, but the debugger command will force it to show. 
         // debugger;
         $justifiedGallery.justifiedGallery({margins: 5, rowHeight: bbg_xiv.bbg_xiv_miro_row_height, lastRow: 'nojustify', refreshSensitivity: 0, refreshTime: 250 })
@@ -529,7 +529,9 @@ console.log('bbg_xiv-gallery.js:loading...');
               }
           } );
         });
-    };
+        // titlesButton.show();
+        bbg_xiv.constructOverlay(container)
+    }   // bbg_xiv.postRenderJustified = container => {
 
     // renderGeneric() may work unmodified with your template.
     // Otherwise you can use it as a base for a render function specific to your template.
@@ -802,7 +804,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             // show alt overlay
             showOverlay.call( this, e );
         } );
-        if (!jqGallery.hasClass('bbg_xiv-flex_container')) {
+        if (!jqGallery.hasClass('bbg_xiv-flex_container') && !jqGallery.hasClass('bbg_xiv-justified_container')) {
             jqGallery.find( 'button.bbg_xiv-dense_full_btn, button.bbg_xiv-dense_alt_btn' ).click( showOverlay );
             jqGallery.find( 'button.bbg_xiv-dense_alt_btn span.glyphicon' ).mouseenter( showOverlay );
         }

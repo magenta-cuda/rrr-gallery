@@ -8,6 +8,10 @@ class JustifiedGalleryContainer extends React.Component {
         super(props)
         this.container = null
     }
+    static getDerivedStateFromError(error) {
+        console.log('JustifiedGalleryContainer:', error)
+        return {}
+    }
     render() {
         // TODO: remove React = - don't need this when we use webpack
         const React      = window.mcRrr.React
@@ -51,5 +55,8 @@ class JustifiedGalleryContainer extends React.Component {
     componentDidUpdate(prevProps, prevState, snapshot){
         console.log('componentDidUpdate():this.container=', this.container)
         window.bbg_xiv.postRenderJustified(this.container)
+    }
+    componentDidCatch(error, info) {
+        console.log('JustifiedGalleryContainer:', error, info)
     }
 }
