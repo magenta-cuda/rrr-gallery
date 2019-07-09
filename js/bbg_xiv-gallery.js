@@ -475,12 +475,14 @@ console.log('bbg_xiv-gallery.js:loading...');
             window.open( bbg_xiv.docUrl + '#view-dense', '_blank' );
             e.preventDefault();      
         } );
+/*
         jqGallery.find("button.bbg_xiv-dense_close_btn").click(function(e){
             // restore "Gallery View"
             bbg_xiv.resetGallery(jQuery(this).parents("div.bbg_xiv-gallery"));
             jQuery( 'html' ).css( 'overflow-y', '' );
             e.preventDefault();      
         });
+ */ 
         // bbg_xiv.constructOverlay(container)
         mcRrr.ReactDOM.render(<Overlay />, jQuery(container).find('div.mc-rrr-react-overlay-root').get(0))
     }   //     bbg_xiv.postRenderDense = container => {

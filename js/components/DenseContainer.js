@@ -3,7 +3,15 @@
 class DenseContainer extends React.Component {
     constructor(props) {
         super(props)
-        this.container = null
+        this.container        = null
+        this.handleCloseClick = this.handleCloseClick.bind(this)
+    }
+    static getDerivedStateFromError(error) {
+        console.log('DenseContainer:', error)
+        return {}
+    }
+    handleCloseClick = function(e) {
+        this.props.setView('Gallery')
     }
     render() {
         const {images: collection, mode = 'title'} = this.props
@@ -35,7 +43,8 @@ class DenseContainer extends React.Component {
                     <button type="button" className="bbg_xiv-dense_info_btn btn" title="get help">
                         <span className="glyphicon glyphicon-question-sign"></span>
                     </button>
-                    <button type="button" className="bbg_xiv-dense_close_btn btn btn-default" title="close">
+                    <button type="button" className="bbg_xiv-dense_close_btn btn btn-default" title="close"
+                            onClick={this.handleCloseClick}>
                         <span className="glyphicon glyphicon-remove"></span>
                     </button>
                 </div>
@@ -67,5 +76,8 @@ class DenseContainer extends React.Component {
     componentDidMount() {
         console.log('DenseContainer::componentDidMount():this.container=', this.container)
         window.bbg_xiv.postRenderDense(this.container)
+    }
+    componentDidCatch(error, info) {
+        console.log('DenseContainer:', error, info)
     }
 }

@@ -20,5 +20,5 @@ export default props => {
         Container = DenseContainer
         break
     }
-    return <Container images={props.images}></Container>
+    return <Container images={props.images} setView={props.setView}></Container>
 }
