@@ -44,6 +44,8 @@
  * understandable. The other reason is the original BB Gallery was written that way and I am too lazy
  * to rewrite all that code.
   */
+
+/* MUCH OF THE CODE IN THIS FILE IS NOW DEAD CODE */
  
 console.log('bbg_xiv-gallery.js:loading...');
 (function(){
@@ -203,7 +205,8 @@ console.log('bbg_xiv-gallery.js:loading...');
                 }
             });
         }
-        bbg_xiv.constructOverlay(container)
+        // bbg_xiv.constructOverlay(container)
+        mcRrr.ReactDOM.render(<Overlay />, $flexContainer.find('div.mc-rrr-react-overlay-root').get(0))
         window.setTimeout(function() {
             jQuery(window).resize()
         }, 100)

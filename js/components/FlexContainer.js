@@ -24,6 +24,7 @@ export default class FlexContainer extends React.Component {
                 {jsx}
                 <div className="bbg_xiv-flex_footer"></div>
                 {/* Full Browser Viewport View of an Image */}
+                <div className="mc-rrr-react-overlay-root" />
                 <div className="bbg_xiv-dense_outer">
                 </div>
                 <div className="bbg_xiv-dense_inner">
