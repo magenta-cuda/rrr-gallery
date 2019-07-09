@@ -10,9 +10,9 @@ class Overlay extends React.Component {
     constructor(props) {
         super(props)
         this.state                   = {alt: null, data: null}
-        this.outer                   = null
-        this.inner                   = null
-        this.altInner                = null
+        this.$outer                  = null
+        this.$inner                  = null
+        this.$altInner               = null
         this.title                   = null
         this.caption                 = null
         this.altOverlayView          = new bbg_xiv.ImageView();
@@ -34,10 +34,10 @@ class Overlay extends React.Component {
         return {}
     }
     componentDidMount() {
-        if(typeof bbg_xiv.titleColor === 'undefined') {
+        if(typeof Overlay.titleColor === 'undefined') {
             // save the initial values of title color and shadow as these will be changed
-            bbg_xiv.titleColor  = jQuery(this.title).css('color')
-            bbg_xiv.titleShadow = jQuery(this.title).css('text-shadow')
+            Overlay.titleColor  = jQuery(this.title).css('color')
+            Overlay.titleShadow = jQuery(this.title).css('text-shadow')
         }
     }
     showOverlay(e, alt = null, img = null, data = null) {
@@ -51,8 +51,8 @@ class Overlay extends React.Component {
         this.mouseX         = e.screenX;
         this.mouseY         = e.screenY;
         // this.$caption       = $button.parent( 'div.caption' );   // $caption is not in the overlay but in the view
-        if ( alt && this.overlayLocked ) {
-            jQuery(this.altInner).addClass( 'bbg_xiv-locked' );
+        if (alt && this.overlayLocked) {
+            this.$altInner.addClass('bbg_xiv-locked')
         }
         if ( alt && false ) { // TODO:
             // instantiate the alternate overlay
@@ -64,20 +64,20 @@ class Overlay extends React.Component {
             } );
         }
         this.setState({alt: alt, data: data})
-        if ( bbg_xiv.guiInterface === 'touch' ) {
+        if (bbg_xiv.guiInterface === 'touch') {
             // force hover effects on touchscreen
             fullTitle.css({   color: bbg_xiv.titleColor, textShadow: bbg_xiv.titleShadow});
             fullCaption.css({ color: bbg_xiv.titleColor, textShadow: bbg_xiv.titleShadow});
         }
         window.setTimeout(() => {
-            jQuery(alt ? this.altInner : this.inner).css('opacity', '1.0')
-            jQuery(this.outer).css("opacity","0.93");
+            (alt ? this.$altInner : this.$inner).css('opacity', '1.0')
+            this.$outer.css("opacity","0.93");
         }, 100)
         // this.$caption.css( { display: 'block', opacity: '0.7' } );   // $caption is not in the overlay but in the view
         e.preventDefault();
         e.stopPropagation();
     }  // function showOverlay( e ) {
-    hideOverlay(target, e) {
+    hideOverlay(e) {
         // TODO: hideOverlay() still needs reactification
         if (!this.overlayShowing) {
             // ignore events when overlay is transitioning to hide
@@ -87,14 +87,14 @@ class Overlay extends React.Component {
             return
         }
         // This is either a click event on a locked overlay or a large mouse move event on an unlocked alt overlay
-        this.overlayShowing = this.overlayLocked = false;
-        jQuery(this.altInner).removeClass( 'bbg_xiv-locked' );
-        this.mouseX = this.mouseY = NaN;
+        this.overlayShowing = this.overlayLocked = false
+        this.mouseX         = this.mouseY        = NaN
+        this.$altInner.removeClass('bbg_xiv-locked');
         // fade out and hide overlay
-        jQuery(this.alt ? this.altInner : this.inner).css("opacity","0.0")
-        jQuery(this.outer).css("opacity","0.0")
+        (this.alt ? this.$altInner : this.$inner).css('opacity', '0.0')
+        this.$outer.css('opacity', '0.0')
         // workaround for a bug? in Chrome where navbar is not visible after an overlay is closed
-        var $navbar = jQuery( 'div.bbg_xiv-gallery nav.bbg_xiv-gallery_navbar' ).css( 'opacity', '0.99' );
+        var $navbar = jQuery( 'div.bbg_xiv-gallery nav.bbg_xiv-gallery_navbar' ).css( 'opacity', '0.99' )
         window.setTimeout(() => {
             this.setState({alt: null, data: null})
             $navbar.css( 'opacity', '1.0' );
@@ -103,13 +103,13 @@ class Overlay extends React.Component {
     }   //   function hideOverlay( e ) {
     handleMouseOver() {
         if (bbg_xiv.guiInterface === 'mouse') {
-            jQuery(this.title)  .css({color: bbg_xiv.titleColor, textShadow: bbg_xiv.titleShadow})
-            jQuery(this.caption).css({color: bbg_xiv.titleColor, textShadow: bbg_xiv.titleShadow})
+            jQuery(this.title  ).css({color: Overlay.titleColor, textShadow: Overlay.titleShadow})
+            jQuery(this.caption).css({color: Overlay.titleColor, textShadow: Overlay.titleShadow})
         }
     }
     handleMouseOut() {
         if (bbg_xiv.guiInterface === 'mouse') {
-            jQuery(this.title)  .css({color: 'transparent', textShadow: 'none'})
+            jQuery(this.title  ).css({color: 'transparent', textShadow: 'none'})
             jQuery(this.caption).css({color: 'transparent', textShadow: 'none'})
         }
     }
@@ -118,25 +118,25 @@ class Overlay extends React.Component {
             // ignore a small mouse movement
             return;
         }
-        this.hideOverlay(e.currentTarget, e)
+        this.hideOverlay(e)
     }
     handleClick(e) {
         e.preventDefault();
         e.stopPropagation();
         switch (e.currentTarget) {
-        case this.outer:
-        case this.altInner:
+        case this.$outer.get(0):
+        case this.$altInner.get(0):
             if (!this.overlayLocked) {
                 // An unlocked overlay must be the alt overlay.
                 // When the alt overlay is showing from a hover use the first click in the inner to lock the alt overlay.
                 this.overlayLocked = true
-                jQuery(this.altInner).addClass('bbg_xiv-locked')
+                this.$altInner.addClass('bbg_xiv-locked')
             } else {
-                this.hideOverlay(e.currentTarget, e)
+                this.hideOverlay(e)
             }
             break
-        case this.inner:
-            this.hideOverlay(e.currentTarget, e)
+        case this.$inner.get(0):
+            this.hideOverlay(e)
             break
         }
     }
@@ -154,9 +154,9 @@ class Overlay extends React.Component {
             <div style={{display: data === null ? 'none' : 'block'}}>
                 {/* Full Browser Viewport View of an Image */}
                 <div className="bbg_xiv-dense_outer" style={{display: data ? 'block' : 'none'}}
-                        onMouseMove={this.handleMouseMove} onClick={this.handleClick} ref={node => {this.outer = node}} />
+                        onMouseMove={this.handleMouseMove} onClick={this.handleClick} ref={node => {this.$outer = jQuery(node)}} />
                 <div className="bbg_xiv-dense_inner" style={{display: data && !alt ? 'block' : 'none'}}
-                        onClick={this.handleClick} ref={node => {this.inner = node}}>
+                        onClick={this.handleClick} ref={node => {this.$inner = jQuery(node)}}>
                     <button className="bbg_xiv-dense_close"><span className="glyphicon glyphicon-remove"></span></button>
                     <h1 className="bbg_xiv-dense_title" ref={node => {this.title = node}}>
                         {!alt && data ? bbg_xiv.getTitle(data) : ''}
@@ -169,7 +169,7 @@ class Overlay extends React.Component {
                     </h1>
                 </div>
                 <div className="bbg_xiv-dense_alt_inner" style={{display: data && alt ? 'block' : 'none'}}
-                        onMouseMove={this.handleMouseMove} onClick={this.handleClick} ref={node => {this.altInner = node}}>
+                        onMouseMove={this.handleMouseMove} onClick={this.handleClick} ref={node => {this.$altInner = jQuery(node)}}>
                     <span className="bbg_xiv-click_to_lock_comment">
                         {bbg_xiv_lang['Click anywhere to lock the display of this popup.']}
                     </span>
