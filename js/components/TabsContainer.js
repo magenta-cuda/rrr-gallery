@@ -35,7 +35,7 @@ class TabsContainer extends React.Component {
             model.attributes.browser = bbg_xiv.browser
             model.attributes.index   = index
             // model.attributes.bbg_xiv_container_width=containerWidth;
-            imageView.model          = tabView.model=model
+            imageView.model          = tabView.model = model
             tabsHtml                += tabView.render(true)
             // imagesHtml              += imageView.render(true)
             // I will attempt to avoid using React's dangerouslySetInnerHTML

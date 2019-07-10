@@ -14,11 +14,13 @@ export class JqueryProxy {
         this.jqueryToggleClass       = jQuery.prototype.toggleClass
         this.jqueryShow              = jQuery.prototype.show
         this.jqueryHide              = jQuery.prototype.hide
+        this.jqueryCss               = jQuery.prototype.css
         jQuery.prototype.addClass    = this.addClass
         jQuery.prototype.removeClass = this.removeClass
         jQuery.prototype.toggleClass = this.toggleClass
         jQuery.prototype.show        = this.show
         jQuery.prototype.hide        = this.hide
+        jQuery.prototype.css         = this.css
         this.cssReducer              = new CssReducer(max, classNameRegEx, this)
         JqueryProxy.cssReducer       = this.cssReducer
     }
@@ -36,6 +38,9 @@ export class JqueryProxy {
     }
     hide() {
         return JqueryProxy.cssReducer.hide       .call(JqueryProxy.cssReducer, this)
+    }
+    css(...args) {
+        return JqueryProxy.cssReducer.css        .apply(JqueryProxy.cssReducer, [this, ...args])
     }
     getCssReducer() {
         return this.cssReducer
@@ -55,12 +60,14 @@ export class CssReducer {
             this.jqueryToggleClass       = jqueryProxy.jqueryToggleClass
             this.jqueryShow              = jqueryProxy.jqueryShow
             this.jqueryHide              = jqueryProxy.jqueryHide
+            this.jqueryCss               = jqueryProxy.jqueryCss
         } else {
             this.jqueryAddClass          = jQuery.prototype.addClass
             this.jqueryRemoveClass       = jQuery.prototype.removeClass
             this.jqueryToggleClass       = jQuery.prototype.toggleClass
             this.jqueryShow              = jQuery.prototype.show
             this.jqueryHide              = jQuery.prototype.hide
+            this.jqueryCss               = jQuery.prototype.css
         }
     }
     doClass(method, $elements, className) {
@@ -113,13 +120,28 @@ export class CssReducer {
     hide($elements) {
         return this.doShowHide(this.jqueryHide, $elements)
     }
-    static printElements($element) {
+    css($elements, ...args) {
+        if (!$elements.length) {
+            return $elements
+        }
+        if (this.classNameRegEx && this.classNameRegEx.test($elements.selector)) {
+            debugger
+        }
+        if (args.length === 1 && typeof args[0] === 'object' || args.length === 2 && typeof args[0] === 'string') {
+            CssReducer.printElements($elements, args)
+        }
+        return this.jqueryCss.apply($elements, args)
+    }
+    static printElements($element, css) {
         $element.each(function(i) {
             if (i === CssReducer.max) {
                 console.log('    .....')
                 return false
             }
             console.log(`    ${i}: class: "${this.className}", style.display: "${jQuery(this).css('display')}"`)
+            if (css) {
+                console.log('        css: ', css)
+            }
         })
     }
 }
