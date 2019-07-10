@@ -1372,7 +1372,8 @@ console.log('bbg_xiv-gallery.js:loading...');
         }else if(fullSize==="viewport"){
             return "90vw";
         }else if(fullSize==="container"){
-            return data.bbg_xiv_container_width+"px";
+            // return data.bbg_xiv_container_width+"px";
+            return '100%';
         }else{
             return "50vw";
         }

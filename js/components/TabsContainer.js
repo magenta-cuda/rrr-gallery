@@ -10,52 +10,77 @@
 
 // export default props => (
 
-const TabsContainer = props => {
-    const collection = props.images
+class TabsContainer extends React.Component {
+    constructor(props) {
+        super(props)
+        this.imagesContainer = null
+        this.$imagesDom      = jQuery('<div class="tab-content" />')   // this.imagesDom is not in this.state as that may cause problems
+    }
+    static getDerivedStateFromError(error) {
+        console.log('TabsContainer:', error)
+        return {}
+    }
+    render() {
+        const collection   = this.props.images
+        // TODO: how to handle container.width()
+        // var containerWidth=container.width();
+        const tabView      = new bbg_xiv.ImageView()
+        tabView.template   = _.template(jQuery("script#bbg_xiv-template_tabs_tab").html(),null,bbg_xiv.templateOptions)
+        const imageView    = new bbg_xiv.ImageView()
+        imageView.template = _.template(jQuery("script#bbg_xiv-template_tabs_item").html(),null,bbg_xiv.templateOptions)
+        let tabsHtml = ""
+        // let imagesHtml = ""
+        const $imagesDom = this.$imagesDom
+        collection.forEach(function(model, index) {
+            model.attributes.browser = bbg_xiv.browser
+            model.attributes.index   = index
+            // model.attributes.bbg_xiv_container_width=containerWidth;
+            imageView.model          = tabView.model=model
+            tabsHtml                += tabView.render(true)
+            // imagesHtml              += imageView.render(true)
+            // I will attempt to avoid using React's dangerouslySetInnerHTML
+            // by letting imageView.render() return a DOM element instead of HTML
+            // N.B. this really isn't any safer as imageView.render() also works
+            // by setting the inner HTML but it may be more obscure to someone
+            // not familiar with Backbone
+            // $imagesDom.append(imageView.render(false).$el.clone().children())
+            $imagesDom.append(imageView.render(false).$el.children())
+        })
+        // TODO: handle translations for 'IMAGES:'
+        // <li class="bbg_xiv-tabs_title"><a href="#"><?php _e( 'IMAGES:', 'bb_gallery' ); ?></a></li>
+        tabsHtml   = {__html: '<li class="bbg_xiv-tabs_title"><a href="#">IMAGES:</a></li>' + tabsHtml}
+        // imagesHtml = {__html: imagesHtml}
 
-    // TODO: how to handle container.width()
-    // var containerWidth=container.width();
-    const tabView      = new bbg_xiv.ImageView()
-    tabView.template   = _.template(jQuery("script#bbg_xiv-template_tabs_tab").html(),null,bbg_xiv.templateOptions)
-    const imageView    = new bbg_xiv.ImageView()
-    imageView.template = _.template(jQuery("script#bbg_xiv-template_tabs_item").html(),null,bbg_xiv.templateOptions)
-    let tabsHtml       = ""
-    let imagesHtml     = ""
-    collection.forEach(function(model,index) {
-        model.attributes.browser = bbg_xiv.browser
-        model.attributes.index   = index
-        // model.attributes.bbg_xiv_container_width=containerWidth;
-        imageView.model          = tabView.model=model
-        tabsHtml                += tabView.render(true)
-        imagesHtml              += imageView.render(true)
-    })
-    {/* TODO: handle translations for 'IMAGES:' */}
-    {/* <li class="bbg_xiv-tabs_title"><a href="#"><?php _e( 'IMAGES:', 'bb_gallery' ); ?></a></li> */}
-    tabsHtml   = {__html: '<li class="bbg_xiv-tabs_title"><a href="#">IMAGES:</a></li>' + tabsHtml}
-    imagesHtml = {__html: imagesHtml}
-
-    return (
-        <div class="bbg_xiv-container bbg_xiv-template_tabs_container">
-            {/* Tabs */}
-            <nav role="navigation" class="navbar navbar-default">
-            <div class="navbar-header">
-                <button type="button" data-target={"#" + collection.id + "_tabbar_collapse"} data-toggle="collapse" class="navbar-toggle">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                {/* TODO: handle translations for 'IMAGES:' */}
-                {/* <a href="#" class="navbar-brand bbg_xiv-tabs_brand"><?php _e( 'IMAGES:', 'bb_gallery' ); ?></a> */}
-                <a href="#" class="navbar-brand bbg_xiv-tabs_brand">'IMAGES:</a>
+        return (
+            <div className="bbg_xiv-container bbg_xiv-template_tabs_container">
+                {/* Tabs */}
+                <nav role="navigation" className="navbar navbar-default">
+                <div className="navbar-header">
+                    <button type="button" data-target={"#" + collection.id + "_tabbar_collapse"} data-toggle="collapse" className="navbar-toggle">
+                        <span className="sr-only">Toggle navigation</span>
+                        <span className="icon-bar"></span>
+                        <span className="icon-bar"></span>
+                        <span className="icon-bar"></span>
+                    </button>
+                    {/* TODO: handle translations for 'IMAGES:' */}
+                    {/* <a href="#" class="navbar-brand bbg_xiv-tabs_brand"><?php _e( 'IMAGES:', 'bb_gallery' ); ?></a> */}
+                    <a href="#" className="navbar-brand bbg_xiv-tabs_brand">'IMAGES:</a>
+                </div>
+                <div id={collection.id + "_tabbar_collapse"} className="collapse navbar-collapse bbg_xiv-closed">
+                    <ul className="nav nav-tabs" dangerouslySetInnerHTML={tabsHtml} />
+                </div>
+                <span className="glyphicon glyphicon-collapse-down"></span>
+                </nav>
+                {/* Panes */}
+                {/* <div className="tab-content" dangerouslySetInnerHTML={imagesHtml} /> */}
+                <div className="tab-content" ref={node => {this.imagesContainer = node}} />
             </div>
-            <div id={collection.id + "_tabbar_collapse"} class="collapse navbar-collapse bbg_xiv-closed">
-                <ul class="nav nav-tabs" dangerouslySetInnerHTML={tabsHtml} />
-            </div>
-            <span class="glyphicon glyphicon-collapse-down"></span>
-            </nav>
-            {/* Panes */}
-            <div class="tab-content" dangerouslySetInnerHTML={imagesHtml} />
-        </div>
-    )
+        )
+    }
+    componentDidMount() {
+        jQuery(this.imagesContainer).replaceWith(this.$imagesDom)
+    }
+    componentDidCatch(error, info) {
+        console.log('TabsContainer:', error, info)
+    }
 }
