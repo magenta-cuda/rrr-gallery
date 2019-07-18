@@ -13,6 +13,7 @@
 class TabsContainer extends React.Component {
     constructor(props) {
         super(props)
+        this.container       = null
         this.imagesContainer = null
         this.$imagesDom      = jQuery('<div class="tab-content" />')   // this.imagesDom is not in this.state as that may cause problems
     }
@@ -52,7 +53,7 @@ class TabsContainer extends React.Component {
         // imagesHtml = {__html: imagesHtml}
 
         return (
-            <div className="bbg_xiv-container bbg_xiv-template_tabs_container">
+            <div className="bbg_xiv-container bbg_xiv-template_tabs_container" ref={node => {this.container = node}}>
                 {/* Tabs */}
                 <nav role="navigation" className="navbar navbar-default">
                 <div className="navbar-header">
@@ -64,7 +65,7 @@ class TabsContainer extends React.Component {
                     </button>
                     {/* TODO: handle translations for 'IMAGES:' */}
                     {/* <a href="#" class="navbar-brand bbg_xiv-tabs_brand"><?php _e( 'IMAGES:', 'bb_gallery' ); ?></a> */}
-                    <a href="#" className="navbar-brand bbg_xiv-tabs_brand">'IMAGES:</a>
+                    <a href="#" className="navbar-brand bbg_xiv-tabs_brand">IMAGES:</a>
                 </div>
                 <div id={collection.id + "_tabbar_collapse"} className="collapse navbar-collapse bbg_xiv-closed">
                     <ul className="nav nav-tabs" dangerouslySetInnerHTML={tabsHtml} />
@@ -79,6 +80,7 @@ class TabsContainer extends React.Component {
     }
     componentDidMount() {
         jQuery(this.imagesContainer).replaceWith(this.$imagesDom)
+        window.bbg_xiv.postRenderTabs(this.container)
     }
     componentDidCatch(error, info) {
         console.log('TabsContainer:', error, info)

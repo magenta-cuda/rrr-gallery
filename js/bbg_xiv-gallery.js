@@ -543,6 +543,110 @@ console.log('bbg_xiv-gallery.js:loading...');
         mcRrr.ReactDOM.render(<Overlay />, jQuery(container).find('div.mc-rrr-react-overlay-root').get(0))
     }   // bbg_xiv.postRenderJustified = container => {
 
+    bbg_xiv.postRenderTabs = container => {
+        const jqGallery = jQuery(container)
+        bbg_xiv.prettifyTabs(jqGallery,true);
+        jqGallery.find( 'nav.navbar ul.nav li a' ).click(function() {
+            if(!Modernizr.objectfit){
+                // Microsoft Edge does not support CSS object-fit so do the object fit with JavaScript code
+                jQuery(this.href.substr(this.href.lastIndexOf("#"))+" img").each(function(){
+                    var img=this;
+                    var i=0;
+                    var j=0;
+                    var r0;
+                    window.setTimeout(function f(){
+                        var w=img.naturalWidth;
+                        var h=img.naturalHeight;
+                        var parent=jQuery(img.parentNode.parentNode.parentNode);
+                        var W=parent.width();
+                        var H=0.7*jQuery(window).height();
+                        if(!w||!h||!W||!H||W<64||H<64){
+                            if(i++<16){
+                                window.setTimeout(f,250);
+                            }
+                            return;
+                        }
+                        var r=Math.max(w/W,h/H);
+                        if(r<0.125||r>8){
+                            return;
+                        }
+                        if(typeof r0!=='undefined'&&r===r0){
+                            return;
+                        }
+                        w=Math.floor(w/r);
+                        h=Math.floor(h/r);
+                        jQuery(img).css({width:w+"px",height:h+"px"});
+                        r0=r;
+                        if(j++<16){
+                            window.setTimeout(f,250);
+                        }
+                    },250);
+                });
+            }
+            window.setTimeout(function() {
+                // the timeout is necessary to give browser time to render the image before the scrolling is done
+                var $window    = jQuery( window );
+                var $gallery   = jqGallery.closest( 'div.bbg_xiv-gallery' );
+                var fullscreen = $gallery.hasClass( 'bbg_xiv-fullscreen_gallery' );
+                var $content   = jqGallery.find( 'div.tab-content' );
+                if( window.matchMedia( '(max-aspect-ratio:1/1)' ).matches ) {
+                    // portrait mode
+                    if ( fullscreen ) {
+                        $gallery.scrollTop( $gallery.scrollTop() + $content.position().top  - $window.height() / 3 - 20 );
+                    } else {
+                        $window.scrollTop( $content.offset().top - $window.height() / 3 - 20 );
+                    }
+                } else {
+                    // landscape mode
+                    if ( fullscreen ) {
+                        $gallery.scrollTop( $gallery.scrollTop() + $content.position().top - 90 );
+                    } else {
+                        var $body            = jQuery( 'body' );
+                        var $adminBar        = jQuery( 'div#wpadminbar' );
+                        // If WordPress admin bar is showing on frontend page adjust for it.
+                        var adminBarHeight   = $body.hasClass( 'admin-bar' ) && $adminBar.css( 'position' ) == 'fixed' ? $adminBar.outerHeight() : 0;
+                        var bodyBeforeHeight = 0;
+                        if ( $body.hasClass( 'bbg_xiv-twentysixteen_with_border' ) ) {
+                            // Adjust for the black border in the WordPress TwentySixteen theme.
+                            var bodyBeforeStyle = window.getComputedStyle( $body[0], ':before' );
+                            bodyBeforeHeight    = bodyBeforeStyle && bodyBeforeStyle.position === 'fixed' ? parseInt( bodyBeforeStyle.height, 10 ) : 0;
+                        }
+                        var offset              = $window.height() >= 480 ? 80 : 40;
+                        $window.scrollTop( $content.offset().top - offset - adminBarHeight - bodyBeforeHeight );
+                    }
+                }
+            }, 500 );
+        });
+        // intercept clicks when images belong to gallery of galleries
+        if(jqGallery.hasClass("bbg_xiv-gallery_icons_mode")){
+            jqGallery.find("div.bbg_xiv-template_tabs_container div.tab-content figure.tab-pane a").click(function(e){
+                var galleries=jqGallery.parent().find("nav.bbg_xiv-gallery_navbar ul.nav li.dropdown ul.bbg_xiv-view_menu li.bbg_xiv-alt_gallery");
+                // only intercept clicks on the home gallery
+                if(galleries.filter(".bbg_xiv-alt_gallery_home").hasClass("active")){
+                    galleries.find("a[data-view='gallery_"+this.dataset.galleryIndex+"']").click();
+                    e.preventDefault();
+                }
+            });
+        }
+        // make the "Tabs" brand clickable for mobile devices and send click to the toggle button
+        jqGallery.find("a.bbg_xiv-tabs_brand").click(function(e){
+            var toggle=jQuery(this).siblings("button.navbar-toggle");
+            if(toggle.css("display")!=="none"){
+                toggle.click();
+            }
+            e.preventDefault();
+        });
+        if ( bbg_xiv.guiInterface === 'touch' ) {
+            // For mobile devices if a scrollbar is needed then initially expand the tab navbar as the collapsed tab navbar is not user friendly on mobile devices
+            jQuery( 'div.bbg_xiv-gallery nav.bbg_xiv-gallery_navbar' ).find( 'span.glyphicon-collapse-down' ).each(function(){
+                var jqThis=jQuery(this);
+                if(jqThis.css("display")!=="none"){
+                    jqThis.click();
+                }
+            });
+        }
+    }   // bbg_xiv.postRenderTabs = container => {
+
     // renderGeneric() may work unmodified with your template.
     // Otherwise you can use it as a base for a render function specific to your template.
     // See renderGallery(), renderCarousel() or renderTabs() - all of which need some special HTML to work correctly.
@@ -842,17 +946,18 @@ console.log('bbg_xiv-gallery.js:loading...');
         bbg_xiv.galleries[gallery.id]=bbg_xiv.galleries[gallery.id]||{images:{"gallery_home":images},view:"gallery_home"};
         var titlesButton=jqGallery.parents("div.bbg_xiv-gallery").find("nav.navbar button.bbg_xiv-titles").hide();
         switch(view){
+/*
         case "Gallery":
             if(flags.indexOf("tiles")!==-1){
                 bbg_xiv.renderTiles(jqGallery,images,flags);
                 constructOverlay();
                 titlesButton.show();
 // TODO: renderFlex commented out to force renderBootstrapGallery for testing JSX code - uncomment!
-/*
+/ *
             } else if ( Modernizr.flexbox && Modernizr.flexwrap && ! window.bbg_xiv.bbg_xiv_disable_flexbox ) {
                 bbg_xiv.renderFlex(jqGallery,images);
                 constructOverlay();
-*/ 
+* / 
             }else{
                 bbg_xiv.renderBootstrapGallery(jqGallery,images);
             }
@@ -865,6 +970,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             constructOverlay();
             titlesButton.show();
             break;
+ */ 
         case "Carousel":
             if(flags.indexOf("embedded-carousel")!==-1){
                 jqGallery.addClass("bbg_xiv-embedded_carousel");
@@ -1002,6 +1108,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             }
             jQuery("#"+carouselId).carousel({interval:bbg_xiv.bbg_xiv_carousel_interval,pause:false});
             break;
+/*
         case "Tabs":
             bbg_xiv.renderTabs(jqGallery,images,"bbg_xiv-tabs_"+gallery.id);
             bbg_xiv.prettifyTabs(jqGallery,true);
@@ -1105,7 +1212,6 @@ console.log('bbg_xiv-gallery.js:loading...');
                 });
             }
             break;
-/*
         case "Dense":
             jQuery("html").css("overflow-y","hidden");
             bbg_xiv.renderDense(jqGallery,images,"bbg_xiv-dense_"+gallery.id,"title");
@@ -1265,7 +1371,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             });
         }
     };
-
+/*
     bbg_xiv.resetGallery=function(gallery,currentView){
         // restore "Gallery View"
         var divGallery=gallery.find("div.bbg_xiv-gallery_envelope")[0];
@@ -1280,7 +1386,7 @@ console.log('bbg_xiv-gallery.js:loading...');
         liSelectView.find("a.bbg_xiv-selected_view span").text(liFirst.text());
         jQuery(window).resize();
     };
-     
+ */
     // getting attributes indirectly through functions will make it possible for one template to be used for both the REST mode and the old proprietary mode
 
     // the fullSize parameter is the size of the non-iconic view of the image and should either "viewport" or "container"
