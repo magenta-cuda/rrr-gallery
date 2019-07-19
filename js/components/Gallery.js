@@ -9,6 +9,7 @@ export default props => {
         Container = FlexContainer
         break
     case 'Carousel':
+        Container = CarouselContainer
         break
     case 'Justified':
         Container = JustifiedGalleryContainer
