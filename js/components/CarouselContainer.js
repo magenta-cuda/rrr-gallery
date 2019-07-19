@@ -24,7 +24,7 @@ class CarouselContainer extends React.Component {
                 <ol className="carousel-indicators">
                     {bulletsJsx}
                 </ol>
-                -->
+                {/* --> */}
                 <div className="carousel-indicators bbg_xiv-jquery_mobile">
                 <form>
                   <div className="ui-field-contain">
