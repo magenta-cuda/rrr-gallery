@@ -2,13 +2,17 @@
 class CarouselContainer extends React.Component {
     constructor(props) {
         super(props)
-        this.container  = null
-        this.carouselId = null
-        this.length     = null
+        this.container        = null
+        this.carouselId       = null
+        this.length           = null
+        this.handleCloseClick = this.handleCloseClick.bind(this)
     }
     static getDerivedStateFromError(error) {
         console.log('CarouselContainer:', error)
         return {}
+    }
+    handleCloseClick = function(e) {
+        this.props.setView('Gallery')
     }
     render() {
         const collection = this.props.images
@@ -65,7 +69,8 @@ class CarouselContainer extends React.Component {
                     </a>
                 </div>
                 <div className="right carousel-control">
-                    <a className="bbg_xiv-carousel_close carousel-control" href="#" title={bbg_xiv_lang['Close']}>
+                    <a className="bbg_xiv-carousel_close carousel-control" href="#" title={bbg_xiv_lang['Close']}
+                            onClick={this.handleCloseClick}>
                         <span className="glyphicon glyphicon-remove"></span>
                         <span className="sr-only">Close</span>
                     </a>

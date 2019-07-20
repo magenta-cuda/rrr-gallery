@@ -692,9 +692,10 @@ console.log('bbg_xiv-gallery.js:loading...');
         jqGallery.find("a.bbg_xiv-carousel_close").click(function(e){
             // restore "Gallery View"
             jqGallery.removeClass("bbg_xiv-embedded_carousel");
-            bbg_xiv.resetGallery(jQuery(this).parents("div.bbg_xiv-gallery"),"Carousel");
+            // This handler handles only CSS changes; state changes are handled by the React click handler
+            // bbg_xiv.resetGallery(jQuery(this).parents("div.bbg_xiv-gallery"),"Carousel");
             jQuery( 'html' ).css( 'overflow-y', '' );
-            e.preventDefault();
+            //e.preventDefault();
         });
         var input=jqGallery.find("div.bbg_xiv-jquery_mobile input[type='range']");
         input.slider();
@@ -747,7 +748,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             window.setTimeout( function() {
                 // the timeout is necessary to give browser time to render the image before the scrolling is done
                 var $gallery     = jqGallery.closest( 'div.bbg_xiv-gallery' );
-                var $divCarousel = jqGallery.find( 'div.carousel' );
+                var $divCarousel = jqGallery;
                 if ( $gallery.hasClass( 'bbg_xiv-fullscreen_gallery' ) ) {
                     // full screen
                     if ( window.matchMedia( '(max-aspect-ratio:1/1)' ).matches ) {
