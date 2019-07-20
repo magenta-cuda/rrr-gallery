@@ -2,6 +2,9 @@
 class CarouselContainer extends React.Component {
     constructor(props) {
         super(props)
+        this.container  = null
+        this.carouselId = null
+        this.length     = null
     }
     static getDerivedStateFromError(error) {
         console.log('CarouselContainer:', error)
@@ -9,7 +12,9 @@ class CarouselContainer extends React.Component {
     }
     render() {
         const collection = this.props.images
-        const carouselId = `bbg_xiv-carousel_${collection.id}`;
+        const carouselId = `bbg_xiv-carousel_${collection.id}`
+        this.carouselId  = carouselId
+        this.length      = collection.length
         const bulletsJsx = []
         const imagesJsx  = []
         collection.forEach(function(model, index) {
@@ -18,7 +23,8 @@ class CarouselContainer extends React.Component {
         })
         return (
             <div id={carouselId} className="carousel slide bbg_xiv-container" data-ride="carousel"
-                    data-interval={bbg_xiv.bbg_xiv_carousel_interval} data-bbg_xiv-gallery-id={collection.id}>
+                    data-interval={bbg_xiv.bbg_xiv_carousel_interval} data-bbg_xiv-gallery-id={collection.id}
+                    ref={node => {this.container = node}}>
                 {/* Indicators */}
                 {/* the original Bootstrap carousel slide indicators which actually works very well in desktop browser but is a failure for mobile */}
                 <ol className="carousel-indicators">
@@ -78,6 +84,8 @@ class CarouselContainer extends React.Component {
                     </a>
                 </div>
                 {/* Alt (Info) View of an Image */}
+                <div className="mc-rrr-react-overlay-root" />
+{/*
                 <div className="bbg_xiv-dense_outer">
                 </div>
                 <div className="bbg_xiv-dense_alt_inner">
@@ -88,12 +96,12 @@ class CarouselContainer extends React.Component {
                     <button className="bbg_xiv-dense_close"><span className="glyphicon glyphicon-remove"></span></button>
                     <div className="bbg_xiv-dense_alt_items"></div>
                 </div>
+*/}
             </div>
         )
     }
     componentDidMount() {
-        // TODO:
-        //window.bbg_xiv.postRenderCarousel(this.container)
+        window.bbg_xiv.postRenderCarousel(this.container, this.carouselId, this.length)
     }
     componentDidCatch(error, info) {
         console.log('CarouselContainer:', error, info)

@@ -646,7 +646,140 @@ console.log('bbg_xiv-gallery.js:loading...');
             });
         }
     }   // bbg_xiv.postRenderTabs = container => {
-
+    bbg_xiv.postRenderCarousel = (container, carouselId, length) => {
+        // constructOverlay();
+        const jqGallery = jQuery(container)
+        mcRrr.ReactDOM.render(<Overlay />, jqGallery.find('div.mc-rrr-react-overlay-root').get(0))
+        // pause() can be called from a button's event handler to pause the carousel, the argument is the button
+        function pause( button ) {
+            var $carousel = jQuery( button ).parents( 'div.carousel' );
+            $carousel.carousel( 'pause' );
+            $carousel.find( 'a.bbg_xiv-carousel_play span.glyphicon' ).removeClass( 'glyphicon-pause' ).addClass( 'glyphicon-play' ).parent().attr( 'title', bbg_xiv_lang['Play'] );
+        }
+        // Wireup the handlers - this must be done here as the elements in the carousel view are dynamically created
+        // Carousel pause handler
+        jqGallery.find( 'a.bbg_xiv-carousel_play' ).click( function( e ) {
+            var $this     = jQuery( this );
+            var $carousel = $this.parents( 'div.carousel' );
+            var $span     = $this.find( 'span.glyphicon' );
+            if ( $span.hasClass( 'glyphicon-pause' ) ) {
+                pause( this );
+            } else {
+                $span.removeClass( 'glyphicon-play' ).addClass( 'glyphicon-pause' ).parent().attr( 'title', bbg_xiv_lang['Pause'] );
+                $carousel.carousel( 'next' );
+                $carousel.carousel( 'cycle' );
+            }
+            e.preventDefault();
+        });
+        jqGallery.find( 'a.bbg_xiv-carousel_left, a.bbg_xiv-carousel_right' ).click(function() {
+            pause(this);
+        });
+        // Carousel rewind handler
+        jqGallery.find("a.bbg_xiv-carousel_first span.glyphicon,a.bbg_xiv-carousel_last span.glyphicon").click(function(e){
+            pause( this );
+            var carousel=jQuery(this).parents("div.carousel");
+            if(jQuery(this.parentNode).hasClass("bbg_xiv-carousel_first")){
+                carousel.carousel(0);
+            }else{
+                carousel.carousel(length-1);
+            }
+            e.preventDefault();
+        });
+        jqGallery.find( 'a.bbg_xiv-carousel_help span.glyphicon' ).click( function( e ) {
+            window.open( bbg_xiv.docUrl + '#view-carousel', '_blank' );
+            e.preventDefault();
+        } );
+        jqGallery.find("a.bbg_xiv-carousel_close").click(function(e){
+            // restore "Gallery View"
+            jqGallery.removeClass("bbg_xiv-embedded_carousel");
+            bbg_xiv.resetGallery(jQuery(this).parents("div.bbg_xiv-gallery"),"Carousel");
+            jQuery( 'html' ).css( 'overflow-y', '' );
+            e.preventDefault();
+        });
+        var input=jqGallery.find("div.bbg_xiv-jquery_mobile input[type='range']");
+        input.slider();
+        var prevChangeTime;
+        var slideChange=false;   // change event triggered by a carousel slid event
+        // update Bootstrap carousel slide when jQuery mobile slider changes
+        // jQuery Mobile should change the "type" from "range" to "number" but does not so force it.
+        // TODO: Find out why jQuery Mobile is not doing this here - maybe I am doing something wrong.
+        input.attr( 'type', 'number' ).val( '1' ).change(function() {
+            if(slideChange){
+                // ignore change events triggered by a carousel slid event
+                return;
+            }
+            prevChangeTime=Date.now();
+            var carousel=jQuery(this).parents("div.carousel");
+            pause(input);
+            // Since change events will occur much too rapidly wait until they quiesce
+            window.setTimeout(function(){
+                if(Date.now()-prevChangeTime>=500){
+                    var i=input.val();
+                    if(jQuery.isNumeric(i)){
+                        i = parseInt( i, 10 ) - 1;
+                        if(i>=0&&i<images.length){
+                            carousel.carousel(i);
+                            pause(input);
+                        }
+                    }
+                }
+            },500);
+        }).keypress(function(e){
+            if(e.which===13){
+                jQuery(this).blur();
+                e.preventDefault();
+            }
+        }).focus(function() {
+            pause(this);
+        }).on( 'slidestart', function() {
+            pause(this);
+        });
+        // update jQuery Mobile slider when Bootstrap carousel changes slide
+        jqGallery.find("div.carousel").on("slide.bs.carousel slid.bs.carousel",function(e){
+            slideChange=true;
+            // update input element and trigger change event to force update of slider position
+            jQuery( this ).find( 'div.bbg_xiv-jquery_mobile input[type="number"]' ).val( parseInt( e.relatedTarget.dataset.index, 10 ) + 1 ).change();
+            slideChange=false;
+        });
+        // TODO: flags
+        // if ( flags.indexOf( 'embedded-carousel' ) !== -1 ) {
+        if (true) {
+            window.setTimeout( function() {
+                // the timeout is necessary to give browser time to render the image before the scrolling is done
+                var $gallery     = jqGallery.closest( 'div.bbg_xiv-gallery' );
+                var $divCarousel = jqGallery.find( 'div.carousel' );
+                if ( $gallery.hasClass( 'bbg_xiv-fullscreen_gallery' ) ) {
+                    // full screen
+                    if ( window.matchMedia( '(max-aspect-ratio:1/1)' ).matches ) {
+                        // portrait mode
+                    } else {
+                        // landscape mode
+                        $gallery.scrollTop( $gallery[0].scrollHeight - $gallery.height() - 50 + 0.05 * $divCarousel.height() );
+                    }
+                } else {
+                    // not full screen
+                    if(window.matchMedia("(max-aspect-ratio:1/1)").matches){
+                        // portrait mode
+                        jQuery(window).scrollTop( $divCarousel.offset().top - jQuery(window).height()/6 );
+                    }else{
+                        // landscape mode
+                        // If WordPress admin bar is showing on frontend page adjust for it.
+                        var $body            = jQuery( 'body' );
+                        var $adminBar        = jQuery( 'div#wpadminbar' );
+                        var adminBarHeight   = $body.hasClass( 'admin-bar' ) && $adminBar.css( 'position' ) == 'fixed' ? $adminBar.outerHeight() : 0;
+                        var bodyBeforeHeight = 0;
+                        if ( $body.hasClass( 'bbg_xiv-twentysixteen_with_border' ) ) {
+                            // Adjust for the black border in the WordPress TwentySixteen theme.
+                            var bodyBeforeStyle = window.getComputedStyle( $body[0], ':before' );
+                            bodyBeforeHeight    = bodyBeforeStyle && bodyBeforeStyle.position === 'fixed' ? parseInt( bodyBeforeStyle.height, 10 ) : 0;
+                        }
+                        jQuery( window ).scrollTop( $divCarousel.offset().top - $divCarousel.outerHeight() / 18 - adminBarHeight - bodyBeforeHeight );
+                    }
+                }
+            }, 500 );
+        }
+        jQuery("#"+carouselId).carousel({interval:bbg_xiv.bbg_xiv_carousel_interval,pause:false});
+    }   // bbg_xiv.postRenderCarousel = container => {
     // renderGeneric() may work unmodified with your template.
     // Otherwise you can use it as a base for a render function specific to your template.
     // See renderGallery(), renderCarousel() or renderTabs() - all of which need some special HTML to work correctly.
@@ -970,7 +1103,6 @@ console.log('bbg_xiv-gallery.js:loading...');
             constructOverlay();
             titlesButton.show();
             break;
- */ 
         case "Carousel":
             if(flags.indexOf("embedded-carousel")!==-1){
                 jqGallery.addClass("bbg_xiv-embedded_carousel");
@@ -1108,7 +1240,6 @@ console.log('bbg_xiv-gallery.js:loading...');
             }
             jQuery("#"+carouselId).carousel({interval:bbg_xiv.bbg_xiv_carousel_interval,pause:false});
             break;
-/*
         case "Tabs":
             bbg_xiv.renderTabs(jqGallery,images,"bbg_xiv-tabs_"+gallery.id);
             bbg_xiv.prettifyTabs(jqGallery,true);
