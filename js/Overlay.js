@@ -8,6 +8,7 @@ const React = window.mcRrr.React
 
 class Overlay extends React.Component {
     constructor(props) {
+        console.log('Overlay::constructor():props=', props)
         super(props)
         this.state                   = {alt: null, data: null}
         this.$outer                  = null
@@ -41,6 +42,7 @@ class Overlay extends React.Component {
         }
     }
     showOverlay(e, alt = null, img = null, data = null) {
+        console.log('Overlay::showOverlay():this.props=', this.props)
         console.log('Overlay::showOverlay():alt=', alt, 'img=', img, 'data=', data)
         if ( parseFloat( jQuery(e.target).closest( 'div.caption' ).css( 'opacity' ) ) < 0.1 ) {
             // click was on an invisible button so ignore it
@@ -145,6 +147,8 @@ class Overlay extends React.Component {
         const data    = this.state.data
         const srcSet  = !alt && data && data.bbg_srcset ? bbg_xiv.getSrcset(data)                  : ''
         const sizes   = !alt && data && data.bbg_srcset ? bbg_xiv.getSizes(null,'viewport', false) : ''
+        console.log('Overlay::render():this.props=', this.props)
+        console.log('Overlay::render():alt=', alt, 'data=', data)
         let   altHtml = {__html: ''}
         if (alt) {
             this.altOverlayView.model = {attributes: data}

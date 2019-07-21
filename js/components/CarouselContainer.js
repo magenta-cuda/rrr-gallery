@@ -4,7 +4,6 @@ class CarouselContainer extends React.Component {
         super(props)
         this.container        = null
         this.carouselId       = null
-        this.length           = null
         this.handleCloseClick = this.handleCloseClick.bind(this)
     }
     static getDerivedStateFromError(error) {
@@ -18,7 +17,6 @@ class CarouselContainer extends React.Component {
         const collection = this.props.images
         const carouselId = `bbg_xiv-carousel_${collection.id}`
         this.carouselId  = carouselId
-        this.length      = collection.length
         const bulletsJsx = []
         const imagesJsx  = []
         collection.forEach(function(model, index) {
@@ -106,7 +104,7 @@ class CarouselContainer extends React.Component {
         )
     }
     componentDidMount() {
-        window.bbg_xiv.postRenderCarousel(this.container, this.carouselId, this.length)
+        window.bbg_xiv.postRenderCarousel(this.container, this.carouselId, this.props.images)
     }
     componentDidCatch(error, info) {
         console.log('CarouselContainer:', error, info)

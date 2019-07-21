@@ -21,7 +21,7 @@ export default class FlexItem extends React.Component {
     handleInfoMouseEnter = function(e) {
         e.preventDefault()
         // TODO: this.img may not be necessary as it probably is only used to get this.props.data
-        window.bbg_xiv.showOverlay(e, true,  this.img, this.props.data)
+        window.bbg_xiv.showOverlay(e, true, this.img, this.props.data)
     }
     render() {
         const data           = this.props.data

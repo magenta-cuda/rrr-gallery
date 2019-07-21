@@ -646,10 +646,15 @@ console.log('bbg_xiv-gallery.js:loading...');
             });
         }
     }   // bbg_xiv.postRenderTabs = container => {
-    bbg_xiv.postRenderCarousel = (container, carouselId, length) => {
+    bbg_xiv.postRenderCarousel = (container, carouselId, images) => {
         // constructOverlay();
         const jqGallery = jQuery(container)
-        mcRrr.ReactDOM.render(<Overlay />, jqGallery.find('div.mc-rrr-react-overlay-root').get(0))
+        // TODO: flags
+        // if(flags.indexOf("embedded-carousel")!==-1){
+        if (true) {
+            jqGallery.addClass("bbg_xiv-embedded_carousel")
+        }
+        mcRrr.ReactDOM.render(<Overlay className="carousel" id={`mcrrr-overlay-${carouselId}`} />, jqGallery.find('div.mc-rrr-react-overlay-root').get(0))
         // pause() can be called from a button's event handler to pause the carousel, the argument is the button
         function pause( button ) {
             var $carousel = jQuery( button ).parents( 'div.carousel' );
@@ -681,10 +686,19 @@ console.log('bbg_xiv-gallery.js:loading...');
             if(jQuery(this.parentNode).hasClass("bbg_xiv-carousel_first")){
                 carousel.carousel(0);
             }else{
-                carousel.carousel(length-1);
+                carousel.carousel(images.length - 1 )
             }
             e.preventDefault();
         });
+        // Carousel Image Info Handler
+        jqGallery.find('a.bbg_xiv-carousel_info').click(function(e) {
+            pause(this)
+            // click is from carousel info button so active image is
+            const img  = jqGallery.find('div.carousel-inner figure.item.active img')[0]
+            const data = images.get(img.dataset.bbg_xivImageId).attributes
+            // Show alt overlay
+            window.bbg_xiv.showOverlay(e, true, img, data)
+        })
         jqGallery.find( 'a.bbg_xiv-carousel_help span.glyphicon' ).click( function( e ) {
             window.open( bbg_xiv.docUrl + '#view-carousel', '_blank' );
             e.preventDefault();
@@ -736,7 +750,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             pause(this);
         });
         // update jQuery Mobile slider when Bootstrap carousel changes slide
-        jqGallery.find("div.carousel").on("slide.bs.carousel slid.bs.carousel",function(e){
+        jqGallery.on("slide.bs.carousel slid.bs.carousel",function(e){
             slideChange=true;
             // update input element and trigger change event to force update of slider position
             jQuery( this ).find( 'div.bbg_xiv-jquery_mobile input[type="number"]' ).val( parseInt( e.relatedTarget.dataset.index, 10 ) + 1 ).change();
