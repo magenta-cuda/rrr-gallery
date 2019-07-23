@@ -166,6 +166,8 @@ console.log('bbg_xiv-gallery.js:loading...');
 
     bbg_xiv.postRenderFlexContainer = container => {
         const $flexContainer = jQuery(container)
+        // Remove the loading element.
+        $flexContainer.parents("div.bbg_xiv-gallery_envelope").find("div.ui-loader").remove()
         if (bbg_xiv.guiInterface === 'touch') {
             $flexContainer.find("div.bbg_xiv-flex_item div.bbg_xiv-dense_full_btn").addClass("bbg_xiv-touch");
         }
