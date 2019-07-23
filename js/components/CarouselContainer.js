@@ -4,11 +4,19 @@ class CarouselContainer extends React.Component {
         super(props)
         this.container        = null
         this.carouselId       = null
+        this.index            = 0
+        this.handleInfoClick  = this.handleInfoClick.bind(this)
         this.handleCloseClick = this.handleCloseClick.bind(this)
     }
     static getDerivedStateFromError(error) {
         console.log('CarouselContainer:', error)
         return {}
+    }
+    setIndex(index) {
+        this.index = index
+    }
+    handleInfoClick = function(e) {
+        window.bbg_xiv.showOverlay(e, true, null, this.props.images.at(this.index).attributes)
     }
     handleCloseClick = function(e) {
         this.props.setView('Gallery')
@@ -48,7 +56,8 @@ class CarouselContainer extends React.Component {
                 </div>
                 {/* Left and right controls */}
                 <div className="left carousel-control">
-                    <a className="bbg_xiv-carousel_info carousel-control" href="#" title={bbg_xiv_lang['Show Image Info']}>
+                    <a className="bbg_xiv-carousel_info carousel-control" href="#" title={bbg_xiv_lang['Show Image Info']}
+                            onClick={this.handleInfoClick}>
                         <span className="glyphicon glyphicon-info-sign"></span>
                         <span className="sr-only">Info</span>
                     </a>
@@ -104,7 +113,7 @@ class CarouselContainer extends React.Component {
         )
     }
     componentDidMount() {
-        window.bbg_xiv.postRenderCarousel(this.container, this.carouselId, this.props.images)
+        window.bbg_xiv.postRenderCarousel(this.container, this.carouselId, this.props.images, this.setIndex.bind(this))
     }
     componentDidCatch(error, info) {
         console.log('CarouselContainer:', error, info)

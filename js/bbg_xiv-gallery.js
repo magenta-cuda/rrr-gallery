@@ -646,7 +646,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             });
         }
     }   // bbg_xiv.postRenderTabs = container => {
-    bbg_xiv.postRenderCarousel = (container, carouselId, images) => {
+    bbg_xiv.postRenderCarousel = (container, carouselId, images, setIndex) => {
         // constructOverlay();
         const jqGallery = jQuery(container)
         // TODO: flags
@@ -693,11 +693,12 @@ console.log('bbg_xiv-gallery.js:loading...');
         // Carousel Image Info Handler
         jqGallery.find('a.bbg_xiv-carousel_info').click(function(e) {
             pause(this)
+            // The React Carousel component click handler handles the actual display of the overlay.
             // click is from carousel info button so active image is
-            const img  = jqGallery.find('div.carousel-inner figure.item.active img')[0]
-            const data = images.get(img.dataset.bbg_xivImageId).attributes
+            // const img  = jqGallery.find('div.carousel-inner figure.item.active img')[0]
+            // const data = images.get(img.dataset.bbg_xivImageId).attributes
             // Show alt overlay
-            window.bbg_xiv.showOverlay(e, true, img, data)
+            // window.bbg_xiv.showOverlay(e, true, img, data)
         })
         jqGallery.find( 'a.bbg_xiv-carousel_help span.glyphicon' ).click( function( e ) {
             window.open( bbg_xiv.docUrl + '#view-carousel', '_blank' );
@@ -753,7 +754,9 @@ console.log('bbg_xiv-gallery.js:loading...');
         jqGallery.on("slide.bs.carousel slid.bs.carousel",function(e){
             slideChange=true;
             // update input element and trigger change event to force update of slider position
-            jQuery( this ).find( 'div.bbg_xiv-jquery_mobile input[type="number"]' ).val( parseInt( e.relatedTarget.dataset.index, 10 ) + 1 ).change();
+            const index = parseInt( e.relatedTarget.dataset.index, 10 )
+            setIndex(index)
+            jQuery(this).find('div.bbg_xiv-jquery_mobile input[type="number"]').val(index + 1).change();
             slideChange=false;
         });
         // TODO: flags
