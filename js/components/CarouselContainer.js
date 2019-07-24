@@ -36,11 +36,11 @@ class CarouselContainer extends React.Component {
                     data-interval={bbg_xiv.bbg_xiv_carousel_interval} data-bbg_xiv-gallery-id={collection.id}
                     ref={node => {this.container = node}}>
                 {/* Indicators */}
-                {/* the original Bootstrap carousel slide indicators which actually works very well in desktop browser but is a failure for mobile */}
+                {/* the original Bootstrap carousel slide indicators which actually works very well in desktop browser but is a failure for mobile
                 <ol className="carousel-indicators">
                     {bulletsJsx}
                 </ol>
-                {/* --> */}
+                */}
                 <div className="carousel-indicators bbg_xiv-jquery_mobile">
                 <form>
                   <div className="ui-field-contain">
