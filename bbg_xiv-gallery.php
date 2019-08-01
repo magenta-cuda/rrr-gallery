@@ -424,96 +424,105 @@ EOD;
                 break;
         }
         return (
-            <nav role="navigation" className="navbar navbar-inverse bbg_xiv-gallery_navbar">
-                <div className="navbar-header">
-                    <button type="button" data-target={"#" + selector + "-navbarCollapse"} data-toggle="collapse"
-                            className="navbar-toggle">
-                        <span className="sr-only">Toggle navigation</span>
-                        <span className="icon-bar"></span>
-                        <span className="icon-bar"></span>
-                        <span className="icon-bar"></span>
-                    </button>
-                    <a href="#" className="navbar-brand bbg_xiv-images_brand">{$translations['GALLERY MENU']}</a>
-                </div>
-                <div id={selector + "-navbarCollapse"} className="collapse navbar-collapse">
-                    <ul className="nav navbar-nav">
-                        <li className="dropdown bbg_xiv-select_view">
-                            <a data-toggle="dropdown" className="dropdown-toggle bbg_xiv-selected_view" href="#">
-                                <span>{dropdownText}</span> <b className="caret"></b>
-                            </a>
-                            <ul role="menu" className="dropdown-menu bbg_xiv-view_menu">
-                                <li className="dropdown-header">{$translations['VIEWS']}</li>
-                                <li className={"bbg_xiv-view bbg_xiv-view_gallery"
-                                        + (view === "Gallery" ? " active" : "")}>
-                                    <a data-view="Gallery" href="#" onClick={handleViewClick}>{$translations['Gallery']}</a>
-                                </li>
-                                <li className={"bbg_xiv-view bbg_xiv-view_carousel bbg_xiv-hide_for_gallery_icons"
-                                        + (view === "Carousel" ? " active" : "")}>
-                                    <a data-view="Carousel" href="#" onClick={handleViewClick}>{$translations['Carousel']}</a>
-                                </li>
-                                <li className={"bbg_xiv-view bbg_xiv-view_justified bbg_xiv-hide_for_gallery_icons"
-                                        + (view === "Justified" ? " active" : "")}>
-                                    <a data-view="Justified" href="#" onClick={handleViewClick}>{$translations['Justified']}</a>
-                                </li>
-                                <li className={"bbg_xiv-view bbg_xiv-view_tabs"
-                                        + (view === "Tabs" ? " active" : "")}>
-                                    <a data-view="Tabs" href="#" onClick={handleViewClick}>{$translations['Tabs']}</a>
-                                </li>
-                                <li className={"bbg_xiv-view bbg_xiv-hide_for_gallery_icons bbg_xiv-large_viewport_only"
-                                        + (view === "Dense" ? " active" : "")}>
-                                    <a data-view="Dense" href="#" onClick={handleViewClick}>{$translations['Dense']}</a>
-                                </li>
-                                {/* TODO: Add entry for new views here. */}
-                                $table_nav_item
-                                {/* output menu items for dynamically loaded galleries */}
-                                {galleries}
-                            </ul>
-                        </li>
-                    </ul>
-                    <form role="search" className="navbar-form navbar-left bbg_xiv-search_form">
-                        <div className="form-group">
-                            <div className="input-group">
-                                <input type="text" placeholder="{$translations['Search Images on Site']}"
-                                        className="form-control" />
-                                <span className="input-group-btn">
-                                    <button type="submit" className="btn btn-default bbg_xiv-search" title="start search"
-                                            onClick={handleSearchClick}>
-                                        <span className="glyphicon glyphicon-search"></span>
-                                    </button>
-                                </span>
+            <React.Fragment>
+                <nav role="navigation" className="navbar navbar-inverse bbg_xiv-gallery_navbar">
+                    <div className="navbar-header">
+                        <button type="button" data-target={"#" + selector + "-navbarCollapse"} data-toggle="collapse"
+                                className="navbar-toggle">
+                            <span className="sr-only">Toggle navigation</span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
+                        </button>
+                        <a href="#" className="navbar-brand bbg_xiv-images_brand">{$translations['GALLERY MENU']}</a>
+                    </div>
+                    <div id={selector + "-navbarCollapse"} className="collapse navbar-collapse">
+                        <ul className="nav navbar-nav">
+                            <li className="dropdown bbg_xiv-select_view">
+                                <a data-toggle="dropdown" className="dropdown-toggle bbg_xiv-selected_view" href="#">
+                                    <span>{dropdownText}</span> <b className="caret"></b>
+                                </a>
+                                <ul role="menu" className="dropdown-menu bbg_xiv-view_menu">
+                                    <li className="dropdown-header">{$translations['VIEWS']}</li>
+                                    <li className={"bbg_xiv-view bbg_xiv-view_gallery"
+                                            + (view === "Gallery" ? " active" : "")}>
+                                        <a data-view="Gallery" href="#" onClick={handleViewClick}>{$translations['Gallery']}</a>
+                                    </li>
+                                    <li className={"bbg_xiv-view bbg_xiv-view_carousel bbg_xiv-hide_for_gallery_icons"
+                                            + (view === "Carousel" ? " active" : "")}>
+                                        <a data-view="Carousel" href="#" onClick={handleViewClick}>{$translations['Carousel']}</a>
+                                    </li>
+                                    <li className={"bbg_xiv-view bbg_xiv-view_justified bbg_xiv-hide_for_gallery_icons"
+                                            + (view === "Justified" ? " active" : "")}>
+                                        <a data-view="Justified" href="#" onClick={handleViewClick}>{$translations['Justified']}</a>
+                                    </li>
+                                    <li className={"bbg_xiv-view bbg_xiv-view_tabs"
+                                            + (view === "Tabs" ? " active" : "")}>
+                                        <a data-view="Tabs" href="#" onClick={handleViewClick}>{$translations['Tabs']}</a>
+                                    </li>
+                                    <li className={"bbg_xiv-view bbg_xiv-hide_for_gallery_icons bbg_xiv-large_viewport_only"
+                                            + (view === "Dense" ? " active" : "")}>
+                                        <a data-view="Dense" href="#" onClick={handleViewClick}>{$translations['Dense']}</a>
+                                    </li>
+                                    {/* TODO: Add entry for new views here. */}
+                                    $table_nav_item
+                                    {/* output menu items for dynamically loaded galleries */}
+                                    {galleries}
+                                </ul>
+                            </li>
+                        </ul>
+                        <form role="search" className="navbar-form navbar-left bbg_xiv-search_form">
+                            <div className="form-group">
+                                <div className="input-group">
+                                    <input type="text" placeholder="{$translations['Search Images on Site']}"
+                                            className="form-control" />
+                                    <span className="input-group-btn">
+                                        <button type="submit" className="btn btn-default bbg_xiv-search" title="start search"
+                                                onClick={handleSearchClick}>
+                                            <span className="glyphicon glyphicon-search"></span>
+                                        </button>
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                        $nonce_field
-                    </form>
-                    <button type="button" className="btn btn-info bbg_xiv-help" title="{$translations['get help']}"
-                            onClick={e => {bbg_xiv.handleHelpClick.call(e.currentTarget, e)}}>
-                        <span className="glyphicon glyphicon-question-sign"></span>
-                        <span className="bbg_xiv-navbar_button_text">{$translations['Help']}</span>
-                    </button>
-                    <button type="button" className="btn btn-info bbg_xiv-configure"
-                            title="{$translations['configure bandwidth, carousel interval, ...']}"
-                            onClick={e => {bbg_xiv.handleConfigureClick.call(e.currentTarget, e)}}>
-                        <span className="glyphicon glyphicon-cog"></span>
-                        <span className="bbg_xiv-navbar_button_text">{$translations['Options']}</span>
-                    </button>
-                    <button type="button" className="btn btn-info bbg_xiv-home"
-                            title="{$translations['return to home gallery']}">
-                        <span className="glyphicon glyphicon-home"></span>
-                        <span className="bbg_xiv-navbar_button_text">{$translations['Home']}</span>
-                    </button>
-                    <button type="button" className="btn btn-info bbg_xiv-fullscreen"
-                            title="{$translations['toggle fullscreen']}">
-                        <span className="glyphicon glyphicon-fullscreen"></span>
-                        <span className="bbg_xiv-navbar_button_text">{$translations['Fullscreen']}</span>
-                    </button>
-                    <button type="button" className="btn btn-info bbg_xiv-titles"
-                            title="{$translations['show/hide image titles']}"
-                            onClick={e => {bbg_xiv.handleTitlesClick.call(e.currentTarget, e)}}>
-                        <span className="glyphicon glyphicon-subtitles"></span>
-                        <span className="bbg_xiv-navbar_button_text">{$translations['Titles']}</span>
-                    </button>
+                            $nonce_field
+                        </form>
+                        <button type="button" className="btn btn-info bbg_xiv-help" title="{$translations['get help']}"
+                                onClick={e => {bbg_xiv.handleHelpClick.call(e.currentTarget, e)}}>
+                            <span className="glyphicon glyphicon-question-sign"></span>
+                            <span className="bbg_xiv-navbar_button_text">{$translations['Help']}</span>
+                        </button>
+                        <button type="button" className="btn btn-info bbg_xiv-configure"
+                                title="{$translations['configure bandwidth, carousel interval, ...']}"
+                                onClick={e => {bbg_xiv.handleConfigureClick.call(e.currentTarget, e)}}>
+                            <span className="glyphicon glyphicon-cog"></span>
+                            <span className="bbg_xiv-navbar_button_text">{$translations['Options']}</span>
+                        </button>
+                        <button type="button" className="btn btn-info bbg_xiv-home"
+                                title="{$translations['return to home gallery']}">
+                            <span className="glyphicon glyphicon-home"></span>
+                            <span className="bbg_xiv-navbar_button_text">{$translations['Home']}</span>
+                        </button>
+                        <button type="button" className="btn btn-info bbg_xiv-fullscreen"
+                                title="{$translations['toggle fullscreen']}">
+                            <span className="glyphicon glyphicon-fullscreen"></span>
+                            <span className="bbg_xiv-navbar_button_text">{$translations['Fullscreen']}</span>
+                        </button>
+                        <button type="button" className="btn btn-info bbg_xiv-titles"
+                                title="{$translations['show/hide image titles']}"
+                                onClick={e => {bbg_xiv.handleTitlesClick.call(e.currentTarget, e)}}>
+                            <span className="glyphicon glyphicon-subtitles"></span>
+                            <span className="bbg_xiv-navbar_button_text">{$translations['Titles']}</span>
+                        </button>
+                    </div>
+                </nav>
+                {/* Search Headings */}
+                <div id="$selector-heading" className="bbg_xiv-search_header">
+                    <span className="bbg_xiv-search_heading_first"></span><br />
+                    <button className="btn btn-primary btn-sm bbg_xiv-search_scroll_left" disabled><span class="glyphicon glyphicon-chevron-left"></span></button>
+                    <span className="bbg_xiv-search_heading_second"></span>
+                    <button className="btn btn-primary btn-sm bbg_xiv-search_scroll_right"><span class="glyphicon glyphicon-chevron-right"></span></button>
                 </div>
-            </nav>
+            </React.Fragment>
         )
     }
     console.log('window.bbg_xiv.NavBar=', window.bbg_xiv.NavBar)
@@ -568,12 +577,14 @@ EOD;
         $flags                    = empty( $flags )              ? '' : $flags;
         $output .= <<<EOD
     <!-- Search or Gallery Headings -->
+    <!--
     <div id="$selector-heading" class="bbg_xiv-search_header">
         <span class="bbg_xiv-search_heading_first"></span><br>
         <button class="btn btn-primary btn-sm bbg_xiv-search_scroll_left" disabled><span class="glyphicon glyphicon-chevron-left"></span></button>
         <span class="bbg_xiv-search_heading_second"></span>
         <button class="btn btn-primary btn-sm bbg_xiv-search_scroll_right"><span class="glyphicon glyphicon-chevron-right"></span></button>
     </div>
+    -->
     <div id="$selector-alt_gallery_heading" class="bbg_xiv-alt_gallery_header">
         <span class="bbg_xiv-alt_gallery_heading"></span>
     </div>

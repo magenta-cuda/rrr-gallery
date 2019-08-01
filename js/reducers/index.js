@@ -5,14 +5,15 @@ export default (state = {}, action) => {
     case LOAD_GALLERY_IMAGES:
     case LOAD_SEARCH_IMAGES:{
         action.images.id = action.id
-        let images       = state.images
-        images           = {...images, [action.id]: action.images}
+        const images     = {...state.images, [action.id]: action.images}
         if ( action.type === LOAD_GALLERY_IMAGES ) {
             console.log('reducers:LOAD_GALLERY_IMAGES:action=', action)
             return {...state, images: images}
         }
         console.log('reducers:LOAD_SEARCH_IMAGES:action=', action)
         // TODO: search also has multi page state
+        images[action.id].query = action.parms.query
+        console.log('reducers:LOAD_SEARCH_IMAGES:images=', images)
         return {...state, images: images}
     }
     case HANDLE_LOAD_FAILED:
