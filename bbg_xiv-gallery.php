@@ -383,7 +383,10 @@ EOD;
             }
             getImagesByGallerySpecs(selector, parameters)
         }
-        const {id, view, setView, getImagesByGallerySpecs} = props
+        function handleSearchClick(e) {
+            bbg_xiv.handleSearchClick.call(e.currentTarget, e, getImagesBySearchParms)
+        }
+        const {id, view, setView, getImagesByGallerySpecs, getImagesBySearchParms} = props
         const selector  = 'gallery-' + id
         let   galleries = ''
         if ( typeof props.galleries !== 'undefined' ) {
@@ -474,7 +477,7 @@ EOD;
                                         className="form-control" />
                                 <span className="input-group-btn">
                                     <button type="submit" className="btn btn-default bbg_xiv-search" title="start search"
-                                            onClick={e => {bbg_xiv.handleSearchClick.call(e.currentTarget, e)}}>
+                                            onClick={handleSearchClick}>
                                         <span className="glyphicon glyphicon-search"></span>
                                     </button>
                                 </span>
@@ -520,7 +523,8 @@ EOD;
     }
     const mapDispatchToProps = dispatch => ({
         setView:                 view        => dispatch(mcRrr.setView(view)),
-        getImagesByGallerySpecs: (id, specs) => dispatch(mcRrr.getImagesByGallerySpecs(id, specs))
+        getImagesByGallerySpecs: (id, specs) => dispatch(mcRrr.getImagesByGallerySpecs(id, specs)),
+        getImagesBySearchParms: (id, parms)  => dispatch(mcRrr.getImagesBySearchParms(id, parms))
     })
     window.bbg_xiv.NavBarContainer = mcRrr.connect(mapStateToProps, mapDispatchToProps)(window.bbg_xiv.NavBar)
 </script>

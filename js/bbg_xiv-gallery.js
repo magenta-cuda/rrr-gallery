@@ -1998,7 +1998,7 @@ console.log('bbg_xiv-gallery.js:loading...');
     var count=Number.MAX_SAFE_INTEGER;
     var pages=Number.MAX_SAFE_INTEGER;
 
-    bbg_xiv.handleSearchClick = function(e) {
+    bbg_xiv.handleSearchClick = function(e, getImagesBySearchParms) {
         var searchLimit = parseInt( bbg_xiv.bbg_xiv_max_search_results, 10 );
         if ( searchLimit > bbg_xiv.wpRestApiMaxPerPage ) {
             searchLimit = bbg_xiv.wpRestApiMaxPerPage;
@@ -2051,7 +2051,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             input:         input,
             searchBtn:     searchBtn
         }
-        window.mcRrr.store.dispatch( mcRrr.getImagesBySearchParms( divGallery.id, parms ) );
+        getImagesBySearchParms(divGallery.id, parms)
         searchBtn.closest( 'div.bbg_xiv-gallery' ).removeClass( 'bbg_xiv-home_gallery' );
         e.preventDefault();
     }
