@@ -2023,6 +2023,7 @@ console.log('bbg_xiv-gallery.js:loading...');
         }
         // setup headings
         jQuery("div#"+divGallery.id+"-alt_gallery_heading").hide();
+/*
         var jqueryLoading=true;
         try {
             // There is a very rare failure of the following
@@ -2034,6 +2035,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             jQuery.mobile.loading._widget=undefined;
             jqueryLoading=false;
         }
+ */
         jQuery(divGallery).parent().find("div.bbg_xiv-search_header").hide();
         // uses the WP REST API
         // TODO: quick hack to check middleware
@@ -2042,7 +2044,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             page:          page++,
             searchLimit:   searchLimit,
             offset:        offset,
-            jqueryLoading: jqueryLoading,
+            // jqueryLoading: jqueryLoading,
             // TODO: the references to UI elements divGallery, input and searchBtn will not be needed after these are Reactified
             //       but for now we need these as action parameters
             divGallery:    divGallery,
