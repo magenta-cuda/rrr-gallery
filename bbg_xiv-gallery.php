@@ -386,6 +386,18 @@ EOD;
         function handleSearchClick(e) {
             bbg_xiv.handleSearchClick.call(e.currentTarget, e, getImagesBySearchParms)
         }
+        function handlePageClick(e, direction) {
+            let searchLimit = parseInt( bbg_xiv.bbg_xiv_max_search_results, 10 )
+            if (searchLimit > bbg_xiv.wpRestApiMaxPerPage) {
+                searchLimit = bbg_xiv.wpRestApiMaxPerPage
+            }
+            const parms = {
+                query:         images.state.data.search,
+                page:          images.state.currentPage + (direction === 'next' ? 1 : -1),
+                searchLimit:   searchLimit
+            }
+            getImagesBySearchParms(selector, parms)
+        }
         const {id, images, view, setView, getImagesByGallerySpecs, getImagesBySearchParms} = props
         const selector  = 'gallery-' + id
         let   galleries = ''
@@ -519,16 +531,24 @@ EOD;
                 {/* TODO: \$ -> $ - needed for now since this in a PHP file. */}
                 <div id={`\${selector}-heading`} className="bbg_xiv-search_header" style={{display: images.query ? 'block' : 'none'}}>
                     {/* TODO: \$ -> $ - needed for now since this in a PHP file. */}
-                    {/* TODO: Replace images.query with state.data.search - so property images.query is unnecessary */}
-                    <span className="bbg_xiv-search_heading_first">{`\${bbg_xiv_lang["Search Results for"]} "\${images.query}"`}</span><br />
-                    <button className="btn btn-primary btn-sm bbg_xiv-search_scroll_left" disabled>
+                    {/* TODO: Replace images.query with images.state.data.search - so property images.query is unnecessary */}
+                    <span className="bbg_xiv-search_heading_first">
+                        {`\${bbg_xiv_lang["Search Results for"]} "\${images.query}"`}
+                    </span><br />
+                    <button className="btn btn-primary btn-sm bbg_xiv-search_scroll_left"
+                            disabled={images.state.currentPage === 1}
+                            onClick={e => {handlePageClick(e, 'prev')}}>
                         <span className="glyphicon glyphicon-chevron-left"></span>
                     </button>
                     <span className="bbg_xiv-search_heading_second">
                         {/* TODO: \$ -> $ - needed for now since this in a PHP file. */}
                         {`\${bbg_xiv_lang.Page} \${images.state.currentPage} \${bbg_xiv_lang.of} \${images.state.totalPages}`}
                     </span>
-                    <button className="btn btn-primary btn-sm bbg_xiv-search_scroll_right"><span class="glyphicon glyphicon-chevron-right"></span></button>
+                    <button className="btn btn-primary btn-sm bbg_xiv-search_scroll_right"
+                            disabled={images.state.currentPage === images.state.totalPages}
+                            onClick={e => {handlePageClick(e, 'next')}}>
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </button>
                 </div>
             </React.Fragment>
         )
