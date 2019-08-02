@@ -518,11 +518,16 @@ EOD;
                 {/* Search Headings */}
                 {/* TODO: \$ -> $ - needed for now since this in a PHP file. */}
                 <div id={`\${selector}-heading`} className="bbg_xiv-search_header" style={{display: images.query ? 'block' : 'none'}}>
-                    <span className="bbg_xiv-search_heading_first"></span><br />
+                    {/* TODO: \$ -> $ - needed for now since this in a PHP file. */}
+                    {/* TODO: Replace images.query with state.data.search - so property images.query is unnecessary */}
+                    <span className="bbg_xiv-search_heading_first">{`\${bbg_xiv_lang["Search Results for"]} "\${images.query}"`}</span><br />
                     <button className="btn btn-primary btn-sm bbg_xiv-search_scroll_left" disabled>
                         <span className="glyphicon glyphicon-chevron-left"></span>
                     </button>
-                    <span className="bbg_xiv-search_heading_second"></span>
+                    <span className="bbg_xiv-search_heading_second">
+                        {/* TODO: \$ -> $ - needed for now since this in a PHP file. */}
+                        {`\${bbg_xiv_lang.Page} \${images.state.currentPage} \${bbg_xiv_lang.of} \${images.state.totalPages}`}
+                    </span>
                     <button className="btn btn-primary btn-sm bbg_xiv-search_scroll_right"><span class="glyphicon glyphicon-chevron-right"></span></button>
                 </div>
             </React.Fragment>
