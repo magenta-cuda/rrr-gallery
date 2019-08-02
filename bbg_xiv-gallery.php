@@ -386,7 +386,7 @@ EOD;
         function handleSearchClick(e) {
             bbg_xiv.handleSearchClick.call(e.currentTarget, e, getImagesBySearchParms)
         }
-        const {id, view, setView, getImagesByGallerySpecs, getImagesBySearchParms} = props
+        const {id, images, view, setView, getImagesByGallerySpecs, getImagesBySearchParms} = props
         const selector  = 'gallery-' + id
         let   galleries = ''
         if ( typeof props.galleries !== 'undefined' ) {
@@ -516,9 +516,12 @@ EOD;
                     </div>
                 </nav>
                 {/* Search Headings */}
-                <div id="$selector-heading" className="bbg_xiv-search_header">
+                {/* TODO: \$ -> $ - needed for now since this in a PHP file. */}
+                <div id={`\${selector}-heading`} className="bbg_xiv-search_header" style={{display: images.query ? 'block' : 'none'}}>
                     <span className="bbg_xiv-search_heading_first"></span><br />
-                    <button className="btn btn-primary btn-sm bbg_xiv-search_scroll_left" disabled><span class="glyphicon glyphicon-chevron-left"></span></button>
+                    <button className="btn btn-primary btn-sm bbg_xiv-search_scroll_left" disabled>
+                        <span className="glyphicon glyphicon-chevron-left"></span>
+                    </button>
                     <span className="bbg_xiv-search_heading_second"></span>
                     <button className="btn btn-primary btn-sm bbg_xiv-search_scroll_right"><span class="glyphicon glyphicon-chevron-right"></span></button>
                 </div>
@@ -528,7 +531,8 @@ EOD;
     console.log('window.bbg_xiv.NavBar=', window.bbg_xiv.NavBar)
 
     const mapStateToProps = (state, ownProps) => {
-        return {id: ownProps.id, galleries: ownProps.galleries, view: state.view}
+                {/* TODO: \$ -> $ - needed for now since this in a PHP file. */}
+        return {id: ownProps.id, images: state.images[`gallery-\${ownProps.id}`], galleries: ownProps.galleries, view: state.view}
     }
     const mapDispatchToProps = dispatch => ({
         setView:                 view        => dispatch(mcRrr.setView(view)),
