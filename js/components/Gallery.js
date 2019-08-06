@@ -1,10 +1,14 @@
 import React from 'react'
+import {STATUS_LOADING} from '../actions/index.js'
 import FlexContainer from '../components/FlexContainer.js'
 
-export default props => {
-    console.log('Gallery.js:props=', props)
+export default ({images, setView}) => {
+    if (images.status === STATUS_LOADING) {
+        return <div className="ui-loader"><span className="ui-icon-loading"></span></div>
+    }
     let Container = FlexContainer
-    switch (props.view) {
+    console.log('Gallery:images=', images)
+    switch (images.view) {
     case 'Gallery':
         Container = FlexContainer
         break
@@ -21,5 +25,5 @@ export default props => {
         Container = DenseContainer
         break
     }
-    return <Container images={props.images} setView={props.setView}></Container>
+    return <Container images={images} setView={setView}></Container>
 }

@@ -1,4 +1,4 @@
-import {loadSearchImages, loadGalleryImages, handleLoadFailed} from '../actions/index.js'
+import {loadSearchImages, loadGalleryImages, handleLoadFailed, setStatus, STATUS_LOADING, STATUS_LOADED} from '../actions/index.js'
 
 export const REST = 'REST'
 
@@ -9,19 +9,21 @@ export default store => next => action => {
     }
     console.log('rest.js:action=', action)
     // debugger
+    next(setStatus(rest.id, STATUS_LOADING))
     if (typeof rest.specs !== 'undefined') {
         const {id, specs} = rest
         const images = new wp.api.collections.Media()
         images.once("sync", function() {
             // the sync event will occur once only on the Backbone fetch of the collection
-            next(loadGalleryImages(id, images));
+            next(loadGalleryImages(id, images))
+            next(setStatus(id, STATUS_LOADED))
         });
         images.fetch({
             data:    specs,
             success: function(c, r, o) {
             },
             error:   function(c, r) {
-                next(handleLoadFailed(id, images, specs));
+                next(handleLoadFailed(id, images, specs))
             }
         })
     } else if (typeof rest.parms !== 'undefined') {
@@ -30,8 +32,9 @@ export default store => next => action => {
         let images = new wp.api.collections.Media()
         images.once("sync", function() {
             // the sync event will occur once only on the Backbone fetch of the collection
-            next(loadSearchImages(id, images, parms));
-        });
+            next(loadSearchImages(id, images, parms))
+            next(setStatus(id, STATUS_LOADED))
+        })
         // get the next part of the multi-part search result as specified by page
         images.fetch({
             data:{
@@ -42,7 +45,7 @@ export default store => next => action => {
             success:function(c, r, o) {
             },
             error:function(c, r) {
-                next(handleLoadFailed(id, images, parms));
+                next(handleLoadFailed(id, images, parms))
             }
         })
     }

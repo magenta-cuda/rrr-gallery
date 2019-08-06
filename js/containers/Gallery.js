@@ -2,8 +2,7 @@ import { connect } from 'react-redux'
 import Gallery from '../components/Gallery.js'
 
 const mapStateToProps    = (state, ownProps) => ({
-    images:  state.images[ownProps.id] ? state.images[ownProps.id] : 'images do not exists',
-    view:    state.view
+    images:  state.images[ownProps.id] ? state.images[ownProps.id] : 'images do not exists'
 })
 
 const mapDispatchToProps = dispatch          => ({

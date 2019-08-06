@@ -41,8 +41,19 @@ export const handleLoadFailed = (id, images) => ({
 
 export const SET_VIEW = 'SET-VIEW'
 
-export const setView = view => ({
+export const setView = (id, view) => ({
     type: SET_VIEW,
+    id:   id,
     view: view
+})
+
+export const SET_STATUS     = 'SET-STATUS'
+export const STATUS_LOADING = 'loading'
+export const STATUS_LOADED  = 'loaded'
+
+export const setStatus = (id, status) => ({
+    type:   SET_STATUS,
+    id:     id,
+    status: status
 })
 

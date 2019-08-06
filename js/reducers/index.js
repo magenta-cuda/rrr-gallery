@@ -1,4 +1,4 @@
-import {LOAD_GALLERY_IMAGES, LOAD_SEARCH_IMAGES, HANDLE_LOAD_FAILED, SET_VIEW} from '../actions/index.js'
+import {LOAD_GALLERY_IMAGES, LOAD_SEARCH_IMAGES, HANDLE_LOAD_FAILED, SET_VIEW, SET_STATUS} from '../actions/index.js'
 
 export default (state = {}, action) => {
     switch (action.type) {
@@ -18,8 +18,20 @@ export default (state = {}, action) => {
     }
     case HANDLE_LOAD_FAILED:
         return state
-    case SET_VIEW:
-        return {...state, view: action.view}
+    case SET_VIEW: {
+        const images           = {...state.images}
+        // Cannot clone images using the spread operator since it is also necessary to preserve the prototype chain.
+        images[action.id]      = Object.assign(new wp.api.collections.Media(), images[action.id])
+        images[action.id].view = action.view
+        return {...state, images: images}
+    }
+    case SET_STATUS: {
+        const images             = {...state.images}
+        // Cannot clone images using the spread operator since it is also necessary to preserve the prototype chain.
+        images[action.id]        = Object.assign(new wp.api.collections.Media(), images[action.id])
+        images[action.id].status = action.status
+        return {...state, images: images}
+    }
     default:
         return state
     }

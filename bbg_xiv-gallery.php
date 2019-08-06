@@ -547,7 +547,7 @@ EOD;
                     <button className="btn btn-primary btn-sm bbg_xiv-search_scroll_right"
                             disabled={images.state.currentPage === images.state.totalPages}
                             onClick={e => {handlePageClick(e, 'next')}}>
-                        <span class="glyphicon glyphicon-chevron-right"></span>
+                        <span className="glyphicon glyphicon-chevron-right"></span>
                     </button>
                 </div>
             </React.Fragment>
@@ -1089,7 +1089,13 @@ EOD
 ?>
 <script src="<?php echo plugins_url( "js/vendors~main.bundle.js",                  __FILE__ ); ?>" type="text/javascript"></script>
 <script src="<?php echo plugins_url( "js/bundle.js",                               __FILE__ ); ?>" type="text/javascript"></script>
+<!--
 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"                                    type="text/javascript"></script>
+-->
+<script src="<?php echo plugins_url( "js/babel.js",                                __FILE__ ); ?>" type="text/javascript"></script>
+<script type="text/babel">
+    // Test Harness for Babel JavaScript code
+</script>
 <!-- TODO: 'js/components/*.js' will eventually be in 'js/bundle.js' but not true for now. -->
 <script src="<?php echo plugins_url( "js/components/JustifiedGalleryItem.js",      __FILE__ ); ?>" type="text/babel"></script>
 <script src="<?php echo plugins_url( "js/components/JustifiedGalleryContainer.js", __FILE__ ); ?>" type="text/babel"></script>

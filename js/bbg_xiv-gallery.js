@@ -271,7 +271,6 @@ console.log('bbg_xiv-gallery.js:loading...');
             });
         }
     };
- */
 
     bbg_xiv.renderCarousel=function(container,collection,id){
         var containerWidth=container.width();
@@ -304,7 +303,6 @@ console.log('bbg_xiv-gallery.js:loading...');
         container.append(galleryView.render().$el.find( "div.carousel.slide"));
     };
 
-/*
     bbg_xiv.renderTabs=function(container,collection,id){
         var containerWidth=container.width();
         var tabView=new bbg_xiv.ImageView();
