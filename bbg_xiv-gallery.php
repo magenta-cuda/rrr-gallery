@@ -527,38 +527,43 @@ EOD;
                         </button>
                     </div>
                 </nav>
-                {/* Search Headings */}
-                {/* TODO: \$ -> $ - needed for now since this in a PHP file. */}
-                <div id={`\${selector}-heading`} className="bbg_xiv-search_header" style={{display: images.query ? 'block' : 'none'}}>
-                    {/* TODO: \$ -> $ - needed for now since this in a PHP file. */}
-                    {/* TODO: Replace images.query with images.state.data.search - so property images.query is unnecessary */}
-                    <span className="bbg_xiv-search_heading_first">
-                        {`\${bbg_xiv_lang["Search Results for"]} "\${images.query}"`}
-                    </span><br />
-                    <button className="btn btn-primary btn-sm bbg_xiv-search_scroll_left"
-                            disabled={images.state.currentPage === 1}
-                            onClick={e => {handlePageClick(e, 'prev')}}>
-                        <span className="glyphicon glyphicon-chevron-left"></span>
-                    </button>
-                    <span className="bbg_xiv-search_heading_second">
+                {images && images.query ?
+                    // Search Headings
+                    // TODO: \$ -> $ - needed for now since this in a PHP file.
+                    <div id={`\${selector}-heading`} className="bbg_xiv-search_header" style={{display: images.query ? 'block' : 'none'}}>
                         {/* TODO: \$ -> $ - needed for now since this in a PHP file. */}
-                        {`\${bbg_xiv_lang.Page} \${images.state.currentPage} \${bbg_xiv_lang.of} \${images.state.totalPages}`}
-                    </span>
-                    <button className="btn btn-primary btn-sm bbg_xiv-search_scroll_right"
-                            disabled={images.state.currentPage === images.state.totalPages}
-                            onClick={e => {handlePageClick(e, 'next')}}>
-                        <span className="glyphicon glyphicon-chevron-right"></span>
-                    </button>
-                </div>
+                        {/* TODO: Replace images.query with images.state.data.search - so property images.query is unnecessary */}
+                        <span className="bbg_xiv-search_heading_first">
+                            {`\${bbg_xiv_lang["Search Results for"]} "\${images.query}"`}
+                        </span><br />
+                        <button className="btn btn-primary btn-sm bbg_xiv-search_scroll_left"
+                                disabled={images.state.currentPage === 1}
+                                onClick={e => {handlePageClick(e, 'prev')}}>
+                            <span className="glyphicon glyphicon-chevron-left"></span>
+                        </button>
+                        <span className="bbg_xiv-search_heading_second">
+                            {/* TODO: \$ -> $ - needed for now since this in a PHP file. */}
+                            {`\${bbg_xiv_lang.Page} \${images.state.currentPage} \${bbg_xiv_lang.of} \${images.state.totalPages}`}
+                        </span>
+                        <button className="btn btn-primary btn-sm bbg_xiv-search_scroll_right"
+                                disabled={images.state.currentPage === images.state.totalPages}
+                                onClick={e => {handlePageClick(e, 'next')}}>
+                            <span className="glyphicon glyphicon-chevron-right"></span>
+                        </button>
+                    </div>
+                : null
+            }
             </React.Fragment>
         )
     }
     console.log('window.bbg_xiv.NavBar=', window.bbg_xiv.NavBar)
 
-    const mapStateToProps = (state, ownProps) => {
-                {/* TODO: \$ -> $ - needed for now since this in a PHP file. */}
-        return {id: ownProps.id, images: state.images[`gallery-\${ownProps.id}`], galleries: ownProps.galleries, view: state.view}
-    }
+    const mapStateToProps = (state, ownProps) => ({
+            id:        ownProps.id,
+            // TODO: \$ -> $ - needed for now since this in a PHP file.
+            images:    state.images && state.images[`gallery-\${ownProps.id}`] ? state.images[`gallery-\${ownProps.id}`] : null,
+            galleries: ownProps.galleries, view: state.view
+    })
     const mapDispatchToProps = dispatch => ({
         setView:                 view        => dispatch(mcRrr.setView(view)),
         getImagesByGallerySpecs: (id, specs) => dispatch(mcRrr.getImagesByGallerySpecs(id, specs)),

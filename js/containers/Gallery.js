@@ -1,12 +1,15 @@
-import { connect } from 'react-redux'
-import Gallery from '../components/Gallery.js'
+import { connect }                  from 'react-redux'
+import Gallery                      from '../components/Gallery.js'
+import {setView, loadGalleryImages} from '../actions/index.js'
 
 const mapStateToProps    = (state, ownProps) => ({
-    images:  state.images[ownProps.id] ? state.images[ownProps.id] : 'images do not exists'
+    id:     ownProps.id,
+    images: state.images && state.images[ownProps.id] ? state.images[ownProps.id] : null
 })
 
 const mapDispatchToProps = dispatch          => ({
-    setView: view => dispatch(mcRrr.setView(view))
+    setView:           view         => dispatch(setView(view)),
+    loadGalleryImages: (id, images) => dispatch(loadGalleryImages(id, images))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Gallery)

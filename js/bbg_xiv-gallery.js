@@ -2074,10 +2074,11 @@ console.log('bbg_xiv-gallery.js:loading...');
         }, 0 );
         jQuery("div.bbg_xiv-gallery_envelope").each(function(){
             var gallery=this;
-            var defaultView=bbg_xiv.getDefaultView(jQuery(gallery),null);
+            // var defaultView=bbg_xiv.getDefaultView(jQuery(gallery),null);
             // prettify Galleries tabs
             bbg_xiv.prettifyTabs(jQuery(gallery.parentNode).find("div.bbg_xiv-container"),true);
             // If the schema is not in sessionStorage it will be loaded asynchronously so must use wp.api.loadPromise.done()
+/*
             wp.api.loadPromise.done(function(){
                 var images=bbg_xiv.images[gallery.id]=new wp.api.collections.Media();
                 images.reset(JSON.parse(bbg_xiv[gallery.id+"-data"]));
@@ -2091,6 +2092,7 @@ console.log('bbg_xiv-gallery.js:loading...');
                 // jQuery( gallery ).closest( 'div.bbg_xiv-gallery' ).addClass( 'bbg_xiv-home_gallery' );
                 // jQuery(window).resize();
             });
+ */ 
         });
 
 /*
