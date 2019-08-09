@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import {createStore, applyMiddleware, compose} from 'redux'
 import { connect } from 'react-redux'
@@ -23,6 +23,7 @@ const store = createStore(reducer, {images: {}, view: 'Gallery'}, compose(applyM
 window.mcRrr = {
     store:                   store,
     React:                   React,
+    useState:                useState,
     ReactDOM:                ReactDOM,
     connect:                 connect,
     Provider:                Provider,

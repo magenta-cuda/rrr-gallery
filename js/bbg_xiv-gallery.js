@@ -1910,6 +1910,7 @@ console.log('bbg_xiv-gallery.js:loading...');
  */
 
     bbg_xiv.handleConfigureClick = function(e) {
+/*
         const divConfigure = jQuery(".bbg_xiv-configure_inner");
         divConfigure.find("input#bbg_xiv-carousel_delay").val(bbg_xiv.bbg_xiv_carousel_interval);
         divConfigure.find("input#bbg_xiv-min_image_width").val(bbg_xiv.bbg_xiv_flex_min_width);
@@ -1931,6 +1932,9 @@ console.log('bbg_xiv-gallery.js:loading...');
         inner.show();
         e.preventDefault();
         // debugger
+ */
+        // TODO: Replace below with a React state or React prop on the configure component
+        jQuery('div#mc-rrr-react-configure').find('div.bbg_xiv-configure_outer, div.bbg_xiv-configure_inner').show()
     }
 
     bbg_xiv.handleHelpClick = function(e) {
@@ -2598,7 +2602,23 @@ console.log('bbg_xiv-gallery.js:loading...');
         if ( $body.hasClass( 'admin-bar' ) && jQuery( 'div#wpadminbar' ).css( 'position' ) == 'fixed' ) {
             $body.addClass( 'bbg_xiv-fixed_admin_bar' );
         }
-        
+
+        window.setTimeout( function renderConfigure() {
+            if ( typeof window.bbg_xiv.Configure !== 'undefined' ) {
+                console.log('bbg_xiv-gallery.js:renderConfigure:mcRrr.ReactDOM.render():');
+                jQuery('body').append('<div id="mc-rrr-react-configure" class="bbg_xiv-bootstrap"></div>')
+                const configure = <bbg_xiv.Configure />
+                mcRrr.ReactDOM.render(
+                    configure,
+                    document.getElementById('mc-rrr-react-configure')
+                )
+                console.log('configure=', configure)
+                bbg_xiv.configure = configure
+                // debugger
+            } else {
+                setTimeout( renderConfigure, 1000 );
+            }
+        }, 0 );
     });   // jQuery(document).ready(function(){
 
     //cookie test code

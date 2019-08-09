@@ -627,121 +627,182 @@ EOD;
             data-flags="{$flags}">
         <div id="mc-rrr-react-root-$selector" class="bbg_xiv-gallery"></div>
         <div class="ui-loader"><span class="ui-icon-loading"></span></div>
-   </div>
-    <div class="bbg_xiv-configure_outer">
     </div>
-    <div class="bbg_xiv-configure_inner">
-      <button class="bbg_xiv-configure_close"><span class="glyphicon glyphicon-remove"></span></button>
-      <h1>BB Gallery Options</h1>
-      <form class="form-horizontal">
-        <div class="form-group">
-          <label for="bbg_xiv-carousel_delay" class="control-label col-sm-9 col-md-offset-2 col-md-6">{$translations['Carousel Time Interval in ms']}</label>
-          <div class="col-sm-3 col-md-2">
-            <input type="number" class="form-control" id="bbg_xiv-carousel_delay" min="1000" step="100">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="bbg_xiv-min_image_width" class="control-label col-sm-9 col-md-offset-2 col-md-6">{$translations['Minimum Width for Gallery Images in px']}</label>
-          <div class="col-sm-3 col-md-2">
-            <input type="number" class="form-control" id="bbg_xiv-min_image_width" min="32" max="1024">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="bbg_xiv-miro_row_height" class="control-label col-sm-9 col-md-offset-2 col-md-6">{$translations['Preferred Row Height for Justified Images in px']}</label>
-          <div class="col-sm-3 col-md-2">
-            <input type="number" class="form-control" id="bbg_xiv-miro_row_height" min="32" max="1024">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="bbg_xiv-max_search_results" class="control-label col-sm-9 col-md-offset-2 col-md-6">{$translations['Maximum Number of Images Returned by Search']}</label>
-          <div class="col-sm-3 col-md-2">
-            <input type="number" class="form-control" id="bbg_xiv-max_search_results" min="1" max="{$bbg_xiv_data['bbg_xiv_max_search_results']}">
-          </div>
-        </div>
-        <div class="form-group bbg_xiv-mouse_only_option">
-          <label for="bbg_xiv-columns_in_dense_view" class="control-label col-sm-9 col-md-offset-2 col-md-6">{$translations['Number of Columns in the Dense View']}</label>
-          <div class="col-sm-3 col-md-2">
-            <input type="number" class="form-control" id="bbg_xiv-columns_in_dense_view" min="2" max="32">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="bbg_xiv-default_view_gallery" class="control-label col-sm-3 col-md-offset-2 col-md-2">{$translations['Initial View']}</label>
-          <div class="col-sm-9 col-md-6">
-            <span class="bbg_xiv-radio_input">
-                <input type="radio" class="form-control" name="bbg_xiv-default_view" value="Gallery" id="bbg_xiv-default_view_gallery" checked>
-                <span class="bbg_xiv-radio_text">$translations[Gallery]</span>
-            </span>
-            <span class="bbg_xiv-radio_input">
-                <input type="radio" class="form-control" name="bbg_xiv-default_view" value="Justified" id="bbg_xiv-default_view_justified">
-                <span class="bbg_xiv-radio_text">$translations[Justified]</span>
-            </span>
-            <span class="bbg_xiv-radio_input">
-                <input type="radio" class="form-control" name="bbg_xiv-default_view" value="Carousel" id="bbg_xiv-default_view_carousel">
-                <span class="bbg_xiv-radio_text">$translations[Carousel]</span>
-            </span>
-            <span class="bbg_xiv-radio_input">
-                <input type="radio" class="form-control" name="bbg_xiv-default_view" value="Tabs" id="bbg_xiv-default_view_tabs">
-                <span class="bbg_xiv-radio_text">$translations[Tabs]</span>
-            </span>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="bbg_xiv-bandwidth_auto" class="control-label col-sm-3 col-md-offset-2 col-md-2">$translations[Bandwidth]</label>
-          <div class="col-sm-9 col-md-6">
-            <span class="bbg_xiv-radio_input">
-                <input type="radio" class="form-control" name="bbg_xiv-bandwidth" value="auto" id="bbg_xiv-bandwidth_auto" checked>
-                <span class="bbg_xiv-radio_text">$translations[Auto]</span>
-            </span>
-            <span class="bbg_xiv-radio_input">
-                <input type="radio" class="form-control" name="bbg_xiv-bandwidth" value="normal" id="bbg_xiv-bandwidth_normal">
-                <span class="bbg_xiv-radio_text">$translations[High]</span>
-            </span>
-            <span class="bbg_xiv-radio_input">
-                <input type="radio" class="form-control" name="bbg_xiv-bandwidth" value="low" id="bbg_xiv-bandwidth_low">
-                <span class="bbg_xiv-radio_text">$translations[Medium]</span>
-            </span>
-            <span class="bbg_xiv-radio_input">
-                <input type="radio" class="form-control" name="bbg_xiv-bandwidth" value="very low" id="bbg_xiv-bandwidth_very_low">
-                <span class="bbg_xiv-radio_text">$translations[Low]</span>
-            </span>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="bbg_xiv-interface_auto" class="control-label col-sm-3 col-md-offset-2 col-md-2">$translations[Interface]</label>
-          <div class="col-sm-9 col-md-6">
-            <span class="bbg_xiv-radio_input">
-                <input type="radio" class="form-control" name="bbg_xiv-interface" value="auto" id="bbg_xiv-interface_auto" checked>
-                <span class="bbg_xiv-radio_text">$translations[Auto]</span>
-            </span>
-            <span class="bbg_xiv-radio_input">
-                <input type="radio" class="form-control" name="bbg_xiv-interface" value="mouse" id="bbg_xiv-interface_mouse">
-                <span class="bbg_xiv-radio_text">$translations[Mouse]</span>
-            </span>
-            <span class="bbg_xiv-radio_input">
-                <input type="radio" class="form-control" name="bbg_xiv-interface" value="touch" id="bbg_xiv-interface_touch">
-                <span class="bbg_xiv-radio_text">$translations[Touch]</span>
-            </span>
-            <span class="bbg_xiv-radio_input bbg_xiv-null">
-                <input type="radio" class="form-control" name="bbg_xiv-interface" value="null" id="bbg_xiv-interface_null" disabled>
-                <span class="bbg_xiv-radio_text"></span>
-            </span>
-          </div>
-        </div>
-        <br>
-        <div class="form-group">
-          <div class="col-sm-offset-4 col-sm-8">
-            <button type="button" class="btn btn-primary bbg_xiv-options_btn bbg_xiv-save_options">$translations[Save]</button>
-            <button type="button" class="btn btn-default bbg_xiv-options_btn bbg_xiv-cancel_options">$translations[Cancel]</button>
-            <button type="button" class="btn btn-info bbg_xiv-options_btn bbg_xiv-help_options">$translations[Help]</button>
-          </div>
-        </div>
-      </form>
-    </div>
+<!-- start of configure JSX -->
+<!-- \$translations should not be a prop since it is static so we need to initialize with some runtime
+     JavaScript static and avoid the in-browser Babel transformer by precompiling instead -->
+<script type="text/babel">
+    window.bbg_xiv = window.bbg_xiv || {};
+    // Configure does not use the Redux store. Configure is independently rendered with its own DOM root.
+    window.bbg_xiv.Configure = props => {
+        // Use React 16.8's State hook
+        const [show,               setShow              ] = mcRrr.useState(true                                             )
+        const [carouselDelay,      setCarouselDelay     ] = mcRrr.useState(bbg_xiv.bbg_xiv_carousel_interval                )
+        const [minImageWidth,      setMinImageWidth     ] = mcRrr.useState(bbg_xiv.bbg_xiv_flex_min_width                   )
+        const [miroRowHeight,      setMiroRowHeight     ] = mcRrr.useState(bbg_xiv.bbg_xiv_miro_row_height                  )
+        const [maxSearchResults,   setMaxSearchResults  ] = mcRrr.useState(bbg_xiv.bbg_xiv_max_search_results               )
+        const [columnsInDenseView, setColumnsInDenseView] = mcRrr.useState(bbg_xiv.bbg_xiv_flex_number_of_dense_view_columns)
+        return (
+            <React.Fragment>
+                <div className="bbg_xiv-configure_outer" style={{display: show ? 'block' : 'none'}}>
+                </div>
+                <div className="bbg_xiv-configure_inner" style={{display: show ? 'block' : 'none'}}>
+                    <button className="bbg_xiv-configure_close" onClick={() => {console.log('setShow(false)'); setShow(false)}}>
+                        <span className="glyphicon glyphicon-remove"></span>
+                    </button>
+                    <h1>BB Gallery Options</h1>
+                    <form className="form-horizontal">
+                        <div className="form-group">
+                            <label htmlFor="bbg_xiv-carousel_delay" className="control-label col-sm-9 col-md-offset-2 col-md-6">
+                                {$translations['Carousel Time Interval in ms']}
+                            </label>
+                            <div className="col-sm-3 col-md-2">
+                                <input type="number" className="form-control" id="bbg_xiv-carousel_delay" min="1000" step="100"
+                                        value={carouselDelay} />
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="bbg_xiv-min_image_width" className="control-label col-sm-9 col-md-offset-2 col-md-6">
+                                {$translations['Minimum Width for Gallery Images in px']}
+                            </label>
+                            <div className="col-sm-3 col-md-2">
+                                <input type="number" className="form-control" id="bbg_xiv-min_image_width" min="32" max="1024"
+                                        value={minImageWidth} />
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="bbg_xiv-miro_row_height" className="control-label col-sm-9 col-md-offset-2 col-md-6">
+                                {$translations['Preferred Row Height for Justified Images in px']}
+                            </label>
+                            <div className="col-sm-3 col-md-2">
+                                <input type="number" className="form-control" id="bbg_xiv-miro_row_height" min="32" max="1024"
+                                        value={miroRowHeight} />
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="bbg_xiv-max_search_results" className="control-label col-sm-9 col-md-offset-2 col-md-6">
+                                {$translations['Maximum Number of Images Returned by Search']}</label>
+                            <div className="col-sm-3 col-md-2">
+                                <input type="number" className="form-control" id="bbg_xiv-max_search_results" min="1"
+                                        max="{$bbg_xiv_data['bbg_xiv_max_search_results']}" value={maxSearchResults} />
+                            </div>
+                        </div>
+                        <div className="form-group bbg_xiv-mouse_only_option">
+                            <label htmlFor="bbg_xiv-columns_in_dense_view" className="control-label col-sm-9 col-md-offset-2 col-md-6">
+                                {$translations['Number of Columns in the Dense View']}
+                            </label>
+                            <div className="col-sm-3 col-md-2">
+                                <input type="number" className="form-control" id="bbg_xiv-columns_in_dense_view" min="2" max="32"
+                                        value={columnsInDenseView} />
+                            </div>
+                        </div>
+                        {/* TODO: checkboxes for radio buttons */}
+                        <div className="form-group">
+                            <label htmlFor="bbg_xiv-default_view_gallery" className="control-label col-sm-3 col-md-offset-2 col-md-2">
+                                {$translations['Initial View']}
+                            </label>
+                            <div className="col-sm-9 col-md-6">
+                                <span className="bbg_xiv-radio_input">
+                                    <input type="radio" className="form-control" name="bbg_xiv-default_view" value="Gallery"
+                                            id="bbg_xiv-default_view_gallery" checked />
+                                    <span className="bbg_xiv-radio_text">$translations[Gallery]</span>
+                                </span>
+                                <span className="bbg_xiv-radio_input">
+                                    <input type="radio" className="form-control" name="bbg_xiv-default_view" value="Justified"
+                                            id="bbg_xiv-default_view_justified" />
+                                    <span className="bbg_xiv-radio_text">$translations[Justified]</span>
+                                </span>
+                                <span className="bbg_xiv-radio_input">
+                                    <input type="radio" className="form-control" name="bbg_xiv-default_view" value="Carousel"
+                                            id="bbg_xiv-default_view_carousel" />
+                                    <span className="bbg_xiv-radio_text">$translations[Carousel]</span>
+                                </span>
+                                <span className="bbg_xiv-radio_input">
+                                    <input type="radio" className="form-control" name="bbg_xiv-default_view" value="Tabs"
+                                            id="bbg_xiv-default_view_tabs" />
+                                    <span className="bbg_xiv-radio_text">$translations[Tabs]</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="bbg_xiv-bandwidth_auto" className="control-label col-sm-3 col-md-offset-2 col-md-2">
+                                $translations[Bandwidth]
+                            </label>
+                            <div className="col-sm-9 col-md-6">
+                                <span className="bbg_xiv-radio_input">
+                                    <input type="radio" className="form-control" name="bbg_xiv-bandwidth" value="auto"
+                                            id="bbg_xiv-bandwidth_auto" checked />
+                                    <span className="bbg_xiv-radio_text">$translations[Auto]</span>
+                                </span>
+                                <span className="bbg_xiv-radio_input">
+                                    <input type="radio" className="form-control" name="bbg_xiv-bandwidth" value="normal"
+                                            id="bbg_xiv-bandwidth_normal" />
+                                    <span className="bbg_xiv-radio_text">$translations[High]</span>
+                                </span>
+                                <span className="bbg_xiv-radio_input">
+                                    <input type="radio" className="form-control" name="bbg_xiv-bandwidth" value="low"
+                                            id="bbg_xiv-bandwidth_low" />
+                                    <span className="bbg_xiv-radio_text">$translations[Medium]</span>
+                                </span>
+                                <span className="bbg_xiv-radio_input">
+                                    <input type="radio" className="form-control" name="bbg_xiv-bandwidth" value="very low"
+                                            id="bbg_xiv-bandwidth_very_low" />
+                                    <span className="bbg_xiv-radio_text">$translations[Low]</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="bbg_xiv-interface_auto" className="control-label col-sm-3 col-md-offset-2 col-md-2">
+                                $translations[Interface]
+                            </label>
+                            <div className="col-sm-9 col-md-6">
+                                <span className="bbg_xiv-radio_input">
+                                    <input type="radio" className="form-control" name="bbg_xiv-interface" value="auto"
+                                            id="bbg_xiv-interface_auto" checked />
+                                    <span className="bbg_xiv-radio_text">$translations[Auto]</span>
+                                </span>
+                                <span className="bbg_xiv-radio_input">
+                                    <input type="radio" className="form-control" name="bbg_xiv-interface" value="mouse"
+                                            id="bbg_xiv-interface_mouse" />
+                                    <span className="bbg_xiv-radio_text">$translations[Mouse]</span>
+                                </span>
+                                <span className="bbg_xiv-radio_input">
+                                    <input type="radio" className="form-control" name="bbg_xiv-interface" value="touch"
+                                            id="bbg_xiv-interface_touch" />
+                                    <span className="bbg_xiv-radio_text">$translations[Touch]</span>
+                                </span>
+                                <span className="bbg_xiv-radio_input bbg_xiv-null">
+                                    <input type="radio" className="form-control" name="bbg_xiv-interface" value="null"
+                                            id="bbg_xiv-interface_null" disabled />
+                                    <span className="bbg_xiv-radio_text"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <br />
+                        <div className="form-group">
+                            <div className="col-sm-offset-4 col-sm-8">
+                                <button type="button" className="btn btn-primary bbg_xiv-options_btn bbg_xiv-save_options">
+                                    $translations[Save]
+                                </button>
+                                <button type="button" className="btn btn-default bbg_xiv-options_btn bbg_xiv-cancel_options">
+                                    $translations[Cancel]
+                                </button>
+                                <button type="button" className="btn btn-info bbg_xiv-options_btn bbg_xiv-help_options">
+                                    $translations[Help]
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </React.Fragment>
+        )
+    }   // window.bbg_xiv.Configure = props => {
+</script>
+<!-- end of Configure JSX -->
 </div>
 EOD;
         return $output;
     }
-
     public static function bbg_xiv_do_attachments( $attachments ) {
         global $content_width;
         foreach ( $attachments as $id => &$attachment ) {
