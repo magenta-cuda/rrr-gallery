@@ -1907,10 +1907,8 @@ console.log('bbg_xiv-gallery.js:loading...');
         liSelectView.find("a.bbg_xiv-selected_view span").text(liFirst.text());
         searchBtn.prop("disabled",false);
     }   // bbg_xiv.handleSearchResponse = function( divGallery, r, parms ) {
- */
 
     bbg_xiv.handleConfigureClick = function(e) {
-/*
         const divConfigure = jQuery(".bbg_xiv-configure_inner");
         divConfigure.find("input#bbg_xiv-carousel_delay").val(bbg_xiv.bbg_xiv_carousel_interval);
         divConfigure.find("input#bbg_xiv-min_image_width").val(bbg_xiv.bbg_xiv_flex_min_width);
@@ -1932,10 +1930,10 @@ console.log('bbg_xiv-gallery.js:loading...');
         inner.show();
         e.preventDefault();
         // debugger
- */
         // TODO: Replace below with a React state or React prop on the configure component
-        jQuery('div#mc-rrr-react-configure').find('div.bbg_xiv-configure_outer, div.bbg_xiv-configure_inner').show()
+        // jQuery('div#mc-rrr-react-configure').find('div.bbg_xiv-configure_outer, div.bbg_xiv-configure_inner').show()
     }
+ */
 
     bbg_xiv.handleHelpClick = function(e) {
         var view = jQuery( this ).closest( 'div.navbar-collapse' )

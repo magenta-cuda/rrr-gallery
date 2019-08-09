@@ -505,7 +505,7 @@ EOD;
                         </button>
                         <button type="button" className="btn btn-info bbg_xiv-configure"
                                 title="{$translations['configure bandwidth, carousel interval, ...']}"
-                                onClick={e => {bbg_xiv.handleConfigureClick.call(e.currentTarget, e)}}>
+                                onClick={e => {mcRrr.setConfigureShow(true)}}>
                             <span className="glyphicon glyphicon-cog"></span>
                             <span className="bbg_xiv-navbar_button_text">{$translations['Options']}</span>
                         </button>
@@ -636,12 +636,13 @@ EOD;
     // Configure does not use the Redux store. Configure is independently rendered with its own DOM root.
     window.bbg_xiv.Configure = props => {
         // Use React 16.8's State hook
-        const [show,               setShow              ] = mcRrr.useState(true                                             )
+        const [show,               setShow              ] = mcRrr.useState(false                                            )
         const [carouselDelay,      setCarouselDelay     ] = mcRrr.useState(bbg_xiv.bbg_xiv_carousel_interval                )
         const [minImageWidth,      setMinImageWidth     ] = mcRrr.useState(bbg_xiv.bbg_xiv_flex_min_width                   )
         const [miroRowHeight,      setMiroRowHeight     ] = mcRrr.useState(bbg_xiv.bbg_xiv_miro_row_height                  )
         const [maxSearchResults,   setMaxSearchResults  ] = mcRrr.useState(bbg_xiv.bbg_xiv_max_search_results               )
         const [columnsInDenseView, setColumnsInDenseView] = mcRrr.useState(bbg_xiv.bbg_xiv_flex_number_of_dense_view_columns)
+        mcRrr.setConfigureShow = setShow
         return (
             <React.Fragment>
                 <div className="bbg_xiv-configure_outer" style={{display: show ? 'block' : 'none'}}>
