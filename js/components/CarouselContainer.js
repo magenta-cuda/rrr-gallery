@@ -19,7 +19,7 @@ class CarouselContainer extends React.Component {
         window.bbg_xiv.showOverlay(e, true, null, this.props.images.at(this.index).attributes)
     }
     handleCloseClick = function(e) {
-        this.props.setView('Gallery')
+        this.props.setView(this.props.images.id, 'Gallery')
     }
     render() {
         const collection = this.props.images

@@ -11,7 +11,7 @@ class DenseContainer extends React.Component {
         return {}
     }
     handleCloseClick = function(e) {
-        this.props.setView('Gallery')
+        this.props.setView(this.props.images.id, 'Gallery')
     }
     render() {
         const {images: collection, mode = 'title'} = this.props
