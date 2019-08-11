@@ -8,7 +8,7 @@ const mapStateToProps    = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = dispatch          => ({
-    setView:           view         => dispatch(setView(view)),
+    setView: (id, view)             => dispatch(setView(id, view)),
     loadGalleryImages: (id, images) => dispatch(loadGalleryImages(id, images))
 })
 

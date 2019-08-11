@@ -348,7 +348,7 @@ EOD;
     window.bbg_xiv.NavBar = props => {
         function handleViewClick(e) {
             e.preventDefault()
-            setView(e.target.dataset.view)
+            setView(selector, e.target.dataset.view)
         }
         function handleGalleryClick(e) {
             e.preventDefault()
@@ -565,7 +565,7 @@ EOD;
             galleries: ownProps.galleries, view: state.view
     })
     const mapDispatchToProps = dispatch => ({
-        setView:                 view        => dispatch(mcRrr.setView(view)),
+        setView: (id, view)                  => dispatch(mcRrr.setView(id, view)),
         getImagesByGallerySpecs: (id, specs) => dispatch(mcRrr.getImagesByGallerySpecs(id, specs)),
         getImagesBySearchParms: (id, parms)  => dispatch(mcRrr.getImagesBySearchParms(id, parms))
     })
@@ -642,7 +642,18 @@ EOD;
         const [miroRowHeight,      setMiroRowHeight     ] = mcRrr.useState(bbg_xiv.bbg_xiv_miro_row_height                  )
         const [maxSearchResults,   setMaxSearchResults  ] = mcRrr.useState(bbg_xiv.bbg_xiv_max_search_results               )
         const [columnsInDenseView, setColumnsInDenseView] = mcRrr.useState(bbg_xiv.bbg_xiv_flex_number_of_dense_view_columns)
+        const [defaultView,        setDefaultView       ] = mcRrr.useState(bbg_xiv.bbg_xiv_default_view                     )
+        const [bandwidth,          setBandwidth         ] = mcRrr.useState(bbg_xiv.bbg_xiv_bandwidth                        )
+        const [interface_,         setInterface         ] = mcRrr.useState(bbg_xiv.bbg_xiv_interface                        )
         mcRrr.setConfigureShow = setShow
+        console.log('carouselDelay=',      carouselDelay     )
+        console.log('minImageWidth-',      minImageWidth     )
+        console.log('miroRowHeight=',      miroRowHeight     )
+        console.log('maxSearchResults=',   maxSearchResults  )
+        console.log('columnsInDenseView=', columnsInDenseView)
+        console.log('defaultView=',        defaultView       )
+        console.log('bandwidth=',          bandwidth         )
+        console.log('interface_=',         interface_        )
         return (
             <React.Fragment>
                 <div className="bbg_xiv-configure_outer" style={{display: show ? 'block' : 'none'}}>
@@ -659,7 +670,8 @@ EOD;
                             </label>
                             <div className="col-sm-3 col-md-2">
                                 <input type="number" className="form-control" id="bbg_xiv-carousel_delay" min="1000" step="100"
-                                        value={carouselDelay} />
+                                        value={carouselDelay} onChange={(e) => {setCarouselDelay(Number(e.target.value))}} />
+                                        {/* TODO: onChange() is triggered for every character but onBlur() does not work in React */}
                             </div>
                         </div>
                         <div className="form-group">
@@ -668,7 +680,7 @@ EOD;
                             </label>
                             <div className="col-sm-3 col-md-2">
                                 <input type="number" className="form-control" id="bbg_xiv-min_image_width" min="32" max="1024"
-                                        value={minImageWidth} />
+                                        value={minImageWidth} onChange={(e) => {setMinImageWidth(Number(e.target.value))}} />
                             </div>
                         </div>
                         <div className="form-group">
@@ -677,7 +689,7 @@ EOD;
                             </label>
                             <div className="col-sm-3 col-md-2">
                                 <input type="number" className="form-control" id="bbg_xiv-miro_row_height" min="32" max="1024"
-                                        value={miroRowHeight} />
+                                        value={miroRowHeight} onChange={(e) => {setMiroRowHeight(Number(e.target.value))}} />
                             </div>
                         </div>
                         <div className="form-group">
@@ -685,7 +697,8 @@ EOD;
                                 {$translations['Maximum Number of Images Returned by Search']}</label>
                             <div className="col-sm-3 col-md-2">
                                 <input type="number" className="form-control" id="bbg_xiv-max_search_results" min="1"
-                                        max="{$bbg_xiv_data['bbg_xiv_max_search_results']}" value={maxSearchResults} />
+                                        max="{$bbg_xiv_data['bbg_xiv_max_search_results']}" value={maxSearchResults}
+                                        onChange={(e) => {setMaxSearchResults(Number(e.target.value))}} />
                             </div>
                         </div>
                         <div className="form-group bbg_xiv-mouse_only_option">
@@ -694,7 +707,7 @@ EOD;
                             </label>
                             <div className="col-sm-3 col-md-2">
                                 <input type="number" className="form-control" id="bbg_xiv-columns_in_dense_view" min="2" max="32"
-                                        value={columnsInDenseView} />
+                                        value={columnsInDenseView} onChange={(e) => {setColumnsInDenseView(Number(e.target.value))}} />
                             </div>
                         </div>
                         {/* TODO: checkboxes for radio buttons */}
@@ -705,22 +718,26 @@ EOD;
                             <div className="col-sm-9 col-md-6">
                                 <span className="bbg_xiv-radio_input">
                                     <input type="radio" className="form-control" name="bbg_xiv-default_view" value="Gallery"
-                                            id="bbg_xiv-default_view_gallery" checked />
+                                            id="bbg_xiv-default_view_gallery" checked={defaultView === 'Gallery'}
+                                            onChange={e => {if (e.target.checked) {setDefaultView(e.target.value)}}} />
                                     <span className="bbg_xiv-radio_text">$translations[Gallery]</span>
                                 </span>
                                 <span className="bbg_xiv-radio_input">
                                     <input type="radio" className="form-control" name="bbg_xiv-default_view" value="Justified"
-                                            id="bbg_xiv-default_view_justified" />
+                                            id="bbg_xiv-default_view_justified" checked={defaultView === 'Justified'}
+                                            onChange={e => {if (e.target.checked) {setDefaultView(e.target.value)}}} />
                                     <span className="bbg_xiv-radio_text">$translations[Justified]</span>
                                 </span>
                                 <span className="bbg_xiv-radio_input">
                                     <input type="radio" className="form-control" name="bbg_xiv-default_view" value="Carousel"
-                                            id="bbg_xiv-default_view_carousel" />
+                                            id="bbg_xiv-default_view_carousel" checked={defaultView === 'Carousel'}
+                                            onChange={e => {if (e.target.checked) {setDefaultView(e.target.value)}}} />
                                     <span className="bbg_xiv-radio_text">$translations[Carousel]</span>
                                 </span>
                                 <span className="bbg_xiv-radio_input">
                                     <input type="radio" className="form-control" name="bbg_xiv-default_view" value="Tabs"
-                                            id="bbg_xiv-default_view_tabs" />
+                                            id="bbg_xiv-default_view_tabs" checked={defaultView === 'Tabs'}
+                                            onChange={e => {if (e.target.checked) {setDefaultView(e.target.value)}}} />
                                     <span className="bbg_xiv-radio_text">$translations[Tabs]</span>
                                 </span>
                             </div>
@@ -732,22 +749,26 @@ EOD;
                             <div className="col-sm-9 col-md-6">
                                 <span className="bbg_xiv-radio_input">
                                     <input type="radio" className="form-control" name="bbg_xiv-bandwidth" value="auto"
-                                            id="bbg_xiv-bandwidth_auto" checked />
+                                            id="bbg_xiv-bandwidth_auto" checked={bandwidth === 'auto'}
+                                            onChange={e => {if (e.target.checked) {setBandwidth(e.target.value)}}} />
                                     <span className="bbg_xiv-radio_text">$translations[Auto]</span>
                                 </span>
                                 <span className="bbg_xiv-radio_input">
                                     <input type="radio" className="form-control" name="bbg_xiv-bandwidth" value="normal"
-                                            id="bbg_xiv-bandwidth_normal" />
+                                            id="bbg_xiv-bandwidth_normal" checked={bandwidth === 'normal'}
+                                            onChange={e => {if (e.target.checked) {setBandwidth(e.target.value)}}} />
                                     <span className="bbg_xiv-radio_text">$translations[High]</span>
                                 </span>
                                 <span className="bbg_xiv-radio_input">
                                     <input type="radio" className="form-control" name="bbg_xiv-bandwidth" value="low"
-                                            id="bbg_xiv-bandwidth_low" />
+                                            id="bbg_xiv-bandwidth_low" checked={bandwidth === 'low'}
+                                            onChange={e => {if (e.target.checked) {setBandwidth(e.target.value)}}} />
                                     <span className="bbg_xiv-radio_text">$translations[Medium]</span>
                                 </span>
                                 <span className="bbg_xiv-radio_input">
                                     <input type="radio" className="form-control" name="bbg_xiv-bandwidth" value="very low"
-                                            id="bbg_xiv-bandwidth_very_low" />
+                                            id="bbg_xiv-bandwidth_very_low" checked={bandwidth === 'very low'}
+                                            onChange={e => {if (e.target.checked) {setBandwidth(e.target.value)}}} />
                                     <span className="bbg_xiv-radio_text">$translations[Low]</span>
                                 </span>
                             </div>
@@ -759,17 +780,20 @@ EOD;
                             <div className="col-sm-9 col-md-6">
                                 <span className="bbg_xiv-radio_input">
                                     <input type="radio" className="form-control" name="bbg_xiv-interface" value="auto"
-                                            id="bbg_xiv-interface_auto" checked />
+                                            id="bbg_xiv-interface_auto" checked={interface_ === 'auto'}
+                                            onChange={e => {if (e.target.checked) {setInterface(e.target.value)}}} />
                                     <span className="bbg_xiv-radio_text">$translations[Auto]</span>
                                 </span>
                                 <span className="bbg_xiv-radio_input">
                                     <input type="radio" className="form-control" name="bbg_xiv-interface" value="mouse"
-                                            id="bbg_xiv-interface_mouse" />
+                                            id="bbg_xiv-interface_mouse" checked={interface_ === 'mouse'}
+                                            onChange={e => {if (e.target.checked) {setInterface(e.target.value)}}} />
                                     <span className="bbg_xiv-radio_text">$translations[Mouse]</span>
                                 </span>
                                 <span className="bbg_xiv-radio_input">
                                     <input type="radio" className="form-control" name="bbg_xiv-interface" value="touch"
-                                            id="bbg_xiv-interface_touch" />
+                                            id="bbg_xiv-interface_touch" checked={interface_ === 'touch'}
+                                            onChange={e => {if (e.target.checked) {setInterface(e.target.value)}}} />
                                     <span className="bbg_xiv-radio_text">$translations[Touch]</span>
                                 </span>
                                 <span className="bbg_xiv-radio_input bbg_xiv-null">
