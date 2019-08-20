@@ -654,6 +654,22 @@ EOD;
         console.log('defaultView=',        defaultView       )
         console.log('bandwidth=',          bandwidth         )
         console.log('interface_=',         interface_        )
+        mcRrr.useEffect(() => {
+            // Save configuration in a cookie
+            const cookie = JSON.stringify({
+                bbg_xiv_carousel_interval:                 carouselDelay,
+                bbg_xiv_flex_min_width:                    minImageWidth,
+                bbg_xiv_miro_row_height:                   miroRowHeight,
+                bbg_xiv_max_search_results:                maxSearchResults,
+                bbg_xiv_flex_number_of_dense_view_columns: columnsInDenseView,
+                bbg_xiv_default_view:                      defaultView,         // TODO: bbg_xiv.usingServerDefaultView?
+                bbg_xiv_bandwidth:                         bandwidth,
+                bbg_xiv_interface:                         interface_
+            })
+            bbg_xiv.setCookie("bbg_xiv", cookie, 30)
+            bbg_xiv.getOptionsFromCookie()
+            // TODO: bbg_xiv.calcBreakpoints()?
+        })
         return (
             <React.Fragment>
                 <div className="bbg_xiv-configure_outer" style={{display: show ? 'block' : 'none'}}>
@@ -662,8 +678,23 @@ EOD;
                     <button className="bbg_xiv-configure_close" onClick={() => {console.log('setShow(false)'); setShow(false)}}>
                         <span className="glyphicon glyphicon-remove"></span>
                     </button>
-                    <h1>BB Gallery Options</h1>
                     <form className="form-horizontal">
+                        <div className="form-group">
+                            <h3 className="col-sm-offset-1 col-sm-5">BB Gallery Options</h3>
+                            <div className="col-sm-5">
+                                {/* Save and Cancel buttons are not needed as changes are immediately saved.
+                                <button type="button" className="btn btn-primary bbg_xiv-options_btn bbg_xiv-save_options">
+                                    $translations[Save]
+                                </button>
+                                <button type="button" className="btn btn-default bbg_xiv-options_btn bbg_xiv-cancel_options">
+                                    $translations[Cancel]
+                                </button>
+                                */}
+                                <button type="button" className="btn btn-info bbg_xiv-options_btn bbg_xiv-help_options">
+                                    $translations[Help]
+                                </button>
+                            </div>
+                        </div>
                         <div className="form-group">
                             <label htmlFor="bbg_xiv-carousel_delay" className="control-label col-sm-9 col-md-offset-2 col-md-6">
                                 {$translations['Carousel Time Interval in ms']}
@@ -804,19 +835,6 @@ EOD;
                             </div>
                         </div>
                         <br />
-                        <div className="form-group">
-                            <div className="col-sm-offset-4 col-sm-8">
-                                <button type="button" className="btn btn-primary bbg_xiv-options_btn bbg_xiv-save_options">
-                                    $translations[Save]
-                                </button>
-                                <button type="button" className="btn btn-default bbg_xiv-options_btn bbg_xiv-cancel_options">
-                                    $translations[Cancel]
-                                </button>
-                                <button type="button" className="btn btn-info bbg_xiv-options_btn bbg_xiv-help_options">
-                                    $translations[Help]
-                                </button>
-                            </div>
-                        </div>
                     </form>
                 </div>
             </React.Fragment>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import {createStore, applyMiddleware, compose} from 'redux'
 import { connect } from 'react-redux'
@@ -24,6 +24,7 @@ window.mcRrr = {
     store:                   store,
     React:                   React,
     useState:                useState,
+    useEffect:               useEffect,
     ReactDOM:                ReactDOM,
     connect:                 connect,
     Provider:                Provider,
