@@ -1,6 +1,7 @@
 import {LOAD_GALLERY_IMAGES, LOAD_SEARCH_IMAGES, HANDLE_LOAD_FAILED, SET_VIEW, SET_STATUS} from '../actions/index.js'
+import { combineReducers } from 'redux'
 
-export default (state = {}, action) => {
+const galleries = (state = {}, action) => {
     switch (action.type) {
     case LOAD_GALLERY_IMAGES:
     case LOAD_SEARCH_IMAGES:{
@@ -36,3 +37,9 @@ export default (state = {}, action) => {
         return state
     }
 }
+
+const rootReducer = combineReducers({
+  galleries
+})
+
+export default rootReducer

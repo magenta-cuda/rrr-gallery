@@ -15,7 +15,8 @@ import {CssReducer, JqueryProxy} from './CssReducer.js'
 
 console.log( 'rr-main.js loading...' )
 
-const store = createStore(reducer, {images: {}, view: 'Gallery'}, compose(applyMiddleware( thunk, rest, createLogger()), DevTools.instrument()))
+const store = createStore(reducer, {galleries: {images: {}}},
+                          compose(applyMiddleware( thunk, rest, createLogger()), DevTools.instrument()))
 
 // TODO: need store in global scope for now to do testing; remove for production.
 // TODO: need actions in global scope for now as cannot import yet; remove for production.

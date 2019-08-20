@@ -4,7 +4,7 @@ import {setView, loadGalleryImages} from '../actions/index.js'
 
 const mapStateToProps    = (state, ownProps) => ({
     id:     ownProps.id,
-    images: state.images && state.images[ownProps.id] ? state.images[ownProps.id] : null
+    images: state.galleries.images && state.galleries.images[ownProps.id] ? state.galleries.images[ownProps.id] : null
 })
 
 const mapDispatchToProps = dispatch          => ({

@@ -417,8 +417,11 @@ EOD;
                 </li>
             )))
         }
-        let dropdownText= "{$translations['View']}"
+        let dropdownText = "{$translations['View']}"
         switch (view) {
+            case 'View':
+                dropdownText = "{$translations['View']}"
+                break
             case 'Gallery':
                 dropdownText = "{$translations['Gallery']}"
                 break;
@@ -558,12 +561,16 @@ EOD;
     }
     console.log('window.bbg_xiv.NavBar=', window.bbg_xiv.NavBar)
 
-    const mapStateToProps = (state, ownProps) => ({
+    const mapStateToProps = (state, ownProps) => {
+        // TODO: \$ -> $ - needed for now since this in a PHP file.
+        const images = state.galleries.images && state.galleries.images[`gallery-\${ownProps.id}`] ? state.galleries.images[`gallery-\${ownProps.id}`] : null
+        return {
             id:        ownProps.id,
-            // TODO: \$ -> $ - needed for now since this in a PHP file.
-            images:    state.images && state.images[`gallery-\${ownProps.id}`] ? state.images[`gallery-\${ownProps.id}`] : null,
-            galleries: ownProps.galleries, view: state.view
-    })
+            images:    images,
+            galleries: ownProps.galleries,
+            view:      images && images.view ? images.view : 'View'
+        }
+    }
     const mapDispatchToProps = dispatch => ({
         setView: (id, view)                  => dispatch(mcRrr.setView(id, view)),
         getImagesByGallerySpecs: (id, specs) => dispatch(mcRrr.getImagesByGallerySpecs(id, specs)),
