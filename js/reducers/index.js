@@ -1,4 +1,4 @@
-import {LOAD_GALLERY_IMAGES, LOAD_SEARCH_IMAGES, HANDLE_LOAD_FAILED, SET_VIEW, SET_STATUS} from '../actions/index.js'
+import {LOAD_GALLERY_IMAGES, LOAD_SEARCH_IMAGES, HANDLE_LOAD_FAILED, SET_VIEW, SET_STATUS, SET_CONFIGURATION} from '../actions/index.js'
 import { combineReducers } from 'redux'
 
 const galleries = (state = {}, action) => {
@@ -38,8 +38,19 @@ const galleries = (state = {}, action) => {
     }
 }
 
+const configuration = (state = {}, action) => {
+    switch (action.type) {
+    case SET_CONFIGURATION: {
+        return action.configuration
+    }
+    default:
+        return state
+    }
+}
+
 const rootReducer = combineReducers({
-  galleries
+    galleries,
+    configuration
 })
 
 export default rootReducer

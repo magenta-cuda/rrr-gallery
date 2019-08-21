@@ -663,7 +663,7 @@ EOD;
         console.log('interface_=',         interface_        )
         mcRrr.useEffect(() => {
             // Save configuration in a cookie
-            const cookie = JSON.stringify({
+            const cookie = {
                 bbg_xiv_carousel_interval:                 carouselDelay,
                 bbg_xiv_flex_min_width:                    minImageWidth,
                 bbg_xiv_miro_row_height:                   miroRowHeight,
@@ -672,8 +672,10 @@ EOD;
                 bbg_xiv_default_view:                      defaultView,         // TODO: bbg_xiv.usingServerDefaultView?
                 bbg_xiv_bandwidth:                         bandwidth,
                 bbg_xiv_interface:                         interface_
-            })
-            bbg_xiv.setCookie("bbg_xiv", cookie, 30)
+            }
+            // TODO: Since Configure is not yet in the Redux tree we must directly invoke store.dispatch
+            mcRrr.store.dispatch(mcRrr.setConfiguration(cookie))
+            bbg_xiv.setCookie("bbg_xiv", JSON.stringify(cookie), 30)
             bbg_xiv.getOptionsFromCookie()
             // TODO: bbg_xiv.calcBreakpoints()?
         })

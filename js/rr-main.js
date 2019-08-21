@@ -10,12 +10,12 @@ import rest from './middleware/rest.js'
 import Frame from './components/Frame.js'
 //import NavBar from './containers/NavBar.js'
 import DevTools from './containers/DevTools.js'
-import {getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages, setView} from './actions/index.js'
+import {getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages, setView, setConfiguration} from './actions/index.js'
 import {CssReducer, JqueryProxy} from './CssReducer.js'
 
 console.log( 'rr-main.js loading...' )
 
-const store = createStore(reducer, {galleries: {images: {}}},
+const store = createStore(reducer, {galleries: {images: {}}, configuration: {}},
                           compose(applyMiddleware( thunk, rest, createLogger()), DevTools.instrument()))
 
 // TODO: need store in global scope for now to do testing; remove for production.
@@ -35,6 +35,7 @@ window.mcRrr = {
     loadGalleryImages:       loadGalleryImages,
     getImagesByGallerySpecs: getImagesByGallerySpecs,
     getImagesBySearchParms:  getImagesBySearchParms,
+    setConfiguration:        setConfiguration,
     CssReducer:              new JqueryProxy().getCssReducer()
 }
 
