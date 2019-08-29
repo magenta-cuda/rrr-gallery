@@ -353,6 +353,13 @@ EOD;
         function handleGalleryClick(e) {
             e.preventDefault()
             const specifiers = e.target.dataset.specifiers;
+            if (specifiers === '') {
+                // This is the Home gallery.
+                const images = new wp.api.collections.Media()
+                images.reset(JSON.parse(bbg_xiv[selector + '-data']))
+                loadGalleryImages(selector, images)
+                return
+            }
             // extract individual gallery parameters
             // translation maps for gallery shortcode parameter names and values to WP REST API option names and values
             var nameMap = {
@@ -398,7 +405,7 @@ EOD;
             }
             getImagesBySearchParms(selector, parms)
         }
-        const {id, images, view, setView, getImagesByGallerySpecs, getImagesBySearchParms} = props
+        const {id, images, view, setView, getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages} = props
         const selector  = 'gallery-' + id
         let   galleries = ''
         if ( typeof props.galleries !== 'undefined' ) {
@@ -406,7 +413,7 @@ EOD;
                 <li className="divider"></li>,
                 <li className="dropdown-header">{$translations['GALLERIES']}</li>,
                 <li className="bbg_xiv-alt_gallery bbg_xiv-alt_gallery_home active">
-                    <a data-view="gallery_home" data-specifiers='' href="#">{$translations['Home']}</a>
+                    <a data-view="gallery_home" data-specifiers='' href="#" onClick={handleGalleryClick}>{$translations['Home']}</a>
                 </li>
             ]
             galleries = galleries.concat(JSON.parse(props.galleries).map((gallery, i) => (
@@ -574,7 +581,8 @@ EOD;
     const mapDispatchToProps = dispatch => ({
         setView: (id, view)                  => dispatch(mcRrr.setView(id, view)),
         getImagesByGallerySpecs: (id, specs) => dispatch(mcRrr.getImagesByGallerySpecs(id, specs)),
-        getImagesBySearchParms: (id, parms)  => dispatch(mcRrr.getImagesBySearchParms(id, parms))
+        getImagesBySearchParms: (id, parms)  => dispatch(mcRrr.getImagesBySearchParms(id, parms)),
+        loadGalleryImages: (id, images)      => dispatch(mcRrr.loadGalleryImages(id, images))
     })
     window.bbg_xiv.NavBarContainer = mcRrr.connect(mapStateToProps, mapDispatchToProps)(window.bbg_xiv.NavBar)
 </script>

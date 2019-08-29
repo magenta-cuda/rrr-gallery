@@ -1827,10 +1827,13 @@ console.log('bbg_xiv-gallery.js:loading...');
                 // for touch and small screen devices hide the dense menu item
                 menuItems.filter(".bbg_xiv-large_viewport_only").hide();
             }
+            // TODO: Gallery of galleries is now broken fix it
+/*
             if(typeof bbg_xiv.images[this.id].models[0].attributes.gallery_index!=="undefined"){
                 // for a gallery of gallery icons hide the carousel and the dense menu items
                 menuItems.filter(".bbg_xiv-hide_for_gallery_icons").hide();
             }
+ */
         });
     });
 
