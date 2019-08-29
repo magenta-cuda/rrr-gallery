@@ -405,6 +405,11 @@ EOD;
             }
             getImagesBySearchParms(selector, parms)
         }
+        function handleHomeButtonClick(e) {
+            const images = new wp.api.collections.Media()
+            images.reset(JSON.parse(bbg_xiv[selector + '-data']))
+            loadGalleryImages(selector, images)
+        }
         const {id, images, view, setView, getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages} = props
         const selector  = 'gallery-' + id
         let   galleries = ''
@@ -520,7 +525,7 @@ EOD;
                             <span className="bbg_xiv-navbar_button_text">{$translations['Options']}</span>
                         </button>
                         <button type="button" className="btn btn-info bbg_xiv-home"
-                                title="{$translations['return to home gallery']}">
+                                title="{$translations['return to home gallery']}" onClick={handleHomeButtonClick}>
                             <span className="glyphicon glyphicon-home"></span>
                             <span className="bbg_xiv-navbar_button_text">{$translations['Home']}</span>
                         </button>
