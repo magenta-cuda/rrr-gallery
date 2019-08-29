@@ -8,6 +8,20 @@ export default class FlexContainer extends React.Component {
         super(props)
         this.container = null
     }
+    resize() {
+        // set tile width and height in pixels so that tiles cover the div exactly and completely
+        const minWidth           = this.props.configuration.bbg_xiv_flex_min_width
+        const minWidthForCaption = this.props.configuration.bbg_xiv_flex_min_width_for_caption
+        const $container         = jQuery(this.container)
+        const containerWidth     = $container.width()
+        const pxWidth            = Math.floor( containerWidth / Math.floor( containerWidth / minWidth ) ) - 1;
+        window.setTimeout(function() {
+            $container.find('div.bbg_xiv-flex_item').css({width:pxWidth, height:pxWidth});
+            if (pxWidth < minWidthForCaption) {
+                $container.find("div.bbg_xiv-flex_item figcaption").hide();
+            }
+        }, 100)
+    }
     render() {
         console.log('FlexContainer.render():this.props=', this.props)
         const collection = this.props.images
@@ -48,11 +62,10 @@ export default class FlexContainer extends React.Component {
     }
     componentDidMount() {
         window.bbg_xiv.postRenderFlexContainer(this.container)
+        this.resize()
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
-        window.setTimeout(function() {
-            jQuery(window).resize()
-        }, 100)
+        this.resize()
     }
 }
 

@@ -212,9 +212,11 @@ console.log('bbg_xiv-gallery.js:loading...');
         }
         // bbg_xiv.constructOverlay(container)
         mcRrr.ReactDOM.render(<Overlay />, $flexContainer.find('div.mc-rrr-react-overlay-root').get(0))
+/*
         window.setTimeout(function() {
             jQuery(window).resize()
         }, 100)
+ */
     }   // bbg_xiv.postRenderFlexContainer = container => {
 
 /*
@@ -1790,12 +1792,15 @@ console.log('bbg_xiv-gallery.js:loading...');
             var minFlexWidthForCaption=window.bbg_xiv.bbg_xiv_flex_min_width_for_caption;
             if(jqThis.parents("div.bbg_xiv-gallery_envelope").hasClass("bbg_xiv-tiles_container")
                 || jqThis.hasClass("bbg_xiv-tiles_container") ) {
+/*
+                This code moved to FlexContainer.js
                 // set tile width and height in pixels so that tiles cover the div exactly and completely
                 pxWidth = Math.floor( width / Math.floor( width / window.bbg_xiv.bbg_xiv_flex_min_width ) ) - 1;
                 jqThis.find("div.bbg_xiv-flex_item").css({width:pxWidth,height:pxWidth});
                 if(pxWidth<minFlexWidthForCaption){
                     jqThis.find("div.bbg_xiv-flex_item figcaption").hide();
                 }
+ */
             }else{
                 // find the smallest percentage width that satisfies the minimum image width
                 breakpoints.forEach(function(breakpoint){
