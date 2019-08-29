@@ -9,13 +9,15 @@ export default class FlexContainer extends React.Component {
         this.container = null
     }
     render() {
+        console.log('FlexContainer.render():this.props=', this.props)
         const collection = this.props.images
+        const minWidth   = this.props.configuration.bbg_xiv_flex_min_width
         if ( typeof collection === 'string' ) {
             return <h1>{collection}</h1>
         }
         const jsx = []
         collection.forEach(function(model) {
-             jsx.push(<FlexItem data={model.attributes} key={model.attributes.id} />)
+             jsx.push(<FlexItem data={model.attributes} key={model.attributes.id} minWidth={minWidth} />)
         })
         console.log( 'FlexContainer():jsx=', jsx )
         return (

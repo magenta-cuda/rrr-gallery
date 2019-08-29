@@ -25,6 +25,7 @@ export default class FlexItem extends React.Component {
     }
     render() {
         const data           = this.props.data
+        const minWidth       = this.props.minWidth
         let className        = ''
         let dataGalleryIndex = ''
         if (typeof data.gallery_index !== 'undefined') {
@@ -39,7 +40,7 @@ export default class FlexItem extends React.Component {
                         <img src={bbg_xiv.getSrc(data,'viewport',true)} srcSet={bbg_xiv.getSrcset(data)}
                                 sizes={bbg_xiv.getSizes(data,'viewport',true)}
                                 alt={bbg_xiv.getAlt(data)} title={bbg_xiv.getTitle(data)} data-bbg_xiv-image-id={data.id}
-                                ref={node => {this.img = node}} />
+                                data-min-width={minWidth} ref={node => {this.img = node}} />
                     </a>
                 </figure>
                 <a href={data.link} target="_blank" className={className} data-gallery-index={dataGalleryIndex}>
