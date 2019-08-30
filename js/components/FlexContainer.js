@@ -12,6 +12,7 @@ export default class FlexContainer extends React.Component {
     handleResize() {
         this.props.setContainerWidth(this.props.images.id, jQuery(this.container).width())
     }
+/*
     resize() {
         // set tile width and height in pixels so that tiles cover the div exactly and completely
         const minWidth           = this.props.configuration.bbg_xiv_flex_min_width
@@ -26,22 +27,32 @@ export default class FlexContainer extends React.Component {
             }
         }, 100)
     }
+ */
     render() {
         console.log('FlexContainer.render():this.props=', this.props)
-        const collection = this.props.images
-        const minWidth   = this.props.configuration.bbg_xiv_flex_min_width
+        const collection         = this.props.images
+        const containerWidth     = this.props.containerWidth
+        const minWidth           = this.props.configuration.bbg_xiv_flex_min_width
+        const minWidthForCaption = this.props.configuration.bbg_xiv_flex_min_width_for_caption
+        const width              = Math.floor( containerWidth / Math.floor( containerWidth / minWidth ) ) - 1;
+        const captionHide        = width < minWidthForCaption
         if ( typeof collection === 'string' ) {
             return <h1>{collection}</h1>
         }
-        const jsx = []
-        collection.forEach(function(model) {
-             jsx.push(<FlexItem data={model.attributes} key={model.attributes.id} minWidth={minWidth} />)
-        })
-        console.log( 'FlexContainer():jsx=', jsx )
+        let jsx
+        if (containerWidth) {
+            jsx = []
+            collection.forEach(function(model) {
+                 jsx.push(<FlexItem data={model.attributes} width={width} captionHide={captionHide} key={model.attributes.id} />)
+            })
+            console.log( 'FlexContainer():jsx=', jsx )
+        } else {
+            jsx = '<h1>Loading...</h1>'
+        }
         return (
             <div className="bbg_xiv-container bbg_xiv-flex_container bbg_xiv-tiles_container mc-rrr-jsx-container"
                 data-bbg_xiv-gallery-id={collection.id} ref={node => {this.container = node}}>
-                {this.props.containerWidth ? jsx : 'Loading...'}
+                {jsx}
                 <div className="bbg_xiv-flex_footer"></div>
                 {/* Full Browser Viewport View of an Image */}
                 <div className="mc-rrr-react-overlay-root" />
@@ -67,10 +78,10 @@ export default class FlexContainer extends React.Component {
     componentDidMount() {
         window.bbg_xiv.postRenderFlexContainer(this.container)
         this.handleResize()
-        this.resize()
+        // this.resize()
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
-        this.resize()
+        // this.resize()
     }
 }
 
