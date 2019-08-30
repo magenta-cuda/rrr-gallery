@@ -16,7 +16,7 @@ export default class Gallery extends React.Component {
         return {}
     }
     render() {
-        const {images, configuration, setView} = this.props
+        const {images, configuration, containerWidth, setView, setContainerWidth} = this.props
         if (!images || images.status === STATUS_LOADING) {
             return <div className="ui-loader"><span className="ui-icon-loading"></span></div>
         }
@@ -39,7 +39,11 @@ export default class Gallery extends React.Component {
             Container = DenseContainer
             break
         }
-        return <Container images={images} configuration={configuration} setView={setView}></Container>
+        return (
+            <Container images={images} configuration={configuration} containerWidth={containerWidth} setView={setView}
+                    setContainerWidth={setContainerWidth}>
+            </Container>
+        )
     }
     componentDidCatch(error, info) {
         console.log('Gallery:', error, info)

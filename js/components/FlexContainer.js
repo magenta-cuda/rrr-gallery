@@ -6,14 +6,18 @@ import FlexItem from '../components/FlexItem.js'
 export default class FlexContainer extends React.Component {
     constructor(props) {
         super(props)
-        this.container = null
+        this.container    = null
+        this.handleResize = this.handleResize.bind(this)
+    }
+    handleResize() {
+        this.props.setContainerWidth(this.props.images.id, jQuery(this.container).width())
     }
     resize() {
         // set tile width and height in pixels so that tiles cover the div exactly and completely
         const minWidth           = this.props.configuration.bbg_xiv_flex_min_width
         const minWidthForCaption = this.props.configuration.bbg_xiv_flex_min_width_for_caption
         const $container         = jQuery(this.container)
-        const containerWidth     = $container.width()
+        const containerWidth     = this.props.containerWidth
         const pxWidth            = Math.floor( containerWidth / Math.floor( containerWidth / minWidth ) ) - 1;
         window.setTimeout(function() {
             $container.find('div.bbg_xiv-flex_item').css({width:pxWidth, height:pxWidth});
@@ -37,7 +41,7 @@ export default class FlexContainer extends React.Component {
         return (
             <div className="bbg_xiv-container bbg_xiv-flex_container bbg_xiv-tiles_container mc-rrr-jsx-container"
                 data-bbg_xiv-gallery-id={collection.id} ref={node => {this.container = node}}>
-                {jsx}
+                {this.props.containerWidth ? jsx : 'Loading...'}
                 <div className="bbg_xiv-flex_footer"></div>
                 {/* Full Browser Viewport View of an Image */}
                 <div className="mc-rrr-react-overlay-root" />
@@ -62,6 +66,7 @@ export default class FlexContainer extends React.Component {
     }
     componentDidMount() {
         window.bbg_xiv.postRenderFlexContainer(this.container)
+        this.handleResize()
         this.resize()
     }
     componentDidUpdate(prevProps, prevState, snapshot) {

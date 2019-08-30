@@ -63,3 +63,11 @@ export const setConfiguration = (configuration) => ({
     type:          SET_CONFIGURATION,
     configuration: configuration
 })
+
+export const SET_CONTAINER_WIDTH = 'SET-CONTAINER-WIDTH'
+
+export const setContainerWidth = (id, width) => ({
+    type:          SET_CONTAINER_WIDTH,
+    id:            id,
+    width:         width
+})

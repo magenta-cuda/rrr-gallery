@@ -1,16 +1,21 @@
-import { connect }                  from 'react-redux'
-import Gallery                      from '../components/Gallery.js'
-import {setView, loadGalleryImages} from '../actions/index.js'
+import { connect }                                     from 'react-redux'
+import Gallery                                         from '../components/Gallery.js'
+import {setView, loadGalleryImages, setContainerWidth} from '../actions/index.js'
 
-const mapStateToProps    = (state, ownProps) => ({
-    id:            ownProps.id,
-    images:        state.galleries.images && state.galleries.images[ownProps.id] ? state.galleries.images[ownProps.id] : null,
-    configuration: state.configuration
-})
+const mapStateToProps = (state, ownProps) => {
+    const images = state.galleries.images && state.galleries.images[ownProps.id] ? state.galleries.images[ownProps.id] : undefined
+    return {
+        id:             ownProps.id,
+        images:         images,
+        configuration:  state.configuration,
+        containerWidth: images ? images.containerWidth : undefined
+    }
+}
 
 const mapDispatchToProps = dispatch          => ({
     setView: (id, view)             => dispatch(setView(id, view)),
-    loadGalleryImages: (id, images) => dispatch(loadGalleryImages(id, images))
+    loadGalleryImages: (id, images) => dispatch(loadGalleryImages(id, images)),
+    setContainerWidth: (id, width)  => dispatch(setContainerWidth(id, width))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Gallery)
