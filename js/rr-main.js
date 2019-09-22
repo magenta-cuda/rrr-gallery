@@ -10,7 +10,8 @@ import rest from './middleware/rest.js'
 import Frame from './components/Frame.js'
 //import NavBar from './containers/NavBar.js'
 import DevTools from './containers/DevTools.js'
-import {getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages, setView, setConfiguration} from './actions/index.js'
+import {getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages, setView, toggleFullScreen,
+        setConfiguration} from './actions/index.js'
 import {CssReducer, JqueryProxy} from './CssReducer.js'
 
 console.log( 'rr-main.js loading...' )
@@ -32,6 +33,7 @@ window.mcRrr = {
     Frame:                   Frame,
 //    NavBar:                  NavBar,
     setView:                 setView,
+    toggleFullScreen:        toggleFullScreen,
     loadGalleryImages:       loadGalleryImages,
     getImagesByGallerySpecs: getImagesByGallerySpecs,
     getImagesBySearchParms:  getImagesBySearchParms,

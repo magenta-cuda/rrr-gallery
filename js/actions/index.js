@@ -71,3 +71,10 @@ export const setContainerWidth = (id, width) => ({
     id:            id,
     width:         width
 })
+
+export const TOGGLE_FULL_SCREEN = 'TOGGLE-FULL-SCREEN'
+
+export const toggleFullScreen = (id) => ({
+    type:          TOGGLE_FULL_SCREEN,
+    id:            id
+})

@@ -411,8 +411,10 @@ EOD;
             loadGalleryImages(selector, images)
         }
         function handleFullScreenButtonClick(e) {
+            e.preventDefault()
+            toggleFullScreen(selector)
         }
-        const {id, images, view, setView, getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages} = props
+        const {id, images, view, setView, toggleFullScreen, getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages} = props
         const selector  = 'gallery-' + id
         let   galleries = ''
         if ( typeof props.galleries !== 'undefined' ) {
@@ -587,6 +589,7 @@ EOD;
     }
     const mapDispatchToProps = dispatch => ({
         setView: (id, view)                  => dispatch(mcRrr.setView(id, view)),
+        toggleFullScreen: id                 => dispatch(mcRrr.toggleFullScreen(id)),
         getImagesByGallerySpecs: (id, specs) => dispatch(mcRrr.getImagesByGallerySpecs(id, specs)),
         getImagesBySearchParms: (id, parms)  => dispatch(mcRrr.getImagesBySearchParms(id, parms)),
         loadGalleryImages: (id, images)      => dispatch(mcRrr.loadGalleryImages(id, images))
