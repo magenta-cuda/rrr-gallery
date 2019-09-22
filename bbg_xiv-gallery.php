@@ -410,6 +410,8 @@ EOD;
             images.reset(JSON.parse(bbg_xiv[selector + '-data']))
             loadGalleryImages(selector, images)
         }
+        function handleFullScreenButtonClick(e) {
+        }
         const {id, images, view, setView, getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages} = props
         const selector  = 'gallery-' + id
         let   galleries = ''
@@ -530,7 +532,7 @@ EOD;
                             <span className="bbg_xiv-navbar_button_text">{$translations['Home']}</span>
                         </button>
                         <button type="button" className="btn btn-info bbg_xiv-fullscreen"
-                                title="{$translations['toggle fullscreen']}">
+                                title="{$translations['toggle fullscreen']}" onClick={handleFullScreenButtonClick}>
                             <span className="glyphicon glyphicon-fullscreen"></span>
                             <span className="bbg_xiv-navbar_button_text">{$translations['Fullscreen']}</span>
                         </button>

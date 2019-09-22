@@ -10,7 +10,10 @@ export default class FlexContainer extends React.Component {
         this.handleResize = this.handleResize.bind(this)
     }
     handleResize() {
-        this.props.setContainerWidth(this.props.images.id, jQuery(this.container).width())
+        const width = jQuery(this.container).width()
+        if (width !== this.props.containerWidth) {
+            this.props.setContainerWidth(this.props.images.id, width)
+        }
     }
 /*
     resize() {
@@ -81,6 +84,7 @@ export default class FlexContainer extends React.Component {
         // this.resize()
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
+        this.handleResize()
         // this.resize()
     }
 }
