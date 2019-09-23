@@ -8,7 +8,7 @@ export default class Gallery extends React.Component {
         wp.api.loadPromise.done(() => {
             const images = new wp.api.collections.Media()
             images.reset(JSON.parse(bbg_xiv[props.id+"-data"]))
-            props.loadGalleryImages(props.id, images)
+            props.loadGalleryImages(props.id, images, true)
         })
     }
     static getDerivedStateFromError(error) {

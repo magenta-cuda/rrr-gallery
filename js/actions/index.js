@@ -16,10 +16,11 @@ export const getImagesBySearchParms = (id, parms) => ({
 
 export const LOAD_GALLERY_IMAGES = 'LOAD-GALLERY-IMAGES'
 
-export const loadGalleryImages = (id, images) => ({
+export const loadGalleryImages = (id, images, home = false) => ({
     type:   LOAD_GALLERY_IMAGES,
     id:     id,
-    images: images
+    images: images,
+    home:   home
 })
 
 export const LOAD_SEARCH_IMAGES = 'LOAD-SEARCH-IMAGES'

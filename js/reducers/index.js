@@ -8,6 +8,8 @@ const galleries = (state = {}, action) => {
     case LOAD_SEARCH_IMAGES:{
         action.images.id             = action.id
         action.images.containerWidth = state[action.id] ? state[action.id].containerWidth : undefined
+        action.images.fullScreen     = false
+        action.images.home           = action.home ? true : false
         const images                 = {...state.images, [action.id]: action.images}
         if (action.type === LOAD_GALLERY_IMAGES) {
             console.log('reducers:LOAD_GALLERY_IMAGES:action=', action)

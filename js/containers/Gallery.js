@@ -14,9 +14,9 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = dispatch          => ({
-    setView: (id, view)             => dispatch(setView(id, view)),
-    loadGalleryImages: (id, images) => dispatch(loadGalleryImages(id, images)),
-    setContainerWidth: (id, width)  => dispatch(setContainerWidth(id, width))
+    setView: (id, view)                   => dispatch(setView(id, view)),
+    loadGalleryImages: (id, images, home) => dispatch(loadGalleryImages(id, images, home)),
+    setContainerWidth: (id, width)        => dispatch(setContainerWidth(id, width))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Gallery)

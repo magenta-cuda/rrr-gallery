@@ -357,7 +357,7 @@ EOD;
                 // This is the Home gallery.
                 const images = new wp.api.collections.Media()
                 images.reset(JSON.parse(bbg_xiv[selector + '-data']))
-                loadGalleryImages(selector, images)
+                loadGalleryImages(selector, images, true)
                 return
             }
             // extract individual gallery parameters
@@ -408,7 +408,7 @@ EOD;
         function handleHomeButtonClick(e) {
             const images = new wp.api.collections.Media()
             images.reset(JSON.parse(bbg_xiv[selector + '-data']))
-            loadGalleryImages(selector, images)
+            loadGalleryImages(selector, images, true)
         }
         function handleFullScreenButtonClick(e) {
             e.preventDefault()
@@ -593,11 +593,11 @@ EOD;
         }
     }
     const mapDispatchToProps = dispatch => ({
-        setView: (id, view)                  => dispatch(mcRrr.setView(id, view)),
-        toggleFullScreen: id                 => dispatch(mcRrr.toggleFullScreen(id)),
-        getImagesByGallerySpecs: (id, specs) => dispatch(mcRrr.getImagesByGallerySpecs(id, specs)),
-        getImagesBySearchParms: (id, parms)  => dispatch(mcRrr.getImagesBySearchParms(id, parms)),
-        loadGalleryImages: (id, images)      => dispatch(mcRrr.loadGalleryImages(id, images))
+        setView: (id, view)                   => dispatch(mcRrr.setView(id, view)),
+        toggleFullScreen: id                  => dispatch(mcRrr.toggleFullScreen(id)),
+        getImagesByGallerySpecs: (id, specs)  => dispatch(mcRrr.getImagesByGallerySpecs(id, specs)),
+        getImagesBySearchParms: (id, parms)   => dispatch(mcRrr.getImagesBySearchParms(id, parms)),
+        loadGalleryImages: (id, images, home) => dispatch(mcRrr.loadGalleryImages(id, images, home))
     })
     window.bbg_xiv.NavBarContainer = mcRrr.connect(mapStateToProps, mapDispatchToProps)(window.bbg_xiv.NavBar)
 </script>

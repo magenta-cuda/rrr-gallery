@@ -6,6 +6,7 @@ const mapStateToProps = (state, ownProps) => {
     const images   = state.galleries.images && state.galleries.images[imagesId] ? state.galleries.images[imagesId] : undefined
     console.log( 'containers/Frame:images=', images )
     return {
+        home:       images && images.home       ? true : false,
         fullScreen: images && images.fullScreen ? true : false
     }
 }
