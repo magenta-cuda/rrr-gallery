@@ -8,7 +8,8 @@ const mapStateToProps = (state, ownProps) => {
         id:             ownProps.id,
         images:         images,
         configuration:  state.configuration,
-        containerWidth: images ? images.containerWidth : undefined
+        containerWidth: images ? images.containerWidth : undefined,
+        fullScreen:     images ? images.fullScreen     : false
     }
 }
 

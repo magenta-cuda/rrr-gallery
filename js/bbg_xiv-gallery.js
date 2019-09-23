@@ -2085,7 +2085,7 @@ console.log('bbg_xiv-gallery.js:loading...');
                 console.log('bbg_xiv-gallery.js:renderReactRoot():mcRrr.ReactDOM.render():');
                 mcRrr.ReactDOM.render(
                     <mcRrr.Provider store={mcRrr.store}>
-                        <bbg_xiv.NavBarContainer id={id} galleries={window.bbg_xiv.menu_galleries} />
+                        {/* <bbg_xiv.NavBarContainer id={id} galleries={window.bbg_xiv.menu_galleries} /> */}
                         <mcRrr.Frame id={id} />
                     </mcRrr.Provider>,
                     document.getElementById('mc-rrr-react-root-gallery-' + id)
@@ -2366,6 +2366,7 @@ console.log('bbg_xiv-gallery.js:loading...');
                 .find("nav.bbg_xiv-gallery_navbar ul.nav li.dropdown ul.bbg_xiv-view_menu li > a[data-view='gallery_home']").click();
             e.preventDefault();
         });
+        console.log('##### button.bbg_xiv-fullscreen');
         jQuery( 'button.bbg_xiv-fullscreen' ).click(function() {
             var $gallery = jQuery( this ).closest( 'div.bbg_xiv-gallery' );
             if ( $gallery.hasClass( 'bbg_xiv-fullscreen_gallery' ) ) {

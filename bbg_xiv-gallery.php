@@ -581,10 +581,11 @@ EOD;
         // TODO: \$ -> $ - needed for now since this in a PHP file.
         const images = state.galleries.images && state.galleries.images[`gallery-\${ownProps.id}`] ? state.galleries.images[`gallery-\${ownProps.id}`] : null
         return {
-            id:        ownProps.id,
-            images:    images,
-            galleries: ownProps.galleries,
-            view:      images && images.view ? images.view : 'View'
+            id:         ownProps.id,
+            images:     images,
+            galleries:  ownProps.galleries,
+            view:       images && images.view       ? images.view       : 'View',
+            fullScreen: images && images.fullScreen ? images.fullScreen : false
         }
     }
     const mapDispatchToProps = dispatch => ({

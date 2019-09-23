@@ -4,6 +4,7 @@ import DevTools from '../containers/DevTools.js'
 
 export default props => (
     <div id="mc-rrr-jsx-frame" className="mc-rrr-jsx-frame">
+        <window.bbg_xiv.NavBarContainer id={props.id} galleries={window.bbg_xiv.menu_galleries} />
         <Gallery id={"gallery-" + props.id} />
         <DevTools />
     </div>
