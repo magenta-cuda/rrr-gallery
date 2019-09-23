@@ -7,7 +7,7 @@ import { createLogger } from 'redux-logger'
 import { Provider } from 'react-redux'
 import reducer from './reducers/index.js'
 import rest from './middleware/rest.js'
-import Frame from './components/Frame.js'
+import Frame from './containers/Frame.js'
 //import NavBar from './containers/NavBar.js'
 import DevTools from './containers/DevTools.js'
 import {getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages, setView, toggleFullScreen,
