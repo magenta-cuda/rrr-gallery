@@ -414,7 +414,8 @@ EOD;
             e.preventDefault()
             toggleFullScreen(selector)
         }
-        const {id, images, view, setView, toggleFullScreen, getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages} = props
+        const {id, images, view, fullScreen, setView, toggleFullScreen, getImagesByGallerySpecs, getImagesBySearchParms,
+               loadGalleryImages} = props
         const selector  = 'gallery-' + id
         let   galleries = ''
         if ( typeof props.galleries !== 'undefined' ) {
@@ -534,7 +535,10 @@ EOD;
                             <span className="bbg_xiv-navbar_button_text">{$translations['Home']}</span>
                         </button>
                         <button type="button" className="btn btn-info bbg_xiv-fullscreen"
-                                title="{$translations['toggle fullscreen']}" onClick={handleFullScreenButtonClick}>
+                                title={fullScreen ? bbg_xiv_lang['shrink gallery from full-screen']
+                                                  : bbg_xiv_lang['expand gallery to full-screen']}
+                                onClick={handleFullScreenButtonClick}>
+                                {/* title="{$translations['toggle fullscreen']}" */}
                             <span className="glyphicon glyphicon-fullscreen"></span>
                             <span className="bbg_xiv-navbar_button_text">{$translations['Fullscreen']}</span>
                         </button>

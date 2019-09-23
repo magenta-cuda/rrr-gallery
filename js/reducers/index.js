@@ -47,6 +47,7 @@ const galleries = (state = {}, action) => {
         // Cannot clone images using the spread operator since it is also necessary to preserve the prototype chain.
         images[action.id]                = Object.assign(new wp.api.collections.Media(), images[action.id])
         images[action.id].fullScreen     = images[action.id].fullScreen ? false : true
+        images[action.id].containerWidth = undefined
         return {...state, images: images}
     }
     default:
