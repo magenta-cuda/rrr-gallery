@@ -414,8 +414,12 @@ EOD;
             e.preventDefault()
             toggleFullScreen(selector)
         }
-        const {id, images, view, fullScreen, setView, toggleFullScreen, getImagesByGallerySpecs, getImagesBySearchParms,
-               loadGalleryImages} = props
+        function handleCaptionsButtonClick(e) {
+            e.preventDefault()
+            toggleCaptions(selector)
+        }
+        const {id, images, view, fullScreen, setView, toggleFullScreen, toggleCaptions, getImagesByGallerySpecs,
+               getImagesBySearchParms, loadGalleryImages} = props
         const selector  = 'gallery-' + id
         let   galleries = ''
         if ( typeof props.galleries !== 'undefined' ) {
@@ -544,7 +548,8 @@ EOD;
                         </button>
                         <button type="button" className="btn btn-info bbg_xiv-titles"
                                 title="{$translations['show/hide image titles']}"
-                                onClick={e => {bbg_xiv.handleTitlesClick.call(e.currentTarget, e)}}>
+                                onClick={handleCaptionsButtonClick}>
+                                {/* onClick={e => {bbg_xiv.handleTitlesClick.call(e.currentTarget, e)}}> */}
                             <span className="glyphicon glyphicon-subtitles"></span>
                             <span className="bbg_xiv-navbar_button_text">{$translations['Titles']}</span>
                         </button>
@@ -595,6 +600,7 @@ EOD;
     const mapDispatchToProps = dispatch => ({
         setView: (id, view)                   => dispatch(mcRrr.setView(id, view)),
         toggleFullScreen: id                  => dispatch(mcRrr.toggleFullScreen(id)),
+        toggleCaptions: id                    => dispatch(mcRrr.toggleCaptions(id)),
         getImagesByGallerySpecs: (id, specs)  => dispatch(mcRrr.getImagesByGallerySpecs(id, specs)),
         getImagesBySearchParms: (id, parms)   => dispatch(mcRrr.getImagesBySearchParms(id, parms)),
         loadGalleryImages: (id, images, home) => dispatch(mcRrr.loadGalleryImages(id, images, home))

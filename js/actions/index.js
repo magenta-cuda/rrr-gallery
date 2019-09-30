@@ -79,3 +79,10 @@ export const toggleFullScreen = (id) => ({
     type:          TOGGLE_FULL_SCREEN,
     id:            id
 })
+
+export const TOGGLE_CAPTIONS = 'TOGGLE-CAPTIONS'
+
+export const toggleCaptions = (id) => ({
+    type:          TOGGLE_CAPTIONS,
+    id:            id
+})

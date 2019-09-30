@@ -7,6 +7,7 @@ const mapStateToProps = (state, ownProps) => {
     console.log( 'containers/Frame:images=', images )
     return {
         home:       images && images.home       ? true : false,
+        captions:   images && images.captions   ? true : false,
         fullScreen: images && images.fullScreen ? true : false
     }
 }

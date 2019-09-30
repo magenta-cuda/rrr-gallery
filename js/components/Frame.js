@@ -7,6 +7,7 @@ export default props => {
     return (
         <div id="mc-rrr-jsx-frame" className={"mc-rrr-jsx-frame bbg_xiv-bootstrap"
                                                   + (props.home       ? " bbg_xiv-home_gallery"       : "")
+                                                  + (props.captions   ? " bbg_xiv-caption_visible"    : "")
                                                   + (props.fullScreen ? " bbg_xiv-fullscreen_gallery" : "")}>
             <window.bbg_xiv.NavBarContainer id={props.id} galleries={window.bbg_xiv.menu_galleries} />
             <Gallery id={"gallery-" + props.id} />

@@ -10,7 +10,7 @@ import rest from './middleware/rest.js'
 import Frame from './containers/Frame.js'
 //import NavBar from './containers/NavBar.js'
 import DevTools from './containers/DevTools.js'
-import {getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages, setView, toggleFullScreen,
+import {getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages, setView, toggleFullScreen, toggleCaptions,
         setConfiguration} from './actions/index.js'
 import {CssReducer, JqueryProxy} from './CssReducer.js'
 
@@ -34,6 +34,7 @@ window.mcRrr = {
 //    NavBar:                  NavBar,
     setView:                 setView,
     toggleFullScreen:        toggleFullScreen,
+    toggleCaptions:          toggleCaptions,
     loadGalleryImages:       loadGalleryImages,
     getImagesByGallerySpecs: getImagesByGallerySpecs,
     getImagesBySearchParms:  getImagesBySearchParms,
