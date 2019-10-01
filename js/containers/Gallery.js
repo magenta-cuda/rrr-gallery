@@ -9,6 +9,7 @@ const mapStateToProps = (state, ownProps) => {
         images:         images,
         configuration:  state.configuration,
         containerWidth: images ? images.containerWidth : undefined,
+        captions:       images ? images.captions       : false,
         fullScreen:     images ? images.fullScreen     : false
     }
 }

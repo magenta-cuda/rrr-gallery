@@ -38,7 +38,7 @@ export default class FlexContainer extends React.Component {
         const minWidth           = this.props.configuration.bbg_xiv_flex_min_width
         const minWidthForCaption = this.props.configuration.bbg_xiv_flex_min_width_for_caption
         const width              = Math.floor( containerWidth / Math.floor( containerWidth / minWidth ) ) - 1;
-        const captionHide        = width < minWidthForCaption
+        const captionHide        = !this.props.captions || width < minWidthForCaption
         if ( typeof collection === 'string' ) {
             return <h1>{collection}</h1>
         }
