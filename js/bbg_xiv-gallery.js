@@ -1964,6 +1964,7 @@ console.log('bbg_xiv-gallery.js:loading...');
         // debugger
     }
 
+/*
     bbg_xiv.handleTitlesClick = function(e) {
         const  $this            = jQuery(this);
         const $galleryContainer = $this.closest('div.bbg_xiv-bootstrap.bbg_xiv-gallery');
@@ -2009,6 +2010,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             }, 1000 );
         }
     }
+ */
 
 {
     // TODO: the vars below should be in Redux store.

@@ -16,12 +16,13 @@ class JustifiedGalleryContainer extends React.Component {
         // TODO: remove React = - don't need this when we use webpack
         const React      = window.mcRrr.React
         const collection = this.props.images
+        const captions   = this.props.captions
         if (typeof collection === 'string') {
             return <h1>{collection}</h1>
         }
         const jsx = [];
         collection.forEach(function(model) {
-             jsx.push(<JustifiedGalleryItem data={model.attributes} key={model.attributes.id} />);        
+             jsx.push(<JustifiedGalleryItem data={model.attributes} caption={captions} key={model.attributes.id} />);
         })
         console.log( 'JustifiedGalleryContainer():jsx=', jsx );
         return (

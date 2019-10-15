@@ -26,15 +26,16 @@ class JustifiedGalleryItem extends React.Component {
     }
     render() {
         // TODO: remove React = - don't need this when we use webpack
-        const React = window.mcRrr.React
-        const data  = this.props.data
+        const React   = window.mcRrr.React
+        const data    = this.props.data
+        const caption = this.props.caption
         return (
             <div className="bbg_xiv-justified_item">
                 <a href={data.link} target="_blank">
                     <img src={data.bbg_medium_src[0]} alt={bbg_xiv.getAlt(data)} title={bbg_xiv.getCaption(data)}
                             data-bbg_xiv-image-id={data.id} ref={node => {this.img = node}} />
                 </a>
-                <div className="caption">
+                <div className="caption" style={caption ? {display: "block", opacity: 0.7} : {display: "none", opacity: 0.0}}>
                     <a href={data.link} target="_blank">{bbg_xiv.getTitle(data)}</a>
                     <button className="bbg_xiv-dense_full_btn bbg_xiv-dense_from_justified btn" onClick={this.handleImageClick}>
                         <span className="glyphicon glyphicon-fullscreen"></span>
