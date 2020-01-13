@@ -14,7 +14,10 @@ import {getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages, setV
         setConfiguration} from './actions/index.js'
 import {CssReducer, JqueryProxy} from './CssReducer.js'
 
-console.log( 'rr-main.js loading...' )
+var searchParams = new URLSearchParams(window.location.search)
+var debug        = searchParams.has("mc_debug")
+
+debug && console.log("rr-main.js loading...")
 
 const store = createStore(reducer, {galleries: {images: {}}, configuration: {}},
                           compose(applyMiddleware( thunk, rest, createLogger()), DevTools.instrument()))
@@ -23,6 +26,7 @@ const store = createStore(reducer, {galleries: {images: {}}, configuration: {}},
 // TODO: need actions in global scope for now as cannot import yet; remove for production.
 
 window.mcRrr = {
+    debug:                   debug,
     store:                   store,
     React:                   React,
     useState:                useState,
@@ -42,4 +46,4 @@ window.mcRrr = {
     CssReducer:              new JqueryProxy().getCssReducer()
 }
 
-console.log( 'rr-main.js loaded.' )
+window.mcRrr.debug && console.log("rr-main.js loaded.")

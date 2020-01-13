@@ -7,7 +7,7 @@ export default store => next => action => {
     if (typeof rest === 'undefined') {
         return next(action)
     }
-    console.log('rest.js:action=', action)
+    window.mcRrr.debug && console.log('rest.js:action=', action)
     // debugger
     next(setStatus(rest.id, STATUS_LOADING))
     if (typeof rest.specs !== 'undefined') {

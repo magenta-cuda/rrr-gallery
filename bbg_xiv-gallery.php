@@ -35,12 +35,16 @@ License: GPL2
 
 class BBG_XIV_Gallery {
 
+    public  static $error_log                = 'BBG_XIV_Gallery::error_log';
     public  static $nonce_action             = 'bbg_xiv-search';
     private static $gallery_menu_items_count = 5;
     private static $translations             = NULL;
     private static $bbg_xiv_data             = NULL;
     private static $bbg_xiv_lang             = NULL;
   
+    public static function error_log() {
+    }
+
     # excerpted from the WordPress function gallery_shortcode() of .../wp-includes/media.php
 
     public static function bb_gallery_shortcode( $attr, $content = '' ) {
@@ -650,14 +654,6 @@ EOD;
         $flags                    = empty( $flags )              ? '' : $flags;
         $output .= <<<EOD
     <!-- Search or Gallery Headings -->
-    <!--
-    <div id="$selector-heading" class="bbg_xiv-search_header">
-        <span class="bbg_xiv-search_heading_first"></span><br>
-        <button class="btn btn-primary btn-sm bbg_xiv-search_scroll_left" disabled><span class="glyphicon glyphicon-chevron-left"></span></button>
-        <span class="bbg_xiv-search_heading_second"></span>
-        <button class="btn btn-primary btn-sm bbg_xiv-search_scroll_right"><span class="glyphicon glyphicon-chevron-right"></span></button>
-    </div>
-    -->
     <div id="$selector-alt_gallery_heading" class="bbg_xiv-alt_gallery_header">
         <span class="bbg_xiv-alt_gallery_heading"></span>
     </div>
@@ -885,8 +881,10 @@ EOD;
 <!-- end of Configure JSX -->
 </div>
 EOD;
+        $error_log = self::$error_log;
+        $error_log( 'bb_gallery_shortcode():return=' . $output . "\n#####" );
         return $output;
-    }
+    }   # public static function bb_gallery_shortcode( $attr, $content = '' ) {
     public static function bbg_xiv_do_attachments( $attachments ) {
         global $content_width;
         foreach ( $attachments as $id => &$attachment ) {
@@ -1049,6 +1047,9 @@ EOD;
     }
     
     public static function init( ) {
+        if ( array_key_exists( 'mc_debug', $_GET ) ) {
+            self::$error_log = 'error_log';
+        }
         $bbg_xiv_data                                                =& self::$bbg_xiv_data;
         $bbg_xiv_data                                                = [];
         $bbg_xiv_data[ 'version' ]                                   = '1.0';
@@ -1561,7 +1562,7 @@ EOD
             } );
         }
     }
-}
+}   # class BBG_XIV_Gallery {
 
 BBG_XIV_Gallery::init( );
 
