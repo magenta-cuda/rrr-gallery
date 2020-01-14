@@ -86,3 +86,11 @@ export const toggleCaptions = (id) => ({
     type:          TOGGLE_CAPTIONS,
     id:            id
 })
+
+export const SET_QUERY = 'SET-QUERY'
+
+export const setQuery = (id, query) => ({
+    type: SET_QUERY,
+    id:   id,
+    query: query
+})

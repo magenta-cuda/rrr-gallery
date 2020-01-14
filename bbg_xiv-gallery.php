@@ -394,8 +394,27 @@ EOD;
             }
             getImagesByGallerySpecs(selector, parameters)
         }
+        function handleQueryChange(e) {
+            e.preventDefault()
+            const query = e.target.value
+            setQuery(selector, query)
+            images.query = query
+        }
+        // TODO: refactor handleSearchClick() and handlePageClick() into one function
         function handleSearchClick(e) {
             bbg_xiv.handleSearchClick.call(e.currentTarget, e, getImagesBySearchParms)
+            return
+            // TODO: below does not work
+            let searchLimit = parseInt( bbg_xiv.bbg_xiv_max_search_results, 10 )
+            if (searchLimit > bbg_xiv.wpRestApiMaxPerPage) {
+                searchLimit = bbg_xiv.wpRestApiMaxPerPage
+            }
+            const parms = {
+                query:       images.query,
+                page:        1,
+                searchLimit: searchLimit
+            }
+            getImagesBySearchParms(selector, parms)
         }
         function handlePageClick(e, direction) {
             let searchLimit = parseInt( bbg_xiv.bbg_xiv_max_search_results, 10 )
@@ -422,7 +441,7 @@ EOD;
             e.preventDefault()
             toggleCaptions(selector)
         }
-        const {id, images, view, captions, fullScreen, setView, toggleFullScreen, toggleCaptions, getImagesByGallerySpecs,
+        const {id, images, view, captions, fullScreen, setView, toggleFullScreen, toggleCaptions, setQuery, getImagesByGallerySpecs,
                getImagesBySearchParms, loadGalleryImages} = props
         const selector  = 'gallery-' + id
         let   galleries = ''
@@ -515,7 +534,7 @@ EOD;
                             <div className="form-group">
                                 <div className="input-group">
                                     <input type="text" placeholder="{$translations['Search Images on Site']}"
-                                            className="form-control" />
+                                            className="form-control" onChange={handleQueryChange} />
                                     <span className="input-group-btn">
                                         <button type="submit" className="btn btn-default bbg_xiv-search" title="start search"
                                                 onClick={handleSearchClick}>
@@ -589,12 +608,13 @@ EOD;
             }
             </React.Fragment>
         )
-    }
+    }   // window.bbg_xiv.NavBar = props => {
     console.log('window.bbg_xiv.NavBar=', window.bbg_xiv.NavBar)
 
     const mapStateToProps = (state, ownProps) => {
         // TODO: \$ -> $ - needed for now since this in a PHP file.
         const images = state.galleries.images && state.galleries.images[`gallery-\${ownProps.id}`] ? state.galleries.images[`gallery-\${ownProps.id}`] : null
+        console.log('(NavBarContainer)mapStateToProps():images=', images)
         return {
             id:         ownProps.id,
             images:     images,
@@ -608,6 +628,7 @@ EOD;
         setView: (id, view)                   => dispatch(mcRrr.setView(id, view)),
         toggleFullScreen: id                  => dispatch(mcRrr.toggleFullScreen(id)),
         toggleCaptions: id                    => dispatch(mcRrr.toggleCaptions(id)),
+        setQuery: (id, query)                 => dispatch(mcRrr.setQuery(id, query)),
         getImagesByGallerySpecs: (id, specs)  => dispatch(mcRrr.getImagesByGallerySpecs(id, specs)),
         getImagesBySearchParms: (id, parms)   => dispatch(mcRrr.getImagesBySearchParms(id, parms)),
         loadGalleryImages: (id, images, home) => dispatch(mcRrr.loadGalleryImages(id, images, home))

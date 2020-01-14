@@ -11,7 +11,7 @@ import Frame from './containers/Frame.js'
 //import NavBar from './containers/NavBar.js'
 import DevTools from './containers/DevTools.js'
 import {getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages, setView, toggleFullScreen, toggleCaptions,
-        setConfiguration} from './actions/index.js'
+        setQuery, setConfiguration} from './actions/index.js'
 import {CssReducer, JqueryProxy} from './CssReducer.js'
 
 var searchParams = new URLSearchParams(window.location.search)
@@ -39,6 +39,7 @@ window.mcRrr = {
     setView:                 setView,
     toggleFullScreen:        toggleFullScreen,
     toggleCaptions:          toggleCaptions,
+    setQuery:                setQuery,
     loadGalleryImages:       loadGalleryImages,
     getImagesByGallerySpecs: getImagesByGallerySpecs,
     getImagesBySearchParms:  getImagesBySearchParms,
