@@ -402,9 +402,7 @@ EOD;
         }
         // TODO: refactor handleSearchClick() and handlePageClick() into one function
         function handleSearchClick(e) {
-            bbg_xiv.handleSearchClick.call(e.currentTarget, e, getImagesBySearchParms)
-            return
-            // TODO: below does not work
+            e.preventDefault()
             let searchLimit = parseInt( bbg_xiv.bbg_xiv_max_search_results, 10 )
             if (searchLimit > bbg_xiv.wpRestApiMaxPerPage) {
                 searchLimit = bbg_xiv.wpRestApiMaxPerPage
@@ -415,6 +413,8 @@ EOD;
                 searchLimit: searchLimit
             }
             getImagesBySearchParms(selector, parms)
+            // TODO: bbg_xiv.handleSearchClick() still has some code for hide/show of GUI elements
+            bbg_xiv.handleSearchClick.call(e.currentTarget, e, getImagesBySearchParms)
         }
         function handlePageClick(e, direction) {
             let searchLimit = parseInt( bbg_xiv.bbg_xiv_max_search_results, 10 )

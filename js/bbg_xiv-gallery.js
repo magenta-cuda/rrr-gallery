@@ -2013,21 +2013,25 @@ console.log('bbg_xiv-gallery.js:loading...');
  */
 
 {
+/*
     // TODO: the vars below should be in Redux store.
     var query;
     var offset;
     var page;
     var count=Number.MAX_SAFE_INTEGER;
     var pages=Number.MAX_SAFE_INTEGER;
-
+ */
     bbg_xiv.handleSearchClick = function(e, getImagesBySearchParms) {
+/*
         var searchLimit = parseInt( bbg_xiv.bbg_xiv_max_search_results, 10 );
         if ( searchLimit > bbg_xiv.wpRestApiMaxPerPage ) {
             searchLimit = bbg_xiv.wpRestApiMaxPerPage;
         }
+ */
         var searchBtn=jQuery(this);
         searchBtn.prop("disabled",true);
         var divGallery=searchBtn.parents("div.bbg_xiv-gallery").find("div.bbg_xiv-gallery_envelope")[0];
+/*
         var form=searchBtn.parents("form[role='search']");
         var input=form.find("input[type='text']");
         var value=input.val();
@@ -2043,6 +2047,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             e.preventDefault();
             return;
         }
+ */
         // setup headings
         jQuery("div#"+divGallery.id+"-alt_gallery_heading").hide();
 /*
@@ -2059,6 +2064,7 @@ console.log('bbg_xiv-gallery.js:loading...');
         }
  */
         jQuery(divGallery).parent().find("div.bbg_xiv-search_header").hide();
+/*
         // uses the WP REST API
         // TODO: quick hack to check middleware
         let parms = {
@@ -2074,8 +2080,11 @@ console.log('bbg_xiv-gallery.js:loading...');
             searchBtn:     searchBtn
         }
         getImagesBySearchParms(divGallery.id, parms)
+ */
         searchBtn.closest( 'div.bbg_xiv-gallery' ).removeClass( 'bbg_xiv-home_gallery' );
+/*
         e.preventDefault();
+ */
     }
 }
 
