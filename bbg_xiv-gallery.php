@@ -414,7 +414,7 @@ EOD;
             }
             getImagesBySearchParms(selector, parms)
             // TODO: bbg_xiv.handleSearchClick() still has some code for hide/show of GUI elements
-            bbg_xiv.handleSearchClick.call(e.currentTarget, e, getImagesBySearchParms)
+            bbg_xiv.handleSearchClick.call(e.currentTarget, e)
         }
         function handlePageClick(e, direction) {
             let searchLimit = parseInt( bbg_xiv.bbg_xiv_max_search_results, 10 )
@@ -534,7 +534,7 @@ EOD;
                             <div className="form-group">
                                 <div className="input-group">
                                     <input type="text" placeholder="{$translations['Search Images on Site']}"
-                                            className="form-control" onChange={handleQueryChange} />
+                                            className="form-control" autocomplete="off" onChange={handleQueryChange} />
                                     <span className="input-group-btn">
                                         <button type="submit" className="btn btn-default bbg_xiv-search" title="start search"
                                                 onClick={handleSearchClick}>
