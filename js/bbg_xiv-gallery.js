@@ -2013,44 +2013,23 @@ console.log('bbg_xiv-gallery.js:loading...');
  */
 
 {
-/*
-    // TODO: the vars below should be in Redux store.
-    var query;
-    var offset;
-    var page;
-    var count=Number.MAX_SAFE_INTEGER;
-    var pages=Number.MAX_SAFE_INTEGER;
- */
     bbg_xiv.handleSearchClick = function(e, getImagesBySearchParms) {
-/*
-        var searchLimit = parseInt( bbg_xiv.bbg_xiv_max_search_results, 10 );
-        if ( searchLimit > bbg_xiv.wpRestApiMaxPerPage ) {
-            searchLimit = bbg_xiv.wpRestApiMaxPerPage;
-        }
- */
         var searchBtn=jQuery(this);
         searchBtn.prop("disabled",true);
         var divGallery=searchBtn.parents("div.bbg_xiv-gallery").find("div.bbg_xiv-gallery_envelope")[0];
 /*
-        var form=searchBtn.parents("form[role='search']");
-        var input=form.find("input[type='text']");
-        var value=input.val();
-        var postData;
-        if(value){
-            // new search
-            query=value;
-            offset=0;
-            page=1;
+        if(* new search *) {
+            // TODO: Redux store also needs to hold a search history
             // start new search history
             bbg_xiv.search[divGallery.id]={history:[],index:-1,done:false};
         }else if(typeof query==="undefined"){
-            e.preventDefault();
             return;
         }
  */
         // setup headings
         jQuery("div#"+divGallery.id+"-alt_gallery_heading").hide();
 /*
+        // TODO: the GUI needs a loading message
         var jqueryLoading=true;
         try {
             // There is a very rare failure of the following
@@ -2064,27 +2043,7 @@ console.log('bbg_xiv-gallery.js:loading...');
         }
  */
         jQuery(divGallery).parent().find("div.bbg_xiv-search_header").hide();
-/*
-        // uses the WP REST API
-        // TODO: quick hack to check middleware
-        let parms = {
-            query:         query,
-            page:          page++,
-            searchLimit:   searchLimit,
-            offset:        offset,
-            // jqueryLoading: jqueryLoading,
-            // TODO: the references to UI elements divGallery, input and searchBtn will not be needed after these are Reactified
-            //       but for now we need these as action parameters
-            divGallery:    divGallery,
-            input:         input,
-            searchBtn:     searchBtn
-        }
-        getImagesBySearchParms(divGallery.id, parms)
- */
         searchBtn.closest( 'div.bbg_xiv-gallery' ).removeClass( 'bbg_xiv-home_gallery' );
-/*
-        e.preventDefault();
- */
     }
 }
 
