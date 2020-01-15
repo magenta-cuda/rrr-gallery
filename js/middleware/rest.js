@@ -16,7 +16,6 @@ export default store => next => action => {
         images.once("sync", function() {
             // the sync event will occur once only on the Backbone fetch of the collection
             next(loadGalleryImages(id, images))
-            next(setStatus(id, STATUS_LOADED))
         });
         images.fetch({
             data:    specs,
@@ -33,7 +32,6 @@ export default store => next => action => {
         images.once("sync", function() {
             // the sync event will occur once only on the Backbone fetch of the collection
             next(loadSearchImages(id, images, parms))
-            next(setStatus(id, STATUS_LOADED))
         })
         // get the next part of the multi-part search result as specified by page
         images.fetch({

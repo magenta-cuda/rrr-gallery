@@ -534,10 +534,11 @@ EOD;
                             <div className="form-group">
                                 <div className="input-group">
                                     <input type="text" placeholder="{$translations['Search Images on Site']}"
-                                            className="form-control" autocomplete="off" onChange={handleQueryChange} />
+                                            className="form-control" autoComplete="off" onChange={handleQueryChange} />
                                     <span className="input-group-btn">
                                         <button type="submit" className="btn btn-default bbg_xiv-search" title="start search"
-                                                onClick={handleSearchClick}>
+                                                disabled={images && images.status!=="loaded"} onClick={handleSearchClick}>
+                                                {/* // TODO: "loaded" -> STATUS_LOADED */}
                                             <span className="glyphicon glyphicon-search"></span>
                                         </button>
                                     </span>
@@ -583,7 +584,7 @@ EOD;
                 {images && images.query ?
                     // Search Headings
                     // TODO: \$ -> $ - needed for now since this in a PHP file.
-                    <div id={`\${selector}-heading`} className="bbg_xiv-search_header" style={{display: images.query ? 'block' : 'none'}}>
+                    <div id={`\${selector}-heading`} className="bbg_xiv-search_header" style={{display: images.state.data.search ? 'block' : 'none'}}>
                         {/* TODO: \$ -> $ - needed for now since this in a PHP file. */}
                         {/* TODO: Replace images.query with images.state.data.search - so property images.query is unnecessary */}
                         <span className="bbg_xiv-search_heading_first">
