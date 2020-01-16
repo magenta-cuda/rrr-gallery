@@ -2488,6 +2488,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             e.preventDefault();
         });
  */
+/*
         // wireup the handler for scrolling through search results
         jQuery( 'div.bbg_xiv-search_header button.bbg_xiv-search_scroll_left,div.bbg_xiv-search_header button.bbg_xiv-search_scroll_right' ).click(function() {
             var jqThis = jQuery( this );
@@ -2529,6 +2530,7 @@ console.log('bbg_xiv-gallery.js:loading...');
                 liSelectView.find("a.bbg_xiv-selected_view span").text(liFirst.text());
             }
         });
+ */
         // make the "Images" brand clickable for mobile devices and send click to the toggle button
         jQuery("a.bbg_xiv-images_brand,a.bbg_xiv-tabs_brand").click(function(e){
             var toggle=jQuery(this).siblings("button.navbar-toggle");

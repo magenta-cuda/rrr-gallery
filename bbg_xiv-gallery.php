@@ -581,14 +581,15 @@ EOD;
                         </button>
                     </div>
                 </nav>
-                {images && images.query ?
+                {images && images.state.data.search ?
                     // Search Headings
                     // TODO: \$ -> $ - needed for now since this in a PHP file.
-                    <div id={`\${selector}-heading`} className="bbg_xiv-search_header" style={{display: images.state.data.search ? 'block' : 'none'}}>
+                    // TODO: Fix CSS so display is none.
+                    <div id={`\${selector}-heading`} className="bbg_xiv-search_header" style={{display:"block"}}>
                         {/* TODO: \$ -> $ - needed for now since this in a PHP file. */}
                         {/* TODO: Replace images.query with images.state.data.search - so property images.query is unnecessary */}
                         <span className="bbg_xiv-search_heading_first">
-                            {`\${bbg_xiv_lang["Search Results for"]} "\${images.query}"`}
+                            {`\${bbg_xiv_lang["Search Results for"]} "\${images.state.data.search}"`}
                         </span><br />
                         <button className="btn btn-primary btn-sm bbg_xiv-search_scroll_left"
                                 disabled={images.state.currentPage === 1}

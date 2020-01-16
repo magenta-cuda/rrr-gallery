@@ -9,7 +9,7 @@ export default store => next => action => {
     }
     window.mcRrr.debug && console.log('rest.js:action=', action)
     // debugger
-    next(setStatus(rest.id, STATUS_LOADING))
+    const ret = next(setStatus(rest.id, STATUS_LOADING))
     if (typeof rest.specs !== 'undefined') {
         const {id, specs} = rest
         const images = new wp.api.collections.Media()
@@ -47,4 +47,5 @@ export default store => next => action => {
             }
         })
     }
+    return ret
 }
