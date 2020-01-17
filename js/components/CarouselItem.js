@@ -1,6 +1,6 @@
 // Carousel Item
 
-const CarouselItem = (props) => {
+export default props => {
     const {index, data} = props
     return (
         <figure className={`item bbg_xiv-item${index === 0 ? " active" : ""}`} data-index={index}>

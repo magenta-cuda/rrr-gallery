@@ -1,5 +1,9 @@
 // Carousel Container Template
-class CarouselContainer extends React.Component {
+
+import React from 'react'
+import CarouselItem from '../components/CarouselItem.js'
+
+export default class CarouselContainer extends React.Component {
     constructor(props) {
         super(props)
         this.container        = null
