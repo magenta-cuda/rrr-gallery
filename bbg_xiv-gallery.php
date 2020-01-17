@@ -398,7 +398,6 @@ EOD;
             e.preventDefault()
             const query = e.target.value
             setQuery(selector, query)
-            images.query = query
         }
         // TODO: refactor handleSearchClick() and handlePageClick() into one function
         function handleSearchClick(e) {
@@ -408,7 +407,7 @@ EOD;
                 searchLimit = bbg_xiv.wpRestApiMaxPerPage
             }
             const parms = {
-                query:       images.query,
+                query:       query,
                 page:        1,
                 searchLimit: searchLimit
             }
@@ -422,8 +421,8 @@ EOD;
                 searchLimit = bbg_xiv.wpRestApiMaxPerPage
             }
             const parms = {
-                query:         images.state.data.search,
-                page:          images.state.currentPage + (direction === 'next' ? 1 : -1),
+                query:         search,
+                page:          currentPage + (direction === 'next' ? 1 : -1),
                 searchLimit:   searchLimit
             }
             getImagesBySearchParms(selector, parms)
@@ -441,8 +440,8 @@ EOD;
             e.preventDefault()
             toggleCaptions(selector)
         }
-        const {id, images, view, captions, fullScreen, setView, toggleFullScreen, toggleCaptions, setQuery, getImagesByGallerySpecs,
-               getImagesBySearchParms, loadGalleryImages} = props
+        const {id, view, captions, fullScreen, status, query, search, currentPage, totalPages, setView, toggleFullScreen,
+               toggleCaptions, setQuery, getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages} = props
         const selector  = 'gallery-' + id
         let   galleries = ''
         if ( typeof props.galleries !== 'undefined' ) {
@@ -537,7 +536,7 @@ EOD;
                                             className="form-control" autoComplete="off" onChange={handleQueryChange} />
                                     <span className="input-group-btn">
                                         <button type="submit" className="btn btn-default bbg_xiv-search" title="start search"
-                                                disabled={images && images.status!=="loaded"} onClick={handleSearchClick}>
+                                                disabled={status!=="loaded"} onClick={handleSearchClick}>
                                                 {/* // TODO: "loaded" -> STATUS_LOADED */}
                                             <span className="glyphicon glyphicon-search"></span>
                                         </button>
@@ -581,27 +580,26 @@ EOD;
                         </button>
                     </div>
                 </nav>
-                {images && images.state.data.search ?
+                {search ?
                     // Search Headings
                     // TODO: \$ -> $ - needed for now since this in a PHP file.
                     // TODO: Fix CSS so display is none.
                     <div id={`\${selector}-heading`} className="bbg_xiv-search_header" style={{display:"block"}}>
                         {/* TODO: \$ -> $ - needed for now since this in a PHP file. */}
-                        {/* TODO: Replace images.query with images.state.data.search - so property images.query is unnecessary */}
                         <span className="bbg_xiv-search_heading_first">
-                            {`\${bbg_xiv_lang["Search Results for"]} "\${images.state.data.search}"`}
+                            {`\${bbg_xiv_lang["Search Results for"]} "\${search}"`}
                         </span><br />
                         <button className="btn btn-primary btn-sm bbg_xiv-search_scroll_left"
-                                disabled={images.state.currentPage === 1}
+                                disabled={currentPage === 1}
                                 onClick={e => {handlePageClick(e, 'prev')}}>
                             <span className="glyphicon glyphicon-chevron-left"></span>
                         </button>
                         <span className="bbg_xiv-search_heading_second">
                             {/* TODO: \$ -> $ - needed for now since this in a PHP file. */}
-                            {`\${bbg_xiv_lang.Page} \${images.state.currentPage} \${bbg_xiv_lang.of} \${images.state.totalPages}`}
+                            {`\${bbg_xiv_lang.Page} \${currentPage} \${bbg_xiv_lang.of} \${totalPages}`}
                         </span>
                         <button className="btn btn-primary btn-sm bbg_xiv-search_scroll_right"
-                                disabled={images.state.currentPage === images.state.totalPages}
+                                disabled={currentPage === totalPages}
                                 onClick={e => {handlePageClick(e, 'next')}}>
                             <span className="glyphicon glyphicon-chevron-right"></span>
                         </button>
@@ -612,18 +610,21 @@ EOD;
         )
     }   // window.bbg_xiv.NavBar = props => {
     console.log('window.bbg_xiv.NavBar=', window.bbg_xiv.NavBar)
-
     const mapStateToProps = (state, ownProps) => {
         // TODO: \$ -> $ - needed for now since this in a PHP file.
         const images = state.galleries.images && state.galleries.images[`gallery-\${ownProps.id}`] ? state.galleries.images[`gallery-\${ownProps.id}`] : null
         console.log('(NavBarContainer)mapStateToProps():images=', images)
         return {
-            id:         ownProps.id,
-            images:     images,
-            galleries:  ownProps.galleries,
-            view:       images && images.view       ? images.view       : 'View',
-            captions:   images && images.captions   ? images.captions   : false,
-            fullScreen: images && images.fullScreen ? images.fullScreen : false
+            id:          ownProps.id,
+            galleries:   ownProps.galleries,
+            view:        images && images.view              ? images.view              : "View",
+            captions:    images && images.captions          ? images.captions          : false,
+            fullScreen:  images && images.fullScreen        ? images.fullScreen        : false,
+            status:      images && images.status            ? images.status            : "",
+            currentPage: images && images.state.currentPage ? images.state.currentPage : 0,
+            totalPages:  images && images.state.totalPages  ? images.state.totalPages  : 0,
+            query:       images && images.query             ? images.query             : "",
+            search:      images && images.state.data.search ? images.state.data.search : ""
         }
     }
     const mapDispatchToProps = dispatch => ({
