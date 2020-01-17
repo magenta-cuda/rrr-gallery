@@ -2,6 +2,7 @@ import React from 'react'
 import {STATUS_LOADING} from '../actions/index.js'
 import FlexContainer from '../components/FlexContainer.js'
 import JustifiedGalleryContainer from '../components/JustifiedGalleryContainer.js'
+import TabsContainer from '../components/TabsContainer.js'
 
 export default class Gallery extends React.Component {
     constructor(props) {

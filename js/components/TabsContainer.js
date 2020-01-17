@@ -4,13 +4,9 @@
 // Unfortunately I think this needs React's dangerouslySetInnerHTML.
 // TODO: Try to find a safer way.
 
-// TODO: webpack into bundle.js
+import React from 'react';
 
-// import React from 'react';
-
-// export default props => (
-
-class TabsContainer extends React.Component {
+export default class TabsContainer extends React.Component {
     constructor(props) {
         super(props)
         this.container       = null

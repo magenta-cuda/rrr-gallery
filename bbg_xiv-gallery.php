@@ -1274,7 +1274,6 @@ EOD
 <script src="<?php echo plugins_url( "js/components/DenseTitle.js",                __FILE__ ); ?>" type="text/babel"></script>
 <script src="<?php echo plugins_url( "js/components/DenseImage.js",                __FILE__ ); ?>" type="text/babel"></script>
 <script src="<?php echo plugins_url( "js/components/DenseContainer.js",            __FILE__ ); ?>" type="text/babel"></script>
-<script src="<?php echo plugins_url( "js/components/TabsContainer.js",             __FILE__ ); ?>" type="text/babel"></script>
 <script src="<?php echo plugins_url( "js/components/CarouselContainer.js",         __FILE__ ); ?>" type="text/babel"></script>
 <script src="<?php echo plugins_url( "js/components/CarouselItem.js",              __FILE__ ); ?>" type="text/babel"></script>
 <script src="<?php echo plugins_url( "js/Overlay.js",                              __FILE__ ); ?>" type="text/babel"></script>
