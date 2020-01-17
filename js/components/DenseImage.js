@@ -1,9 +1,8 @@
 // Dense Image Template
 
-// TODO: remove React = - don't need this when we use webpack
-const React = window.mcRrr.React
+import React from 'react'
 
-class DenseImage extends React.Component {
+export default class DenseImage extends React.Component {
     constructor(props) {
         super(props)
         this.img              = null

@@ -4,6 +4,7 @@ import FlexContainer from '../components/FlexContainer.js'
 import JustifiedGalleryContainer from '../components/JustifiedGalleryContainer.js'
 import CarouselContainer from '../components/CarouselContainer.js'
 import TabsContainer from '../components/TabsContainer.js'
+import DenseContainer from '../components/DenseContainer.js'
 
 export default class Gallery extends React.Component {
     constructor(props) {

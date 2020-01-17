@@ -1,10 +1,8 @@
 // Dense Title Template
 
-// TODO: remove React = - don't need this when we use webpack
+import React from 'react'
 
-const React = window.mcRrr.React
-
-class DenseTitle extends React.Component {
+export default class DenseTitle extends React.Component {
     constructor(props) {
         super(props)
         this.handleImageClick = this.handleImageClick.bind(this)

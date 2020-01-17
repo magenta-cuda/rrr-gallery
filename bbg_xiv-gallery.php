@@ -1270,10 +1270,7 @@ EOD
 <script type="text/babel">
     // Test Harness for Babel JavaScript code
 </script>
-<!-- TODO: 'js/components/*.js' will eventually be in 'js/bundle.js' but not true for now. -->
-<script src="<?php echo plugins_url( "js/components/DenseTitle.js",                __FILE__ ); ?>" type="text/babel"></script>
-<script src="<?php echo plugins_url( "js/components/DenseImage.js",                __FILE__ ); ?>" type="text/babel"></script>
-<script src="<?php echo plugins_url( "js/components/DenseContainer.js",            __FILE__ ); ?>" type="text/babel"></script>
+<!-- TODO: 'js/Overlay.js' will eventually be in 'js/bundle.js' but not true for now. -->
 <script src="<?php echo plugins_url( "js/Overlay.js",                              __FILE__ ); ?>" type="text/babel"></script>
 <script src="<?php echo plugins_url( "js/bbg_xiv-gallery.js",                      __FILE__ ); ?>" type="text/babel"></script>
 <?php

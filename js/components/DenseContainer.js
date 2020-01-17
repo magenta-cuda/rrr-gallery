@@ -1,6 +1,10 @@
 // Dense Container Template
 
-class DenseContainer extends React.Component {
+import React from 'react'
+import DenseTitle from '../components/DenseTitle.js'
+import DenseImage from '../components/DenseImage.js'
+
+export default class DenseContainer extends React.Component {
     constructor(props) {
         super(props)
         this.container        = null
