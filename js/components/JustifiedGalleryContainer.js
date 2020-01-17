@@ -1,9 +1,9 @@
 // Justified Gallery Container Template
 
-// TODO: remove React = - don't need this when we use webpack
-const React = window.mcRrr.React
+import React from 'react'
+import JustifiedGalleryItem from '../components/JustifiedGalleryItem.js'
 
-class JustifiedGalleryContainer extends React.Component {
+export default class JustifiedGalleryContainer extends React.Component {
     constructor(props) {
         super(props)
         this.container = null
@@ -13,8 +13,6 @@ class JustifiedGalleryContainer extends React.Component {
         return {}
     }
     render() {
-        // TODO: remove React = - don't need this when we use webpack
-        const React      = window.mcRrr.React
         const collection = this.props.images
         const captions   = this.props.captions
         if (typeof collection === 'string') {

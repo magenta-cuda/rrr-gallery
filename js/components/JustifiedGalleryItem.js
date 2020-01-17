@@ -1,9 +1,8 @@
 // Justified Gallery Item Template
 
-// TODO: remove React = - don't need this when we use webpack
-const React = window.mcRrr.React
+import React from 'react'
 
-class JustifiedGalleryItem extends React.Component {
+export default class JustifiedGalleryItem extends React.Component {
     constructor(props) {
         super(props)
         this.img                  = null
@@ -25,8 +24,6 @@ class JustifiedGalleryItem extends React.Component {
         window.bbg_xiv.showOverlay(e, true,  this.img, this.props.data)
     }
     render() {
-        // TODO: remove React = - don't need this when we use webpack
-        const React   = window.mcRrr.React
         const data    = this.props.data
         const caption = this.props.caption
         return (
