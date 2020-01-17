@@ -583,8 +583,7 @@ EOD;
                 {search ?
                     // Search Headings
                     // TODO: \$ -> $ - needed for now since this in a PHP file.
-                    // TODO: Fix CSS so display is none.
-                    <div id={`\${selector}-heading`} className="bbg_xiv-search_header" style={{display:"block"}}>
+                    <div id={`\${selector}-heading`} className="bbg_xiv-search_header">
                         {/* TODO: \$ -> $ - needed for now since this in a PHP file. */}
                         <span className="bbg_xiv-search_heading_first">
                             {`\${bbg_xiv_lang["Search Results for"]} "\${search}"`}

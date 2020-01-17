@@ -79,7 +79,7 @@ div.bbg_xiv-bootstrap.bbg_xiv-gallery div.navbar-header a.bbg_xiv-images_brand {
 div.bbg_xiv-bootstrap.bbg_xiv-gallery .bbg_xiv-search_header, div.bbg_xiv-bootstrap.bbg_xiv-gallery .bbg_xiv-alt_gallery_header {
   text-align: center;
   margin-bottom: 10px;
-  display: none; }
+  display: block; }
   div.bbg_xiv-bootstrap.bbg_xiv-gallery .bbg_xiv-search_header span, div.bbg_xiv-bootstrap.bbg_xiv-gallery .bbg_xiv-alt_gallery_header span {
     font-size: 16px;
     font-weight: bold; }
