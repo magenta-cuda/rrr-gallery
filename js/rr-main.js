@@ -8,6 +8,7 @@ import { Provider } from 'react-redux'
 import reducer from './reducers/index.js'
 import start from './middleware/start.js'
 import rest from './middleware/rest.js'
+import postRest from './middleware/postRest.js'
 import end from './middleware/end.js'
 import Frame from './containers/Frame.js'
 //import NavBar from './containers/NavBar.js'
@@ -22,7 +23,7 @@ var debug        = searchParams.has("mc_debug")
 debug && console.log("rr-main.js loading...")
 
 const store = createStore(reducer, {galleries: {images: {}}, configuration: {}},
-                          compose(applyMiddleware( thunk, start, rest, end, createLogger()), DevTools.instrument()))
+                          compose(applyMiddleware( thunk, start, rest, postRest, end, createLogger()), DevTools.instrument()))
 
 // TODO: need store in global scope for now to do testing; remove for production.
 // TODO: need actions in global scope for now as cannot import yet; remove for production.
