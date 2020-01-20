@@ -10,10 +10,10 @@ const galleries = (state = {}, action) => {
         action.images.containerWidth = state[action.id] ? state[action.id].containerWidth : undefined
         action.images.fullScreen     = false
         action.images.captions       = true
-        action.images.home           = action.home ? true : false
         action.images.status         = STATUS_LOADED
         const images                 = {...state.images, [action.id]: action.images}
         if (action.type === LOAD_GALLERY_IMAGES) {
+            images[action.id].home = action.home
             console.log('reducers:LOAD_GALLERY_IMAGES:action=', action)
             return {...state, images: images}
         }
