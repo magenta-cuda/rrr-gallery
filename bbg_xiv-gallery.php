@@ -430,6 +430,7 @@ EOD;
             getImagesBySearchParms(selector, parms)
         }
         function handleHomeButtonClick(e) {
+            setGallery(selector, "{$translations['Home']}")
             const images = new wp.api.collections.Media()
             images.reset(JSON.parse(bbg_xiv[selector + '-data']))
             loadGalleryImages(selector, images, true)
