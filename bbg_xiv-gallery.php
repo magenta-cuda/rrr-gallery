@@ -356,6 +356,7 @@ EOD;
         }
         function handleGalleryClick(e) {
             e.preventDefault()
+            setGallery(selector, e.target.textContent)
             const specifiers = e.target.dataset.specifiers;
             if (specifiers === '') {
                 // This is the Home gallery.
@@ -440,7 +441,7 @@ EOD;
             e.preventDefault()
             toggleCaptions(selector)
         }
-        const {id, view, captions, fullScreen, status, query, search, currentPage, totalPages, setView, toggleFullScreen,
+        const {id, view, captions, fullScreen, status, query, search, currentPage, totalPages, setView, setGallery, toggleFullScreen,
                toggleCaptions, setQuery, getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages} = props
         const selector  = 'gallery-' + id
         let   galleries = ''
@@ -616,7 +617,8 @@ EOD;
         return {
             id:          ownProps.id,
             galleries:   ownProps.galleries,
-            view:        images && images.view              ? images.view              : "View",
+            view:        images && images.view              ? images.view              : "View",   // TODO: may be translated
+            gallery:     images && images.gallery           ? images.gallery           : "Home",   // TODO: may be translated
             captions:    images && images.captions          ? images.captions          : false,
             fullScreen:  images && images.fullScreen        ? images.fullScreen        : false,
             status:      images && images.status            ? images.status            : "",
@@ -628,6 +630,7 @@ EOD;
     }
     const mapDispatchToProps = dispatch => ({
         setView: (id, view)                   => dispatch(mcRrr.setView(id, view)),
+        setGallery: (id, gallery)             => dispatch(mcRrr.setGallery(id, gallery)),
         toggleFullScreen: id                  => dispatch(mcRrr.toggleFullScreen(id)),
         toggleCaptions: id                    => dispatch(mcRrr.toggleCaptions(id)),
         setQuery: (id, query)                 => dispatch(mcRrr.setQuery(id, query)),

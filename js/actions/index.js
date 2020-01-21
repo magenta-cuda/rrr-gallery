@@ -48,6 +48,14 @@ export const setView = (id, view) => ({
     view: view
 })
 
+export const SET_GALLERY = 'SET-GALLERY'
+
+export const setGallery = (id, gallery) => ({
+    type:    SET_GALLERY,
+    id:      id,
+    gallery: gallery
+})
+
 export const SET_STATUS     = 'SET-STATUS'
 export const STATUS_LOADING = 'loading'
 export const STATUS_LOADED  = 'loaded'

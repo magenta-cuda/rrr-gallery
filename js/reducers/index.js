@@ -1,5 +1,6 @@
-import {LOAD_GALLERY_IMAGES, LOAD_SEARCH_IMAGES, HANDLE_LOAD_FAILED, SET_VIEW, SET_STATUS, STATUS_LOADING, STATUS_LOADED,
-        SET_CONTAINER_WIDTH, SET_CONFIGURATION, TOGGLE_FULL_SCREEN, TOGGLE_CAPTIONS, SET_QUERY} from '../actions/index.js'
+import {LOAD_GALLERY_IMAGES, LOAD_SEARCH_IMAGES, HANDLE_LOAD_FAILED, SET_VIEW, SET_GALLERY, SET_STATUS, STATUS_LOADING,
+        STATUS_LOADED, SET_CONTAINER_WIDTH, SET_CONFIGURATION, TOGGLE_FULL_SCREEN, TOGGLE_CAPTIONS, SET_QUERY} from
+        '../actions/index.js'
 import { combineReducers } from 'redux'
 
 const galleries = (state = {}, action) => {
@@ -7,7 +8,8 @@ const galleries = (state = {}, action) => {
     case LOAD_GALLERY_IMAGES:
     case LOAD_SEARCH_IMAGES:{
         action.images.id             = action.id
-        action.images.containerWidth = state[action.id] ? state[action.id].containerWidth : undefined
+        action.images.gallery        = state.images[action.id] ? state.images[action.id].gallery        : undefined
+        action.images.containerWidth = state.images[action.id] ? state.images[action.id].containerWidth : undefined
         action.images.fullScreen     = false
         action.images.captions       = true
         action.images.status         = STATUS_LOADED
@@ -30,6 +32,13 @@ const galleries = (state = {}, action) => {
         // Cannot clone images using the spread operator since it is also necessary to preserve the prototype chain.
         images[action.id]      = Object.assign(new wp.api.collections.Media(), images[action.id])
         images[action.id].view = action.view
+        return {...state, images: images}
+    }
+    case SET_GALLERY: {
+        const images              = {...state.images}
+        // Cannot clone images using the spread operator since it is also necessary to preserve the prototype chain.
+        images[action.id]         = Object.assign(new wp.api.collections.Media(), images[action.id])
+        images[action.id].gallery = action.gallery
         return {...state, images: images}
     }
     case SET_STATUS: {
