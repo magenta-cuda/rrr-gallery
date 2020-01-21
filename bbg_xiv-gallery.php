@@ -344,6 +344,7 @@ EOD;
         $output       = $templates;
         $output      .= <<<EOD
 <div class="bbg_xiv-bootstrap bbg_xiv-gallery">
+<!-- This is an example of how to emit a React component directly from PHP. -->
 <!-- start of navbar JSX -->
 <!-- \$translations should not be a prop since it is static so we need to initialize with some runtime
      JavaScript static and avoid the in-browser Babel transformer by precompiling instead -->
@@ -441,22 +442,24 @@ EOD;
             e.preventDefault()
             toggleCaptions(selector)
         }
-        const {id, view, captions, fullScreen, status, query, search, currentPage, totalPages, setView, setGallery, toggleFullScreen,
-               toggleCaptions, setQuery, getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages} = props
+        const {id, view, gallery, captions, fullScreen, status, query, search, currentPage, totalPages, setView, setGallery,
+               toggleFullScreen, toggleCaptions, setQuery, getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages}
+                = props
         const selector  = 'gallery-' + id
         let   galleries = ''
         if ( typeof props.galleries !== 'undefined' ) {
             galleries = [
                 <li className="divider"></li>,
                 <li className="dropdown-header">{$translations['GALLERIES']}</li>,
-                <li className="bbg_xiv-alt_gallery bbg_xiv-alt_gallery_home active">
+                <li className={"bbg_xiv-alt_gallery bbg_xiv-alt_gallery_home"
+                        + (gallery === "{$translations['Home']}" ? " active" : "")}>
                     <a data-view="gallery_home" data-specifiers='' href="#" onClick={handleGalleryClick}>{$translations['Home']}</a>
                 </li>
             ]
-            galleries = galleries.concat(JSON.parse(props.galleries).map((gallery, i) => (
-                <li className="bbg_xiv-alt_gallery">
-                    <a data-view={"gallery_" + i} data-specifiers={gallery.specifiers} href="#" onClick={handleGalleryClick}>
-                        {gallery.title}
+            galleries = galleries.concat(JSON.parse(props.galleries).map((aGallery, i) => (
+                <li className={"bbg_xiv-alt_gallery" + (gallery === aGallery.title ? " active" : "")}>
+                    <a data-view={"gallery_" + i} data-specifiers={aGallery.specifiers} href="#" onClick={handleGalleryClick}>
+                        {aGallery.title}
                     </a>
                 </li>
             )))
