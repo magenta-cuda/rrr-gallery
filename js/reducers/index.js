@@ -8,6 +8,9 @@ const galleries = (state = {}, action) => {
     case LOAD_GALLERY_IMAGES:
     case LOAD_SEARCH_IMAGES:{
         action.images.id             = action.id
+        // action.images.view           = state.images[action.id] ? state.images[action.id].view           : "Gallery"
+        // TODO: The above doesn't work for Justified - doesn't initialize correctly, why?
+        action.images.view           = "Gallery"
         action.images.gallery        = state.images[action.id] ? state.images[action.id].gallery        : undefined
         action.images.containerWidth = state.images[action.id] ? state.images[action.id].containerWidth : undefined
         action.images.fullScreen     = false
