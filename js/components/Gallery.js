@@ -21,13 +21,13 @@ export default class Gallery extends React.Component {
         return {}
     }
     render() {
-        const {images, configuration, containerWidth, captions, setView, setContainerWidth} = this.props
+        const {images, configuration, view, containerWidth, captions, fullScreen, setView, setContainerWidth} = this.props
         if (!images || images.status === STATUS_LOADING) {
             return <div className="ui-loader"><span className="ui-icon-loading"></span></div>
         }
         let Container = FlexContainer
         console.log('Gallery:images=', images)
-        switch (images.view) {
+        switch (view) {
         case 'Gallery':
             Container = FlexContainer
             break

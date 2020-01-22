@@ -1,3 +1,6 @@
+// window.mcRrr is needed for now because we cannot import in the inline scripts of bbg_xiv-gallery.php
+// window.mcRrr has references to the things that the inline scripts cannot import
+
 import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import {createStore, applyMiddleware, compose} from 'redux'
