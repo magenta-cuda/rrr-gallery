@@ -1,3 +1,5 @@
+// Cache for dynamically loaded galleries
+
 const cache = {
 
     imagesByGallerySpecs: {},
@@ -24,7 +26,7 @@ const cache = {
 
     getImagesBySearchParms: (parms) => {
         const key    = JSON.stringify(parms)
-        const images = imagesBySearchParms[key]
+        const images = cache.imagesBySearchParms[key]
         console.log("getImagesBySearchParms():images=", images)
         return images
     }
