@@ -21,6 +21,7 @@ import Frame from './containers/Frame.js'
 import {getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages, setView, setGallery, toggleFullScreen, toggleCaptions,
         setQuery, setConfiguration} from './actions/index.js'
 import {CssReducer, JqueryProxy} from './CssReducer.js'
+import createReduxStoreProxy from './reduxStoreProxy.js'
 
 var searchParams = new URLSearchParams(window.location.search)
 var debug        = searchParams.has("mc_debug")
@@ -55,6 +56,7 @@ window.mcRrr = {
     getImagesBySearchParms:   getImagesBySearchParms,
     setConfiguration:         setConfiguration,
     CssReducer:               new JqueryProxy().getCssReducer(),
+    reduxStoreProxy:          createReduxStoreProxy(store),
     useDispatchInsteadOfNext: false   // for use in asynchronous callbacks in Redux middleware - experimental
 }
 
