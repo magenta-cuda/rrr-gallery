@@ -8,7 +8,8 @@ import {REST} from './middleware/rest.js'
 const proxy = {
     dispatch: (...args) => {
         // Filter on Redux action type
-        if (true || [REST, LOAD_GALLERY_IMAGES, LOAD_SEARCH_IMAGES].includes(args[0].type)) {
+        const filter = mcRrr.debugDispatchFilter
+        if (typeof filter === "boolean" ? filter : filter.includes(args[0].type)) {
             console.log("proxy.dispatch():args=", args)
             console.trace()
         }

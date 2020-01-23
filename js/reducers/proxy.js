@@ -7,10 +7,17 @@ import reducer from './index.js'
 
 var count = 0;
 export default (state = {}, action) => {
-    console.log(`%%%%%%:reducer called[${++count}]:OLD STATE=`, state)
-    console.log(`%%%%%%:reducer called[${count}]:ACTION=`, action)
+    const filter = mcRrr.debugDispatchFilter
+    const debug = typeof filter === "boolean" ? filter : filter.includes(action.type)
+    if (debug) {
+        console.trace("%%%%%% reducer proxy:")
+        console.log(`%%%%%%:reducer called[${++count}]:OLD STATE=`, state)
+        console.log(`%%%%%%:reducer called[${count}]:ACTION=`, action)
+    }
     const ret = reducer(state, action)
-    console.log(`%%%%%%:reducer returned[${count}]:ACTION=`, action)
-    console.log(`%%%%%%:reducer returned[${count}]:NEW STATE=`, ret)
+    if (debug) {
+        console.log(`%%%%%%:reducer returned[${count}]:ACTION=`, action)
+        console.log(`%%%%%%:reducer returned[${count}]:NEW STATE=`, ret)
+    }
     return ret
 }
