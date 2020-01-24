@@ -7,7 +7,7 @@ import {REST} from './middleware/rest.js'
 
 const proxy = {
     dispatch: (...args) => {
-        // Filter on Redux action type. N.B. REST is not an action type
+        // Filter on Redux action type. N.B. REST is not an action type.
         const filter = mcRrr.debugDispatchFilter
         const debug  = typeof filter === "boolean" ? filter : (filter.includes(args[0].type) || filter.includes(REST) && args[REST])
         if (debug) {
@@ -18,7 +18,16 @@ const proxy = {
     // Find out what is listening to Redux state tree changes.
     subscribe: (...args) => {
         console.trace("proxy.subscribe():args=", args)
-        return proxy.reduxSubscribe.apply(null, args)
+        const newArgs = [...args]
+        // Bind the proxy listener to the real listener.
+        newArgs[0] = proxy.proxyListener.bind(null, args[0])
+        console.trace("proxy.subscribe():newArgs=", newArgs)
+        return proxy.reduxSubscribe.apply(null, newArgs)
+    },
+    // A wrapper for the Redux state tree change listener - must be bound to the real listener.
+    proxyListener(listener, ...args) {
+        console.trace("proxy.proxyListener:listener=", listener, "args=", args)
+        return listener.apply(args)
     }
 }
 
