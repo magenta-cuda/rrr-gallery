@@ -11,16 +11,22 @@ const proxy = {
         const filter = mcRrr.debugDispatchFilter
         const debug  = typeof filter === "boolean" ? filter : (filter.includes(args[0].type) || filter.includes(REST) && args[REST])
         if (debug) {
-            console.log("proxy.dispatch():args=", args)
-            console.trace()
+            console.trace("proxy.dispatch():args=", args)
         }
         return proxy.reduxDispatch.apply(null, args)
+    },
+    // Find out what is listening to Redux state tree changes.
+    subscribe: (...args) => {
+        console.trace("proxy.subscribe():args=", args)
+        return proxy.reduxSubscribe.apply(null, args)
     }
 }
 
 export default store => {
-    proxy.reduxDispatch = store.dispatch
-    store.dispatch      = proxy.dispatch
+    proxy.reduxDispatch  = store.dispatch
+    store.dispatch       = proxy.dispatch
+    proxy.reduxSubscribe = store.subscribe
+    store.subscribe      = proxy.subscribe
     console.log("reduxStoreProxy.js:store=", store)
     return proxy
 }
