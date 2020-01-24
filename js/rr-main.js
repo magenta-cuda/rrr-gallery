@@ -48,7 +48,7 @@ const store = createStore(reducer, {galleries: {images: {}}, configuration: {}},
 // TODO: BELOW FOR DEBUGGING ONLY
                           // applyMiddleware(thunk, rest, postRest))
                           // compose(applyMiddleware(thunk, start, rest, postRest, end, createLogger()), DevTools.instrument()))
-                          applyMiddleware(thunk, start, rest, postRest, end))
+                          applyMiddleware(thunk, start, rest, postRest, end))   // for lightweight, programmable debugging when using debugging proxies
 // TODO: ABOVE FOR DEBUGGING ONLY
 
 // TODO: need store in global scope for now to do testing; remove for production.

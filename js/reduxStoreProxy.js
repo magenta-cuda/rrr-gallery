@@ -7,9 +7,10 @@ import {REST} from './middleware/rest.js'
 
 const proxy = {
     dispatch: (...args) => {
-        // Filter on Redux action type
+        // Filter on Redux action type. N.B. REST is not an action type
         const filter = mcRrr.debugDispatchFilter
-        if (typeof filter === "boolean" ? filter : filter.includes(args[0].type)) {
+        const debug  = typeof filter === "boolean" ? filter : (filter.includes(args[0].type) || filter.includes(REST) && args[REST])
+        if (debug) {
             console.log("proxy.dispatch():args=", args)
             console.trace()
         }
