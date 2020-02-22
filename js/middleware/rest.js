@@ -14,7 +14,6 @@ export default store => next => action => {
         return ret
     }
     // window.mcRrr.debug && console.log('rest.js:action=', action)
-    // debugger
     if (typeof rest.specs !== 'undefined') {
         // This is a getImagesByGallerySpecs action
         const {id, specs} = rest
@@ -27,13 +26,7 @@ export default store => next => action => {
             images.once("sync", function() {
                 // the sync event will occur once only on the Backbone fetch of the collection
                 cache.putImagesByGallerySpecs(specs, images)
-                if (!mcRrr.useDispatchInsteadOfNext) {
-                    const nextRet = next(loadGalleryImages(id, images))
-                    console.log("%%%%%:REST: middleware:nextRet=", nextRet)
-                } else {
-                    const dispatchRet = store.dispatch(loadGalleryImages(id, images))
-                    console.log("%%%%%:REST: middleware:dispatchRet=", dispatchRet)
-                }
+                const nextRet = next(loadGalleryImages(id, images))
             });
             images.fetch({
                 data:    specs,
@@ -58,13 +51,7 @@ export default store => next => action => {
             images.once("sync", function() {
                 // the sync event will occur once only on the Backbone fetch of the collection
                 cache.putImagesBySearchParms(parms, images)
-                if (!mcRrr.useDispatchInsteadOfNext) {
-                    const nextRet = next(loadSearchImages(id, images, parms))
-                    console.log("%%%%%:REST: middleware:nextRet=", nextRet)
-                } else {
-                    const dispatchRet = store.dispatch(loadSearchImages(id, images, parms))
-                    console.log("%%%%%:REST: middleware:dispatchRet=", dispatchRet)
-                }
+                const nextRet = next(loadSearchImages(id, images, parms))
             })
             // get the next part of the multi-part search result as specified by page
             images.fetch({
