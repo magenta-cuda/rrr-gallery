@@ -334,8 +334,9 @@ EOD;
         }
         $bbg_xiv_data['menu_galleries'] = json_encode( $galleries );
 
-        wp_localize_script( 'bbg_xiv-gallery', 'bbg_xiv', $bbg_xiv_data );
-        wp_localize_script( 'bbg_xiv-gallery', 'bbg_xiv_lang', self::$bbg_xiv_lang );
+        wp_localize_script( 'bbg_xiv-gallery', 'bbg_xiv',        $bbg_xiv_data );
+        wp_localize_script( 'bbg_xiv-gallery', 'bbg_xiv_lang',   self::$bbg_xiv_lang );
+        wp_localize_script( 'bbg_xiv-gallery', 'bbg_xiv_lang_2', self::$translations );
 
         ob_start( );
         wp_nonce_field( self::$nonce_action );
@@ -454,7 +455,7 @@ EOD;
                 <li className="dropdown-header">{$translations['GALLERIES']}</li>,
                 <li className={"bbg_xiv-alt_gallery bbg_xiv-alt_gallery_home"
                         + (gallery === "{$translations['Home']}" ? " active" : "")}>
-                    <a data-view="gallery_home" data-specifiers='' href="#" onClick={handleGalleryClick}>{$translations['Home']}</a>
+                    <a data-view="gallery_home" data-specifiers='' href="#" onClick={handleGalleryClick}>{bbg_xiv_lang_2["Home"]}</a>
                 </li>
             ]
             galleries = galleries.concat(JSON.parse(props.galleries).map((aGallery, i) => (
@@ -465,26 +466,26 @@ EOD;
                 </li>
             )))
         }
-        let dropdownText = "{$translations['View']}"
+        let dropdownText = bbg_xiv_lang_2["View"]
         switch (view) {
             case 'View':
-                dropdownText = "{$translations['View']}"
+                dropdownText = bbg_xiv_lang_2["View"]
                 break
             case 'Gallery':
-                dropdownText = "{$translations['Gallery']}"
-                break;
+                dropdownText = bbg_xiv_lang_2["Gallery"]
+                break
             case 'Carousel':
-                dropdownText = "{$translations['Carousel']}"
-                break;
+                dropdownText = bbg_xiv_lang_2["Carousel"]
+                break
             case 'Justified':
-                dropdownText = "{$translations['Justified']}"
-                break;
+                dropdownText = bbg_xiv_lang_2["Justified"]
+                break
             case 'Tabs':
-                dropdownText = "{$translations['Tabs']}"
-                break;
+                dropdownText = bbg_xiv_lang_2["Tabs"]
+                break
             case 'Dense':
-                dropdownText = "{$translations['Dense']}"
-                break;
+                dropdownText = bbg_xiv_lang_2["Dense"]
+                break
         }
         return (
             <React.Fragment>
@@ -497,7 +498,7 @@ EOD;
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                         </button>
-                        <a href="#" className="navbar-brand bbg_xiv-images_brand">{$translations['GALLERY MENU']}</a>
+                        <a href="#" className="navbar-brand bbg_xiv-images_brand">{bbg_xiv_lang_2["GALLERY MENU"]}</a>
                     </div>
                     <div id={selector + "-navbarCollapse"} className="collapse navbar-collapse">
                         <ul className="nav navbar-nav">
@@ -506,26 +507,26 @@ EOD;
                                     <span>{dropdownText}</span> <b className="caret"></b>
                                 </a>
                                 <ul role="menu" className="dropdown-menu bbg_xiv-view_menu">
-                                    <li className="dropdown-header">{$translations['VIEWS']}</li>
+                                    <li className="dropdown-header">{bbg_xiv_lang_2["VIEWS"]}</li>
                                     <li className={"bbg_xiv-view bbg_xiv-view_gallery"
                                             + (view === "Gallery" ? " active" : "")}>
-                                        <a data-view="Gallery" href="#" onClick={handleViewClick}>{$translations['Gallery']}</a>
+                                        <a data-view="Gallery" href="#" onClick={handleViewClick}>{bbg_xiv_lang_2["Gallery"]}</a>
                                     </li>
                                     <li className={"bbg_xiv-view bbg_xiv-view_carousel bbg_xiv-hide_for_gallery_icons"
                                             + (view === "Carousel" ? " active" : "")}>
-                                        <a data-view="Carousel" href="#" onClick={handleViewClick}>{$translations['Carousel']}</a>
+                                        <a data-view="Carousel" href="#" onClick={handleViewClick}>{bbg_xiv_lang_2["Carousel"]}</a>
                                     </li>
                                     <li className={"bbg_xiv-view bbg_xiv-view_justified bbg_xiv-hide_for_gallery_icons"
                                             + (view === "Justified" ? " active" : "")}>
-                                        <a data-view="Justified" href="#" onClick={handleViewClick}>{$translations['Justified']}</a>
+                                        <a data-view="Justified" href="#" onClick={handleViewClick}>{bbg_xiv_lang_2["Justified"]}</a>
                                     </li>
                                     <li className={"bbg_xiv-view bbg_xiv-view_tabs"
                                             + (view === "Tabs" ? " active" : "")}>
-                                        <a data-view="Tabs" href="#" onClick={handleViewClick}>{$translations['Tabs']}</a>
+                                        <a data-view="Tabs" href="#" onClick={handleViewClick}>{bbg_xiv_lang_2["Tabs"]}</a>
                                     </li>
                                     <li className={"bbg_xiv-view bbg_xiv-hide_for_gallery_icons bbg_xiv-large_viewport_only"
                                             + (view === "Dense" ? " active" : "")}>
-                                        <a data-view="Dense" href="#" onClick={handleViewClick}>{$translations['Dense']}</a>
+                                        <a data-view="Dense" href="#" onClick={handleViewClick}>{bbg_xiv_lang_2["Dense"]}</a>
                                     </li>
                                     {/* TODO: Add entry for new views here. */}
                                     $table_nav_item
@@ -537,7 +538,7 @@ EOD;
                         <form role="search" className="navbar-form navbar-left bbg_xiv-search_form">
                             <div className="form-group">
                                 <div className="input-group">
-                                    <input type="text" placeholder="{$translations['Search Images on Site']}"
+                                    <input type="text" placeholder={bbg_xiv_lang_2["Search Images on Site"]}
                                             className="form-control" autoComplete="off" onChange={handleQueryChange} />
                                     <span className="input-group-btn">
                                         <button type="submit" className="btn btn-default bbg_xiv-search" title="start search"
@@ -1094,6 +1095,7 @@ EOD;
         $bbg_xiv_data[ 'bbg_xiv_disable_flexbox' ]                   = get_option( 'bbg_xiv_disable_flexbox', FALSE );
         $bbg_xiv_data[ 'bbg_xiv_default_view' ]                      = get_option( 'bbg_xiv_default_view', 'Gallery' );
 
+        # The following translations were originally done on the server side but is now done on the client side.
         self::$translations = [
             'GALLERY MENU'                                => __( 'GALLERY MENU',                                'bb_gallery' ),
             'IMAGES:'                                     => __( 'IMAGES:',                                     'bb_gallery' ),
@@ -1165,12 +1167,6 @@ EOD;
         $bbg_xiv_lang[ 'Click anywhere to lock the display of this popup.' ]
                                                                      = __(
             'Click anywhere to lock the display of this popup.',                                 'bb_gallery' );
-
-        add_action( 'admin_enqueue_scripts', function( $hook ) {
-            if ( $hook === 'options-media.php' ) {
-                wp_enqueue_script( "bbg_xiv-admin", plugins_url( 'js/bbg_xiv-admin.js', __FILE__ ) );
-            }
-        } );
 
         add_action( 'plugins_loaded', function( ) {
             if ( !load_plugin_textdomain( 'bb_gallery', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' ) ) {
@@ -1256,8 +1252,6 @@ EOD
             $deps[ ] = 'justified-gallery';
             $deps[ ] = 'wp-api';
             wp_enqueue_script( 'bbg_xiv-gallery',   plugins_url( "js/bbg_xiv-gallery-extra.js",   __FILE__ ), $deps,        FALSE, TRUE );
-            // wp_enqueue_script( 'react',             'https://unpkg.com/react@16/umd/react.development.js'         );
-            // wp_enqueue_script( 'react-dom',         'https://unpkg.com/react-dom@16/umd/react-dom.development.js' );
         } );
 
         add_action( 'wp_head', function( ) {
@@ -1266,17 +1260,10 @@ EOD
                 # only emit bb_gallery's styles and scripts if the post content has the bb_gallery shortcode
                 return;
             }
-            # error_log( 'ACTION::wp_head():called' );
 ?>
 <script src="<?php echo plugins_url( "js/vendors~main.bundle.js",                  __FILE__ ); ?>" type="text/javascript"></script>
 <script src="<?php echo plugins_url( "js/bundle.js",                               __FILE__ ); ?>" type="text/javascript"></script>
-<!--
-<script src="https://unpkg.com/babel-standalone@6/babel.min.js"                                    type="text/javascript"></script>
--->
 <script src="<?php echo plugins_url( "js/babel.js",                                __FILE__ ); ?>" type="text/javascript"></script>
-<script type="text/babel">
-    // Test Harness for Babel JavaScript code
-</script>
 <!-- TODO: 'js/Overlay.js' will eventually be in 'js/bundle.js' but not true for now. -->
 <script src="<?php echo plugins_url( "js/Overlay.js",                              __FILE__ ); ?>" type="text/babel"></script>
 <script src="<?php echo plugins_url( "js/bbg_xiv-gallery.js",                      __FILE__ ); ?>" type="text/babel"></script>
