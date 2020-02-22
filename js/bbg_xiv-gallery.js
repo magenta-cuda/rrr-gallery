@@ -1995,7 +1995,7 @@ console.log('bbg_xiv-gallery.js:loading...');
         const React = mcRrr.React;
         const id    = '10001'
         window.setTimeout( function renderReactRoot() {
-            if ( typeof window.bbg_xiv.NavBar !== 'undefined' ) {
+            if ( true || typeof window.bbg_xiv.NavBar !== 'undefined' ) {   // TODO: Why?
                 console.log('bbg_xiv-gallery.js:renderReactRoot():mcRrr.ReactDOM.render():');
                 mcRrr.ReactDOM.render(
                     <mcRrr.Provider store={mcRrr.store}>

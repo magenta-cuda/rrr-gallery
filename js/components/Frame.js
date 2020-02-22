@@ -1,5 +1,6 @@
-import React from 'react';
-import Gallery from '../containers/Gallery.js'
+import React    from 'react'
+import NavBar   from '../containers/NavBar.js'
+import Gallery  from '../containers/Gallery.js'
 import DevTools from '../containers/DevTools.js'
 
 export default props => {
@@ -9,7 +10,7 @@ export default props => {
                                                   + (props.home       ? " bbg_xiv-home_gallery"       : "")
                                                   + (props.captions   ? " bbg_xiv-caption_visible"    : "")
                                                   + (props.fullScreen ? " bbg_xiv-fullscreen_gallery" : "")}>
-            <window.bbg_xiv.NavBarContainer id={props.id} galleries={window.bbg_xiv.menu_galleries} />
+            <NavBar id={props.id} galleries={window.bbg_xiv.menu_galleries} />
             <Gallery id={"gallery-" + props.id} />
             <DevTools />
         </div>
