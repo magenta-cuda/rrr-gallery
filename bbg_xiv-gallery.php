@@ -347,8 +347,6 @@ EOD;
 <div class="bbg_xiv-bootstrap bbg_xiv-gallery">
 <!-- This is an example of how to emit a React component directly from PHP. -->
 <!-- start of navbar JSX -->
-<!-- \$translations should not be a prop since it is static so we need to initialize with some runtime
-     JavaScript static and avoid the in-browser Babel transformer by precompiling instead -->
 <script type="text/babel">
     window.bbg_xiv = window.bbg_xiv || {};
     window.bbg_xiv.NavBar = props => {
@@ -431,7 +429,7 @@ EOD;
             getImagesBySearchParms(selector, parms)
         }
         function handleHomeButtonClick(e) {
-            setGallery(selector, "{$translations['Home']}")
+            setGallery(selector, bbg_xiv_lang_2["Home"])
             const images = new wp.api.collections.Media()
             images.reset(JSON.parse(bbg_xiv[selector + '-data']))
             loadGalleryImages(selector, images, true)
@@ -452,9 +450,9 @@ EOD;
         if ( typeof props.galleries !== 'undefined' ) {
             galleries = [
                 <li className="divider"></li>,
-                <li className="dropdown-header">{$translations['GALLERIES']}</li>,
+                <li className="dropdown-header">{bbg_xiv_lang_2["GALLERIES"]}</li>,
                 <li className={"bbg_xiv-alt_gallery bbg_xiv-alt_gallery_home"
-                        + (gallery === "{$translations['Home']}" ? " active" : "")}>
+                        + (gallery === bbg_xiv_lang_2['Home'] ? " active" : "")}>
                     <a data-view="gallery_home" data-specifiers='' href="#" onClick={handleGalleryClick}>{bbg_xiv_lang_2["Home"]}</a>
                 </li>
             ]
@@ -551,38 +549,35 @@ EOD;
                             </div>
                             $nonce_field
                         </form>
-                        <button type="button" className="btn btn-info bbg_xiv-help" title="{$translations['get help']}"
+                        <button type="button" className="btn btn-info bbg_xiv-help" title={bbg_xiv_lang_2["get help"]}
                                 onClick={e => {bbg_xiv.handleHelpClick.call(e.currentTarget, e)}}>
                             <span className="glyphicon glyphicon-question-sign"></span>
-                            <span className="bbg_xiv-navbar_button_text">{$translations['Help']}</span>
+                            <span className="bbg_xiv-navbar_button_text">{bbg_xiv_lang_2["Help"]}</span>
                         </button>
                         <button type="button" className="btn btn-info bbg_xiv-configure"
-                                title="{$translations['configure bandwidth, carousel interval, ...']}"
+                                title={bbg_xiv_lang_2["configure bandwidth, carousel interval, ..."]}
                                 onClick={e => {mcRrr.setConfigureShow(true)}}>
                             <span className="glyphicon glyphicon-cog"></span>
-                            <span className="bbg_xiv-navbar_button_text">{$translations['Options']}</span>
+                            <span className="bbg_xiv-navbar_button_text">{bbg_xiv_lang_2["Options"]}</span>
                         </button>
                         <button type="button" className="btn btn-info bbg_xiv-home"
-                                title="{$translations['return to home gallery']}" onClick={handleHomeButtonClick}>
+                                title={bbg_xiv_lang_2["return to home gallery"]} onClick={handleHomeButtonClick}>
                             <span className="glyphicon glyphicon-home"></span>
-                            <span className="bbg_xiv-navbar_button_text">{$translations['Home']}</span>
+                            <span className="bbg_xiv-navbar_button_text">{bbg_xiv_lang_2["Home"]}</span>
                         </button>
                         <button type="button" className="btn btn-info bbg_xiv-fullscreen"
                                 title={fullScreen ? bbg_xiv_lang['shrink gallery from full-screen']
                                                   : bbg_xiv_lang['expand gallery to full-screen']}
                                 onClick={handleFullScreenButtonClick}>
-                                {/* title="{$translations['toggle fullscreen']}" */}
                             <span className="glyphicon glyphicon-fullscreen"></span>
-                            <span className="bbg_xiv-navbar_button_text">{$translations['Fullscreen']}</span>
+                            <span className="bbg_xiv-navbar_button_text">{bbg_xiv_lang_2["Fullscreen"]}</span>
                         </button>
                         <button type="button" className="btn btn-info bbg_xiv-titles"
                                 title={captions ? bbg_xiv_lang['hide titles']
                                                 : bbg_xiv_lang['show titles']}
                                 onClick={handleCaptionsButtonClick}>
-                                {/* title="{$translations['show/hide image titles']}" */}
-                                {/* onClick={e => {bbg_xiv.handleTitlesClick.call(e.currentTarget, e)}}> */}
                             <span className="glyphicon glyphicon-subtitles"></span>
-                            <span className="bbg_xiv-navbar_button_text">{$translations['Titles']}</span>
+                            <span className="bbg_xiv-navbar_button_text">{bbg_xiv_lang_2["Titles"]}</span>
                         </button>
                     </div>
                 </nav>
@@ -660,11 +655,11 @@ EOD;
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a href="#" class="navbar-brand bbg_xiv-tabs_brand">{$translations['GALLERIES:']}</a>
+          <a href="#" class="navbar-brand bbg_xiv-tabs_brand">{bbg_xiv_lang_2["GALLERIES:"]}</a>
         </div>
         <div id="gallery_tabbar_collapse" class="collapse navbar-collapse bbg_xiv-closed">
           <ul class="nav nav-tabs">
-            <li class="bbg_xiv-tabs_title"><a href="#">{$translations['GALLERIES:']}</a></li>
+            <li class="bbg_xiv-tabs_title"><a href="#">{bbg_xiv_lang_2["GALLERIES:"]}</a></li>
         <li class="active"><a data-view="gallery_home" data-specifiers='' href="#">{$translations['Home']}</a></li>
 EOD;
             foreach ( $galleries as $i => $gallery ) {
