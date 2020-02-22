@@ -345,9 +345,6 @@ EOD;
         $output       = $templates;
         $output      .= <<<EOD
 <div class="bbg_xiv-bootstrap bbg_xiv-gallery">
-<script type="text/babel">
-    window.bbg_xiv = window.bbg_xiv || {};
-</script>
 EOD;
         # Optionally show titles of dynamically loadable galleries as tab items
         if ( $galleries && empty( $gallery_icons_mode ) && get_option( 'bbg_xiv_use_gallery_tabs', TRUE ) ) {
