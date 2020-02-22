@@ -28,11 +28,7 @@
  *    2. The class and style attributes of DOM elements
  *
  * Changes to the state in domain 1 are handled by React/Redux. Changes to the state in domain 2 are
- * handled directly by JavaScript. However, I have tried to duplicate the reducer feature of Redux
- * for changes in domain 2 by forcing those changes to pass through my CSS reducer - CssReducer. This
- * was implemented by monkey patching the addClass(), removeClass(), toggleClass() and css() methods
- * of jQuery to wrappers in my CssReducer. Thus my CssReducer provides a single point for logging and
- * debugging all changes to the class and style attributes of DOM elements.
+ * handled directly by JavaScript.
  * 
  * React Redux primarily handles changes to the image data. Changes to how the images are rendered,
  * e.g. whether captions are visible or not are handled directly by JavaScript code manipulating CSS.
@@ -182,8 +178,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             });
         }
  */
-        const $galleryContainer = mcRrr.CssReducer.addClass($flexContainer.closest('div.bbg_xiv-gallery'),'bbg_xiv-caption_visible')
-        // const $galleryContainer = mcRrr.CssReducer.removeClass($flexContainer.closest('div.bbg_xiv-gallery'),'bbg_xiv-caption_visible')
+        const $galleryContainer = $flexContainer.closest('div.bbg_xiv-gallery').addClass('bbg_xiv-caption_visible')
         $galleryContainer.find('button.bbg_xiv-titles').attr('title', bbg_xiv_lang['hide titles'])
         // flip display state of caption on hover
         $flexContainer.find("div.bbg_xiv-dense_full_btn").hover(
@@ -507,7 +502,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             });
             justifiedContainer.addClass( window.matchMedia( '(max-aspect-ratio:1/1)' ).matches ? 'bbg_xiv-portrait' : 'bbg_xiv-landscape' );
         }
-        var galleryContainer = mcRrr.CssReducer.removeClass(justifiedContainer.closest('div.bbg_xiv-gallery'), 'bbg_xiv-caption_visible')
+        var galleryContainer = justifiedContainer.closest('div.bbg_xiv-gallery').removeClass('bbg_xiv-caption_visible')
         galleryContainer.find( 'button.bbg_xiv-titles' ).attr( 'title',  bbg_xiv_lang['show captions'] );
         // if CC has been set to visible then override Justified Gallery's hover handlers
         justifiedContainer.find("div.bbg_xiv-justified_gallery div.bbg_xiv-justified_item").each(function(){
@@ -1963,54 +1958,6 @@ console.log('bbg_xiv-gallery.js:loading...');
         e.preventDefault();
         // debugger
     }
-
-/*
-    bbg_xiv.handleTitlesClick = function(e) {
-        const  $this            = jQuery(this);
-        const $galleryContainer = $this.closest('div.bbg_xiv-bootstrap.bbg_xiv-gallery');
-        let   $container        = $galleryContainer.find('div.bbg_xiv-flex_container');
-        if ( $container.length ) {
-            var $figure  = $container.find( 'div.bbg_xiv-flex_item figure' );
-            var $caption = $figure.find( 'figcaption' );
-            if ( $galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
-                $caption.hide( 1000 );
-                $galleryContainer.removeClass('bbg_xiv-caption_visible')
-                $this.attr( 'title', bbg_xiv_lang['show titles'] );
-            } else {
-                $caption.show( 1000 );
-                mcRrr.CssReducer.addClass($galleryContainer, 'bbg_xiv-caption_visible')
-                $this.attr( 'title', bbg_xiv_lang['hide titles'] );
-            }
-            if ( $container.hasClass( 'bbg_xiv-contain' ) ) {
-                // in tiles contain mode center image if title not displayed
-                if ( $galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
-                    $figure.find( 'img' ).removeClass( 'bbg_xiv-vertical_center' );
-                }else{
-                    $figure.find( 'img' ).addClass( 'bbg_xiv-vertical_center' );
-                }
-            }
-            return;
-        }
-        $container = $galleryContainer.find( 'div.bbg_xiv-justified_container' );
-        if ( $container.length ) {
-            if ( $galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
-                mcRrr.CssReducer.removeClass($galleryContainer, 'bbg_xiv-caption_visible')
-                $this.attr( 'title', bbg_xiv_lang['show captions'] );
-            } else {
-                mcRrr.CssReducer.addClass($galleryContainer, 'bbg_xiv-caption_visible')
-                $this.attr( 'title', bbg_xiv_lang['hide captions'] );
-            }
-            window.setTimeout( function() {
-                var $caption = $container.find( 'div.caption' );
-                if ( $galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
-                    $caption.css( { display: 'block', opacity: '0.7' } );
-                } else {
-                    $caption.css( { display: 'none',  opacity: '0.0' } );
-                }
-            }, 1000 );
-        }
-    }
- */
 
     bbg_xiv.handleSearchClick = function(e) {
         var searchBtn=jQuery(this);

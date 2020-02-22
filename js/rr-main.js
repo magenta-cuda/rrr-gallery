@@ -18,17 +18,12 @@ import reducer from './reducers/proxy.js'   // proxy.js is a lightweight debuggi
 // TODO: ABOVE FOR DEBUGGING ONLY
 import start from './middleware/start.js'
 import rest from './middleware/rest.js'
-import postRest from './middleware/postRest.js'
 import end from './middleware/end.js'
 import Frame from './containers/Frame.js'
 // import NavBar from './containers/NavBar.js'
 // import DevTools from './containers/DevTools.js'
 import {getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages, setView, setGallery, toggleFullScreen, toggleCaptions,
         setQuery, setConfiguration} from './actions/index.js'
-// TODO: BELOW FOR DEBUGGING ONLY
-import {CssReducer, JqueryProxy} from './CssReducer.js'
-import createReduxStoreProxy from './reduxStoreProxy.js'
-// TODO: ABOVE FOR DEBUGGING ONLY
 
 var searchParams = new URLSearchParams(window.location.search)
 var debug        = searchParams.has("mc_debug")
@@ -37,7 +32,6 @@ debug && console.log("rr-main.js loading...")
 
 window.mcRrr = {
 // TODO: BELOW FOR DEBUGGING ONLY
-    CssReducer:               new JqueryProxy().getCssReducer(),
     debugDispatchFilter:      true,    // trace all actions
 //    debugDispatchFilter:      false,   // disable
 //    debugDispatchFilter:      [REST, LOAD_GALLERY_IMAGES, LOAD_SEARCH_IMAGES],
@@ -48,7 +42,7 @@ const store = createStore(reducer, {galleries: {images: {}}, configuration: {}},
 // TODO: BELOW FOR DEBUGGING ONLY
                           // applyMiddleware(thunk, rest, postRest))
                           // compose(applyMiddleware(thunk, start, rest, postRest, end, createLogger()), DevTools.instrument()))
-                          applyMiddleware(thunk, start, rest, postRest, end))   // for lightweight, programmable debugging when using debugging proxies
+                          applyMiddleware(thunk, start, rest, end))   // for lightweight, programmable debugging when using debugging proxies
 // TODO: ABOVE FOR DEBUGGING ONLY
 
 // TODO: need store in global scope for now to do testing; remove for production.
@@ -74,9 +68,6 @@ Object.assign(window.mcRrr, {
     getImagesByGallerySpecs:  getImagesByGallerySpecs,
     getImagesBySearchParms:   getImagesBySearchParms,
     setConfiguration:         setConfiguration,
-// TODO: BELOW FOR DEBUGGING ONLY
-    reduxStoreProxy:          createReduxStoreProxy(store),
-// TODO: ABOVE FOR DEBUGGING ONLY
     useDispatchInsteadOfNext: false   // for use in asynchronous callbacks in Redux middleware - experimental
 })
 
