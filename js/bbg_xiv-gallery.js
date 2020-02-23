@@ -2530,22 +2530,13 @@ console.log('bbg_xiv-gallery.js:loading...');
             $body.addClass( 'bbg_xiv-fixed_admin_bar' );
         }
 
-        window.setTimeout( function renderConfigure() {
-            if ( typeof window.bbg_xiv.Configure !== 'undefined' ) {
-                console.log('bbg_xiv-gallery.js:renderConfigure:mcRrr.ReactDOM.render():');
-                jQuery('body').append('<div id="mc-rrr-react-configure" class="bbg_xiv-bootstrap"></div>')
-                const configure = <bbg_xiv.Configure />
-                mcRrr.ReactDOM.render(
-                    configure,
-                    document.getElementById('mc-rrr-react-configure')
-                )
-                console.log('configure=', configure)
-                bbg_xiv.configure = configure
-                // debugger
-            } else {
-                setTimeout( renderConfigure, 1000 );
-            }
-        }, 0 );
+        console.log('bbg_xiv-gallery.js:renderConfigure:mcRrr.ReactDOM.render():');
+        jQuery('body').append('<div id="mc-rrr-react-configure" class="bbg_xiv-bootstrap"></div>')
+        mcRrr.ReactDOM.render(
+            <mcRrr.Configure />,
+            document.getElementById('mc-rrr-react-configure')
+        )
+
     });   // jQuery(document).ready(function(){
 
     //cookie test code

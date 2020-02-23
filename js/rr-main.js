@@ -4,7 +4,7 @@
 import React, {useState, useEffect} from 'react'
 import ReactDOM from 'react-dom'
 import {createStore, applyMiddleware, compose} from 'redux'
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 import thunk from 'redux-thunk'
 // TODO: BELOW FOR DEBUGGING ONLY
 // import { createLogger } from 'redux-logger'
@@ -13,6 +13,7 @@ import { Provider } from 'react-redux'
 import reducer from './reducers/index.js'
 import rest from './middleware/rest.js'
 import Frame from './containers/Frame.js'
+import Configure from './components/Configure.js'
 // TODO: BELOW FOR DEBUGGING ONLY
 // import DevTools from './containers/DevTools.js'
 // TODO: ABOVE FOR DEBUGGING ONLY
@@ -39,5 +40,6 @@ window.mcRrr = {
     connect:                  connect,
     Provider:                 Provider,
     Frame:                    Frame,
+    Configure:                Configure,
     setConfiguration:         setConfiguration
 }
