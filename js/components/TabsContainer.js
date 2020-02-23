@@ -1,5 +1,8 @@
 // Tabs Container Template
 
+// N.B. Overlay uses the Backbone.js template 'script#bbg_xiv-template_tabs_tab'  from bbg_xiv-gallery_templates_wp_rest.php
+// N.B. Overlay uses the Backbone.js template 'script#bbg_xiv-template_tabs_item' from bbg_xiv-gallery_templates_wp_rest.php
+
 // This is an experiment using a hybrid component that uses a Backbone.View inside a React element.
 // Unfortunately I think this needs React's dangerouslySetInnerHTML.
 // TODO: Try to find a safer way.

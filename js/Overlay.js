@@ -1,5 +1,7 @@
 // Overlay
 
+// N.B. Overlay uses the Backbone.js template 'script#bbg_xiv-template_justified_alt_overlay' from bbg_xiv-gallery_templates_wp_rest.php
+
 // Overlay is not part of main React Redux tree.
 // Overlay is independently rendered with its own DOM root.
 

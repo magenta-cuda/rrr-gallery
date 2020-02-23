@@ -948,7 +948,9 @@ EOD
             $deps[ ] = 'jquery-mobile';
             $deps[ ] = 'justified-gallery';
             $deps[ ] = 'wp-api';
-            wp_enqueue_script( 'bbg_xiv-gallery',   plugins_url( "js/bbg_xiv-gallery-extra.js",   __FILE__ ), $deps,        FALSE, TRUE );
+            wp_enqueue_script( 'bbg_xiv-gallery',     plugins_url( "js/bbg_xiv-gallery-extra.js",   __FILE__ ), $deps,        FALSE, TRUE );
+            wp_enqueue_script( 'vendors~main.bundle', plugins_url( "js/vendors~main.bundle.js",     __FILE__ ), $deps,        FALSE, FALSE );
+            wp_enqueue_script( 'bundle',              plugins_url( "js/bundle.js",                  __FILE__ ), $deps,        FALSE, FALSE );
         } );
 
         add_action( 'wp_head', function( ) {
@@ -958,8 +960,6 @@ EOD
                 return;
             }
 ?>
-<script src="<?php echo plugins_url( "js/vendors~main.bundle.js",                  __FILE__ ); ?>" type="text/javascript"></script>
-<script src="<?php echo plugins_url( "js/bundle.js",                               __FILE__ ); ?>" type="text/javascript"></script>
 <script src="<?php echo plugins_url( "js/babel.js",                                __FILE__ ); ?>" type="text/javascript"></script>
 <!-- TODO: 'js/Overlay.js' will eventually be in 'js/bundle.js' but not true for now. -->
 <script src="<?php echo plugins_url( "js/Overlay.js",                              __FILE__ ); ?>" type="text/babel"></script>
