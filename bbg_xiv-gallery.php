@@ -394,8 +394,6 @@ EOD;
         <div class="ui-loader"><span class="ui-icon-loading"></span></div>
     </div>
 <!-- start of configure JSX -->
-<!-- \$translations should not be a prop since it is static so we need to initialize with some runtime
-     JavaScript static and avoid the in-browser Babel transformer by precompiling instead -->
 <script type="text/babel">
     window.bbg_xiv = window.bbg_xiv || {};
     // Configure does not use the Redux store. Configure is independently rendered with its own DOM root.
@@ -451,20 +449,20 @@ EOD;
                             <div className="col-sm-5">
                                 {/* Save and Cancel buttons are not needed as changes are immediately saved.
                                 <button type="button" className="btn btn-primary bbg_xiv-options_btn bbg_xiv-save_options">
-                                    $translations[Save]
+                                    {bbg_xiv_lang_2["Save"]}
                                 </button>
                                 <button type="button" className="btn btn-default bbg_xiv-options_btn bbg_xiv-cancel_options">
-                                    $translations[Cancel]
+                                    {bbg_xiv_lang_2["Cancel"]}
                                 </button>
                                 */}
                                 <button type="button" className="btn btn-info bbg_xiv-options_btn bbg_xiv-help_options">
-                                    $translations[Help]
+                                    {bbg_xiv_lang_2["Help"]}
                                 </button>
                             </div>
                         </div>
                         <div className="form-group">
                             <label htmlFor="bbg_xiv-carousel_delay" className="control-label col-sm-9 col-md-offset-2 col-md-6">
-                                {$translations['Carousel Time Interval in ms']}
+                                {bbg_xiv_lang_2["Carousel Time Interval in ms"]}
                             </label>
                             <div className="col-sm-3 col-md-2">
                                 <input type="number" className="form-control" id="bbg_xiv-carousel_delay" min="1000" step="100"
@@ -474,7 +472,7 @@ EOD;
                         </div>
                         <div className="form-group">
                             <label htmlFor="bbg_xiv-min_image_width" className="control-label col-sm-9 col-md-offset-2 col-md-6">
-                                {$translations['Minimum Width for Gallery Images in px']}
+                                {bbg_xiv_lang_2["Minimum Width for Gallery Images in px"]}
                             </label>
                             <div className="col-sm-3 col-md-2">
                                 <input type="number" className="form-control" id="bbg_xiv-min_image_width" min="32" max="1024"
@@ -483,7 +481,7 @@ EOD;
                         </div>
                         <div className="form-group">
                             <label htmlFor="bbg_xiv-miro_row_height" className="control-label col-sm-9 col-md-offset-2 col-md-6">
-                                {$translations['Preferred Row Height for Justified Images in px']}
+                                {bbg_xiv_lang_2["Preferred Row Height for Justified Images in px"]}
                             </label>
                             <div className="col-sm-3 col-md-2">
                                 <input type="number" className="form-control" id="bbg_xiv-miro_row_height" min="32" max="1024"
@@ -492,7 +490,7 @@ EOD;
                         </div>
                         <div className="form-group">
                             <label htmlFor="bbg_xiv-max_search_results" className="control-label col-sm-9 col-md-offset-2 col-md-6">
-                                {$translations['Maximum Number of Images Returned by Search']}</label>
+                                {bbg_xiv_lang_2["Maximum Number of Images Returned by Search"]}</label>
                             <div className="col-sm-3 col-md-2">
                                 <input type="number" className="form-control" id="bbg_xiv-max_search_results" min="1"
                                         max="{$bbg_xiv_data['bbg_xiv_max_search_results']}" value={maxSearchResults}
@@ -501,7 +499,7 @@ EOD;
                         </div>
                         <div className="form-group bbg_xiv-mouse_only_option">
                             <label htmlFor="bbg_xiv-columns_in_dense_view" className="control-label col-sm-9 col-md-offset-2 col-md-6">
-                                {$translations['Number of Columns in the Dense View']}
+                                {bbg_xiv_lang_2["Number of Columns in the Dense View"]}
                             </label>
                             <div className="col-sm-3 col-md-2">
                                 <input type="number" className="form-control" id="bbg_xiv-columns_in_dense_view" min="2" max="32"
@@ -511,88 +509,88 @@ EOD;
                         {/* TODO: checkboxes for radio buttons */}
                         <div className="form-group">
                             <label htmlFor="bbg_xiv-default_view_gallery" className="control-label col-sm-3 col-md-offset-2 col-md-2">
-                                {$translations['Initial View']}
+                                {bbg_xiv_lang_2["Initial View"]}
                             </label>
                             <div className="col-sm-9 col-md-6">
                                 <span className="bbg_xiv-radio_input">
                                     <input type="radio" className="form-control" name="bbg_xiv-default_view" value="Gallery"
                                             id="bbg_xiv-default_view_gallery" checked={defaultView === 'Gallery'}
                                             onChange={e => {if (e.target.checked) {setDefaultView(e.target.value)}}} />
-                                    <span className="bbg_xiv-radio_text">$translations[Gallery]</span>
+                                    <span className="bbg_xiv-radio_text">{bbg_xiv_lang_2["Gallery"]}</span>
                                 </span>
                                 <span className="bbg_xiv-radio_input">
                                     <input type="radio" className="form-control" name="bbg_xiv-default_view" value="Justified"
                                             id="bbg_xiv-default_view_justified" checked={defaultView === 'Justified'}
                                             onChange={e => {if (e.target.checked) {setDefaultView(e.target.value)}}} />
-                                    <span className="bbg_xiv-radio_text">$translations[Justified]</span>
+                                    <span className="bbg_xiv-radio_text">{bbg_xiv_lang_2["Justified"]}</span>
                                 </span>
                                 <span className="bbg_xiv-radio_input">
                                     <input type="radio" className="form-control" name="bbg_xiv-default_view" value="Carousel"
                                             id="bbg_xiv-default_view_carousel" checked={defaultView === 'Carousel'}
                                             onChange={e => {if (e.target.checked) {setDefaultView(e.target.value)}}} />
-                                    <span className="bbg_xiv-radio_text">$translations[Carousel]</span>
+                                    <span className="bbg_xiv-radio_text">{bbg_xiv_lang_2["Carousel"]}</span>
                                 </span>
                                 <span className="bbg_xiv-radio_input">
                                     <input type="radio" className="form-control" name="bbg_xiv-default_view" value="Tabs"
                                             id="bbg_xiv-default_view_tabs" checked={defaultView === 'Tabs'}
                                             onChange={e => {if (e.target.checked) {setDefaultView(e.target.value)}}} />
-                                    <span className="bbg_xiv-radio_text">$translations[Tabs]</span>
+                                    <span className="bbg_xiv-radio_text">{bbg_xiv_lang_2["Tabs"]}</span>
                                 </span>
                             </div>
                         </div>
                         <div className="form-group">
                             <label htmlFor="bbg_xiv-bandwidth_auto" className="control-label col-sm-3 col-md-offset-2 col-md-2">
-                                $translations[Bandwidth]
+                                {bbg_xiv_lang_2["Bandwidth"]}
                             </label>
                             <div className="col-sm-9 col-md-6">
                                 <span className="bbg_xiv-radio_input">
                                     <input type="radio" className="form-control" name="bbg_xiv-bandwidth" value="auto"
                                             id="bbg_xiv-bandwidth_auto" checked={bandwidth === 'auto'}
                                             onChange={e => {if (e.target.checked) {setBandwidth(e.target.value)}}} />
-                                    <span className="bbg_xiv-radio_text">$translations[Auto]</span>
+                                    <span className="bbg_xiv-radio_text">{bbg_xiv_lang_2["Auto"]}</span>
                                 </span>
                                 <span className="bbg_xiv-radio_input">
                                     <input type="radio" className="form-control" name="bbg_xiv-bandwidth" value="normal"
                                             id="bbg_xiv-bandwidth_normal" checked={bandwidth === 'normal'}
                                             onChange={e => {if (e.target.checked) {setBandwidth(e.target.value)}}} />
-                                    <span className="bbg_xiv-radio_text">$translations[High]</span>
+                                    <span className="bbg_xiv-radio_text">{bbg_xiv_lang_2["High"]}</span>
                                 </span>
                                 <span className="bbg_xiv-radio_input">
                                     <input type="radio" className="form-control" name="bbg_xiv-bandwidth" value="low"
                                             id="bbg_xiv-bandwidth_low" checked={bandwidth === 'low'}
                                             onChange={e => {if (e.target.checked) {setBandwidth(e.target.value)}}} />
-                                    <span className="bbg_xiv-radio_text">$translations[Medium]</span>
+                                    <span className="bbg_xiv-radio_text">{bbg_xiv_lang_2["Medium"]}</span>
                                 </span>
                                 <span className="bbg_xiv-radio_input">
                                     <input type="radio" className="form-control" name="bbg_xiv-bandwidth" value="very low"
                                             id="bbg_xiv-bandwidth_very_low" checked={bandwidth === 'very low'}
                                             onChange={e => {if (e.target.checked) {setBandwidth(e.target.value)}}} />
-                                    <span className="bbg_xiv-radio_text">$translations[Low]</span>
+                                    <span className="bbg_xiv-radio_text">{bbg_xiv_lang_2["Low"]}</span>
                                 </span>
                             </div>
                         </div>
                         <div className="form-group">
                             <label htmlFor="bbg_xiv-interface_auto" className="control-label col-sm-3 col-md-offset-2 col-md-2">
-                                $translations[Interface]
+                                {bbg_xiv_lang_2["Interface"]}
                             </label>
                             <div className="col-sm-9 col-md-6">
                                 <span className="bbg_xiv-radio_input">
                                     <input type="radio" className="form-control" name="bbg_xiv-interface" value="auto"
                                             id="bbg_xiv-interface_auto" checked={interface_ === 'auto'}
                                             onChange={e => {if (e.target.checked) {setInterface(e.target.value)}}} />
-                                    <span className="bbg_xiv-radio_text">$translations[Auto]</span>
+                                    <span className="bbg_xiv-radio_text">{bbg_xiv_lang_2["Auto"]}</span>
                                 </span>
                                 <span className="bbg_xiv-radio_input">
                                     <input type="radio" className="form-control" name="bbg_xiv-interface" value="mouse"
                                             id="bbg_xiv-interface_mouse" checked={interface_ === 'mouse'}
                                             onChange={e => {if (e.target.checked) {setInterface(e.target.value)}}} />
-                                    <span className="bbg_xiv-radio_text">$translations[Mouse]</span>
+                                    <span className="bbg_xiv-radio_text">{bbg_xiv_lang_2["Mouse"]}</span>
                                 </span>
                                 <span className="bbg_xiv-radio_input">
                                     <input type="radio" className="form-control" name="bbg_xiv-interface" value="touch"
                                             id="bbg_xiv-interface_touch" checked={interface_ === 'touch'}
                                             onChange={e => {if (e.target.checked) {setInterface(e.target.value)}}} />
-                                    <span className="bbg_xiv-radio_text">$translations[Touch]</span>
+                                    <span className="bbg_xiv-radio_text">{bbg_xiv_lang_2["Touch"]}</span>
                                 </span>
                                 <span className="bbg_xiv-radio_input bbg_xiv-null">
                                     <input type="radio" className="form-control" name="bbg_xiv-interface" value="null"
