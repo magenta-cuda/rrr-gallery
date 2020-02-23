@@ -5,10 +5,9 @@
 // Overlay is not part of main React Redux tree.
 // Overlay is independently rendered with its own DOM root.
 
-// TODO: remove React = - don't need this when we use webpack
-const React = window.mcRrr.React
+import React from 'react'
 
-class Overlay extends React.Component {
+export default class Overlay extends React.Component {
     constructor(props) {
         console.log('Overlay::constructor():props=', props)
         super(props)

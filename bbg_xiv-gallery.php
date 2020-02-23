@@ -746,10 +746,9 @@ EOD
                 return;
             }
 ?>
-<script src="<?php echo plugins_url( "js/babel.js",                                __FILE__ ); ?>" type="text/javascript"></script>
-<!-- TODO: 'js/Overlay.js' will eventually be in 'js/bundle.js' but not true for now. -->
-<script src="<?php echo plugins_url( "js/Overlay.js",                              __FILE__ ); ?>" type="text/babel"></script>
-<script src="<?php echo plugins_url( "js/bbg_xiv-gallery.js",                      __FILE__ ); ?>" type="text/babel"></script>
+<!-- TODO: 'js/bbg_xiv-gallery.js has JSX so babel.js is still necessary. -->
+<script src="<?php echo plugins_url( "js/babel.js",           __FILE__ ); ?>" type="text/javascript"></script>
+<script src="<?php echo plugins_url( "js/bbg_xiv-gallery.js", __FILE__ ); ?>" type="text/babel"></script>
 <?php
         } );
         add_action( 'admin_init', function( ) {

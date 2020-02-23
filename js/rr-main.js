@@ -1,7 +1,7 @@
 // window.mcRrr is needed for now because we cannot import in the inline scripts of bbg_xiv-gallery.php
 // window.mcRrr has references to the things that the inline scripts cannot import
 
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
 import {createStore, applyMiddleware, compose} from 'redux'
 import {connect} from 'react-redux'
@@ -13,7 +13,8 @@ import { Provider } from 'react-redux'
 import reducer from './reducers/index.js'
 import rest from './middleware/rest.js'
 import Frame from './containers/Frame.js'
-import Configure from './components/Configure.js'
+import Configure from './Configure.js'
+import Overlay from './Overlay.js'
 // TODO: BELOW FOR DEBUGGING ONLY
 // import DevTools from './containers/DevTools.js'
 // TODO: ABOVE FOR DEBUGGING ONLY
@@ -34,12 +35,11 @@ window.mcRrr = {
     debug:                    debug,
     store:                    store,
     React:                    React,
-    useState:                 useState,
-    useEffect:                useEffect,
     ReactDOM:                 ReactDOM,
     connect:                  connect,
     Provider:                 Provider,
     Frame:                    Frame,
     Configure:                Configure,
+    Overlay:                  Overlay,
     setConfiguration:         setConfiguration
 }

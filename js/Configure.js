@@ -1,17 +1,19 @@
 // Configure does not use the Redux store. It is an experiment to try React 16.8's State hooks.
 // Configure is independently rendered with its own DOM root.
 
+import React, {useState, useEffect} from 'react'
+
 export default props => {
     // Use React 16.8's State hook
-    const [show,               setShow              ] = mcRrr.useState(false                                            )
-    const [carouselDelay,      setCarouselDelay     ] = mcRrr.useState(bbg_xiv.bbg_xiv_carousel_interval                )
-    const [minImageWidth,      setMinImageWidth     ] = mcRrr.useState(bbg_xiv.bbg_xiv_flex_min_width                   )
-    const [miroRowHeight,      setMiroRowHeight     ] = mcRrr.useState(bbg_xiv.bbg_xiv_miro_row_height                  )
-    const [maxSearchResults,   setMaxSearchResults  ] = mcRrr.useState(bbg_xiv.bbg_xiv_max_search_results               )
-    const [columnsInDenseView, setColumnsInDenseView] = mcRrr.useState(bbg_xiv.bbg_xiv_flex_number_of_dense_view_columns)
-    const [defaultView,        setDefaultView       ] = mcRrr.useState(bbg_xiv.bbg_xiv_default_view                     )
-    const [bandwidth,          setBandwidth         ] = mcRrr.useState(bbg_xiv.bbg_xiv_bandwidth                        )
-    const [interface_,         setInterface         ] = mcRrr.useState(bbg_xiv.bbg_xiv_interface                        )
+    const [show,               setShow              ] = useState(false                                            )
+    const [carouselDelay,      setCarouselDelay     ] = useState(bbg_xiv.bbg_xiv_carousel_interval                )
+    const [minImageWidth,      setMinImageWidth     ] = useState(bbg_xiv.bbg_xiv_flex_min_width                   )
+    const [miroRowHeight,      setMiroRowHeight     ] = useState(bbg_xiv.bbg_xiv_miro_row_height                  )
+    const [maxSearchResults,   setMaxSearchResults  ] = useState(bbg_xiv.bbg_xiv_max_search_results               )
+    const [columnsInDenseView, setColumnsInDenseView] = useState(bbg_xiv.bbg_xiv_flex_number_of_dense_view_columns)
+    const [defaultView,        setDefaultView       ] = useState(bbg_xiv.bbg_xiv_default_view                     )
+    const [bandwidth,          setBandwidth         ] = useState(bbg_xiv.bbg_xiv_bandwidth                        )
+    const [interface_,         setInterface         ] = useState(bbg_xiv.bbg_xiv_interface                        )
     mcRrr.setConfigureShow = setShow
     console.log('carouselDelay=',      carouselDelay     )
     console.log('minImageWidth-',      minImageWidth     )
@@ -21,7 +23,7 @@ export default props => {
     console.log('defaultView=',        defaultView       )
     console.log('bandwidth=',          bandwidth         )
     console.log('interface_=',         interface_        )
-    mcRrr.useEffect(() => {
+    useEffect(() => {
         // Save configuration in a cookie
         const cookie = {
             bbg_xiv_carousel_interval:                 carouselDelay,
