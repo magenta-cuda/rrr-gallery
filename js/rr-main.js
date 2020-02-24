@@ -13,7 +13,7 @@ import { Provider } from 'react-redux'
 import reducer from './reducers/index.js'
 import rest from './middleware/rest.js'
 import Frame from './containers/Frame.js'
-import Configure from './Configure.js'
+import Configure from './containers/Configure.js'
 import Overlay from './Overlay.js'
 // TODO: BELOW FOR DEBUGGING ONLY
 // import DevTools from './containers/DevTools.js'
@@ -36,7 +36,6 @@ window.mcRrr = {
     store:                    store,
     React:                    React,
     ReactDOM:                 ReactDOM,
-    connect:                  connect,
     Provider:                 Provider,
     Frame:                    Frame,
     Configure:                Configure,

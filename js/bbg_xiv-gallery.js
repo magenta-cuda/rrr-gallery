@@ -47,6 +47,8 @@
 /* MUCH OF THE CODE IN THIS FILE IS NOW DEAD CODE */
 
 const React = mcRrr.React
+
+// const React = await import('react');   // doesn't work
  
 console.log('bbg_xiv-gallery.js:loading...');
 (function(){
@@ -1999,6 +2001,7 @@ console.log('bbg_xiv-gallery.js:loading...');
         mcRrr.ReactDOM.render(
             <mcRrr.Provider store={mcRrr.store}>
                 <mcRrr.Frame id={id} />
+                <mcRrr.Configure />,
             </mcRrr.Provider>,
             document.getElementById('mc-rrr-react-root-gallery-' + id)
         );
@@ -2531,14 +2534,14 @@ console.log('bbg_xiv-gallery.js:loading...');
         if ( $body.hasClass( 'admin-bar' ) && jQuery( 'div#wpadminbar' ).css( 'position' ) == 'fixed' ) {
             $body.addClass( 'bbg_xiv-fixed_admin_bar' );
         }
-
+/*
         console.log('bbg_xiv-gallery.js:renderConfigure:mcRrr.ReactDOM.render():');
         jQuery('body').append('<div id="mc-rrr-react-configure" class="bbg_xiv-bootstrap"></div>')
         mcRrr.ReactDOM.render(
             <mcRrr.Configure />,
             document.getElementById('mc-rrr-react-configure')
         )
-
+*/
     });   // jQuery(document).ready(function(){
 
     //cookie test code

@@ -35,8 +35,7 @@ export default props => {
             bbg_xiv_bandwidth:                         bandwidth,
             bbg_xiv_interface:                         interface_
         }
-        // TODO: Since Configure is not yet in the Redux tree we must directly invoke store.dispatch
-        mcRrr.store.dispatch(mcRrr.setConfiguration(cookie))
+        props.setConfiguration(cookie)
         bbg_xiv.setCookie("bbg_xiv", JSON.stringify(cookie), 30)
         bbg_xiv.getOptionsFromCookie()
         // TODO: bbg_xiv.calcBreakpoints()?
