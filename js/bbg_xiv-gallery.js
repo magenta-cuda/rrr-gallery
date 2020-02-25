@@ -46,10 +46,6 @@
 
 /* MUCH OF THE CODE IN THIS FILE IS NOW DEAD CODE */
 
-const React = mcRrr.React
-
-// const React = await import('react');   // doesn't work
- 
 console.log('bbg_xiv-gallery.js:loading...');
 (function(){
     var bbg_xiv=window.bbg_xiv=window.bbg_xiv||{};
@@ -139,7 +135,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             });
         }
         // bbg_xiv.constructOverlay(container)
-        mcRrr.ReactDOM.render(<mcRrr.Overlay />, $flexContainer.find('div.mc-rrr-react-overlay-root').get(0))
+        mcRrr.createOverlay($flexContainer.find('div.mc-rrr-react-overlay-root').get(0))
 /*
         window.setTimeout(function() {
             jQuery(window).resize()
@@ -231,7 +227,7 @@ console.log('bbg_xiv-gallery.js:loading...');
         });
  */ 
         // bbg_xiv.constructOverlay(container)
-        mcRrr.ReactDOM.render(<mcRrr.Overlay />, jQuery(container).find('div.mc-rrr-react-overlay-root').get(0))
+        mcRrr.createOverlay(jQuery(container).find('div.mc-rrr-react-overlay-root').get(0))
     }   //     bbg_xiv.postRenderDense = container => {
 
 
@@ -287,7 +283,7 @@ console.log('bbg_xiv-gallery.js:loading...');
         });
         // titlesButton.show();
         // bbg_xiv.constructOverlay(container)
-        mcRrr.ReactDOM.render(<mcRrr.Overlay />, jQuery(container).find('div.mc-rrr-react-overlay-root').get(0))
+        mcRrr.createOverlay(jQuery(container).find('div.mc-rrr-react-overlay-root').get(0))
     }   // bbg_xiv.postRenderJustified = container => {
 
     bbg_xiv.postRenderTabs = container => {
@@ -401,7 +397,7 @@ console.log('bbg_xiv-gallery.js:loading...');
         if (true) {
             jqGallery.addClass("bbg_xiv-embedded_carousel")
         }
-        mcRrr.ReactDOM.render(<mcRrr.Overlay className="carousel" id={`mcrrr-overlay-${carouselId}`} />, jqGallery.find('div.mc-rrr-react-overlay-root').get(0))
+        mcRrr.createOverlay(jqGallery.find('div.mc-rrr-react-overlay-root').get(0), `mcrrr-overlay-${carouselId}`, "carousel")
         // pause() can be called from a button's event handler to pause the carousel, the argument is the button
         function pause( button ) {
             var $carousel = jQuery( button ).parents( 'div.carousel' );

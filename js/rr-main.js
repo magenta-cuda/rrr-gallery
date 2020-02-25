@@ -35,9 +35,6 @@ const store = createStore(reducer, {galleries: {images: {}}, configuration: {}},
 
 window.mcRrr = {
     debug:           debug,
-    React:           React,
-    ReactDOM:        ReactDOM,
-    Overlay:         Overlay,
     createReactTree: (id, root) => {
         ReactDOM.render(
             <Provider store={store}>
@@ -46,6 +43,9 @@ window.mcRrr = {
             </Provider>,
             root
         )
+    },
+    createOverlay: (root, id = "", className = "") => {
+        ReactDOM.render(<Overlay className={className} id={id} />, root)
     }
 }
 

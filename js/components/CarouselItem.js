@@ -1,5 +1,7 @@
 // Carousel Item
 
+import React from 'react'
+
 export default props => {
     const {index, data} = props
     return (
