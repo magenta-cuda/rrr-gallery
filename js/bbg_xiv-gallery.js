@@ -1732,15 +1732,8 @@ console.log('bbg_xiv-gallery.js:loading...');
     }
 
     jQuery(document).ready(function(){
-        const React = mcRrr.React;
         const id    = '10001'
-        mcRrr.ReactDOM.render(
-            <mcRrr.Provider store={mcRrr.store}>
-                <mcRrr.Frame id={id} />
-                <mcRrr.Configure />,
-            </mcRrr.Provider>,
-            document.getElementById('mc-rrr-react-root-gallery-' + id)
-        );
+        mcRrr.createReactTree(id, document.getElementById('mc-rrr-react-root-gallery-' + id))
         jQuery("div.bbg_xiv-gallery_envelope").each(function(){
             var gallery=this;
             // var defaultView=bbg_xiv.getDefaultView(jQuery(gallery),null);

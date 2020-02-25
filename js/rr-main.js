@@ -34,15 +34,19 @@ const store = createStore(reducer, {galleries: {images: {}}, configuration: {}},
 // TODO: need store in global scope for now to do testing; remove for production.
 
 window.mcRrr = {
-    debug:                    debug,
-    store:                    store,
-    React:                    React,
-    ReactDOM:                 ReactDOM,
-    Provider:                 Provider,
-    Frame:                    Frame,
-    Configure:                Configure,
-    Overlay:                  Overlay,
-    setConfiguration:         setConfiguration
+    debug:           debug,
+    React:           React,
+    ReactDOM:        ReactDOM,
+    Overlay:         Overlay,
+    createReactTree: (id, root) => {
+        ReactDOM.render(
+            <Provider store={store}>
+                <Frame id={id} />
+                <Configure />
+            </Provider>,
+            root
+        )
+    }
 }
 
 console.log('rr-main.js:loaded.');
