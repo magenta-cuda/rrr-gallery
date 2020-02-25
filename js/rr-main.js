@@ -20,6 +20,8 @@ import Overlay from './Overlay.js'
 // TODO: ABOVE FOR DEBUGGING ONLY
 import {setConfiguration} from './actions/index.js'
 
+console.log('rr-main.js:loading...');
+
 var searchParams = new URLSearchParams(window.location.search)
 var debug        = searchParams.has("mc_debug")
 
@@ -42,3 +44,5 @@ window.mcRrr = {
     Overlay:                  Overlay,
     setConfiguration:         setConfiguration
 }
+
+console.log('rr-main.js:loaded.');

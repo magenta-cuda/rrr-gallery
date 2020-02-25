@@ -5,6 +5,7 @@ import React, {useState, useEffect} from 'react'
 
 export default props => {
     // Use React 16.8's State hook
+    const [initialized,        setInitialized       ] = useState(false                                            )
     const [show,               setShow              ] = useState(false                                            )
     const [carouselDelay,      setCarouselDelay     ] = useState(bbg_xiv.bbg_xiv_carousel_interval                )
     const [minImageWidth,      setMinImageWidth     ] = useState(bbg_xiv.bbg_xiv_flex_min_width                   )
@@ -14,6 +15,19 @@ export default props => {
     const [defaultView,        setDefaultView       ] = useState(bbg_xiv.bbg_xiv_default_view                     )
     const [bandwidth,          setBandwidth         ] = useState(bbg_xiv.bbg_xiv_bandwidth                        )
     const [interface_,         setInterface         ] = useState(bbg_xiv.bbg_xiv_interface                        )
+    if (!initialized) {
+        const configuration = {
+            bbg_xiv_carousel_interval:                 bbg_xiv.bbg_xiv_carousel_interval,
+            bbg_xiv_flex_min_width:                    bbg_xiv.bbg_xiv_flex_min_width,
+            bbg_xiv_miro_row_height:                   bbg_xiv.bbg_xiv_miro_row_height,
+            bbg_xiv_max_search_results:                bbg_xiv.bbg_xiv_max_search_results,
+            bbg_xiv_flex_number_of_dense_view_columns: bbg_xiv.bbg_xiv_flex_number_of_dense_view_columns,
+            bbg_xiv_bandwidth:                         bbg_xiv.bbg_xiv_bandwidth,
+            bbg_xiv_interface:                         bbg_xiv.bbg_xiv_interface
+        }
+        props.setConfiguration(configuration)
+        setInitialized(true)
+    }
     mcRrr.setConfigureShow = setShow
     console.log('carouselDelay=',      carouselDelay     )
     console.log('minImageWidth-',      minImageWidth     )

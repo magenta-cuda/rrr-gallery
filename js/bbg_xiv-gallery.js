@@ -93,77 +93,6 @@ console.log('bbg_xiv-gallery.js:loading...');
         }
     });
     
-/*
-    bbg_xiv.renderBootstrapGallery=function(container,collection){
-        var imageView=new bbg_xiv.ImageView();
-        // attach template to imageView not ImageView.prototype since template is specific to imageView
-        imageView.template=_.template( jQuery("script#bbg_xiv-template_gallery_item").html(),null,bbg_xiv.templateOptions);
-        var imagesHtml="";
-        collection.forEach(function(model,index){
-            imageView.model=model;
-            imagesHtml+=imageView.render(true);
-            // Bootstrap's grid needs "clear" elements to correctly align non-uniformly sized items
-            if(index%4===3){
-                imagesHtml+='<br class="clearfix visible-lg-block">';
-            }
-            if(index%3===2){
-                imagesHtml+='<br class="clearfix visible-md-block">';
-            }
-            if(index%2===1){
-                imagesHtml+='<br class="clearfix visible-sm-block">';
-            }
-        } );
-        var galleryView=new bbg_xiv.GalleryView({
-            model:{
-                attributes:{
-                    items:imagesHtml
-                }
-            }
-        } );
-        galleryView.template=_.template(jQuery("script#bbg_xiv-template_gallery_container").html(),null,bbg_xiv.templateOptions);
-        container.empty();
-        container.append(galleryView.render().$el.find("div.container"));
-        container.empty();
-        mcRrr.ReactDOM.render( GalleryContainer( collection ), container.get( 0 ) );
-    };
-
-    bbg_xiv.renderFlex=function(container,collection){
-        var containerWidth=container.width();
-        var imageView=new bbg_xiv.ImageView();
-        // attach template to imageView not ImageView.prototype since template is specific to imageView
-        imageView.template=_.template( jQuery("script#bbg_xiv-template_flex_item").html(),null,bbg_xiv.templateOptions);
-        var imagesHtml="";
-        collection.forEach(function( model ) {
-            model.attributes.bbg_xiv_container_width=containerWidth;
-            imageView.model=model;
-            imagesHtml+=imageView.render(true);
-        });
-        var galleryView=new bbg_xiv.GalleryView({
-            model:{
-                attributes:{
-                    id:collection.id,
-                    items:imagesHtml
-                }
-            }
-        });
-        galleryView.template=_.template(jQuery("script#bbg_xiv-template_flex_container").html(),null,bbg_xiv.templateOptions);
-        container.empty();
-        container.append(galleryView.render().$el.find("div.bbg_xiv-flex_container"));
-        // For now we must rerender into a new DOM element because if we rerender into an existing DOM element React will
-        // try and diff the React elements of the tree of the existing DOM element against the new React elements. Since,
-        // currently the existing DOM element may have changes from non-React actions this will confuse React and it will
-        // not rerender.
-        container.empty();
-        container.append( '<div></div>' );
-        mcRrr.ReactDOM.render(mcRrr.FlexContainer({images: collection}),container.children().get(0));
-        // The Babel transpiled code does not initially show in the debugger, but the debugger command will force it to show. 
-        // debugger;
-        if ( bbg_xiv.guiInterface === 'touch' ) {
-            container.find("div.bbg_xiv-flex_container div.bbg_xiv-flex_item div.bbg_xiv-dense_full_btn").addClass("bbg_xiv-touch");
-        }
-    };
-*/
-
     bbg_xiv.postRenderFlexContainer = container => {
         const $flexContainer = jQuery(container)
         // Remove the loading element.
@@ -217,189 +146,6 @@ console.log('bbg_xiv-gallery.js:loading...');
         }, 100)
  */
     }   // bbg_xiv.postRenderFlexContainer = container => {
-
-/*
-    bbg_xiv.renderTiles=function(container,collection,flags){
-        // gallery tiles have exactly the same HTML elements as the gallery Flex items but we will use CSS specificity to override the Flex container CSS
-        container.addClass("bbg_xiv-tiles_container");
-        // in the default mode of the square tiles the images cover the square tiles i.e., object-fit: cover;
-        if(flags.indexOf("contain")!==-1){
-            // the images in the square tiles are contained in the square tiles i.e., object-fit: contain;
-            container.addClass("bbg_xiv-contain");
-        }else if(flags.indexOf("fill")!==-1){
-            // object-fit: fill;
-            container.addClass("bbg_xiv-fill");
-        }
-        bbg_xiv.renderFlex(container,collection);
-        if(!Modernizr.objectfit||flags.indexOf("contain")!==-1){
-            // IE and Edge do not support objectfit so we set a class to differentiate between landscape and portrait mode which will let our CSS rules simulate object-fit:cover
-            container.find("div.bbg_xiv-flex_item img").load(function(){
-                if(this.naturalWidth<this.naturalHeight){
-                    jQuery(this).addClass("bbg_xiv-portrait");
-                }
-            });
-        }
-        var flexContainer    = container.find( 'div.bbg_xiv-flex_container');
-        var galleryContainer = flexContainer.closest( 'div.bbg_xiv-gallery' ).addClass( 'bbg_xiv-caption_visible' );
-        galleryContainer.find( 'button.bbg_xiv-titles' ).attr( 'title', bbg_xiv_lang['hide titles'] );
-        // flip display state of caption on hover
-        container.find("div.bbg_xiv-dense_full_btn").hover(
-            function() {
-                if ( ! galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
-                    jQuery(this).parents("div.bbg_xiv-flex_item").find("figure figcaption").each(function(){
-                        jQuery(this).show();
-                    });
-                }
-            },
-            function() {
-                if ( ! galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
-                    jQuery(this).parents("div.bbg_xiv-flex_item").find("figure figcaption").each(function(){
-                        jQuery(this).hide();
-                    });
-                }
-            }
-        );
-        if ( bbg_xiv.guiInterface === 'touch' ) {
-            container.find("div.bbg_xiv-flex_item a").click(function(e){
-                if ( ! galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
-                    var caption=jQuery(this.parentNode).find("figure figcaption");
-                    if(!caption.data("visible")){
-                        container.find("div.bbg_xiv-flex_item figure figcaption").data("visible",false);
-                        caption.data("visible",true);
-                        e.preventDefault();
-                    }
-                }
-            });
-        }
-    };
-
-    bbg_xiv.renderCarousel=function(container,collection,id){
-        var containerWidth=container.width();
-        var imageView=new bbg_xiv.ImageView();
-        imageView.template=_.template(jQuery("script#bbg_xiv-template_carousel_item").html(),null,bbg_xiv.templateOptions);
-        var bulletsHtml="";
-        var imagesHtml="";
-        collection.forEach(function(model,index){
-            model.attributes.browser=bbg_xiv.browser;
-            model.attributes.index=index;
-            model.attributes.bbg_xiv_container_width=containerWidth;
-            imageView.model=model;
-            var active=index ===0?' class="active"':'';
-            bulletsHtml+='<li data-target="#'+id+'" data-slide-to="'+index+'"'+active+'></li>';
-            imagesHtml+=imageView.render(true);
-        } );
-        var galleryView=new bbg_xiv.GalleryView({
-            model:{
-                attributes:{
-                    id:id,
-                    gallery:collection.id,
-                    size:collection.length,
-                    bullets:bulletsHtml,
-                    items:imagesHtml
-                }
-            }
-        } );
-        galleryView.template=_.template(jQuery("script#bbg_xiv-template_carousel_container").html(),null,bbg_xiv.templateOptions);
-        container.empty();
-        container.append(galleryView.render().$el.find( "div.carousel.slide"));
-    };
-
-    bbg_xiv.renderTabs=function(container,collection,id){
-        var containerWidth=container.width();
-        var tabView=new bbg_xiv.ImageView();
-        tabView.template=_.template(jQuery("script#bbg_xiv-template_tabs_tab").html(),null,bbg_xiv.templateOptions);
-        var imageView=new bbg_xiv.ImageView();
-        imageView.template=_.template(jQuery("script#bbg_xiv-template_tabs_item").html(),null,bbg_xiv.templateOptions);
-        var tabsHtml="";
-        var imagesHtml="";
-        collection.forEach(function(model,index){
-            model.attributes.browser=bbg_xiv.browser;
-            model.attributes.index=index;
-            model.attributes.bbg_xiv_container_width=containerWidth;
-            imageView.model=tabView.model=model;
-            tabsHtml+=tabView.render(true);
-            imagesHtml+=imageView.render(true);
-        });
-        var galleryView=new bbg_xiv.GalleryView({
-            model:{
-                attributes:{
-                    id:id,
-                    tabs:tabsHtml,
-                    items:imagesHtml
-                }
-            }
-        });
-        galleryView.template=_.template(jQuery("script#bbg_xiv-template_tabs_container").html(),null,bbg_xiv.templateOptions);
-        container.empty();
-        container.append(galleryView.render().$el.find("div.bbg_xiv-template_tabs_container"));
-    };
-
-    bbg_xiv.renderDense=function(container,collection,id,mode){
-        var containerWidth=container.width();
-        // TODO: how is containerWidth used?
-        var titleView=new bbg_xiv.ImageView();
-        titleView.template=_.template(jQuery("script#bbg_xiv-template_dense_title").html(),null,bbg_xiv.templateOptions);
-        var imageView=new bbg_xiv.ImageView();
-        imageView.template=_.template(jQuery("script#bbg_xiv-template_dense_image").html(),null,bbg_xiv.templateOptions);
-        var titlesHtml="";
-        var imagesHtml="";
-        collection.forEach(function(model,index){
-            model.attributes.mode=mode;
-            model.attributes.index=index;
-            model.attributes.bbg_xiv_container_width=containerWidth;
-            imageView.model=titleView.model=model;
-            titlesHtml+=titleView.render(true);
-            imagesHtml+=imageView.render(true);
-        });
-        var galleryView=new bbg_xiv.GalleryView({
-            model:{
-                attributes:{
-                    id:id,
-                    gallery:collection.id,
-                    mode:mode,
-                    titles:titlesHtml,
-                    images:imagesHtml
-                }
-            }
-        });
-        galleryView.template=_.template(jQuery("script#bbg_xiv-template_dense_container").html(),null,bbg_xiv.templateOptions);
-        container.empty();
-        container.append(galleryView.render().$el.find("div.bbg_xiv-dense_container"));
-        mcRrr.ReactDOM.render(<DenseContainer images={collection} mode={mode} />, container.get(0) );
-    };
-  
-    bbg_xiv.renderJustified=function(container,collection){
-        var imageView=new bbg_xiv.ImageView();
-        // attach template to imageView not ImageView.prototype since template is specific to imageView
-        imageView.template=_.template( jQuery("script#bbg_xiv-template_justified_item").html(),null,bbg_xiv.templateOptions);
-        var imagesHtml="";
-        collection.forEach(function( model ) {
-            imageView.model=model;
-            imagesHtml+=imageView.render(true);
-        });
-        var galleryView=new bbg_xiv.GalleryView({
-            model:{
-                attributes:{
-                    id:collection.id,
-                    items:imagesHtml
-                }
-            }
-        });
-        galleryView.template=_.template(jQuery("script#bbg_xiv-template_justified_container").html(),null,bbg_xiv.templateOptions);
-        container.empty();
-        var justifiedContainer=galleryView.render().$el.find("div.bbg_xiv-justified_container");
-        container.append(justifiedContainer);
-        // For now we must rerender into a new DOM element because if we rerender into an existing DOM element React will
-        // try and diff the React elements of the tree of the existing DOM element against the new React elements. Since,
-        // currently the existing DOM element may have changes from non-React actions this will confuse React and it will
-        // not rerender.
-        container.empty();
-        container.append( '<div></div>' );
-        // mcRrr.ReactDOM.render(JustifiedGalleryContainer({images: collection}),container.children().get(0));
-        mcRrr.ReactDOM.render( <JustifiedGalleryContainer images={collection} />, container.children().get(0) );
-        // bbg_xiv.postRenderJustified( container.find("div.bbg_xiv-justified_container").get(0) );
-    }
- */
 
     bbg_xiv.postRenderDense = container => {
         const jqGallery = jQuery(container)
@@ -1690,6 +1436,7 @@ console.log('bbg_xiv-gallery.js:loading...');
         ];
     };
 
+
     bbg_xiv.getOptionsFromCookie=function(){
         // override options with cookie values if they exists
         var cookie=bbg_xiv.getCookie("bbg_xiv");
@@ -1765,19 +1512,8 @@ console.log('bbg_xiv-gallery.js:loading...');
         // WP REST API requires that per_page be between 1 and 100 inclusive
         bbg_xiv.wpRestApiMaxPerPage=100;
     };
-    
-    bbg_xiv.getOptionsFromCookie();
 
-    const configuration = {
-        bbg_xiv_carousel_interval:                 bbg_xiv.bbg_xiv_carousel_interval,
-        bbg_xiv_flex_min_width:                    bbg_xiv.bbg_xiv_flex_min_width,
-        bbg_xiv_miro_row_height:                   bbg_xiv.bbg_xiv_miro_row_height,
-        bbg_xiv_max_search_results:                bbg_xiv.bbg_xiv_max_search_results,
-        bbg_xiv_flex_number_of_dense_view_columns: bbg_xiv.bbg_xiv_flex_number_of_dense_view_columns,
-        bbg_xiv_bandwidth:                         bbg_xiv.bbg_xiv_bandwidth,
-        bbg_xiv_interface:                         bbg_xiv.bbg_xiv_interface
-    }
-    mcRrr.store.dispatch(mcRrr.setConfiguration(configuration))
+    bbg_xiv.getOptionsFromCookie();
 
     bbg_xiv.calcBreakpoints();
     
