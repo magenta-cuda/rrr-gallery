@@ -734,9 +734,9 @@ EOD
             $deps[ ] = 'jquery-mobile';
             $deps[ ] = 'justified-gallery';
             $deps[ ] = 'wp-api';
-            wp_enqueue_script( 'bbg_xiv-gallery',     plugins_url( "js/bbg_xiv-gallery-extra.js",   __FILE__ ), $deps,        FALSE, TRUE );
-            wp_enqueue_script( 'vendors~main.bundle', plugins_url( "js/vendors~main.bundle.js",     __FILE__ ), $deps,        FALSE, FALSE );
-            wp_enqueue_script( 'bundle',              plugins_url( "js/bundle.js",                  __FILE__ ), $deps,        FALSE, FALSE );
+            wp_enqueue_script( 'bbg_xiv-gallery',     plugins_url( "js/bbg_xiv-gallery.js",       __FILE__ ), $deps,        FALSE, TRUE );
+            wp_enqueue_script( 'vendors~main.bundle', plugins_url( "js/vendors~main.bundle.js",   __FILE__ ), $deps,        FALSE, FALSE );
+            wp_enqueue_script( 'bundle',              plugins_url( "js/bundle.js",                __FILE__ ), $deps,        FALSE, FALSE );
         } );
 
         add_action( 'wp_head', function( ) {
@@ -745,11 +745,6 @@ EOD
                 # only emit bb_gallery's styles and scripts if the post content has the bb_gallery shortcode
                 return;
             }
-?>
-<!-- TODO: 'js/bbg_xiv-gallery.js has JSX so babel.js is still necessary. -->
-<script src="<?php echo plugins_url( "js/babel.js",           __FILE__ ); ?>" type="text/javascript"></script>
-<script src="<?php echo plugins_url( "js/bbg_xiv-gallery.js", __FILE__ ); ?>" type="text/babel"></script>
-<?php
         } );
         add_action( 'admin_init', function( ) {
             add_settings_section( 'bbg_xiv_setting_section', 'BB Gallery', function( ) {
