@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
-import NavBar      from '../components/NavBar.js'
-import {getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages, setView, setGallery, toggleFullScreen, toggleCaptions, setQuery}
-                   from '../actions/index.js'
+import NavBar from '../components/NavBar.js'
+import {getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages, setView, setGallery, toggleFullScreen,
+        toggleCaptions, setQuery, setConfiguration} from '../actions/index.js'
 
 const mapStateToProps = (state, ownProps) => {
     const images = state.galleries.images && state.galleries.images[`gallery-${ownProps.id}`] ? state.galleries.images[`gallery-${ownProps.id}`] : null
@@ -28,7 +28,8 @@ const mapDispatchToProps = dispatch => ({
     setQuery: (id, query)                 => dispatch(setQuery(id, query)),
     getImagesByGallerySpecs: (id, specs)  => dispatch(getImagesByGallerySpecs(id, specs)),
     getImagesBySearchParms: (id, parms)   => dispatch(getImagesBySearchParms(id, parms)),
-    loadGalleryImages: (id, images, home) => dispatch(loadGalleryImages(id, images, home))
+    loadGalleryImages: (id, images, home) => dispatch(loadGalleryImages(id, images, home)),
+    showConfigure: ()                     => dispatch(setConfiguration({show: true}))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar)

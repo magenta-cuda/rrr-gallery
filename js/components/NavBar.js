@@ -94,8 +94,8 @@ export default props => {
         toggleCaptions(selector)
     }
     const {id, view, gallery, captions, fullScreen, status, query, search, currentPage, totalPages, setView, setGallery,
-           toggleFullScreen, toggleCaptions, setQuery, getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages}
-            = props
+           toggleFullScreen, toggleCaptions, setQuery, getImagesByGallerySpecs, getImagesBySearchParms,
+           loadGalleryImages, showConfigure} = props
     const selector  = 'gallery-' + id
     let   galleries = ''
     if ( typeof props.galleries !== 'undefined' ) {
@@ -207,7 +207,7 @@ export default props => {
                     </button>
                     <button type="button" className="btn btn-info bbg_xiv-configure"
                             title={bbg_xiv_lang_2["configure bandwidth, carousel interval, ..."]}
-                            onClick={e => {mcRrr.setConfigureShow(true)}}>
+                            onClick={e => {showConfigure()}}>
                         <span className="glyphicon glyphicon-cog"></span>
                         <span className="bbg_xiv-navbar_button_text">{bbg_xiv_lang_2["Options"]}</span>
                     </button>

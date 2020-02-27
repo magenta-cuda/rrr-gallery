@@ -1448,7 +1448,8 @@ console.log('bbg_xiv-gallery.js:loading...');
             bbg_xiv_max_search_results:                bbg_xiv.bbg_xiv_max_search_results,
             bbg_xiv_flex_number_of_dense_view_columns: bbg_xiv.bbg_xiv_flex_number_of_dense_view_columns,
             bbg_xiv_bandwidth:                         bbg_xiv.bbg_xiv_bandwidth,
-            bbg_xiv_interface:                         bbg_xiv.bbg_xiv_interface
+            bbg_xiv_interface:                         bbg_xiv.bbg_xiv_interface,
+            show:                                      false
         }
         mcRrr.setConfiguration(configuration)
         const id    = '10001'

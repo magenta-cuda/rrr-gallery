@@ -12,7 +12,8 @@ const mapStateToProps = state => {
         columnsInDenseView: configuration.bbg_xiv_flex_number_of_dense_view_columns,
         defaultView:        configuration.bbg_xiv_default_view,   // TODO: bbg_xiv.usingServerDefaultView?
         bandwidth:          configuration.bbg_xiv_bandwidth,
-        interface:          configuration.bbg_xiv_interface
+        interface:          configuration.bbg_xiv_interface,
+        show:               configuration.show
     }
 }
 
