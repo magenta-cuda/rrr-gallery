@@ -1,9 +1,11 @@
 // Configure does not use the Redux store. It is an experiment to try React 16.8's State hooks.
+// TODO: If you are using Redux then React's state hooks are not that useful so redo Configure to use the Redux store.
 // Configure is independently rendered with its own DOM root.
 
 import React, {useState, useEffect} from 'react'
 
 export default props => {
+    console.log('Configure():props=', props)
     // Use React 16.8's State hook
     const [initialized,        setInitialized       ] = useState(false                                            )
     const [show,               setShow              ] = useState(false                                            )

@@ -88,7 +88,7 @@ const galleries = (state = {}, action) => {
 const configuration = (state = {}, action) => {
     switch (action.type) {
     case SET_CONFIGURATION: {
-        return action.configuration
+        return {...state, ...action.configuration}
     }
     default:
         return state
