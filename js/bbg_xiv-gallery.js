@@ -1441,6 +1441,16 @@ console.log('bbg_xiv-gallery.js:loading...');
     }
 
     jQuery(document).ready(function(){
+        const configuration = {
+            bbg_xiv_carousel_interval:                 bbg_xiv.bbg_xiv_carousel_interval,
+            bbg_xiv_flex_min_width:                    bbg_xiv.bbg_xiv_flex_min_width,
+            bbg_xiv_miro_row_height:                   bbg_xiv.bbg_xiv_miro_row_height,
+            bbg_xiv_max_search_results:                bbg_xiv.bbg_xiv_max_search_results,
+            bbg_xiv_flex_number_of_dense_view_columns: bbg_xiv.bbg_xiv_flex_number_of_dense_view_columns,
+            bbg_xiv_bandwidth:                         bbg_xiv.bbg_xiv_bandwidth,
+            bbg_xiv_interface:                         bbg_xiv.bbg_xiv_interface
+        }
+        mcRrr.setConfiguration(configuration)
         const id    = '10001'
         mcRrr.createReactTree(id, document.getElementById('mc-rrr-react-root-gallery-' + id))
         jQuery("div.bbg_xiv-gallery_envelope").each(function(){

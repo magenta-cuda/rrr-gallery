@@ -12,13 +12,13 @@ import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 import reducer from './reducers/index.js'
 import rest from './middleware/rest.js'
+import {setConfiguration} from './actions/index.js'
 import Frame from './containers/Frame.js'
 import Configure from './containers/Configure.js'
 import Overlay from './Overlay.js'
 // TODO: BELOW FOR DEBUGGING ONLY
 // import DevTools from './containers/DevTools.js'
 // TODO: ABOVE FOR DEBUGGING ONLY
-import {setConfiguration} from './actions/index.js'
 
 console.log('rr-main.js:loading...');
 
@@ -35,7 +35,8 @@ const store = createStore(reducer, {galleries: {images: {}}, configuration: {}},
 
 window.mcRrr = {
     debug:           debug,
-    createReactTree: (id, root) => {
+    setConfiguration: setConfiguration,
+    createReactTree:  (id, root) => {
         ReactDOM.render(
             <Provider store={store}>
                 <Frame id={id} />
@@ -44,7 +45,7 @@ window.mcRrr = {
             root
         )
     },
-    createOverlay: (root, id = "", className = "") => {
+    createOverlay:    (root, id = "", className = "") => {
         ReactDOM.render(<Overlay className={className} id={id} />, root)
     }
 }
