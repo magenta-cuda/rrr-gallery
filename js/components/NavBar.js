@@ -54,7 +54,7 @@ export default props => {
     // TODO: refactor handleSearchClick() and handlePageClick() into one function
     function handleSearchClick(e) {
         e.preventDefault()
-        let searchLimit = parseInt( bbg_xiv.bbg_xiv_max_search_results, 10 )
+        let searchLimit = parseInt( maxSearchResults, 10 )
         if (searchLimit > bbg_xiv.wpRestApiMaxPerPage) {
             searchLimit = bbg_xiv.wpRestApiMaxPerPage
         }
@@ -68,7 +68,7 @@ export default props => {
         bbg_xiv.handleSearchClick.call(e.currentTarget, e)
     }
     function handlePageClick(e, direction) {
-        let searchLimit = parseInt( bbg_xiv.bbg_xiv_max_search_results, 10 )
+        let searchLimit = parseInt( maxSearchResults, 10 )
         if (searchLimit > bbg_xiv.wpRestApiMaxPerPage) {
             searchLimit = bbg_xiv.wpRestApiMaxPerPage
         }
@@ -93,8 +93,8 @@ export default props => {
         e.preventDefault()
         toggleCaptions(selector)
     }
-    const {id, view, gallery, captions, fullScreen, status, query, search, currentPage, totalPages, setView, setGallery,
-           toggleFullScreen, toggleCaptions, setQuery, getImagesByGallerySpecs, getImagesBySearchParms,
+    const {id, view, gallery, captions, fullScreen, status, query, search, maxSearchResults, currentPage, totalPages,
+           setView, setGallery, toggleFullScreen, toggleCaptions, setQuery, getImagesByGallerySpecs, getImagesBySearchParms,
            loadGalleryImages, showConfigure} = props
     const selector  = 'gallery-' + id
     let   galleries = ''

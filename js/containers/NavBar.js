@@ -4,20 +4,23 @@ import {getImagesByGallerySpecs, getImagesBySearchParms, loadGalleryImages, setV
         toggleCaptions, setQuery, setConfiguration} from '../actions/index.js'
 
 const mapStateToProps = (state, ownProps) => {
-    const images = state.galleries.images && state.galleries.images[`gallery-${ownProps.id}`] ? state.galleries.images[`gallery-${ownProps.id}`] : null
+    const images        = state.galleries.images && state.galleries.images[`gallery-${ownProps.id}`]
+                              ? state.galleries.images[`gallery-${ownProps.id}`] : null
+    const configuration = state.configuration
     console.log('(NavBarContainer)mapStateToProps():images=', images)
     return {
-        id:          ownProps.id,
-        galleries:   ownProps.galleries,
-        view:        images && images.view              ? images.view              : "View",   // TODO: may be translated
-        gallery:     images && images.gallery           ? images.gallery           : "Home",   // TODO: may be translated
-        captions:    images && images.captions          ? images.captions          : false,
-        fullScreen:  images && images.fullScreen        ? images.fullScreen        : false,
-        status:      images && images.status            ? images.status            : "",
-        currentPage: images && images.state.currentPage ? images.state.currentPage : 0,
-        totalPages:  images && images.state.totalPages  ? images.state.totalPages  : 0,
-        query:       images && images.query             ? images.query             : "",
-        search:      images && images.state.data.search ? images.state.data.search : ""
+        id:               ownProps.id,
+        galleries:        ownProps.galleries,
+        view:             images && images.view              ? images.view              : "View",   // TODO: may be translated
+        gallery:          images && images.gallery           ? images.gallery           : "Home",   // TODO: may be translated
+        captions:         images && images.captions          ? images.captions          : false,
+        fullScreen:       images && images.fullScreen        ? images.fullScreen        : false,
+        status:           images && images.status            ? images.status            : "",
+        currentPage:      images && images.state.currentPage ? images.state.currentPage : 0,
+        totalPages:       images && images.state.totalPages  ? images.state.totalPages  : 0,
+        query:            images && images.query             ? images.query             : "",
+        search:           images && images.state.data.search ? images.state.data.search : "",
+        maxSearchResults: configuration.bbg_xiv_max_search_results
     }
 }
 const mapDispatchToProps = dispatch => ({
