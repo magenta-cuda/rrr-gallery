@@ -1,7 +1,3 @@
-// Configure does not use the Redux store. It is an experiment to try React 16.8's State hooks.
-// TODO: If you are using Redux then React's state hooks are not that useful so redo Configure to use the Redux store.
-// Configure is independently rendered with its own DOM root.
-
 import React from 'react'
 
 export default class Configure extends React.Component {
@@ -12,8 +8,9 @@ export default class Configure extends React.Component {
     render() {
         console.log('Configure::render():this.props=', this.props)
         const {carouselDelay, minImageWidth, miroRowHeight, maxSearchResults, columnsInDenseView, defaultView,
-               bandwidth, interface: interface_, show, setConfiguration, hideConfigure } = this.props
-        // mcRrr.setConfigureShow = setShow
+               bandwidth, interface: interface_, show, setConfiguration, hideConfigure, setCarouselDelay,
+               setMinImageWidth, setMiroRowHeight, setMaxSearchResults, setColumnsInDenseView, setDefaultView,
+               setBandwidth, setInterface} = this.props
         console.log('carouselDelay=',      carouselDelay     )
         console.log('minImageWidth-',      minImageWidth     )
         console.log('miroRowHeight=',      miroRowHeight     )
@@ -24,8 +21,7 @@ export default class Configure extends React.Component {
         console.log('interface_=',         interface_        )
         console.log('show=',               show              )
 /*
-        useEffect(() => {
-            // Save configuration in a cookie
+            // TODO: propagate the configuration to a cookie
             const cookie = {
                 bbg_xiv_carousel_interval:                 carouselDelay,
                 bbg_xiv_flex_min_width:                    minImageWidth,
@@ -36,11 +32,9 @@ export default class Configure extends React.Component {
                 bbg_xiv_bandwidth:                         bandwidth,
                 bbg_xiv_interface:                         interface_
             }
-            props.setConfiguration(cookie)
             bbg_xiv.setCookie("bbg_xiv", JSON.stringify(cookie), 30)
             bbg_xiv.getOptionsFromCookie()
             // TODO: bbg_xiv.calcBreakpoints()?
-        })
 */
         return (
             <React.Fragment>

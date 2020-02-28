@@ -19,7 +19,15 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
     setConfiguration: configuration => dispatch(setConfiguration(configuration)),
-    hideConfigure: ()               => dispatch(setConfiguration({show: false}))
+    hideConfigure: ()               => dispatch(setConfiguration({show:                                      false     })),
+    setCarouselDelay: delay         => dispatch(setConfiguration({bbg_xiv_carousel_interval:                 delay     })),
+    setMinImageWidth: width         => dispatch(setConfiguration({bbg_xiv_flex_min_width:                    width     })),
+    setMiroRowHeight: height        => dispatch(setConfiguration({bbg_xiv_miro_row_height:                   height    })),
+    setMaxSearchResults: max        => dispatch(setConfiguration({bbg_xiv_max_search_results:                max       })),
+    setColumnsInDenseView: columns  => dispatch(setConfiguration({bbg_xiv_flex_number_of_dense_view_columns: columns   })),
+    setDefaultView: view            => dispatch(setConfiguration({bbg_xiv_default_view:                      view      })),
+    setBandwidth: bandwidth         => dispatch(setConfiguration({bbg_xiv_bandwidth:                         bandwidth })),
+    setInterface: interface_        => dispatch(setConfiguration({bbg_xiv_interface:                         interface_}))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Configure)
