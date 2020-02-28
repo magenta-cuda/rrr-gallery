@@ -143,10 +143,10 @@ console.log('bbg_xiv-gallery.js:loading...');
  */
     }   // bbg_xiv.postRenderFlexContainer = container => {
 
-    bbg_xiv.postRenderDense = container => {
+    bbg_xiv.postRenderDense = (container, numberOfColumns) => {
         const jqGallery = jQuery(container)
         jqGallery.find("div.bbg_xiv-dense_images div.bbg_xiv-dense_flex_images div.bbg_xiv-dense_flex_item")
-            .css("width",100/bbg_xiv.bbg_xiv_flex_number_of_dense_view_columns+"%");
+            .css("width", 100/numberOfColumns+"%");
         var normal=jQuery("div.bbg_xiv-dense_container button#bbg_xiv-normal_color").css("background-color");
         var highlight=jQuery("div.bbg_xiv-dense_container button#bbg_xiv-highlight_color").css("background-color");
         jqGallery.find("div.bbg_xiv-dense_titles ul li").hover(

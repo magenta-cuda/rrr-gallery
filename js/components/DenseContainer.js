@@ -8,6 +8,7 @@ export default class DenseContainer extends React.Component {
     constructor(props) {
         super(props)
         this.container        = null
+        this.numberOfColumns  = 10
         this.handleCloseClick = this.handleCloseClick.bind(this)
     }
     static getDerivedStateFromError(error) {
@@ -18,7 +19,8 @@ export default class DenseContainer extends React.Component {
         this.props.setView(this.props.images.id, 'Gallery')
     }
     render() {
-        const {images: collection, mode = 'title'} = this.props
+        const {images: collection, configuration, mode = 'title'} = this.props
+        this.numberOfColumns = configuration.bbg_xiv_flex_number_of_dense_view_columns
         if ( typeof collection === 'string' ) {
             return <h1>{collection}</h1>
         }
@@ -34,7 +36,8 @@ export default class DenseContainer extends React.Component {
                 <button type="button" id="bbg_xiv-highlight_color"></button>
                 <button type="button" id="bbg_xiv-normal_color"></button>
                 {/* Changes to mode radio button state is handled directly by my JavaScript handler,
-                  * i.e., this is not a change to React's state - it is in state Domain 2 */}
+                  * i.e., this is not a change to React's state - it is in state Domain 2
+                  * TODO: move this also to Redux store */}
                 <div className="bbg_xiv-dense_button_box">
                     <input type="radio" name="bbg_xiv-dense_li_mode" className="bbg_xiv-dense_li_mode" value="title"
                             defaultChecked={mode === "title"} />&nbsp;Title&nbsp;&nbsp;&nbsp;&nbsp;
@@ -79,7 +82,7 @@ export default class DenseContainer extends React.Component {
     }
     componentDidMount() {
         console.log('DenseContainer::componentDidMount():this.container=', this.container)
-        window.bbg_xiv.postRenderDense(this.container)
+        window.bbg_xiv.postRenderDense(this.container, this.numberOfColumns)
     }
     componentDidCatch(error, info) {
         console.log('DenseContainer:', error, info)
