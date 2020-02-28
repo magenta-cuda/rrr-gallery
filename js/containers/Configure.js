@@ -18,7 +18,8 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    setConfiguration: configuration => dispatch(setConfiguration(configuration))
+    setConfiguration: configuration => dispatch(setConfiguration(configuration)),
+    hideConfigure: ()               => dispatch(setConfiguration({show: false}))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Configure)
