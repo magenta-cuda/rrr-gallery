@@ -11,6 +11,7 @@ import thunk from 'redux-thunk'
 // TODO: ABOVE FOR DEBUGGING ONLY
 import { Provider } from 'react-redux'
 import reducer from './reducers/index.js'
+import cookie from './middleware/cookie.js'
 import rest from './middleware/rest.js'
 import {setConfiguration} from './actions/index.js'
 import Frame from './containers/Frame.js'
@@ -29,7 +30,7 @@ const store = createStore(reducer, {galleries: {images: {}}, configuration: {}},
 // TODO: BELOW FOR DEBUGGING ONLY
                           // compose(applyMiddleware(thunk, start, rest, postRest, end, createLogger()), DevTools.instrument()))
 // TODO: ABOVE FOR DEBUGGING ONLY
-                          applyMiddleware(thunk, rest))
+                          applyMiddleware(thunk, cookie, rest))
 
 // TODO: need store in global scope for now to do testing; remove for production.
 
