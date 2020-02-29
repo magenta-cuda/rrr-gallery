@@ -38,10 +38,8 @@
  * changed React elements. Directly manipulating the CSS skips all these intermediate steps. Of 
  * course the major disadvantage is the logic isn't as structured but I think it will be reasonably
  * understandable. The other reason is the original BB Gallery was written that way and I am too lazy
- * to rewrite all that code.
- *
- * The Overlay is a React component but it is not part of the main React Redux tree. It is rendered
- * independently with its own DOM root.
+ * to rewrite all that code. (Actually, I am in the process of porting the code to completely drive
+ *  everything from the Redux store.)
  */
 
 /* MUCH OF THE CODE IN THIS FILE IS NOW DEAD CODE */

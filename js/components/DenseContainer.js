@@ -8,7 +8,8 @@ export default class DenseContainer extends React.Component {
     constructor(props) {
         super(props)
         this.container        = null
-        this.numberOfColumns  = 10
+        this.numberOfColumns  = props.configuration.bbg_xiv_flex_number_of_dense_view_columns
+        this.configuring      = props.configuration.show
         this.handleCloseClick = this.handleCloseClick.bind(this)
     }
     static getDerivedStateFromError(error) {
@@ -21,6 +22,10 @@ export default class DenseContainer extends React.Component {
     render() {
         const {images: collection, configuration, mode = 'title'} = this.props
         this.numberOfColumns = configuration.bbg_xiv_flex_number_of_dense_view_columns
+        this.configuring     = configuration.show
+        if (this.configuring) {
+            return <h1>Configuring...</h1>
+        }
         if ( typeof collection === 'string' ) {
             return <h1>{collection}</h1>
         }
@@ -81,8 +86,16 @@ export default class DenseContainer extends React.Component {
         )
     }
     componentDidMount() {
-        console.log('DenseContainer::componentDidMount():this.container=', this.container)
-        window.bbg_xiv.postRenderDense(this.container, this.numberOfColumns)
+        if (!this.configuring) {
+            console.log('DenseContainer::componentDidMount():this.container=', this.container)
+            window.bbg_xiv.postRenderDense(this.container, this.numberOfColumns)
+        }
+    }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (!this.configuring) {
+            console.log('DenseContainer::componentDidUpdate():this.container=', this.container)
+            window.bbg_xiv.postRenderDense(this.container, this.numberOfColumns)
+        }
     }
     componentDidCatch(error, info) {
         console.log('DenseContainer:', error, info)

@@ -65,7 +65,7 @@ export default class JustifiedGalleryContainer extends React.Component {
             window.bbg_xiv.postRenderJustified(this.container, this.rowHeight)
         }
     }
-    componentDidUpdate(prevProps, prevState, snapshot){
+    componentDidUpdate(prevProps, prevState, snapshot) {
         if (!this.configuring) {
             console.log('componentDidUpdate():this.container=', this.container)
             window.bbg_xiv.postRenderJustified(this.container, this.rowHeight)
