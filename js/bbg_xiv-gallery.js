@@ -228,15 +228,12 @@ console.log('bbg_xiv-gallery.js:loading...');
  */ 
         // bbg_xiv.constructOverlay(container)
         mcRrr.createOverlay(jQuery(container).find('div.mc-rrr-react-overlay-root').get(0))
-    }   //     bbg_xiv.postRenderDense = container => {
+    }   // bbg_xiv.postRenderDense = (container, numberOfColumns) => {
 
-
-    bbg_xiv.postRenderJustified = container => {
+    bbg_xiv.postRenderJustified = (container, rowHeight) => {
         const justifiedContainer = jQuery(container);
         const $justifiedGallery  = justifiedContainer.find( 'div.bbg_xiv-justified_gallery' );
-        // The Babel transpiled code does not initially show in the debugger, but the debugger command will force it to show. 
-        // debugger;
-        $justifiedGallery.justifiedGallery({margins: 5, rowHeight: bbg_xiv.bbg_xiv_miro_row_height, lastRow: 'nojustify', refreshSensitivity: 0, refreshTime: 250 })
+        $justifiedGallery.justifiedGallery({margins: 5, rowHeight: rowHeight, lastRow: 'nojustify', refreshSensitivity: 0, refreshTime: 250})
             .on( 'jg.complete jg.resize', function() {
             // Why are there negative margins on the img - anyway remove them
             $justifiedGallery.find( 'img' ).css( 'margin', '0' );
@@ -284,7 +281,7 @@ console.log('bbg_xiv-gallery.js:loading...');
         // titlesButton.show();
         // bbg_xiv.constructOverlay(container)
         mcRrr.createOverlay(jQuery(container).find('div.mc-rrr-react-overlay-root').get(0))
-    }   // bbg_xiv.postRenderJustified = container => {
+    }   // bbg_xiv.postRenderJustified = (container, rowHeight) => {
 
     bbg_xiv.postRenderTabs = container => {
         const jqGallery = jQuery(container)

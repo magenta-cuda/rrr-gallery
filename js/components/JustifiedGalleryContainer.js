@@ -7,6 +7,7 @@ export default class JustifiedGalleryContainer extends React.Component {
     constructor(props) {
         super(props)
         this.container = null
+        this.rowHeight = props.configuration.bbg_xiv_miro_row_height
     }
     static getDerivedStateFromError(error) {
         console.log('JustifiedGalleryContainer:', error)
@@ -15,6 +16,7 @@ export default class JustifiedGalleryContainer extends React.Component {
     render() {
         const collection = this.props.images
         const captions   = this.props.captions
+        this.rowHeight   = this.props.configuration.bbg_xiv_miro_row_height
         if (typeof collection === 'string') {
             return <h1>{collection}</h1>
         }
@@ -52,11 +54,11 @@ export default class JustifiedGalleryContainer extends React.Component {
     }
     componentDidMount() {
         console.log('componentDidMount():this.container=', this.container)
-        window.bbg_xiv.postRenderJustified(this.container)
+        window.bbg_xiv.postRenderJustified(this.container, this.rowHeight)
     }
     componentDidUpdate(prevProps, prevState, snapshot){
         console.log('componentDidUpdate():this.container=', this.container)
-        window.bbg_xiv.postRenderJustified(this.container)
+        window.bbg_xiv.postRenderJustified(this.container, this.rowHeight)
     }
     componentDidCatch(error, info) {
         console.log('JustifiedGalleryContainer:', error, info)
