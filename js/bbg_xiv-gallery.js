@@ -216,14 +216,6 @@ console.log('bbg_xiv-gallery.js:loading...');
             window.open( bbg_xiv.docUrl + '#view-dense', '_blank' );
             e.preventDefault();      
         } );
-/*
-        jqGallery.find("button.bbg_xiv-dense_close_btn").click(function(e){
-            // restore "Gallery View"
-            bbg_xiv.resetGallery(jQuery(this).parents("div.bbg_xiv-gallery"));
-            jQuery( 'html' ).css( 'overflow-y', '' );
-            e.preventDefault();      
-        });
- */ 
         // bbg_xiv.constructOverlay(container)
         mcRrr.createOverlay(jQuery(container).find('div.mc-rrr-react-overlay-root').get(0))
     }   // bbg_xiv.postRenderDense = (container, numberOfColumns) => {
@@ -535,77 +527,7 @@ console.log('bbg_xiv-gallery.js:loading...');
         }
         jQuery("#"+carouselId).carousel({interval:bbg_xiv.bbg_xiv_carousel_interval,pause:false});
     }   // bbg_xiv.postRenderCarousel = container => {
-    // renderGeneric() may work unmodified with your template.
-    // Otherwise you can use it as a base for a render function specific to your template.
-    // See renderGallery(), renderCarousel() or renderTabs() - all of which need some special HTML to work correctly.
 
-    bbg_xiv.renderGeneric=function(container,collection,template){
-        var imageView=new bbg_xiv.ImageView();
-        // attach template to imageView not ImageView.prototype since template is specific to imageView
-        imageView.template=_.template( jQuery("script#bbg_xiv-template_"+template+"_item").html(),null,bbg_xiv.templateOptions);
-        var imagesHtml="";
-        collection.forEach(function( model ) {
-            imageView.model=model;
-            imagesHtml+=imageView.render(true);
-        });
-        var galleryView=new bbg_xiv.GalleryView({
-            model:{
-                attributes:{
-                    items:imagesHtml
-                }
-            }
-        } );
-        galleryView.template=_.template(jQuery("script#bbg_xiv-template_"+template+"_container").html(),null,bbg_xiv.templateOptions);
-        container.empty();
-        container.append(galleryView.render().$el.find("bbg_xiv-container"));
-    };
-
-    // debugging utilities
-    
-    // dumpFieldNames() dumps field names as <th> elements in a <tr> element
-    var fieldNames=[];
-    bbg_xiv.dumpFieldNames=function(collection){
-        collection.forEach(function(model){
-            Object.keys(model.attributes).forEach(function(key){
-                if(fieldNames.indexOf(key)===-1){
-                    fieldNames.push(key);
-                }
-            });
-        });
-        var buffer="<tr>";
-        fieldNames.forEach(function(name){
-            buffer+="<th>"+name+"</th>";
-        });
-        buffer+="</tr>";
-        return buffer;
-    };
-    
-    // dumpFieldValues() dumps field values as <td> elements in <tr> elements
-    bbg_xiv.dumpFieldValues=function(collection){
-        var buffer="";
-        collection.forEach(function(model){
-            buffer+="<tr>";
-            fieldNames.forEach(function(name){
-                buffer+="<td>"+model.attributes[name]+"</td>";
-            });
-            buffer+="</tr>";
-        });
-        return buffer;        
-    };
-    
-    bbg_xiv.renderTable=function(container,collection){
-        var galleryView=new bbg_xiv.GalleryView({
-            model:{
-                attributes:{
-                    collection:collection
-                }
-            }
-        } );
-        galleryView.template=_.template(jQuery("script#bbg_xiv-template_table_container").html(),null,bbg_xiv.templateOptions);
-        container.empty();
-        container.append(galleryView.render().$el.find("div.bbg_xiv-table"));
-    };
-    
     bbg_xiv.renderGallery=function(gallery,view,flags){
         if(!flags){
             flags=[];
@@ -623,14 +545,6 @@ console.log('bbg_xiv-gallery.js:loading...');
         // remember the initial statically loaded gallery so we can efficiently return to it
         bbg_xiv.galleries[gallery.id]=bbg_xiv.galleries[gallery.id]||{images:{"gallery_home":images},view:"gallery_home"};
         var titlesButton=jqGallery.parents("div.bbg_xiv-gallery").find("nav.navbar button.bbg_xiv-titles").hide();
-        switch(view){
-        // TODO: Add entry for new views here
-        case "Table":
-            bbg_xiv.renderTable(jqGallery,images);
-            break;
-        default:
-            break;
-        }
         var menuItems=jQuery(gallery.parentNode).find("nav.bbg_xiv-gallery_navbar ul.nav ul.bbg_xiv-view_menu li").show();
         if ( bbg_xiv.guiInterface !== 'mouse' || jQuery( window ).width() < bbg_xiv.bbg_xiv_flex_min_width_for_dense_view ) {
             // for touch and small screen devices hide the dense menu item
