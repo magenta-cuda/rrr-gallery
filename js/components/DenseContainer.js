@@ -20,7 +20,7 @@ export default class DenseContainer extends React.Component {
         this.props.setView(this.props.images.id, 'Gallery')
     }
     render() {
-        const {images: collection, configuration, mode = 'title'} = this.props
+        const {images: collection, configuration, mode = 'title', showConfigure} = this.props
         this.numberOfColumns = configuration.bbg_xiv_flex_number_of_dense_view_columns
         this.configuring     = configuration.show
         if (this.configuring) {
@@ -52,6 +52,11 @@ export default class DenseContainer extends React.Component {
                             defaultChecked={mode === "alt"}  />&nbsp;Alt
                 </div>
                 <div className="bbg_xiv-dense_right_btns">
+                    <button type="button" className="bbg_xiv-dense_configure_btn btn"
+                            title={bbg_xiv_lang_2["configure bandwidth, carousel interval, ..."]}
+                            onClick={e => {showConfigure()}}>
+                        <span className="glyphicon glyphicon-cog"></span>
+                    </button>
                     <button type="button" className="bbg_xiv-dense_info_btn btn" title="get help">
                         <span className="glyphicon glyphicon-question-sign"></span>
                     </button>
