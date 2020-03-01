@@ -1446,8 +1446,9 @@ console.log('bbg_xiv-gallery.js:loading...');
             bbg_xiv_interface:                         bbg_xiv.bbg_xiv_interface,
             show:                                      false
         }
-        mcRrr.setConfiguration(configuration)
-        const id    = '10001'
+        console.log('configuration=', configuration)
+        mcRrr.createStore(configuration)
+        const id = '10001'
         mcRrr.createReactTree(id, document.getElementById('mc-rrr-react-root-gallery-' + id))
         jQuery("div.bbg_xiv-gallery_envelope").each(function(){
             var gallery=this;

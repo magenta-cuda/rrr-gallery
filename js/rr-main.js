@@ -26,20 +26,21 @@ console.log('rr-main.js:loading...');
 var searchParams = new URLSearchParams(window.location.search)
 var debug        = searchParams.has("mc_debug")
 
-const store = createStore(reducer, {galleries: {images: {}}, configuration: {}},
-// TODO: BELOW FOR DEBUGGING ONLY
-                          // compose(applyMiddleware(thunk, start, rest, postRest, end, createLogger()), DevTools.instrument()))
-// TODO: ABOVE FOR DEBUGGING ONLY
-                          applyMiddleware(thunk, cookie, rest))
-
-// TODO: need store in global scope for now to do testing; remove for production.
-
 window.mcRrr = {
-    debug:           debug,
-    setConfiguration: configuration => store.dispatch(setConfiguration(configuration)),
+    createStore: configuration => {
+        // The configuration cannot be initialized in the call to createStore() as that will not synchronize the cookie to the Redux store.
+        window.mcRrr.store = createStore(reducer, {galleries: {images: {}}, configuration: {}},
+// TODO: BELOW FOR DEBUGGING ONLY
+                                         // compose(applyMiddleware(thunk, start, rest, postRest, end, createLogger()), DevTools.instrument()))
+// TODO: ABOVE FOR DEBUGGING ONLY
+                                         applyMiddleware(thunk, cookie, rest))
+        // The configuration needs to be initialized by dispatching a setConfiguration() action as that will sync the cookie to the Redux store.
+        // If there is no cookie then the server provides a default configuration which needs to be pushed to a cookie.
+        window.mcRrr.store.dispatch(setConfiguration(configuration))
+    },
     createReactTree: (id, root) => {
         ReactDOM.render(
-            <Provider store={store}>
+            <Provider store={window.mcRrr.store}>
                 <Frame id={id} />
                 <Configure />
             </Provider>,
@@ -48,7 +49,8 @@ window.mcRrr = {
     },
     createOverlay: (root, id = "", className = "") => {
         ReactDOM.render(<Overlay className={className} id={id} />, root)
-    }
+    },
+    debug: debug
 }
 
 console.log('rr-main.js:loaded.');
