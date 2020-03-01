@@ -61,12 +61,9 @@ console.log('bbg_xiv-gallery.js:loading...');
     };
     
     bbg_xiv.images    = {};
-    bbg_xiv.search    = {};   // state info for multi part search results
     bbg_xiv.galleries = {};   // state info for alternate galleries
     
     bbg_xiv.Image     = Backbone.Model.extend( { idAttribute: "id" } );
-    
-    bbg_xiv.Images    = Backbone.Collection.extend( {model: bbg_xiv.Image } );
     
     bbg_xiv.ImageView = Backbone.View.extend( {
         render:function(srcOnly){
@@ -77,14 +74,6 @@ console.log('bbg_xiv-gallery.js:loading...');
             this.$el.html(html);
             return this;
         }    
-    });
-    
-    bbg_xiv.GalleryView=Backbone.View.extend({
-        render:function(){
-            var html=this.template(this.model.attributes);
-            this.$el.html(html);
-            return this;
-        }
     });
     
     bbg_xiv.postRenderFlexContainer = container => {
@@ -132,7 +121,6 @@ console.log('bbg_xiv-gallery.js:loading...');
                 }
             });
         }
-        // bbg_xiv.constructOverlay(container)
         mcRrr.createOverlay($flexContainer.find('div.mc-rrr-react-overlay-root').get(0))
 /*
         window.setTimeout(function() {
@@ -216,7 +204,6 @@ console.log('bbg_xiv-gallery.js:loading...');
             window.open( bbg_xiv.docUrl + '#view-dense', '_blank' );
             e.preventDefault();      
         } );
-        // bbg_xiv.constructOverlay(container)
         mcRrr.createOverlay(jQuery(container).find('div.mc-rrr-react-overlay-root').get(0))
     }   // bbg_xiv.postRenderDense = (container, numberOfColumns) => {
 
@@ -267,8 +254,6 @@ console.log('bbg_xiv-gallery.js:loading...');
               }
           } );
         });
-        // titlesButton.show();
-        // bbg_xiv.constructOverlay(container)
         mcRrr.createOverlay(jQuery(container).find('div.mc-rrr-react-overlay-root').get(0))
     }   // bbg_xiv.postRenderJustified = (container, rowHeight) => {
 
@@ -376,7 +361,6 @@ console.log('bbg_xiv-gallery.js:loading...');
         }
     }   // bbg_xiv.postRenderTabs = container => {
     bbg_xiv.postRenderCarousel = (container, carouselId, images, setIndex) => {
-        // constructOverlay();
         const jqGallery = jQuery(container)
         // TODO: flags
         // if(flags.indexOf("embedded-carousel")!==-1){
@@ -550,12 +534,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             // for touch and small screen devices hide the dense menu item
             menuItems.filter( '.bbg_xiv-large_viewport_only' ).hide();
         }
-        if(bbg_xiv.search[gallery.id]){
-            // displaying search results so hide gallery headings
-            jQuery("div#"+gallery.id+"-alt_gallery_heading").hide();
-            // and show search results heading
-            jQuery("div#"+gallery.id+"-heading").show();
-        }else if(bbg_xiv.galleries[gallery.id]){
+        if (bbg_xiv.galleries[gallery.id]) {
             // displaying a gallery so hide search results heading
             jQuery("div#"+gallery.id+"-heading").hide();
             var galleryOfGalleries=typeof bbg_xiv.images[gallery.id].models[0].attributes.gallery_index!=="undefined";
