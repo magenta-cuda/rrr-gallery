@@ -9,12 +9,6 @@ import DenseContainer from '../components/DenseContainer.js'
 export default class Gallery extends React.Component {
     constructor(props) {
         super(props)
-        wp.api.loadPromise.done(() => {
-            const images = new wp.api.collections.Media()
-            images.reset(JSON.parse(bbg_xiv[props.id+"-data"]))
-            images.view  = "Gallery"
-            props.loadGalleryImages(props.id, images, true)
-        })
     }
     static getDerivedStateFromError(error) {
         console.log('Gallery:', error)

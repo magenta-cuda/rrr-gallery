@@ -1448,8 +1448,16 @@ console.log('bbg_xiv-gallery.js:loading...');
         }
         console.log('configuration=', configuration)
         mcRrr.createStore(configuration)
-        const id = '10001'
-        mcRrr.createReactTree(id, document.getElementById('mc-rrr-react-root-gallery-' + id))
+        wp.api.loadPromise.done(() => {
+            const id        = '10001'
+            const galleryId = "gallery-" + id
+            const images    = new wp.api.collections.Media()
+            images.reset(JSON.parse(bbg_xiv[galleryId + "-data"]))
+            images.view  = "Gallery"
+            mcRrr.loadGalleryImages(galleryId, images, true)
+            mcRrr.createReactTree(id, document.getElementById('mc-rrr-react-root-gallery-' + id))
+        })
+/*
         jQuery("div.bbg_xiv-gallery_envelope").each(function(){
             var gallery=this;
             // var defaultView=bbg_xiv.getDefaultView(jQuery(gallery),null);
@@ -1489,141 +1497,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             }
             jQuery( window ).resize();
         });
-/*
-        jQuery( 'button.bbg_xiv-titles' ).click(function() {
-            var $this             = jQuery( this );
-            var $galleryContainer = $this.closest( 'div.bbg_xiv-bootstrap.bbg_xiv-gallery' );
-            var $container        = $galleryContainer.find( 'div.bbg_xiv-flex_container' );
-            if ( $container.length ) {
-                var $figure  = $container.find( 'div.bbg_xiv-flex_item figure' );
-                var $caption = $figure.find( 'figcaption' );
-                if ( $galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
-                    $caption.hide( 1000 );
-                    $galleryContainer.removeClass( 'bbg_xiv-caption_visible' );
-                    $this.attr( 'title', bbg_xiv_lang['show titles'] );
-                } else {
-                    $caption.show( 1000 );
-                    $galleryContainer.addClass( 'bbg_xiv-caption_visible' );
-                    $this.attr( 'title', bbg_xiv_lang['hide titles'] );
-                }
-                if ( $container.hasClass( 'bbg_xiv-contain' ) ) {
-                    // in tiles contain mode center image if title not displayed
-                    if ( $galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
-                        $figure.find( 'img' ).removeClass( 'bbg_xiv-vertical_center' );
-                    }else{
-                        $figure.find( 'img' ).addClass( 'bbg_xiv-vertical_center' );
-                    }
-                }
-                return;
-            }
-            $container = $galleryContainer.find( 'div.bbg_xiv-justified_container' );
-            if ( $container.length ) {
-                if ( $galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
-                    $galleryContainer.removeClass( 'bbg_xiv-caption_visible' );
-                    $this.attr( 'title', bbg_xiv_lang['show captions'] );
-                } else {
-                    $galleryContainer.addClass( 'bbg_xiv-caption_visible' );
-                    $this.attr( 'title', bbg_xiv_lang['hide captions'] );
-                }
-                window.setTimeout( function() {
-                    var $caption = $container.find( 'div.caption' );
-                    if ( $galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
-                        $caption.css( { display: 'block', opacity: '0.7' } );
-                    } else {
-                        $caption.css( { display: 'none',  opacity: '0.0' } );
-                    }
-                }, 1000 );
-            }
-        });
-        // wireup the handler for setting options
-        jQuery("button.bbg_xiv-configure").click(function(e){
-            divConfigure.find("input#bbg_xiv-carousel_delay").val(bbg_xiv.bbg_xiv_carousel_interval);
-            divConfigure.find("input#bbg_xiv-min_image_width").val(bbg_xiv.bbg_xiv_flex_min_width);
-            divConfigure.find( 'input#bbg_xiv-miro_row_height' ).val( bbg_xiv.bbg_xiv_miro_row_height );
-            divConfigure.find("input#bbg_xiv-max_search_results").val(bbg_xiv.bbg_xiv_max_search_results);
-            divConfigure.find("input#bbg_xiv-columns_in_dense_view").val(bbg_xiv.bbg_xiv_flex_number_of_dense_view_columns);
-            divConfigure.find("input[name='bbg_xiv-default_view']").prop("checked",false);
-            if(bbg_xiv.usingServerDefaultView===false){
-                divConfigure.find("input[name='bbg_xiv-default_view'][value='"+bbg_xiv.bbg_xiv_default_view+"']").prop("checked",true);
-            }
-            divConfigure.find("input[name='bbg_xiv-bandwidth']").prop("checked",false);
-            divConfigure.find("input[name='bbg_xiv-bandwidth'][value='"+bbg_xiv.bbg_xiv_bandwidth+"']").prop("checked",true);
-            divConfigure.find("input[name='bbg_xiv-interface']").prop("checked",false);
-            divConfigure.find("input[name='bbg_xiv-interface'][value='"+bbg_xiv.bbg_xiv_interface+"']").prop("checked",true);
-            var gallery=jQuery(this).parents("div.bbg_xiv-gallery");
-            var outer=gallery.find("div.bbg_xiv-configure_outer");
-            outer.show();
-            var inner=gallery.find("div.bbg_xiv-configure_inner");
-            inner.show();
-            e.preventDefault();
-        });
- */ 
-        var divConfigure=jQuery(".bbg_xiv-configure_inner");
-        divConfigure.find( 'input[type="number"]#bbg_xiv-max_search_results' ).change(function() {
-            // max seems to be broken so fix with javascript
-            var jqThis=jQuery(this);
-            var max     = parseInt( jqThis.val(), 10 );
-            var attrMax = parseInt( jqThis.attr( 'max' ), 10 );
-            if ( attrMax > bbg_xiv.wpRestApiMaxPerPage ) {
-                // WP REST API requires that per_page be between 1 and 100 inclusive
-                attrMax = bbg_xiv.wpRestApiMaxPerPage;
-            }
-            if(max>attrMax){
-                jqThis.val(attrMax);
-            }
-        });
-        divConfigure.find( 'button.bbg_xiv-configure_close,button.bbg_xiv-cancel_options' ).click(function() {
-            var gallery=jQuery(this).parents("div.bbg_xiv-gallery");
-            var outer=gallery.find("div.bbg_xiv-configure_outer");
-            outer.hide();
-            var inner=gallery.find("div.bbg_xiv-configure_inner");
-            inner.hide();
-        });
-        divConfigure.find("button.bbg_xiv-help_options").click(function(e){
-            window.open(bbg_xiv.helpOptionsUrl,"_blank");
-            e.preventDefault();
-        });
-        divConfigure.find("button.bbg_xiv-save_options").click(function(e){
-            // save the options
-            bbg_xiv.bbg_xiv_carousel_interval=divConfigure.find("input#bbg_xiv-carousel_delay").val();
-            bbg_xiv.bbg_xiv_flex_min_width=divConfigure.find("input#bbg_xiv-min_image_width").val();
-            bbg_xiv.bbg_xiv_miro_row_height = divConfigure.find( 'input#bbg_xiv-miro_row_height' ).val();
-            bbg_xiv.bbg_xiv_max_search_results=divConfigure.find("input#bbg_xiv-max_search_results").val();
-            bbg_xiv.bbg_xiv_flex_number_of_dense_view_columns=divConfigure.find("input#bbg_xiv-columns_in_dense_view").val();
-            var defaultView=divConfigure.find("input[name='bbg_xiv-default_view']:checked").val();
-            if(defaultView){
-                bbg_xiv.bbg_xiv_default_view=defaultView;
-                bbg_xiv.usingServerDefaultView=false;
-            }else{
-                bbg_xiv.usingServerDefaultView=true;
-            }
-            bbg_xiv.bbg_xiv_bandwidth=divConfigure.find("input[name='bbg_xiv-bandwidth']:checked").val();
-            bbg_xiv.bbg_xiv_interface=divConfigure.find("input[name='bbg_xiv-interface']:checked").val();
-            var cookie={
-                bbg_xiv_carousel_interval:bbg_xiv.bbg_xiv_carousel_interval,
-                bbg_xiv_flex_min_width:bbg_xiv.bbg_xiv_flex_min_width,
-                bbg_xiv_miro_row_height: bbg_xiv.bbg_xiv_miro_row_height,
-                bbg_xiv_max_search_results:bbg_xiv.bbg_xiv_max_search_results,
-                bbg_xiv_flex_number_of_dense_view_columns:bbg_xiv.bbg_xiv_flex_number_of_dense_view_columns,
-                bbg_xiv_bandwidth:bbg_xiv.bbg_xiv_bandwidth,
-                bbg_xiv_interface:bbg_xiv.bbg_xiv_interface
-            };
-            if(bbg_xiv.usingServerDefaultView===false){
-                cookie.bbg_xiv_default_view=bbg_xiv.bbg_xiv_default_view;
-            }
-            cookie=JSON.stringify(cookie);
-            bbg_xiv.setCookie("bbg_xiv",cookie,30);
-            bbg_xiv.getOptionsFromCookie();
-            bbg_xiv.calcBreakpoints();
-            var gallery=jQuery(this).parents("div.bbg_xiv-gallery");
-            var outer=gallery.find("div.bbg_xiv-configure_outer");
-            outer.hide();
-            var inner=gallery.find("div.bbg_xiv-configure_inner");
-            inner.hide();
-            // redisplay the "Gallery" view using the new option values
-            bbg_xiv.resetGallery(jQuery(this).parents("div.bbg_xiv-gallery"));
-            e.preventDefault();
-        });
+ */
 /*
         jQuery("button.bbg_xiv-help").click(function(e){
             var view = jQuery( this ).closest( 'div.navbar-collapse' ).find( 'ul.navbar-nav li.bbg_xiv-select_view ul.bbg_xiv-view_menu li.bbg_xiv-view.active a' ).data( 'view' );

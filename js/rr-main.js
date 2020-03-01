@@ -13,7 +13,7 @@ import { Provider } from 'react-redux'
 import reducer from './reducers/index.js'
 import cookie from './middleware/cookie.js'
 import rest from './middleware/rest.js'
-import {setConfiguration} from './actions/index.js'
+import {setConfiguration, loadGalleryImages} from './actions/index.js'
 import Frame from './containers/Frame.js'
 import Configure from './containers/Configure.js'
 import Overlay from './Overlay.js'
@@ -38,6 +38,7 @@ window.mcRrr = {
         // If there is no cookie then the server provides a default configuration which needs to be pushed to a cookie.
         window.mcRrr.store.dispatch(setConfiguration(configuration))
     },
+    loadGalleryImages: (id, images, home) => window.mcRrr.store.dispatch(loadGalleryImages(id, images, home)),
     createReactTree: (id, root) => {
         ReactDOM.render(
             <Provider store={window.mcRrr.store}>
