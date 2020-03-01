@@ -60,10 +60,7 @@ console.log('bbg_xiv-gallery.js:loading...');
         variable:    'data'
     };
     
-    bbg_xiv.images    = {};
     bbg_xiv.galleries = {};   // state info for alternate galleries
-    
-    bbg_xiv.Image     = Backbone.Model.extend( { idAttribute: "id" } );
     
     bbg_xiv.ImageView = Backbone.View.extend( {
         render:function(srcOnly){
@@ -511,7 +508,7 @@ console.log('bbg_xiv-gallery.js:loading...');
         }
         jQuery("#"+carouselId).carousel({interval:bbg_xiv.bbg_xiv_carousel_interval,pause:false});
     }   // bbg_xiv.postRenderCarousel = container => {
-
+/*
     bbg_xiv.renderGallery=function(gallery,view,flags){
         if(!flags){
             flags=[];
@@ -522,13 +519,8 @@ console.log('bbg_xiv-gallery.js:loading...');
         }
 
         var jqGallery=jQuery(gallery);
-        var images=bbg_xiv.images[gallery.id];
-        if(!images||!images.constructed){
-            images=bbg_xiv.constructImages(gallery);
-        }
         // remember the initial statically loaded gallery so we can efficiently return to it
         bbg_xiv.galleries[gallery.id]=bbg_xiv.galleries[gallery.id]||{images:{"gallery_home":images},view:"gallery_home"};
-        var titlesButton=jqGallery.parents("div.bbg_xiv-gallery").find("nav.navbar button.bbg_xiv-titles").hide();
         var menuItems=jQuery(gallery.parentNode).find("nav.bbg_xiv-gallery_navbar ul.nav ul.bbg_xiv-view_menu li").show();
         if ( bbg_xiv.guiInterface !== 'mouse' || jQuery( window ).width() < bbg_xiv.bbg_xiv_flex_min_width_for_dense_view ) {
             // for touch and small screen devices hide the dense menu item
@@ -557,7 +549,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             }
         }
     };
-    
+ */
     // tabs are used twice - to show a list of gallery titles and a list of image titles. prettifyTabs() implements the common functionality for both
     bbg_xiv.prettifyTabs=function(jqGallery,initial){
         // Adjust the tab view according to its environment
@@ -590,23 +582,6 @@ console.log('bbg_xiv-gallery.js:loading...');
             });
         }
     };
-/*
-    bbg_xiv.resetGallery=function(gallery,currentView){
-        // restore "Gallery View"
-        var divGallery=gallery.find("div.bbg_xiv-gallery_envelope")[0];
-        var galleryOfGalleries=typeof bbg_xiv.images[divGallery.id].models[0].attributes.gallery_index!=="undefined";
-        var defaultView=bbg_xiv.getDefaultView(jQuery(divGallery),galleryOfGalleries);
-        if(currentView==="Carousel"&&defaultView==="Carousel"){
-            defaultView="Gallery";
-        }
-        bbg_xiv.renderGallery(divGallery,defaultView);
-        var liSelectView=gallery.find("nav.bbg_xiv-gallery_navbar ul.nav li.bbg_xiv-select_view");
-        var liFirst=liSelectView.find("ul.bbg_xiv-view_menu li.bbg_xiv-view").removeClass("active").filter(".bbg_xiv-view_"+defaultView.toLowerCase()).addClass("active");
-        liSelectView.find("a.bbg_xiv-selected_view span").text(liFirst.text());
-        jQuery(window).resize();
-    };
- */
-    // getting attributes indirectly through functions will make it possible for one template to be used for both the REST mode and the old proprietary mode
 
     // the fullSize parameter is the size of the non-iconic view of the image and should either "viewport" or "container"
     // the icon parameter is a boolean indicating that the src is for a thumbnail
@@ -842,7 +817,6 @@ console.log('bbg_xiv-gallery.js:loading...');
     
     jQuery(window).resize(function(){
         var breakpoints=bbg_xiv.breakpoints;
-        // debugger;
         jQuery("div.bbg_xiv-flex_container,div.bbg_xiv-gallery_container").each(function(){
             var jqThis=jQuery(this);
             var width=jqThis.width();
@@ -850,15 +824,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             var minFlexWidthForCaption=window.bbg_xiv.bbg_xiv_flex_min_width_for_caption;
             if(jqThis.parents("div.bbg_xiv-gallery_envelope").hasClass("bbg_xiv-tiles_container")
                 || jqThis.hasClass("bbg_xiv-tiles_container") ) {
-/*
-                This code moved to FlexContainer.js
-                // set tile width and height in pixels so that tiles cover the div exactly and completely
-                pxWidth = Math.floor( width / Math.floor( width / window.bbg_xiv.bbg_xiv_flex_min_width ) ) - 1;
-                jqThis.find("div.bbg_xiv-flex_item").css({width:pxWidth,height:pxWidth});
-                if(pxWidth<minFlexWidthForCaption){
-                    jqThis.find("div.bbg_xiv-flex_item figcaption").hide();
-                }
- */
+                // This case handle in FlexContainer.js
             }else{
                 // find the smallest percentage width that satisfies the minimum image width
                 breakpoints.forEach(function(breakpoint){
@@ -934,7 +900,6 @@ console.log('bbg_xiv-gallery.js:loading...');
         window.open( bbg_xiv.docUrl + '#view-' + view.toLowerCase(), '_blank' );
         this.blur();
         e.preventDefault();
-        // debugger
     }
 
     bbg_xiv.handleSearchClick = function(e) {
@@ -981,11 +946,6 @@ console.log('bbg_xiv-gallery.js:loading...');
         jQuery("div.bbg_xiv-gallery_tabs_container nav.navbar ul.nav-tabs li a[data-view^='gallery_']").click(function(e){
             jQuery(this).parents("div.bbg_xiv-bootstrap.bbg_xiv-gallery")
                 .find("nav.bbg_xiv-gallery_navbar ul.nav li.dropdown ul.bbg_xiv-view_menu li > a[data-view='"+this.dataset.view+"']").click();
-            e.preventDefault();
-        });
-        jQuery("button.bbg_xiv-home").click(function(e){
-            jQuery(this).parents("div.bbg_xiv-bootstrap.bbg_xiv-gallery")
-                .find("nav.bbg_xiv-gallery_navbar ul.nav li.dropdown ul.bbg_xiv-view_menu li > a[data-view='gallery_home']").click();
             e.preventDefault();
         });
  */
