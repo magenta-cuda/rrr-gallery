@@ -244,7 +244,6 @@ console.log('bbg_xiv-gallery.js:loading...');
             justifiedContainer.addClass( window.matchMedia( '(max-aspect-ratio:1/1)' ).matches ? 'bbg_xiv-portrait' : 'bbg_xiv-landscape' );
         }
         var galleryContainer = justifiedContainer.closest('div.bbg_xiv-gallery').removeClass('bbg_xiv-caption_visible')
-        galleryContainer.find( 'button.bbg_xiv-titles' ).attr( 'title',  bbg_xiv_lang['show captions'] );
         // if CC has been set to visible then override Justified Gallery's hover handlers
         justifiedContainer.find("div.bbg_xiv-justified_gallery div.bbg_xiv-justified_item").each(function(){
           var img=this.querySelector("img");
@@ -1407,31 +1406,8 @@ console.log('bbg_xiv-gallery.js:loading...');
         var searchBtn=jQuery(this);
         searchBtn.prop("disabled",true);
         var divGallery=searchBtn.parents("div.bbg_xiv-gallery").find("div.bbg_xiv-gallery_envelope")[0];
-/*
-        if(* new search *) {
-            // TODO: Redux store also needs to hold a search history
-            // start new search history
-            bbg_xiv.search[divGallery.id]={history:[],index:-1,done:false};
-        }else if(typeof query==="undefined"){
-            return;
-        }
- */
         // setup headings
         jQuery("div#"+divGallery.id+"-alt_gallery_heading").hide();
-/*
-        // TODO: the GUI needs a loading message
-        var jqueryLoading=true;
-        try {
-            // There is a very rare failure of the following
-            jQuery(divGallery).empty().append(jQuery.mobile.loading("show",{text:"Loading... please wait.",textVisible:true,textonly:false}));
-        } catch ( error) {
-            console.log( error );
-            //console.log("jQuery.mobile.loading._widget=",jQuery.mobile.loading._widget);
-            jQuery(divGallery).empty().append('<h1 class="bbg_xiv-info">Loading... please wait.</h1>');
-            jQuery.mobile.loading._widget=undefined;
-            jqueryLoading=false;
-        }
- */
         searchBtn.closest( 'div.bbg_xiv-gallery' ).removeClass( 'bbg_xiv-home_gallery' );
     }
 
@@ -1472,81 +1448,10 @@ console.log('bbg_xiv-gallery.js:loading...');
                 .find("nav.bbg_xiv-gallery_navbar ul.nav li.dropdown ul.bbg_xiv-view_menu li > a[data-view='"+this.dataset.view+"']").click();
             e.preventDefault();
         });
-        // wireup the handler for searching
-        jQuery("form.bbg_xiv-search_form input[type='text']").keypress(function(e){
-            if(e.which===13){
-                // need to do this to hide virtual keyboard on mobile devices
-                jQuery(this).blur();
-            }
-        });
-
         jQuery("button.bbg_xiv-home").click(function(e){
             jQuery(this).parents("div.bbg_xiv-bootstrap.bbg_xiv-gallery")
                 .find("nav.bbg_xiv-gallery_navbar ul.nav li.dropdown ul.bbg_xiv-view_menu li > a[data-view='gallery_home']").click();
             e.preventDefault();
-        });
-        console.log('##### button.bbg_xiv-fullscreen');
-        jQuery( 'button.bbg_xiv-fullscreen' ).click(function() {
-            var $gallery = jQuery( this ).closest( 'div.bbg_xiv-gallery' );
-            if ( $gallery.hasClass( 'bbg_xiv-fullscreen_gallery' ) ) {
-                $gallery.removeClass( 'bbg_xiv-fullscreen_gallery' ).find( 'button.bbg_xiv-fullscreen' ).attr( 'title', bbg_xiv_lang['expand gallery to full-screen'] );
-                jQuery( 'html' ).removeClass( 'bbg_xiv-fullscreen_gallery' );
-            } else {
-                $gallery.addClass( 'bbg_xiv-fullscreen_gallery' ).find( 'button.bbg_xiv-fullscreen' ).attr( 'title', bbg_xiv_lang['shrink gallery from full-screen'] );
-                jQuery( 'html' ).addClass( 'bbg_xiv-fullscreen_gallery' );
-            }
-            jQuery( window ).resize();
-        });
- */
-/*
-        jQuery("button.bbg_xiv-help").click(function(e){
-            var view = jQuery( this ).closest( 'div.navbar-collapse' ).find( 'ul.navbar-nav li.bbg_xiv-select_view ul.bbg_xiv-view_menu li.bbg_xiv-view.active a' ).data( 'view' );
-            window.open( bbg_xiv.docUrl + '#view-' + view.toLowerCase(), '_blank' );
-            this.blur();
-            e.preventDefault();
-        });
- */
-/*
-        // wireup the handler for scrolling through search results
-        jQuery( 'div.bbg_xiv-search_header button.bbg_xiv-search_scroll_left,div.bbg_xiv-search_header button.bbg_xiv-search_scroll_right' ).click(function() {
-            var jqThis = jQuery( this );
-            var heading=jqThis.parents("div.bbg_xiv-search_header");
-            var id=heading.attr("id").replace("-heading","");
-            var gallery=heading.parents("div.bbg_xiv-gallery");
-            var search=bbg_xiv.search[id];
-            if(jqThis.hasClass("bbg_xiv-search_scroll_left")){
-                if(search.index>0){
-                    if(!--search.index){
-                        jqThis.attr("disabled",true);
-                    }
-                    heading.find("button.bbg_xiv-search_scroll_right").attr("disabled",false);
-                }else{
-                }
-            }else{
-                if(search.index<search.history.length-1){
-                    ++search.index;
-                    if(search.index===search.history.length-1&&search.done){
-                        heading.find("button.bbg_xiv-search_scroll_right").attr("disabled",true);
-                    }
-                    heading.find("button.bbg_xiv-search_scroll_left").attr("disabled",false);
-                }else{
-                    // load the next part of the multi-part search
-                    gallery.find("nav.navbar form.bbg_xiv-search_form button[type='submit']").click();
-                    return;
-                }
-            }
-            if(search.index>=0&&search.index<search.history.length){
-                var history=search.history[search.index];
-                bbg_xiv.images[id]=history.images;
-                heading.find("span.bbg_xiv-search_heading_second").text(history.title);
-                var divGallery  = gallery.find( 'div.bbg_xiv-gallery_envelope' );
-                var defaultView = bbg_xiv.getDefaultView( divGallery, null );
-                bbg_xiv.renderGallery( divGallery[0], defaultView );
-                // reset navbar to "Gallery" view
-                var liSelectView=gallery.find("nav.bbg_xiv-gallery_navbar ul.nav li.bbg_xiv-select_view");
-                var liFirst=liSelectView.find("ul.bbg_xiv-view_menu li.bbg_xiv-view").removeClass("active").filter(".bbg_xiv-view_gallery").addClass("active");
-                liSelectView.find("a.bbg_xiv-selected_view span").text(liFirst.text());
-            }
         });
  */
         // make the "Images" brand clickable for mobile devices and send click to the toggle button

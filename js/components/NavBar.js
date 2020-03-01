@@ -224,8 +224,8 @@ export default props => {
                         <span className="bbg_xiv-navbar_button_text">{bbg_xiv_lang_2["Fullscreen"]}</span>
                     </button>
                     <button type="button" className="btn btn-info bbg_xiv-titles"
-                            title={captions ? bbg_xiv_lang['hide titles']
-                                            : bbg_xiv_lang['show titles']}
+                            title={captions ? (view === 'Justified' ? bbg_xiv_lang['hide captions'] : bbg_xiv_lang['hide titles'])
+                                            : (view === 'Justified' ? bbg_xiv_lang['show captions'] : bbg_xiv_lang['show titles'])}
                             onClick={handleCaptionsButtonClick}>
                         <span className="glyphicon glyphicon-subtitles"></span>
                         <span className="bbg_xiv-navbar_button_text">{bbg_xiv_lang_2["Titles"]}</span>
