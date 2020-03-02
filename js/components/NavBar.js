@@ -178,7 +178,6 @@ export default props => {
                                     <a data-view="Dense" href="#" onClick={handleViewClick}>{bbg_xiv_lang_2["Dense"]}</a>
                                 </li>
                                 {/* TODO: Add entry for new views here. */}
-                                $table_nav_item
                                 {/* output menu items for dynamically loaded galleries */}
                                 {galleries}
                             </ul>

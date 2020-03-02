@@ -1,5 +1,4 @@
 // TODO: Cannot make this into a module as that changes the load order.
-// import { getImagesByGallerySpecs, getImagesBySearchParms } from './actions/index.js'
 
 /*
     This program is free software; you can redistribute it and/or
@@ -75,8 +74,6 @@ console.log('bbg_xiv-gallery.js:loading...');
     
     bbg_xiv.postRenderFlexContainer = container => {
         const $flexContainer = jQuery(container)
-        // Remove the loading element.
-        $flexContainer.parents("div.bbg_xiv-gallery_envelope").find("div.ui-loader").remove()
         if (bbg_xiv.guiInterface === 'touch') {
             $flexContainer.find("div.bbg_xiv-flex_item div.bbg_xiv-dense_full_btn").addClass("bbg_xiv-touch");
         }
@@ -92,7 +89,6 @@ console.log('bbg_xiv-gallery.js:loading...');
         }
  */
         const $galleryContainer = $flexContainer.closest('div.bbg_xiv-gallery').addClass('bbg_xiv-caption_visible')
-        $galleryContainer.find('button.bbg_xiv-titles').attr('title', bbg_xiv_lang['hide titles'])
         // flip display state of caption on hover
         $flexContainer.find("div.bbg_xiv-dense_full_btn").hover(
             function() {
