@@ -24,8 +24,11 @@ export default class FlexItem extends React.Component {
         window.bbg_xiv.showOverlay(e, true, this.img, this.props.data)
     }
     render() {
+        const collectionId   = this.props.collectionId
+        const index          = this.props.index
         const data           = this.props.data
         const width          = this.props.width
+        const setHover       = this.props.setHover
         let className        = ''
         let dataGalleryIndex = ''
         if (typeof data.gallery_index !== 'undefined') {
@@ -44,7 +47,9 @@ export default class FlexItem extends React.Component {
                     </a>
                 </figure>
                 <a href={data.link} target="_blank" className={className} data-gallery-index={dataGalleryIndex}>
-                    <div className="bbg_xiv-dense_full_btn" title={bbg_xiv.getCaption(data)}>
+                    <div className="bbg_xiv-dense_full_btn" title={bbg_xiv.getCaption(data)}
+                            onMouseEnter={() => {setHover(collectionId, index, true)}}
+                            onMouseLeave={() => {setHover(collectionId, index, false)}}>
                         <button className="bbg_xiv-dense_alt_btn bbg_xiv-flex_from_image btn">
                             <span className="glyphicon glyphicon-info-sign" onMouseOver={this.handleInfoMouseEnter}></span>
                         </button>

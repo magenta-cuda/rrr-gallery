@@ -33,10 +33,12 @@ export default class FlexContainer extends React.Component {
  */
     render() {
         console.log('FlexContainer.render():this.props=', this.props)
+        const id                 = this.props.id
         const collection         = this.props.images
         const containerWidth     = this.props.containerWidth
         const minWidth           = this.props.configuration.bbg_xiv_flex_min_width
         const minWidthForCaption = this.props.configuration.bbg_xiv_flex_min_width_for_caption
+        const setHover           = this.props.setHover
         const width              = Math.floor( containerWidth / Math.floor( containerWidth / minWidth ) ) - 1;
         const captionsEnabled    = width >= minWidthForCaption
         const captionShow        = captionsEnabled ? (this.props.captions ? "mc-rrr-captions-show" : "mc-rrr-captions-hide") : "mc-rrr-captions-none"
@@ -46,8 +48,9 @@ export default class FlexContainer extends React.Component {
         let jsx
         if (containerWidth) {
             jsx = []
-            collection.forEach(function(model) {
-                 jsx.push(<FlexItem data={model.attributes} width={width} key={model.attributes.id} />)
+            collection.forEach(function(model, index) {
+                 jsx.push(<FlexItem collectionId={id} index={index} data={model.attributes} width={width} setHover={setHover}
+                                  key={model.attributes.id} />)
             })
             console.log( 'FlexContainer():jsx=', jsx )
         } else {

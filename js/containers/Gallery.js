@@ -15,11 +15,12 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 
-const mapDispatchToProps = dispatch          => ({
-    setView: (id, view)                   => dispatch(setView(id, view)),
-    loadGalleryImages: (id, images, home) => dispatch(loadGalleryImages(id, images, home)),
-    setContainerWidth: (id, width)        => dispatch(setContainerWidth(id, width)),
-    showConfigure: ()                     => dispatch(setConfiguration({show: true}))
+const mapDispatchToProps = dispatch  => ({
+    setView: (id, view)                    => dispatch(setView(id, view)),
+    loadGalleryImages: (id, images, home)  => dispatch(loadGalleryImages(id, images, home)),
+    setContainerWidth: (id, width)         => dispatch(setContainerWidth(id, width)),
+    showConfigure: ()                      => dispatch(setConfiguration({show: true})),
+    setHover: (collectionId, index, value) => console.log('hover[', collectionId, index, '] = ',value)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Gallery)
