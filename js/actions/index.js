@@ -95,6 +95,15 @@ export const toggleCaptions = (id) => ({
     id:            id
 })
 
+export const SET_HOVER_ON_CAPTION = 'SET-HOVER-ON-CAPTION'
+
+export const setHoverOnCaption = (collectionId, index, value) => ({
+    type:          SET_HOVER_ON_CAPTION,
+    collectionId:  collectionId,
+    index:         index,
+    value:         value
+})
+
 export const SET_QUERY = 'SET-QUERY'
 
 export const setQuery = (id, query) => ({

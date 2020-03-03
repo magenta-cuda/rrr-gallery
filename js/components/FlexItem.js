@@ -27,6 +27,7 @@ export default class FlexItem extends React.Component {
         const collectionId   = this.props.collectionId
         const index          = this.props.index
         const data           = this.props.data
+        const hover          = this.props.hover
         const width          = this.props.width
         const setHover       = this.props.setHover
         let className        = ''
@@ -35,6 +36,7 @@ export default class FlexItem extends React.Component {
             className        = 'bbg_xiv-gallery_icon'
             dataGalleryIndex = data.gallery_index
         }
+        console.log('hover[', index, '] = ', hover)
         return (
             <div className="bbg_xiv-flex_item" style={{width: width, height: width}}>
                 <figure>
