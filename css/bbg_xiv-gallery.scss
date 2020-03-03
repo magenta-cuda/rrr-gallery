@@ -773,7 +773,7 @@ div.bbg_xiv-tiles_container div.bbg_xiv-flex_container, div.bbg_xiv-tiles_contai
         width:100%;
         height:100%;
         figcaption{
-          display:block;
+          /* display:block; */
           position:absolute;
           left:5%;
           bottom:1vh;
@@ -1644,4 +1644,22 @@ div.ui-loader{
 
 html.bbg_xiv-fullscreen_gallery{
     overflow-y:hidden;
+}
+
+.mc-rrr-captions-show .mc-rrr-caption {
+    display: block;
+    &:hover {
+        display: none;
+    }
+}
+
+.mc-rrr-captions-hide .mc-rrr-caption {
+    display: none;
+    &:hover {
+        display: block;
+    }
+}
+
+.mc-rrr-captions-none .mc-rrr-caption {
+    display: none;
 }

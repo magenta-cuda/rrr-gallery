@@ -38,7 +38,8 @@ export default class FlexContainer extends React.Component {
         const minWidth           = this.props.configuration.bbg_xiv_flex_min_width
         const minWidthForCaption = this.props.configuration.bbg_xiv_flex_min_width_for_caption
         const width              = Math.floor( containerWidth / Math.floor( containerWidth / minWidth ) ) - 1;
-        const captionHide        = !this.props.captions || width < minWidthForCaption
+        const captionsEnabled    = width >= minWidthForCaption
+        const captionShow        = captionsEnabled ? (this.props.captions ? "mc-rrr-captions-show" : "mc-rrr-captions-hide") : "mc-rrr-captions-none"
         if ( typeof collection === 'string' ) {
             return <h1>{collection}</h1>
         }
@@ -46,14 +47,14 @@ export default class FlexContainer extends React.Component {
         if (containerWidth) {
             jsx = []
             collection.forEach(function(model) {
-                 jsx.push(<FlexItem data={model.attributes} width={width} captionHide={captionHide} key={model.attributes.id} />)
+                 jsx.push(<FlexItem data={model.attributes} width={width} key={model.attributes.id} />)
             })
             console.log( 'FlexContainer():jsx=', jsx )
         } else {
             jsx = '<h1>Loading...</h1>'
         }
         return (
-            <div className="bbg_xiv-container bbg_xiv-flex_container bbg_xiv-tiles_container mc-rrr-jsx-container"
+            <div className={`bbg_xiv-container bbg_xiv-flex_container bbg_xiv-tiles_container mc-rrr-jsx-container ${captionShow}`}
                 data-bbg_xiv-gallery-id={collection.id} ref={node => {this.container = node}}>
                 {jsx}
                 <div className="bbg_xiv-flex_footer"></div>
@@ -84,6 +85,7 @@ export default class FlexContainer extends React.Component {
         // this.resize()
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
+        window.bbg_xiv.postRenderFlexContainer(this.container)
         this.handleResize()
         // this.resize()
     }

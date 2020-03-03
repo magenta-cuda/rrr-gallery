@@ -88,18 +88,18 @@ console.log('bbg_xiv-gallery.js:loading...');
             });
         }
  */
-        const $galleryContainer = $flexContainer.closest('div.bbg_xiv-gallery').addClass('bbg_xiv-caption_visible')
         // flip display state of caption on hover
+        // This cannot be done with the :hover CSS pseudo-class as the <figure> element is overlaid with another element higher in the Z order.
         $flexContainer.find("div.bbg_xiv-dense_full_btn").hover(
             function() {
-                if (!$galleryContainer.hasClass('bbg_xiv-caption_visible')) {
+                if ($flexContainer.hasClass('mc-rrr-captions-show')) {
+                    jQuery(this).parents("div.bbg_xiv-flex_item").find("figure figcaption").hide()
+                } else if ($flexContainer.hasClass('mc-rrr-captions-hide')) {
                     jQuery(this).parents("div.bbg_xiv-flex_item").find("figure figcaption").show()
                 }
             },
             function() {
-                if (!$galleryContainer.hasClass( 'bbg_xiv-caption_visible')) {
-                    jQuery(this).parents("div.bbg_xiv-flex_item").find("figure figcaption").hide()
-                }
+                jQuery(this).parents("div.bbg_xiv-flex_item").find("figure figcaption").css("display", "")
             }
         )
         if (bbg_xiv.guiInterface === 'touch') {
@@ -914,6 +914,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             bbg_xiv_miro_row_height:                   bbg_xiv.bbg_xiv_miro_row_height,
             bbg_xiv_max_search_results:                bbg_xiv.bbg_xiv_max_search_results,
             bbg_xiv_flex_number_of_dense_view_columns: bbg_xiv.bbg_xiv_flex_number_of_dense_view_columns,
+            bbg_xiv_flex_min_width_for_caption:        bbg_xiv.bbg_xiv_flex_min_width_for_caption,
             bbg_xiv_bandwidth:                         bbg_xiv.bbg_xiv_bandwidth,
             bbg_xiv_interface:                         bbg_xiv.bbg_xiv_interface,
             show:                                      false
