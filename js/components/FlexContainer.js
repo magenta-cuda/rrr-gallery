@@ -81,6 +81,8 @@ export default class FlexContainer extends React.Component {
     }
     componentDidMount() {
         window.bbg_xiv.postRenderFlexContainer(this.container)
+        // TODO: When the component mounts the width of the container is not known and handleResize() forces a re-render.
+        // TODO: This means the FlexContainer is rendered twice - seems very inefficient!
         this.handleResize()
         // this.resize()
     }
