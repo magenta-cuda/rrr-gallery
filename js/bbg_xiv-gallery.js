@@ -91,6 +91,7 @@ console.log('bbg_xiv-gallery.js:loading...');
         // Flip the display state of the caption on hover.
         // This cannot be done with the :hover CSS pseudo-class as the figure element is overlaid with the
         // div.bbg_xiv-dense_full_btn element which is higher in the Z order - i.e. the hover is not seen by the figcaption element
+/*
         $flexContainer.find("div.bbg_xiv-dense_full_btn").hover(
             function() {
                 if ($flexContainer.hasClass('mc-rrr-captions-show')) {
@@ -104,6 +105,7 @@ console.log('bbg_xiv-gallery.js:loading...');
                 jQuery(this).parents("div.bbg_xiv-flex_item").find("figure figcaption").css("display", "")
             }
         )
+ */
         if (bbg_xiv.guiInterface === 'touch') {
             $flexContainer.find("div.bbg_xiv-flex_item a").click(function(e) {
                 if (!$galleryContainer.hasClass( 'bbg_xiv-caption_visible')) {

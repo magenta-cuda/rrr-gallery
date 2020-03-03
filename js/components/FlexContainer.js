@@ -41,7 +41,7 @@ export default class FlexContainer extends React.Component {
         const setHover           = this.props.setHover
         const width              = Math.floor( containerWidth / Math.floor( containerWidth / minWidth ) ) - 1;
         const captionsEnabled    = width >= minWidthForCaption
-        const captionShow        = captionsEnabled ? (this.props.captions ? "mc-rrr-captions-show" : "mc-rrr-captions-hide") : "mc-rrr-captions-none"
+        const captionsShow       = captionsEnabled ? (this.props.captions ? "mc-rrr-captions-show" : "mc-rrr-captions-hide") : "mc-rrr-captions-none"
         if ( typeof collection === 'string' ) {
             return <h1>{collection}</h1>
         }
@@ -49,15 +49,16 @@ export default class FlexContainer extends React.Component {
         if (containerWidth) {
             jsx = []
             collection.forEach(function(model, index) {
-                 jsx.push(<FlexItem collectionId={id} index={index} data={model.attributes} width={width} setHover={setHover}
-                                  hover={model.get("hover")} key={model.attributes.id} />)
+                 jsx.push(<FlexItem collectionId={id} index={index} data={model.attributes} width={width}
+                                  captionsShow={captionsShow} hover={model.get("hover")} setHover={setHover}
+                                  key={model.attributes.id} />)
             })
             console.log( 'FlexContainer():jsx=', jsx )
         } else {
             jsx = '<h1>Loading...</h1>'
         }
         return (
-            <div className={`bbg_xiv-container bbg_xiv-flex_container bbg_xiv-tiles_container mc-rrr-jsx-container ${captionShow}`}
+            <div className={`bbg_xiv-container bbg_xiv-flex_container bbg_xiv-tiles_container mc-rrr-jsx-container ${captionsShow}`}
                 data-bbg_xiv-gallery-id={collection.id} ref={node => {this.container = node}}>
                 {jsx}
                 <div className="bbg_xiv-flex_footer"></div>

@@ -27,6 +27,7 @@ export default class FlexItem extends React.Component {
         const collectionId   = this.props.collectionId
         const index          = this.props.index
         const data           = this.props.data
+        const captionsShow   = this.props.captionsShow
         const hover          = this.props.hover
         const width          = this.props.width
         const setHover       = this.props.setHover
@@ -37,10 +38,18 @@ export default class FlexItem extends React.Component {
             dataGalleryIndex = data.gallery_index
         }
         console.log('hover[', index, '] = ', hover)
+        let captionStyle = {}
+        if (hover) {
+            if (captionsShow === "mc-rrr-captions-show") {
+                captionStyle.display = "none"
+            } else if (captionsShow === "mc-rrr-captions-hide") {
+                captionStyle.display = "block"
+            }
+        }
         return (
             <div className="bbg_xiv-flex_item" style={{width: width, height: width}}>
                 <figure>
-                    <figcaption className="mc-rrr-caption">{bbg_xiv.getTitle(data)}</figcaption>
+                    <figcaption className="mc-rrr-caption" style={captionStyle}>{bbg_xiv.getTitle(data)}</figcaption>
                     <a href={data.link} target="_blank" className={className} data-gallery-index={dataGalleryIndex}>
                         <img src={bbg_xiv.getSrc(data,'viewport',true)} srcSet={bbg_xiv.getSrcset(data)}
                                 sizes={bbg_xiv.getSizes(data,'viewport',true)}
