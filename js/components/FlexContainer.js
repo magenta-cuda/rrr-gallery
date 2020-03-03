@@ -51,7 +51,7 @@ export default class FlexContainer extends React.Component {
             collection.forEach(function(model, index) {
                  jsx.push(<FlexItem collectionId={id} index={index} data={model.attributes} width={width}
                                   captionsShow={captionsShow} hover={model.get("hover")} setHover={setHover}
-                                  key={model.attributes.id} />)
+                                  key={model.get("id")} />)
             })
             console.log( 'FlexContainer():jsx=', jsx )
         } else {

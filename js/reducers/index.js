@@ -82,8 +82,7 @@ const galleries = (state = {}, action) => {
     }
     case SET_QUERY: {
         const images            = {...state.images}
-        // Cannot clone images using the spread operator since it is also necessary to preserve the prototype chain.
-        images[action.id]       = Object.assign(new wp.api.collections.Media(), images[action.id])
+        images[action.id]       = images[action.id].clone()
         images[action.id].query = action.query
         return {...state, images: images}
     }

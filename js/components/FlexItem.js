@@ -38,6 +38,10 @@ export default class FlexItem extends React.Component {
             dataGalleryIndex = data.gallery_index
         }
         console.log('hover[', index, '] = ', hover)
+        // Flip the display state of the caption on hover.
+        // This cannot be done with the :hover CSS pseudo-class as the figure element is overlaid with the
+        // div.bbg_xiv-dense_full_btn element which is higher in the Z order - i.e. the hover is not seen
+        // by the figcaption element.
         let captionStyle = {}
         if (hover) {
             if (captionsShow === "mc-rrr-captions-show") {
