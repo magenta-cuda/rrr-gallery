@@ -35,7 +35,7 @@ export default class JustifiedGalleryContainer extends React.Component {
         return (
             <div className="bbg_xiv-container bbg_xiv-justified_container" data-bbg_xiv-gallery-id={collection.id}
                     ref={node => {this.container = node}}>
-                <div className="bbg_xiv-justified_gallery">
+                <div className={`bbg_xiv-justified_gallery${captions?" bbg_xiv-caption_visible":""}`}>
                     {jsx}
                 </div>
                 {/* Full Browser Viewport View of an Image */}

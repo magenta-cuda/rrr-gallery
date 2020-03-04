@@ -37,6 +37,9 @@ const galleries = (state = {}, action) => {
         // images[action.id]      = images[action.id].clone()
         // cloning will not work because images[action.id] have additional properties beyond those of wp.api.collections.Media()
         images[action.id].view = action.view
+        if (action.view === "Justified") {
+            images[action.id].captions = false;
+        }
         return {...state, images: images}
     }
     case SET_GALLERY: {

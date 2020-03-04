@@ -196,38 +196,37 @@ console.log('bbg_xiv-gallery.js:loading...');
             });
             justifiedContainer.addClass( window.matchMedia( '(max-aspect-ratio:1/1)' ).matches ? 'bbg_xiv-portrait' : 'bbg_xiv-landscape' );
         }
-        var galleryContainer = justifiedContainer.closest('div.bbg_xiv-gallery').removeClass('bbg_xiv-caption_visible')
         // if CC has been set to visible then override Justified Gallery's hover handlers
-        justifiedContainer.find("div.bbg_xiv-justified_gallery div.bbg_xiv-justified_item").each(function(){
-          var img=this.querySelector("img");
-          var caption=this.querySelector("div.caption");
-          [img,caption].forEach(function(item){
-              // these handlers need work if executed before or after the Justified Gallery's handlers
-              item.addEventListener("mouseover",function(e){
-                  if ( galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
-                      caption.style.display="block";
-                      caption.style.opacity="0.7";
-                      e.stopImmediatePropagation();
-                  }
-              });
-              item.addEventListener("mouseout",function(e){
-                  if ( galleryContainer.hasClass( 'bbg_xiv-caption_visible' ) ) {
-                      caption.style.display="block";
-                      caption.style.opacity="0.7";
-                      e.stopImmediatePropagation();
-                  }
-              });
-          });
-          jQuery( img ).closest( 'a' ).click(function( e ) {
-              e.preventDefault();
-          });
-          jQuery( caption ).find( 'a' ).click( function( e ) {
-              var $caption = jQuery( this ).closest( 'div.caption' );
-              if ( parseFloat( $caption.css( 'opacity' ) ) < 0.1 ) {
-                  e.preventDefault();
+        $justifiedGallery.find("div.bbg_xiv-justified_item").each(function() {
+            const img     = this.querySelector("img")
+            const caption = this.querySelector("div.caption");
+            [img, caption].forEach(function(item) {
+                // These handlers need to work when executed before or after the Justified Gallery's hover handlers.
+                item.addEventListener("mouseover", function(e) {
+                    if ($justifiedGallery.hasClass( 'bbg_xiv-caption_visible')) {
+                      caption.style.display = "none"
+                      caption.style.opacity = "0.0"
+                      e.stopImmediatePropagation()
+                    }
+                })
+                item.addEventListener("mouseout", function(e) {
+                    if ($justifiedGallery.hasClass("bbg_xiv-caption_visible")) {
+                        caption.style.display = "block"
+                        caption.style.opacity = "0.7"
+                        e.stopImmediatePropagation()
+                    }
+                })
+            })
+            jQuery(img).closest("a").click(function(e) {
+                e.preventDefault()
+            })
+            jQuery(caption).find("a").click(function(e) {
+              var $caption = jQuery(this).closest("div.caption")
+              if ( parseFloat($caption.css("opacity")) < 0.1) {
+                  e.preventDefault()
               }
-          } );
-        });
+            })
+        })
         mcRrr.createOverlay(jQuery(container).find('div.mc-rrr-react-overlay-root').get(0))
     }   // bbg_xiv.postRenderJustified = (container, rowHeight) => {
 
