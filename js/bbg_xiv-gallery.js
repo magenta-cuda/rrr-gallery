@@ -201,11 +201,11 @@ console.log('bbg_xiv-gallery.js:loading...');
             const img     = this.querySelector("img")
             const caption = this.querySelector("div.caption");
             [img, caption].forEach(function(item) {
-                // These handlers need to work when executed before or after the Justified Gallery's hover handlers.
+                // These handlers undoes the actions of Justified Gallery's hover handlers.
                 item.addEventListener("mouseover", function(e) {
                     if ($justifiedGallery.hasClass( 'bbg_xiv-caption_visible')) {
-                      caption.style.display = "none"
-                      caption.style.opacity = "0.0"
+                      caption.style.display = "block"
+                      caption.style.opacity = "0.7"
                       e.stopImmediatePropagation()
                     }
                 })
