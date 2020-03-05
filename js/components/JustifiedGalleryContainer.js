@@ -15,10 +15,12 @@ export default class JustifiedGalleryContainer extends React.Component {
         return {}
     }
     render() {
+        const id         = this.props.id
         const collection = this.props.images
         const captions   = this.props.captions
         this.rowHeight   = this.props.configuration.bbg_xiv_miro_row_height
         this.configuring = this.props.configuration.show
+        const setHover   = this.props.setHover
         if (this.configuring) {
             return (
                 <div>Configuring...</div>
@@ -28,8 +30,9 @@ export default class JustifiedGalleryContainer extends React.Component {
             return <h1>{collection}</h1>
         }
         const jsx = [];
-        collection.forEach(function(model) {
-             jsx.push(<JustifiedGalleryItem data={model.attributes} caption={captions} key={model.attributes.id} />);
+        collection.map((model, index) => {
+             jsx.push(<JustifiedGalleryItem collectionId={id} index={index} data={model.attributes} caption={captions}
+                            setHover={setHover} key={model.get("id")}/>);
         })
         console.log( 'JustifiedGalleryContainer():jsx=', jsx );
         return (
