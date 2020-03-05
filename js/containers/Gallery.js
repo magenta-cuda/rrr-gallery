@@ -8,10 +8,11 @@ const mapStateToProps = (state, ownProps) => {
         id:             ownProps.id,
         images:         images,
         configuration:  state.configuration,
-        view:           images && images.view       ? images.view       : "Gallery",
-        containerWidth: images ? images.containerWidth                  : undefined,
-        captions:       images && images.captions   ? images.captions   : false,
-        fullScreen:     images && images.fullScreen ? images.fullScreen : false
+        view:           images && images.view       ? images.view           : "Gallery",
+        containerWidth: images                      ? images.containerWidth : undefined,
+        captions:       images && images.captions   ? images.captions       : false,
+        fullScreen:     images && images.fullScreen ? images.fullScreen     : false,
+        initialized:    images                      ? images.initialized    : undefined
     }
 }
 

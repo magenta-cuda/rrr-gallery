@@ -26,25 +26,21 @@ export default class JustifiedGalleryItem extends React.Component {
         window.bbg_xiv.showOverlay(e, true,  this.img, this.props.data)
     }
     render() {
-        const collectionId = this.props.collectionId
-        const index        = this.props.index
-        const data         = this.props.data
-        const caption      = this.props.caption
-        const setHover     = this.props.setHover
+        const {collectionId, index, data, captions, initialized = false, setHover} = this.props
         return (
             /*
             TODO: The following onMouseEnter() and onMouseLeave() prevents Justified Gallery's initialization from completing sucessfully. Why?
             TODO: It also triggers componentDidUpdate() on its siblings. Why?
             */
             <div className="bbg_xiv-justified_item"
-                    onMouseEnter={() => {false && setHover(collectionId, index, true)}}
-                    onMouseLeave={() => {false && setHover(collectionId, index, false)}}
+                    onMouseEnter={() => {initialized && setHover(collectionId, index, true)}}
+                    onMouseLeave={() => {initialized && setHover(collectionId, index, false)}}
                 >
                 <a href={data.link} target="_blank">
                     <img src={data.bbg_medium_src[0]} alt={bbg_xiv.getAlt(data)} title={bbg_xiv.getCaption(data)}
                             data-bbg_xiv-image-id={data.id} ref={node => {this.img = node}} />
                 </a>
-                <div className={`caption caption-${index}`} style={caption ? {display: "block", opacity: 0.7} : {display: "none", opacity: 0.0}}
+                <div className={`caption caption-${index}`} style={captions ? {display: "block", opacity: 0.7} : {display: "none", opacity: 0.0}}
                         ref={node => {this.caption = node}}>
                     <a href={data.link} target="_blank">{bbg_xiv.getTitle(data)}</a>
                     <button className="bbg_xiv-dense_full_btn bbg_xiv-dense_from_justified btn" onClick={this.handleImageClick}>
