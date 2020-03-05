@@ -66,6 +66,13 @@ export const setStatus = (id, status) => ({
     status: status
 })
 
+export const SET_INITIALIZED = 'SET-INITIALIZED'
+
+export const setInitialized = id => ({
+    type: SET_INITIALIZED,
+    id:   id
+})
+
 export const SET_CONFIGURATION = 'SET-CONFIGURATION'
 
 export const setConfiguration = (configuration) => ({

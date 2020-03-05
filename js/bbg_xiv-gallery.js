@@ -182,19 +182,23 @@ console.log('bbg_xiv-gallery.js:loading...');
     }   // bbg_xiv.postRenderDense = (container, numberOfColumns) => {
 
     bbg_xiv.postRenderJustified = (container, rowHeight) => {
-        const justifiedContainer = jQuery(container);
-        const $justifiedGallery  = justifiedContainer.find( 'div.bbg_xiv-justified_gallery' );
+        const $justifiedContainer = jQuery(container);
+        const $justifiedGallery   = $justifiedContainer.find( 'div.bbg_xiv-justified_gallery' );
         $justifiedGallery.justifiedGallery({margins: 5, rowHeight: rowHeight, lastRow: 'nojustify', refreshSensitivity: 0, refreshTime: 250})
             .on( 'jg.complete jg.resize', function() {
             // Why are there negative margins on the img - anyway remove them
             $justifiedGallery.find( 'img' ).css( 'margin', '0' );
+            const id = $justifiedContainer.data("bbg_xiv-gallery-id")
+            if (!mcRrr.store.getState().galleries.images[id].initialized) {
+                mcRrr.setInitialized(id)
+            }
         });
         if ( bbg_xiv.guiInterface === 'touch' ) {
-            justifiedContainer.addClass( 'bbg_xiv-touch' );
+            $justifiedContainer.addClass( 'bbg_xiv-touch' );
             $justifiedGallery.find( 'div.bbg_xiv-justified_item > a' ).click(function( e ) {
                 e.preventDefault();
             });
-            justifiedContainer.addClass( window.matchMedia( '(max-aspect-ratio:1/1)' ).matches ? 'bbg_xiv-portrait' : 'bbg_xiv-landscape' );
+            $justifiedContainer.addClass( window.matchMedia( '(max-aspect-ratio:1/1)' ).matches ? 'bbg_xiv-portrait' : 'bbg_xiv-landscape' );
         }
         // if CC has been set to visible then override Justified Gallery's hover handlers
         $justifiedGallery.find("div.bbg_xiv-justified_item").each(function() {

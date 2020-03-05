@@ -1,7 +1,7 @@
-import {LOAD_GALLERY_IMAGES, LOAD_SEARCH_IMAGES, HANDLE_LOAD_FAILED, SET_VIEW, SET_GALLERY, SET_STATUS, STATUS_LOADING,
-        STATUS_LOADED, SET_CONTAINER_WIDTH, SET_CONFIGURATION, TOGGLE_FULL_SCREEN, TOGGLE_CAPTIONS, SET_HOVER_ON_CAPTION,
-        SET_QUERY} from '../actions/index.js'
-import { combineReducers } from 'redux'
+import {LOAD_GALLERY_IMAGES, LOAD_SEARCH_IMAGES, HANDLE_LOAD_FAILED, SET_VIEW, SET_GALLERY, SET_STATUS, SET_INITIALIZED,
+        STATUS_LOADING, STATUS_LOADED, SET_CONTAINER_WIDTH, SET_CONFIGURATION, TOGGLE_FULL_SCREEN, TOGGLE_CAPTIONS,
+        SET_HOVER_ON_CAPTION, SET_QUERY} from '../actions/index.js'
+import {combineReducers} from 'redux'
 
 const galleries = (state = {}, action) => {
     switch (action.type) {
@@ -54,6 +54,13 @@ const galleries = (state = {}, action) => {
         // Cannot clone images using the spread operator since it is also necessary to preserve the prototype chain.
         images[action.id]        = Object.assign(new wp.api.collections.Media(), images[action.id])
         images[action.id].status = action.status
+        return {...state, images: images}
+    }
+    case SET_INITIALIZED: {
+        const images                  = {...state.images}
+        // Cannot clone images using the spread operator since it is also necessary to preserve the prototype chain.
+        images[action.id]             = Object.assign(new wp.api.collections.Media(), images[action.id])
+        images[action.id].initialized = true
         return {...state, images: images}
     }
     case SET_CONTAINER_WIDTH: {

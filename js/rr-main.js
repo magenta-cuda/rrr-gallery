@@ -13,7 +13,7 @@ import { Provider } from 'react-redux'
 import reducer from './reducers/index.js'
 import cookie from './middleware/cookie.js'
 import rest from './middleware/rest.js'
-import {setConfiguration, loadGalleryImages} from './actions/index.js'
+import {setConfiguration, loadGalleryImages, setInitialized} from './actions/index.js'
 import Frame from './containers/Frame.js'
 import Configure from './containers/Configure.js'
 import Overlay from './Overlay.js'
@@ -51,6 +51,7 @@ window.mcRrr = {
     createOverlay: (root, id = "", className = "") => {
         ReactDOM.render(<Overlay className={className} id={id} />, root)
     },
+    setInitialized: id => window.mcRrr.store.dispatch(setInitialized(id)),
     debug: debug
 }
 
