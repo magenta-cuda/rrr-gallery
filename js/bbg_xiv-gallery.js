@@ -189,7 +189,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             // Why are there negative margins on the img - anyway remove them
             $justifiedGallery.find('img').css('margin', '0')
             const id = $justifiedContainer.data("bbg_xiv-gallery-id")
-            if (!mcRrr.store.getState().galleries.images[id].initialized) {
+            if (!mcRrr.getGallery(id).initialized) {
                 mcRrr.setInitialized(id)
             }
         })
@@ -205,6 +205,8 @@ console.log('bbg_xiv-gallery.js:loading...');
             const img     = this.querySelector("img")
             const caption = this.querySelector("div.caption");
 /*
+ * TODO: This code was replaced with React/Redux handlers in JustifiedGalleryItem.componentDidUpdate().
+ * TODO: However, the React/Redux handlers are unacceptably slow. Find out why.
             [img, caption].forEach(function(item) {
                 // These handlers undoes the actions of Justified Gallery's hover handlers.
                 item.addEventListener("mouseover", function(e) {

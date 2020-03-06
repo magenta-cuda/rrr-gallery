@@ -51,6 +51,7 @@ window.mcRrr = {
     createOverlay: (root, id = "", className = "") => {
         ReactDOM.render(<Overlay className={className} id={id} />, root)
     },
+    getGallery: id => window.mcRrr.store.getState().galleries.images[id],
     setInitialized: id => window.mcRrr.store.dispatch(setInitialized(id)),
     debug: debug
 }

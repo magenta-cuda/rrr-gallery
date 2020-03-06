@@ -64,6 +64,8 @@ export default class JustifiedGalleryItem extends React.Component {
             console.log("prevPropsJson !== thisPropsJson")
             // console.log("JustifiedGalleryItem.componentDidUpdate:prevProps=", prevProps)
             // console.log("JustifiedGalleryItem.componentDidUpdate:this.props=", this.props)
+            // TODO: This code replaces jQuery handlers.
+            // TODO: However, this code is incredibly much slower than the jQuery handlers. Find out why.
             if (this.props.captions) {
                 const caption = this.caption
                 window.setTimeout(function() {
