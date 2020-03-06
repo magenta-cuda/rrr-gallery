@@ -62,15 +62,22 @@ export default class JustifiedGalleryItem extends React.Component {
         const thisPropsJson = JSON.stringify(this.props)
         if (prevPropsJson !== thisPropsJson) {
             console.log("prevPropsJson !== thisPropsJson")
-            console.log("JustifiedGalleryItem.componentDidUpdate:prevProps=", prevProps)
-            console.log("JustifiedGalleryItem.componentDidUpdate:this.props=", this.props)
+            // console.log("JustifiedGalleryItem.componentDidUpdate:prevProps=", prevProps)
+            // console.log("JustifiedGalleryItem.componentDidUpdate:this.props=", this.props)
+            if (this.props.captions) {
+                const caption = this.caption
+                window.setTimeout(function() {
+                    caption.style.display = "block"
+                    caption.style.opacity = "0.7"
+                }, 1000)
+            }
         }
         const prevStateJson = JSON.stringify(prevState)
         const thisStateJson = JSON.stringify(this.state)
         if (prevStateJson !== thisStateJson) {
             console.log("prevStateJson !== thisStateJson")
-            console.log("JustifiedGalleryItem.componentDidUpdate:prevState=", prevState)
-            console.log("JustifiedGalleryItem.componentDidUpdate:this.state=", this.state)
+            // console.log("JustifiedGalleryItem.componentDidUpdate:prevState=", prevState)
+            // console.log("JustifiedGalleryItem.componentDidUpdate:this.state=", this.state)
         }
     }
     componentDidCatch(error, info) {

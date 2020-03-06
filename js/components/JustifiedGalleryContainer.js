@@ -33,7 +33,7 @@ export default class JustifiedGalleryContainer extends React.Component {
         const jsx = [];
         collection.map((model, index) => {
              jsx.push(<JustifiedGalleryItem collectionId={id} index={index} data={model.attributes} captions={captions}
-                              initialized={initialized} setHover={setHover} key={model.get("id")}/>);
+                              initialized={initialized} hover={model.get("hover")} setHover={setHover} key={model.get("id")}/>);
         })
         console.log( 'JustifiedGalleryContainer():jsx=', jsx );
         return (

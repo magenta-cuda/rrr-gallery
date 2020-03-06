@@ -182,17 +182,17 @@ console.log('bbg_xiv-gallery.js:loading...');
     }   // bbg_xiv.postRenderDense = (container, numberOfColumns) => {
 
     bbg_xiv.postRenderJustified = (container, rowHeight) => {
-        const $justifiedContainer = jQuery(container);
-        const $justifiedGallery   = $justifiedContainer.find( 'div.bbg_xiv-justified_gallery' );
+        const $justifiedContainer = jQuery(container)
+        const $justifiedGallery   = $justifiedContainer.find('div.bbg_xiv-justified_gallery')
         $justifiedGallery.justifiedGallery({margins: 5, rowHeight: rowHeight, lastRow: 'nojustify', refreshSensitivity: 0, refreshTime: 250})
-            .on( 'jg.complete jg.resize', function() {
+            .on('jg.complete jg.resize', function() {
             // Why are there negative margins on the img - anyway remove them
-            $justifiedGallery.find( 'img' ).css( 'margin', '0' );
+            $justifiedGallery.find('img').css('margin', '0')
             const id = $justifiedContainer.data("bbg_xiv-gallery-id")
             if (!mcRrr.store.getState().galleries.images[id].initialized) {
                 mcRrr.setInitialized(id)
             }
-        });
+        })
         if ( bbg_xiv.guiInterface === 'touch' ) {
             $justifiedContainer.addClass( 'bbg_xiv-touch' );
             $justifiedGallery.find( 'div.bbg_xiv-justified_item > a' ).click(function( e ) {
@@ -204,6 +204,7 @@ console.log('bbg_xiv-gallery.js:loading...');
         $justifiedGallery.find("div.bbg_xiv-justified_item").each(function() {
             const img     = this.querySelector("img")
             const caption = this.querySelector("div.caption");
+/*
             [img, caption].forEach(function(item) {
                 // These handlers undoes the actions of Justified Gallery's hover handlers.
                 item.addEventListener("mouseover", function(e) {
@@ -221,6 +222,7 @@ console.log('bbg_xiv-gallery.js:loading...');
                     }
                 })
             })
+*/
             jQuery(img).closest("a").click(function(e) {
                 e.preventDefault()
             })
