@@ -1,6 +1,7 @@
 // Flex Item Template
 
 import React from 'react'
+import common from '../common.js'
 
 export default class FlexItem extends React.Component {
     constructor(props) {
@@ -31,6 +32,7 @@ export default class FlexItem extends React.Component {
         const hover          = this.props.hover
         const width          = this.props.width
         const setHover       = this.props.setHover
+        const bandwidth      = this.props.bandwidth
         let className        = ''
         let dataGalleryIndex = ''
         if (typeof data.gallery_index !== 'undefined') {
@@ -55,7 +57,7 @@ export default class FlexItem extends React.Component {
                 <figure>
                     <figcaption className="mc-rrr-caption" style={captionStyle}>{bbg_xiv.getTitle(data)}</figcaption>
                     <a href={data.link} target="_blank" className={className} data-gallery-index={dataGalleryIndex}>
-                        <img src={bbg_xiv.getSrc(data,'viewport',true)} srcSet={bbg_xiv.getSrcset(data)}
+                        <img src={common.getSrc(data,'viewport', true, bandwidth)} srcSet={bbg_xiv.getSrcset(data)}
                                 sizes={bbg_xiv.getSizes(data,'viewport',true)}
                                 alt={bbg_xiv.getAlt(data)} title={bbg_xiv.getTitle(data)} data-bbg_xiv-image-id={data.id}
                                 ref={node => {this.img = node}} />

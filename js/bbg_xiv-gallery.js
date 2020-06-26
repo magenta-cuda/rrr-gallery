@@ -670,7 +670,8 @@ console.log('bbg_xiv-gallery.js:loading...');
     }catch(e){
         bbg_xiv.localStorageAvailable=false;
     }
-    
+
+/*
     bbg_xiv.setCookie=function(name,value,expires){
         if(bbg_xiv.localStorageAvailable){
             localStorage.setItem(name,value);
@@ -699,6 +700,7 @@ console.log('bbg_xiv-gallery.js:loading...');
             return cookie.substring(start,end);
         }
     };
+*/
 
     bbg_xiv.calcBreakpoints=function(){
         var minFlexWidth=window.bbg_xiv.bbg_xiv_flex_min_width;
@@ -718,7 +720,7 @@ console.log('bbg_xiv-gallery.js:loading...');
         ];
     };
 
-
+/*
     bbg_xiv.getOptionsFromCookie=function(){
         // override options with cookie values if they exists
         var cookie=bbg_xiv.getCookie("bbg_xiv");
@@ -798,6 +800,7 @@ console.log('bbg_xiv-gallery.js:loading...');
     bbg_xiv.getOptionsFromCookie();
 
     bbg_xiv.calcBreakpoints();
+*/
     
     jQuery(window).resize(function(){
         var breakpoints=bbg_xiv.breakpoints;
@@ -896,6 +899,7 @@ console.log('bbg_xiv-gallery.js:loading...');
     }
 
     jQuery(document).ready(function(){
+/*
         const configuration = {
             bbg_xiv_carousel_interval:                 bbg_xiv.bbg_xiv_carousel_interval,
             bbg_xiv_flex_min_width:                    bbg_xiv.bbg_xiv_flex_min_width,
@@ -909,6 +913,8 @@ console.log('bbg_xiv-gallery.js:loading...');
         }
         console.log('configuration=', configuration)
         mcRrr.createStore(configuration)
+ */
+        mcRrr.createStore()
         wp.api.loadPromise.done(() => {
             const id        = '10001'
             const galleryId = "gallery-" + id
