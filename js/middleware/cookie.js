@@ -1,49 +1,9 @@
 // Since configuration is per user it needs to be persisted on the client side in a cookie or in local storage
 
 import {SET_CONFIGURATION} from '../actions/index.js'
+import common from '../common.js'
 
 export default store => next => action => {
-    function getDefaultConfiguration() {
-        // The default configuration is provided by the WordPress server via window.bbg_xiv.* variables.
-        return {
-            bbg_xiv_carousel_interval:                 bbg_xiv.bbg_xiv_carousel_interval,
-            bbg_xiv_flex_min_width:                    bbg_xiv.bbg_xiv_flex_min_width,
-            bbg_xiv_miro_row_height:                   bbg_xiv.bbg_xiv_miro_row_height,
-            bbg_xiv_max_search_results:                bbg_xiv.bbg_xiv_max_search_results,
-            bbg_xiv_flex_number_of_dense_view_columns: bbg_xiv.bbg_xiv_flex_number_of_dense_view_columns,
-            bbg_xiv_flex_min_width_for_caption:        bbg_xiv.bbg_xiv_flex_min_width_for_caption,
-            bbg_xiv_bandwidth:                         'auto',
-            bbg_xiv_interface:                         bbg_xiv.bbg_xiv_interface,
-            show:                                      false
-        }
-    }
-    function getCookie(name) {
-        if(bbg_xiv.localStorageAvailable){
-            return localStorage.getItem(name);
-        }else{
-            var cookie=document.cookie;
-            cookie += ";";
-            var start=cookie.indexOf(name+"=");
-            if(start===-1){
-                return null;
-            }
-            start+=name.length+1;
-            var end=cookie.indexOf(";",start);
-            if(end===-1){
-                return null;
-            }
-            return cookie.substring(start,end);
-        }
-    }
-    function setCookie(name, value, expires) {
-        if(bbg_xiv.localStorageAvailable){
-            localStorage.setItem(name,value);
-        }else{
-            var d=new Date();
-            d.setTime(d.getTime()+(expires*24*60*60*1000));
-            document.cookie=name+"="+value+"; expires="+d.toUTCString()+"; path=/";
-        }
-    }
     function rationalizeConfiguration(configuration, defaultConfiguration) {
         let rationalizedConfiguration = defaultConfiguration
         var carousel_interval=configuration.bbg_xiv_carousel_interval;
@@ -110,13 +70,13 @@ export default store => next => action => {
         return rationalizedConfiguration
     }
     if (action.type === SET_CONFIGURATION) {
-        let defaultConfiguration = getDefaultConfiguration()
-        let cookie               = getCookie("bbg_xiv")
+        let defaultConfiguration = common.getDefaultConfiguration()
+        let cookie               = common.getCookie("bbg_xiv")
         let configuration        = cookie ? JSON.parse(cookie) : defaultConfiguration
         configuration            = Object.assign(configuration, action.configuration)
         const show               = configuration.show
         delete configuration.show
-        setCookie("bbg_xiv", JSON.stringify(configuration), 30)
+        common.setCookie("bbg_xiv", JSON.stringify(configuration), 30)
         configuration.show       = show
         action.configuration     = rationalizeConfiguration(configuration, defaultConfiguration)
     }
