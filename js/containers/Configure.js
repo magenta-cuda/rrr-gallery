@@ -1,9 +1,13 @@
 import {connect} from 'react-redux'
 import Configure from '../components/Configure.js'
 import {setConfiguration} from '../actions/index.js'
+import common from '../common.js'
 
 const mapStateToProps = state => {
-    const configuration = state.configuration
+    // Configure is a view of the raw configuration data stored in the browser's local storage or in browser cookies.
+    // I.e., it is not a view of the rationalized configuration data stored in the Redux store.
+    const cookie        = common.getCookie("bbg_xiv")
+    const configuration = cookie ? JSON.parse(cookie) : common.getDefaultConfiguration()
     return {
         carouselDelay:      configuration.bbg_xiv_carousel_interval,
         minImageWidth:      configuration.bbg_xiv_flex_min_width,
@@ -13,7 +17,7 @@ const mapStateToProps = state => {
         defaultView:        configuration.bbg_xiv_default_view,   // TODO: bbg_xiv.usingServerDefaultView?
         bandwidth:          configuration.bbg_xiv_bandwidth,
         interface:          configuration.bbg_xiv_interface,
-        show:               configuration.show
+        show:               state.configuration.show
     }
 }
 

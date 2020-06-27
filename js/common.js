@@ -14,7 +14,7 @@ const common = {
         } else {
             var cookie = document.cookie
             cookie += ";"
-            let start = cookie.indexOf(name+"=")
+            let start = cookie.indexOf(name + "=")
             if (start === -1) {
                 return null
             }
@@ -23,7 +23,7 @@ const common = {
             if (end === -1) {
                 return null
             }
-            return cookie.substring(start,end)
+            return cookie.substring(start, end)
         }
     },
     getDefaultConfiguration: () => {
@@ -48,7 +48,7 @@ const common = {
             if (icon) {
                 return data.bbg_thumbnail_src[0]
             } else {
-                if (fullSize==="viewport") {
+                if (fullSize === "viewport") {
                     return data.bbg_large_src[0]
                 } else {
                     return data.bbg_medium_large_src[0]
@@ -59,7 +59,7 @@ const common = {
             if (icon) {
                 return data.bbg_thumbnail_src[0]
             } else {
-                if (fullSize==="viewport") {
+                if (fullSize === "viewport") {
                     return data.bbg_medium_large_src[0]
                 } else {
                     return data.bbg_medium_src[0]
