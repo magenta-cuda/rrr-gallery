@@ -36,8 +36,7 @@ const common = {
             bbg_xiv_flex_number_of_dense_view_columns: bbg_xiv.bbg_xiv_flex_number_of_dense_view_columns,
             bbg_xiv_flex_min_width_for_caption:        bbg_xiv.bbg_xiv_flex_min_width_for_caption,
             bbg_xiv_bandwidth:                         'auto',
-            bbg_xiv_interface:                         bbg_xiv.bbg_xiv_interface,
-            show:                                      false
+            bbg_xiv_interface:                         bbg_xiv.bbg_xiv_interface
         }
     },
     getSrc: (data, fullSize, icon, bandwidth) => {

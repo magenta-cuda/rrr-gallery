@@ -66,19 +66,20 @@ export default store => next => action => {
         }
         // WP REST API requires that per_page be between 1 and 100 inclusive
         rationalizedConfiguration.wpRestApiMaxPerPage=100;
-        rationalizedConfiguration.show = configuration.show
         return rationalizedConfiguration
     }
     if (action.type === SET_CONFIGURATION) {
         let defaultConfiguration = common.getDefaultConfiguration()
         let cookie               = common.getCookie("bbg_xiv")
         let configuration        = cookie ? JSON.parse(cookie) : defaultConfiguration
+        let show                 = action.configuration.show
+        delete action.configuration.show
         configuration            = Object.assign(configuration, action.configuration)
-        const show               = configuration.show
-        delete configuration.show
         common.setCookie("bbg_xiv", JSON.stringify(configuration), 30)
-        configuration.show       = show
         action.configuration     = rationalizeConfiguration(configuration, defaultConfiguration)
+        if (typeof show !== 'undefined') {
+            action.configuration.show = show
+        }
     }
     return next(action)
 }
