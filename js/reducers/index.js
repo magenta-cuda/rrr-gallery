@@ -1,6 +1,6 @@
 import {LOAD_GALLERY_IMAGES, LOAD_SEARCH_IMAGES, HANDLE_LOAD_FAILED, SET_VIEW, SET_GALLERY, SET_STATUS, SET_INITIALIZED,
-        STATUS_LOADING, STATUS_LOADED, SET_CONTAINER_WIDTH, SET_CONFIGURATION, TOGGLE_FULL_SCREEN, TOGGLE_CAPTIONS,
-        SET_HOVER_ON_CAPTION, SET_QUERY} from '../actions/index.js'
+        STATUS_LOADING, STATUS_LOADED, SET_CONTAINER_WIDTH, SET_CONFIGURATION, SET_SHOW_CONFIGURATION,
+        TOGGLE_FULL_SCREEN, TOGGLE_CAPTIONS, SET_HOVER_ON_CAPTION, SET_QUERY} from '../actions/index.js'
 import {combineReducers} from 'redux'
 
 const galleries = (state = {}, action) => {
@@ -108,6 +108,9 @@ const configuration = (state = {}, action) => {
     switch (action.type) {
     case SET_CONFIGURATION: {
         return {...state, ...action.configuration}
+    }
+    case SET_SHOW_CONFIGURATION: {
+        return {...state, show: action.show}
     }
     default:
         return state

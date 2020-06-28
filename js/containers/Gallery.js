@@ -1,6 +1,7 @@
-import {connect}                                                                            from 'react-redux'
-import Gallery                                                                              from '../components/Gallery.js'
-import {setView, loadGalleryImages, setContainerWidth, setConfiguration, setHoverOnCaption} from '../actions/index.js'
+import {connect}                                                   from 'react-redux'
+import Gallery                                                     from '../components/Gallery.js'
+import {setView, loadGalleryImages, setContainerWidth,
+        setConfiguration, setShowConfiguration, setHoverOnCaption} from '../actions/index.js'
 
 const mapStateToProps = (state, ownProps) => {
     const images = state.galleries.images && state.galleries.images[ownProps.id] ? state.galleries.images[ownProps.id] : undefined
@@ -20,7 +21,7 @@ const mapDispatchToProps = dispatch  => ({
     setView: (id, view)                    => dispatch(setView(id, view)),
     loadGalleryImages: (id, images, home)  => dispatch(loadGalleryImages(id, images, home)),
     setContainerWidth: (id, width)         => dispatch(setContainerWidth(id, width)),
-    showConfigure: ()                      => dispatch(setConfiguration({show: true})),
+    showConfigure: ()                      => dispatch(setShowConfiguration(true)),
     setHover: (collectionId, index, value) => dispatch(setHoverOnCaption(collectionId, index, value))
 })
 

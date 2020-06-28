@@ -80,6 +80,13 @@ export const setConfiguration = (configuration) => ({
     configuration: configuration
 })
 
+export const SET_SHOW_CONFIGURATION = 'SET-SHOW-CONFIGURATION'
+
+export const setShowConfiguration = (show) => ({
+    type: SET_SHOW_CONFIGURATION,
+    show: show
+})
+
 export const SET_CONTAINER_WIDTH = 'SET-CONTAINER-WIDTH'
 
 export const setContainerWidth = (id, width) => ({

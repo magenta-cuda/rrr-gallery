@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import Configure from '../components/Configure.js'
-import {setConfiguration} from '../actions/index.js'
+import {setConfiguration, setShowConfiguration} from '../actions/index.js'
 import common from '../common.js'
 
 const mapStateToProps = state => {
@@ -23,7 +23,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
     setConfiguration: configuration => dispatch(setConfiguration(configuration)),
-    hideConfigure: ()               => dispatch(setConfiguration({show:                                      false     })),
+    hideConfigure: ()               => dispatch(setShowConfiguration(false)),
     setCarouselDelay: delay         => dispatch(setConfiguration({bbg_xiv_carousel_interval:                 delay     })),
     setMinImageWidth: width         => dispatch(setConfiguration({bbg_xiv_flex_min_width:                    width     })),
     setMiroRowHeight: height        => dispatch(setConfiguration({bbg_xiv_miro_row_height:                   height    })),
