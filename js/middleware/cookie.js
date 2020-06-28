@@ -77,14 +77,17 @@ export default store => next => action => {
         let defaultConfiguration = common.getDefaultConfiguration()
         let cookie               = common.getCookie("bbg_xiv")
         let configuration        = cookie ? JSON.parse(cookie) : defaultConfiguration
-        let show                 = action.configuration.show
-        delete action.configuration.show
+        // show now handled by action SET_SHOW_CONFIGURATION
+        // let show                 = action.configuration.show
+        // delete action.configuration.show
         configuration            = Object.assign(configuration, action.configuration)
+        // store updated raw configuration data in browser local storage
         common.setCookie("bbg_xiv", JSON.stringify(configuration), 30)
+        // rationalize raw configuration data before storing in Redux store
         action.configuration     = rationalizeConfiguration(configuration, defaultConfiguration)
-        if (typeof show !== 'undefined') {
-            action.configuration.show = show
-        }
+        // if (typeof show !== 'undefined') {
+        //     action.configuration.show = show
+        // }
     }
     return next(action)
 }
