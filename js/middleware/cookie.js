@@ -1,4 +1,9 @@
-// Since configuration is per user it needs to be persisted on the client side in a cookie or in local storage
+// Since configuration is per user it needs to be persisted on the client side in the browser local storage (or a cookie
+// if browser local storage is not available). There are two copies of the configuration data. The raw data is stored in
+// the browser local storage. The raw data is rationalized by rationalizeConfiguration() before storing in the Redux
+// store. The Configure component is a view of the raw data. The rationalized data in the Redux store is what the
+// application actually uses. The configuration data in the Redux store has an additional field named show. The show
+// field controls the visibility of the Configure component.
 
 import {SET_CONFIGURATION} from '../actions/index.js'
 import common from '../common.js'
