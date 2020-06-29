@@ -1,6 +1,15 @@
+var localStorageAvailable
+try {
+    window.localStorage.setItem("test", "test");
+    window.localStorage.removeItem("test");
+    localStorageAvailable = true
+} catch (e) {
+    localStorageAvailable = false
+}
+
 const common = {
     setCookie: (name, value, expires) => {
-        if (bbg_xiv.localStorageAvailable) {
+        if (localStorageAvailable) {
             localStorage.setItem(name,value)
         } else {
             let d = new Date()
@@ -9,7 +18,7 @@ const common = {
         }
     },
     getCookie: (name) => {
-        if (bbg_xiv.localStorageAvailable) {
+        if (localStorageAvailable) {
             return localStorage.getItem(name)
         } else {
             var cookie = document.cookie

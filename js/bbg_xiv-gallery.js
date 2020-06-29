@@ -663,6 +663,7 @@ console.log('bbg_xiv-gallery.js:loading...');
         }
     };
 
+/*
     try{
         window.localStorage.setItem("test","test");
         window.localStorage.removeItem("test");
@@ -670,6 +671,7 @@ console.log('bbg_xiv-gallery.js:loading...');
     }catch(e){
         bbg_xiv.localStorageAvailable=false;
     }
+ */
 
 /*
     bbg_xiv.setCookie=function(name,value,expires){
