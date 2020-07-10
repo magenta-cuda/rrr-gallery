@@ -55,15 +55,15 @@ export default class FlexItem extends React.Component {
         return (
             <div className="bbg_xiv-flex_item" style={{width: width, height: width}}>
                 <figure>
-                    <figcaption className="mc-rrr-caption" style={captionStyle}>{bbg_xiv.getTitle(data)}</figcaption>
+                    <figcaption className="mc-rrr-caption" style={captionStyle}>{common.getTitle(data)}</figcaption>
                     <a href={data.link} target="_blank" className={className} data-gallery-index={dataGalleryIndex}>
                         <img src={common.getSrc(data,'viewport', true, bandwidth)} srcSet={common.getSrcset(data, bandwidth)}
-                                alt={bbg_xiv.getAlt(data)} title={bbg_xiv.getTitle(data)} data-bbg_xiv-image-id={data.id}
+                                alt={common.getAlt(data)} title={common.getTitle(data)} data-bbg_xiv-image-id={data.id}
                                 ref={node => {this.img = node}} />
                     </a>
                 </figure>
                 <a href={data.link} target="_blank" className={className} data-gallery-index={dataGalleryIndex}>
-                    <div className="bbg_xiv-dense_full_btn" title={bbg_xiv.getCaption(data)}
+                    <div className="bbg_xiv-dense_full_btn" title={common.getCaption(data)}
                             onMouseEnter={() => {setHover(collectionId, index, true)}}
                             onMouseLeave={() => {setHover(collectionId, index, false)}}>
                         <button className="bbg_xiv-dense_alt_btn bbg_xiv-flex_from_image btn">

@@ -75,8 +75,21 @@ const common = {
             }
         }
     },
-    getSrcset: (data, bandwidth) => {
-        return data.bbg_srcset;
+    getSrcset: (data, bandwidth) => data.bbg_srcset,
+    getTitle: (data) => data.title.rendered.trim(),
+    getCaption: (data, noAlt) => {
+        let caption = jQuery(data.caption.rendered).text()
+        if (!caption && !noAlt) {
+            caption = common.getAlt(data, true)
+        }
+        return caption.trim()
+    },
+    getAlt: (data, noCaption) => {
+        let alt = data.alt_text
+        if (!alt && !noCaption) {
+            alt = common.getCaption(data, true)
+        }
+        return alt.trim()
     }
 }
 
