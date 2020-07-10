@@ -1,19 +1,20 @@
 // Carousel Item
 
 import React from 'react'
+import common from '../common.js'
 
 export default props => {
-    const {index, data} = props
+    const {index, data, bandwidth} = props
     return (
         <figure className={`item bbg_xiv-item${index === 0 ? " active" : ""}`} data-index={index}>
             <a href="{{{ data.link }}}" target="_blank">
-                <img src={bbg_xiv.getSrc(data, 'container', false)} srcSet={bbg_xiv.getSrcset(data)}
-                        sizes={bbg_xiv.getSizes(data, 'container', false)} data-bbg_xiv-image-id={data.id} />
+                <img src={common.getSrc(data, 'container', false, bandwidth)} srcSet={common.getSrcset(data)}
+                        data-bbg_xiv-image-id={data.id} />
             </a>
             <figcaption>{[
-                <span>{bbg_xiv.getTitle(data)}</span>,
+                <span>{common.getTitle(data)}</span>,
                 <br />,
-                <span>{bbg_xiv.getCaption(data)}</span>
+                <span>{common.getCaption(data)}</span>
             ]}</figcaption>
         </figure>
     )

@@ -27,13 +27,14 @@ export default class CarouselContainer extends React.Component {
     }
     render() {
         const collection = this.props.images
+        const bandwidth  = this.props.configuration.bbg_xiv_bandwidth
         const carouselId = `bbg_xiv-carousel_${collection.id}`
         this.carouselId  = carouselId
         const bulletsJsx = []
         const imagesJsx  = []
         collection.forEach(function(model, index) {
             bulletsJsx.push(<li data-target={`#${carouselId}`} data-slide-to={index} className={index === 0 ? "active" : ""}></li>)
-            imagesJsx .push(<CarouselItem index={index} data={model.attributes} key={model.attributes.id} />)
+            imagesJsx .push(<CarouselItem index={index} data={model.attributes} bandwidth={bandwidth} key={model.attributes.id} />)
         })
         return (
             <div id={carouselId} className="carousel slide bbg_xiv-container" data-ride="carousel"
