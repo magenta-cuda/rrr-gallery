@@ -74,6 +74,9 @@ const common = {
                 }
             }
         }
+    },
+    getSrcset: (data, bandwidth) => {
+        return data.bbg_srcset;
     }
 }
 

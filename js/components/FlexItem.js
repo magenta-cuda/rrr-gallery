@@ -57,8 +57,7 @@ export default class FlexItem extends React.Component {
                 <figure>
                     <figcaption className="mc-rrr-caption" style={captionStyle}>{bbg_xiv.getTitle(data)}</figcaption>
                     <a href={data.link} target="_blank" className={className} data-gallery-index={dataGalleryIndex}>
-                        <img src={common.getSrc(data,'viewport', true, bandwidth)} srcSet={bbg_xiv.getSrcset(data)}
-                                sizes={bbg_xiv.getSizes(data,'viewport',true)}
+                        <img src={common.getSrc(data,'viewport', true, bandwidth)} srcSet={common.getSrcset(data, bandwidth)}
                                 alt={bbg_xiv.getAlt(data)} title={bbg_xiv.getTitle(data)} data-bbg_xiv-image-id={data.id}
                                 ref={node => {this.img = node}} />
                     </a>
