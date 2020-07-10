@@ -20,7 +20,9 @@ export default class DenseContainer extends React.Component {
         this.props.setView(this.props.images.id, 'Gallery')
     }
     render() {
-        const {images: collection, configuration, mode = 'title', showConfigure} = this.props
+        const {images: collection, configuration, showConfigure} = this.props
+        const {bbg_xiv_bandwidth: bandwidth} = configuration
+        const mode = 'title'
         this.numberOfColumns = configuration.bbg_xiv_flex_number_of_dense_view_columns
         this.configuring     = configuration.show
         if (this.configuring) {
@@ -32,8 +34,8 @@ export default class DenseContainer extends React.Component {
         const jsxTitles = []
         const jsxImages = []
         collection.forEach(function(model, index) {
-             jsxTitles.push(<DenseTitle data={model.attributes} index={index} mode={mode} key={model.attributes.id} />);
-             jsxImages.push(<DenseImage data={model.attributes} index={index} key={model.attributes.id} />);
+             jsxTitles.push(<DenseTitle data={model.attributes} index={index} mode={mode} bandwidth={bandwidth} key={model.attributes.id} />);
+             jsxImages.push(<DenseImage data={model.attributes} index={index} bandwidth={bandwidth} key={model.attributes.id} />);
         })
         return (
             <div id={collection.id} className="bbg_xiv-dense_container" data-bbg_xiv-gallery-id={collection.id}

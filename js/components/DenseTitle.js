@@ -1,6 +1,7 @@
 // Dense Title Template
 
 import React from 'react'
+import common from '../common.js'
 
 export default class DenseTitle extends React.Component {
     constructor(props) {
@@ -17,21 +18,21 @@ export default class DenseTitle extends React.Component {
         window.bbg_xiv.showOverlay(e, false, null, this.props.data)
     }
     render() {
-        const {data, index, mode} = this.props
+        const {data, index, mode, bandwidth} = this.props
         return (
             <li id={`bbg_xiv-dense_title_${index}`}>
                 <a href={data.link} target="_blank">
-                    <span className="bbg_xiv-dense_li_title" title={bbg_xiv.getCaption(data)}
+                    <span className="bbg_xiv-dense_li_title" title={common.getCaption(data)}
                             style={mode !== "title"   ? {display: "none"} : {display: "inline"}}>
-                        {bbg_xiv.getTitle(data)}
+                        {common.getTitle(data)}
                     </span>
-                    <span className="bbg_xiv-dense_li_caption" title={bbg_xiv.getTitle(data)}
+                    <span className="bbg_xiv-dense_li_caption" title={common.getTitle(data)}
                             style={mode !== "caption" ? {display: "none"} : {display: "inline"}}>
-                        {bbg_xiv.getCaption(data)}
+                        {common.getCaption(data)}
                     </span>
-                    <span className="bbg_xiv-dense_li_alt" title={bbg_xiv.getTitle(data)}
+                    <span className="bbg_xiv-dense_li_alt" title={common.getTitle(data)}
                             style={mode !== "alt"     ? {display: "none"} : {display: "inline"}}>
-                        {bbg_xiv.getAlt(data)}
+                        {common.getAlt(data)}
                     </span>
                 </a>
                 <button className="bbg_xiv-dense_full_btn bbg_xiv-dense_from_title btn" onClick={this.handleImageClick}>
