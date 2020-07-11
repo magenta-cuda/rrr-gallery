@@ -19,6 +19,7 @@ export default class JustifiedGalleryContainer extends React.Component {
         const collection  = this.props.images
         const captions    = this.props.captions
         this.rowHeight    = this.props.configuration.bbg_xiv_miro_row_height
+        const bandwidth   = this.props.configuration.bbg_xiv_bandwidth
         this.configuring  = this.props.configuration.show
         const initialized = this.props.initialized
         const setHover    = this.props.setHover
@@ -33,6 +34,7 @@ export default class JustifiedGalleryContainer extends React.Component {
         const jsx = [];
         collection.map((model, index) => {
              jsx.push(<JustifiedGalleryItem collectionId={id} index={index} data={model.attributes} captions={captions}
+                              bandwidth={bandwidth}
                               initialized={initialized} hover={model.get("hover")} setHover={setHover} key={model.get("id")}/>);
         })
         console.log( 'JustifiedGalleryContainer():jsx=', jsx );

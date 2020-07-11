@@ -1,6 +1,7 @@
 // Justified Gallery Item Template
 
 import React from 'react'
+import common from '../common.js'
 
 export default class JustifiedGalleryItem extends React.Component {
     constructor(props) {
@@ -26,7 +27,8 @@ export default class JustifiedGalleryItem extends React.Component {
         window.bbg_xiv.showOverlay(e, true,  this.img, this.props.data)
     }
     render() {
-        const {collectionId, index, data, captions, initialized = false, setHover} = this.props
+        const {collectionId, index, data, captions, bandwidth, setHover} = this.props
+        const initialized = false
         return (
             /*
             TODO: The following onMouseEnter() and onMouseLeave() prevents Justified Gallery's initialization from completing sucessfully. Why?
@@ -37,12 +39,12 @@ export default class JustifiedGalleryItem extends React.Component {
                     onMouseLeave={() => {initialized && setHover(collectionId, index, false)}}
                 >
                 <a href={data.link} target="_blank">
-                    <img src={data.bbg_medium_src[0]} alt={bbg_xiv.getAlt(data)} title={bbg_xiv.getCaption(data)}
+                    <img src={data.bbg_medium_src[0]} alt={common.getAlt(data)} title={common.getCaption(data)}
                             data-bbg_xiv-image-id={data.id} ref={node => {this.img = node}} />
                 </a>
                 <div className={`caption caption-${index}`} style={captions ? {display: "block", opacity: 0.7} : {display: "none", opacity: 0.0}}
                         ref={node => {this.caption = node}}>
-                    <a href={data.link} target="_blank">{bbg_xiv.getTitle(data)}</a>
+                    <a href={data.link} target="_blank">{common.getTitle(data)}</a>
                     <button className="bbg_xiv-dense_full_btn bbg_xiv-dense_from_justified btn" onClick={this.handleImageClick}>
                         <span className="glyphicon glyphicon-fullscreen"></span>
                     </button>
