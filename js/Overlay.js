@@ -42,7 +42,7 @@ export default class Overlay extends React.Component {
             Overlay.titleShadow = jQuery(this.title).css('text-shadow')
         }
     }
-    showOverlay(e, alt = null, img = null, data = null) {
+    showOverlay(e, alt = null, img = null, data = null, bandwidth = null) {
         console.log('Overlay::showOverlay():this.props=', this.props)
         console.log('Overlay::showOverlay():alt=', alt, 'img=', img, 'data=', data)
         if ( parseFloat( jQuery(e.target).closest( 'div.caption' ).css( 'opacity' ) ) < 0.1 ) {
@@ -66,7 +66,7 @@ export default class Overlay extends React.Component {
                 }
             } );
         }
-        this.setState({alt: alt, data: data})
+        this.setState({alt: alt, data: data, bandwidth: bandwidth})
         if (bbg_xiv.guiInterface === 'touch') {
             // force hover effects on touchscreen
             fullTitle.css({   color: bbg_xiv.titleColor, textShadow: bbg_xiv.titleShadow});
@@ -99,7 +99,7 @@ export default class Overlay extends React.Component {
         // workaround for a bug? in Chrome where navbar is not visible after an overlay is closed
         var $navbar = jQuery( 'div.bbg_xiv-gallery nav.bbg_xiv-gallery_navbar' ).css( 'opacity', '0.99' )
         window.setTimeout(() => {
-            this.setState({alt: null, data: null})
+            this.setState({alt: null, data: null, bandwidth: null})
             $navbar.css( 'opacity', '1.0' );
         }, !this.alt ? 2000 : 500 )
         // $caption.css( { display: 'block', opacity: '0.7' } );   // $caption is not in the overlay but in the view
@@ -144,13 +144,15 @@ export default class Overlay extends React.Component {
         }
     }
     render() {
-        const alt     = this.state.alt
-        const data    = this.state.data
-        const srcSet  = !alt && data && data.bbg_srcset ? bbg_xiv.getSrcset(data)                  : ''
-        const sizes   = !alt && data && data.bbg_srcset ? bbg_xiv.getSizes(null,'viewport', false) : ''
+        console.trace('render():')
+        const alt       = this.state.alt
+        const data      = this.state.data
+        const bandwidth = this.state.bandwidth
+        const srcSet    = !alt && data && data.bbg_srcset ? bbg_xiv.getSrcset(data)                  : ''
+        const sizes     = !alt && data && data.bbg_srcset ? bbg_xiv.getSizes(null,'viewport', false) : ''
         console.log('Overlay::render():this.props=', this.props)
-        console.log('Overlay::render():alt=', alt, 'data=', data)
-        let   altHtml = {__html: ''}
+        console.log('Overlay::render():alt=', alt, 'data=', data, 'bandwidth=', bandwidth)
+        let   altHtml   = {__html: ''}
         if (alt) {
             this.altOverlayView.model = {attributes: data}
             altHtml                   = {__html: this.altOverlayView.render(true)}
@@ -167,7 +169,8 @@ export default class Overlay extends React.Component {
                         {!alt && data ? bbg_xiv.getTitle(data) : ''}
                     </h1>
                     <img className="img-rounded bbg_xiv-img_overlay"
-                            src={data && !alt ? bbg_xiv.getSrc(data,"viewport", false) : ''} srcSet={srcSet} sizes={sizes}
+                            log={console.log('Overlay::render():bbg_xiv.getSrc(data, "viewport", false, bandwidth)=', bbg_xiv.getSrc(data,"viewport", false))}
+                            src={data && !alt ? bbg_xiv.getSrc(data, "viewport", false, bandwidth) : ''} srcSet={srcSet} sizes={sizes}
                             onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut} />
                     <h1 className="bbg_xiv-dense_caption" ref={node => {this.caption = node}}>
                         {!alt && data ? bbg_xiv.getCaption(data) : ''}

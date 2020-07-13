@@ -17,12 +17,12 @@ export default class FlexItem extends React.Component {
     handleImageClick = function(e) {
         e.preventDefault()
         // TODO: this.img may not be necessary as it probably is only used to get this.props.data
-        window.bbg_xiv.showOverlay(e, false, this.img, this.props.data)
+        window.bbg_xiv.showOverlay(e, false, this.img, this.props.data, this.props.bandwidth)
     }
     handleInfoMouseEnter = function(e) {
         e.preventDefault()
         // TODO: this.img may not be necessary as it probably is only used to get this.props.data
-        window.bbg_xiv.showOverlay(e, true, this.img, this.props.data)
+        window.bbg_xiv.showOverlay(e, true, this.img, this.props.data, this.props.bandwidth)
     }
     render() {
         const collectionId   = this.props.collectionId

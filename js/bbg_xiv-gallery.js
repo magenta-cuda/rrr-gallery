@@ -573,8 +573,8 @@ console.log('bbg_xiv-gallery.js:loading...');
     // getSrc() sets the src attribute of <img> HTML elements which will be ignored on modern browsers that support the srcset attribute
     // i.e. the source selection logic of getSrc() will only be used on older browsers
 
-    bbg_xiv.getSrc = function( data, fullSize,icon ) {
-        switch ( bbg_xiv.bandwidth ) {
+    bbg_xiv.getSrc = function(data, fullSize, icon, bandwidth) {
+        switch (bandwidth) {
         case "normal":
             return data.source_url;
         case "low":
