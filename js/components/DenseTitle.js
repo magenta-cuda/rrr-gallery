@@ -15,7 +15,7 @@ export default class DenseTitle extends React.Component {
     handleImageClick = function(e) {
         e.preventDefault()
         // TODO: img = null probably works as img is only used to get this.props.data
-        window.bbg_xiv.showOverlay(e, false, null, this.props.data)
+        common.showOverlay(e, false, null, this.props.data, this.props.bandwidth)
     }
     render() {
         const {data, index, mode, bandwidth} = this.props

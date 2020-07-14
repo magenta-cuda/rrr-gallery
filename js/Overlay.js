@@ -6,6 +6,7 @@
 // Overlay is independently rendered with its own DOM root.
 
 import React from 'react'
+import common from './common.js'
 
 export default class Overlay extends React.Component {
     constructor(props) {
@@ -29,7 +30,7 @@ export default class Overlay extends React.Component {
         this.handleMouseMove         = this.handleMouseMove.bind(this)
         this.handleClick             = this.handleClick    .bind(this)
         // TODO: below is a just a quick hack to make the new showOverlay accessible from the old showOverlay call - replace this
-        window.bbg_xiv.showOverlay   = this.showOverlay.bind(this)
+        window.bbg_xiv.showOverlay   = common.showOverlay = this.showOverlay.bind(this)
     }
     static getDerivedStateFromError(error) {
         console.log('Overlay:', error)
