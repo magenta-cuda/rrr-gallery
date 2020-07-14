@@ -90,7 +90,23 @@ const common = {
             alt = common.getCaption(data, true)
         }
         return alt.trim()
-    }
+    },
+    templateOptions: {
+        // use WordPress templating syntax; see .../wp-includes/js/wp-util.js
+        evaluate:    /<#([\s\S]+?)#>/g,
+        interpolate: /\{\{\{([\s\S]+?)\}\}\}/g,
+        escape:      /\{\{([^\}]+?)\}\}(?!\})/g,
+        variable:    'data'
+    },
+    ImageView: Backbone.View.extend({
+        render: function(srcOnly) {
+            const html = this.template(this.model.attributes)
+            if (srcOnly) {
+                return html
+            }
+            this.$el.html(html)
+            return this
+        }
+    })
 }
-
 export default common

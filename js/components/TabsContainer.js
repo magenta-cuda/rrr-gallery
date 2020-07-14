@@ -26,22 +26,24 @@ export default class TabsContainer extends React.Component {
         const bandwidth    = this.props.configuration.bbg_xiv_bandwidth
         // TODO: how to handle container.width()
         // var containerWidth=container.width();
-        const tabView      = new bbg_xiv.ImageView()
-        tabView.template   = _.template(jQuery("script#bbg_xiv-template_tabs_tab").html(),null,bbg_xiv.templateOptions)
-        const imageView    = new bbg_xiv.ImageView()
-        imageView.template = _.template(jQuery("script#bbg_xiv-template_tabs_item").html(),null,bbg_xiv.templateOptions)
-        let tabsHtml = ""
-        // let imagesHtml = ""
-        const $imagesDom = this.$imagesDom
+        const tabView      = new common.ImageView()
+        tabView.template   = _.template(jQuery("script#bbg_xiv-template_tabs_tab").html(),  null, common.templateOptions)
+        const imageView    = new common.ImageView()
+        imageView.template = _.template(jQuery("script#bbg_xiv-template_tabs_item").html(), null, common.templateOptions)
+        let tabsHtml       = ""
+        // let imagesHtml     = ""
+        const $imagesDom   = this.$imagesDom
         collection.forEach(function(model, index) {
+            // The Underscore.js template's free variables are the properties of model.attributes.
+            // See the definition of common.ImageView.
             model.attributes.browser   = bbg_xiv.browser
             model.attributes.index     = index
             model.attributes.common    = common
             model.attributes.bandwidth = bandwidth
             // model.attributes.bbg_xiv_container_width=containerWidth;
-            imageView.model          = tabView.model = model
-            tabsHtml                += tabView.render(true)
-            // imagesHtml              += imageView.render(true)
+            imageView.model            = tabView.model = model
+            tabsHtml                  += tabView.render(true)
+            // imagesHtml                += imageView.render(true)
             // I will attempt to avoid using React's dangerouslySetInnerHTML
             // by letting imageView.render() return a DOM element instead of HTML
             // N.B. this really isn't any safer as imageView.render() also works
