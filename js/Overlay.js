@@ -18,9 +18,9 @@ export default class Overlay extends React.Component {
         this.$altInner               = null
         this.title                   = null
         this.caption                 = null
-        this.altOverlayView          = new bbg_xiv.ImageView();
+        this.altOverlayView          = new common.ImageView();
         this.altOverlayView.template = _.template(jQuery( 'script#bbg_xiv-template_justified_alt_overlay' ).html(),
-                                                   null, bbg_xiv.templateOptions)
+                                                   null, common.templateOptions)
         this.mouseX                  = NaN
         this.mouseY                  = NaN
         this.overlayShowing          = false
@@ -149,7 +149,7 @@ export default class Overlay extends React.Component {
         const alt       = this.state.alt
         const data      = this.state.data
         const bandwidth = this.state.bandwidth
-        const srcSet    = !alt && data && data.bbg_srcset ? bbg_xiv.getSrcset(data)                  : ''
+        const srcSet    = !alt && data && data.bbg_srcset ? common.getSrcset(data)                  : ''
         const sizes     = !alt && data && data.bbg_srcset ? bbg_xiv.getSizes(null,'viewport', false) : ''
         console.log('Overlay::render():this.props=', this.props)
         console.log('Overlay::render():alt=', alt, 'data=', data, 'bandwidth=', bandwidth)
@@ -167,14 +167,14 @@ export default class Overlay extends React.Component {
                         onClick={this.handleClick} ref={node => {this.$inner = jQuery(node)}}>
                     <button className="bbg_xiv-dense_close"><span className="glyphicon glyphicon-remove"></span></button>
                     <h1 className="bbg_xiv-dense_title" ref={node => {this.title = node}}>
-                        {!alt && data ? bbg_xiv.getTitle(data) : ''}
+                        {!alt && data ? common.getTitle(data) : ''}
                     </h1>
                     <img className="img-rounded bbg_xiv-img_overlay"
-                            log={console.log('Overlay::render():bbg_xiv.getSrc(data, "viewport", false, bandwidth)=', bbg_xiv.getSrc(data,"viewport", false))}
-                            src={data && !alt ? bbg_xiv.getSrc(data, "viewport", false, bandwidth) : ''} srcSet={srcSet} sizes={sizes}
+                            log={console.log('Overlay::render():common.getSrc(data, "viewport", false, bandwidth)=', common.getSrc(data,"viewport", false))}
+                            src={data && !alt ? common.getSrc(data, "viewport", false, bandwidth) : ''} srcSet={srcSet} sizes={sizes}
                             onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut} />
                     <h1 className="bbg_xiv-dense_caption" ref={node => {this.caption = node}}>
-                        {!alt && data ? bbg_xiv.getCaption(data) : ''}
+                        {!alt && data ? common.getCaption(data) : ''}
                     </h1>
                 </div>
                 <div className="bbg_xiv-dense_alt_inner" style={{display: data && alt ? 'block' : 'none'}}
