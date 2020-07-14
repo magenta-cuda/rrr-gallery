@@ -1,6 +1,7 @@
 // Carousel Container Template
 
 import React from 'react'
+import common from '../common.js'
 import CarouselItem from '../components/CarouselItem.js'
 
 export default class CarouselContainer extends React.Component {
@@ -20,7 +21,7 @@ export default class CarouselContainer extends React.Component {
         this.index = index
     }
     handleInfoClick = function(e) {
-        window.bbg_xiv.showOverlay(e, true, null, this.props.images.at(this.index).attributes)
+        common.showOverlay(e, true, null, this.props.images.at(this.index).attributes, this.props.configuration.bbg_xiv_bandwidth)
     }
     handleCloseClick = function(e) {
         this.props.setView(this.props.images.id, 'Gallery')
