@@ -8,6 +8,7 @@
 // TODO: Try to find a safer way.
 
 import React from 'react';
+import common from '../common.js'
 
 export default class TabsContainer extends React.Component {
     constructor(props) {
@@ -22,6 +23,7 @@ export default class TabsContainer extends React.Component {
     }
     render() {
         const collection   = this.props.images
+        const bandwidth    = this.props.configuration.bbg_xiv_bandwidth
         // TODO: how to handle container.width()
         // var containerWidth=container.width();
         const tabView      = new bbg_xiv.ImageView()
@@ -32,8 +34,10 @@ export default class TabsContainer extends React.Component {
         // let imagesHtml = ""
         const $imagesDom = this.$imagesDom
         collection.forEach(function(model, index) {
-            model.attributes.browser = bbg_xiv.browser
-            model.attributes.index   = index
+            model.attributes.browser   = bbg_xiv.browser
+            model.attributes.index     = index
+            model.attributes.common    = common
+            model.attributes.bandwidth = bandwidth
             // model.attributes.bbg_xiv_container_width=containerWidth;
             imageView.model          = tabView.model = model
             tabsHtml                += tabView.render(true)

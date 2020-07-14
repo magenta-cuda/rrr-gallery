@@ -14,7 +14,7 @@
 <script type="text/html" id="bbg_xiv-template_tabs_item">
 <figure id="bbg_xiv-tab_pane{{{ data.index }}}" role="tabpanel" class="tab-pane fade<# if ( data.index === 0 ) { #> active in<# } #>">
   <a href="{{{ data.link }}}" target="_blank"<# if ( typeof data.gallery_index !== "undefined" ) { #> class="bbg_xiv-gallery_icon" data-gallery-index="{{{ data.gallery_index }}}"<# } #>>
-    <img class="bbg_xiv-tabs_img img-rounded" src="<# print(bbg_xiv.getSrc(data,'container',false)); #>"
+    <img class="bbg_xiv-tabs_img img-rounded" src="<# print(data.common.getSrc(data, 'container', false, data.bandwidth)); #>"
         srcset="<# print(bbg_xiv.getSrcset(data)); #>" sizes="<# print(bbg_xiv.getSizes(data,'container',false)); #>">
   </a>
   <figcaption><# print(bbg_xiv.getPostContent(data)); #></figcaption>
