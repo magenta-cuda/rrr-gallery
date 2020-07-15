@@ -12,7 +12,7 @@ var GalleryItem = ( data ) => {
             <figure className="img-rounded bbg_xiv-gallery_item">
                 <figcaption>{bbg_xiv.getTitle(data)}</figcaption>
                 <a href={data.link} target="_blank" className={className} dataGalleryIndex={dataGalleryIndex}>
-                    <img src={bbg_xiv.getSrc(data,'viewport',true)} srcSet={bbg_xiv.getSrcset(data)} sizes={bbg_xiv.getSizes(data,'viewport',true)}
+                    <img src={bbg_xiv.getSrc(data,'viewport',true)} srcSet={bbg_xiv.getSrcset(data)}
                         alt={bbg_xiv.getAlt(data)} title={bbg_xiv.getTitle(data)} dataBbg_xivImageId={data.id} />
                 </a>
             </figure>

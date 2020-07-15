@@ -150,7 +150,6 @@ export default class Overlay extends React.Component {
         const data      = this.state.data
         const bandwidth = this.state.bandwidth
         const srcSet    = !alt && data && data.bbg_srcset ? common.getSrcset(data)                  : ''
-        const sizes     = !alt && data && data.bbg_srcset ? bbg_xiv.getSizes(null,'viewport', false) : ''
         console.log('Overlay::render():this.props=', this.props)
         console.log('Overlay::render():alt=', alt, 'data=', data, 'bandwidth=', bandwidth)
         let   altHtml   = {__html: ''}
@@ -171,7 +170,7 @@ export default class Overlay extends React.Component {
                     </h1>
                     <img className="img-rounded bbg_xiv-img_overlay"
                             log={console.log('Overlay::render():common.getSrc(data, "viewport", false, bandwidth)=', common.getSrc(data,"viewport", false))}
-                            src={data && !alt ? common.getSrc(data, "viewport", false, bandwidth) : ''} srcSet={srcSet} sizes={sizes}
+                            src={data && !alt ? common.getSrc(data, "viewport", false, bandwidth) : ''} srcSet={srcSet}
                             onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut} />
                     <h1 className="bbg_xiv-dense_caption" ref={node => {this.caption = node}}>
                         {!alt && data ? common.getCaption(data) : ''}

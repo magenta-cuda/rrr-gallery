@@ -79,16 +79,6 @@ export default class DenseContainer extends React.Component {
                 </div>
                 {/* Full Browser Viewport View of an Image */}
                 <div className="mc-rrr-react-overlay-root" />
-{/*
-                <div className="bbg_xiv-dense_outer">
-                </div>
-                <div className="bbg_xiv-dense_inner">
-                    <button className="bbg_xiv-dense_close"><span className="glyphicon glyphicon-remove"></span></button>
-                    <h1 className="bbg_xiv-dense_title"></h1>
-                    <img className="img-rounded bbg_xiv-img_overlay" sizes={bbg_xiv.getSizes(null,'viewport',false)} />
-                    <h1 className="bbg_xiv-dense_caption"></h1>
-                </div>
-*/}
             </div>
         )
     }

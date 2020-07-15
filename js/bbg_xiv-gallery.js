@@ -549,32 +549,6 @@ console.log('bbg_xiv-gallery.js:loading...');
         }
     };
 
-    bbg_xiv.getSizes=function(data,fullSize,icon){
-        if(bbg_xiv.bbg_xiv_bandwidth!=='auto'){
-            // really should removeAttribute but this should work
-            return "";
-        }
-        if(!data){
-            if(fullSize==="viewport"&&!icon){
-                return "100vw";
-            }
-            return "50vw";
-        }         
-        if(!data.bbg_srcset){
-            // really should removeAttribute but this should work
-            return "";
-        } else if ( icon ) {
-            return '10vw';
-        }else if(fullSize==="viewport"){
-            return "90vw";
-        }else if(fullSize==="container"){
-            // return data.bbg_xiv_container_width+"px";
-            return '100%';
-        }else{
-            return "50vw";
-        }
-    };
-
     bbg_xiv.calcBreakpoints=function(){
         var minFlexWidth=window.bbg_xiv.bbg_xiv_flex_min_width;
         bbg_xiv.breakpoints=[
