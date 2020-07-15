@@ -91,6 +91,7 @@ const common = {
         }
         return alt.trim()
     },
+    getPostContent: data => data.bbg_post_content ? data.bbg_post_content : bbg_xiv.getCaption(data),
     templateOptions: {
         // use WordPress templating syntax; see .../wp-includes/js/wp-util.js
         evaluate:    /<#([\s\S]+?)#>/g,

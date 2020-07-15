@@ -1,12 +1,12 @@
 <!-- Backbone.js templates for the 'gallery' shortcode using the WP REST API models        -->
 
 <!-- These templates use the WordPress syntax for Backbone.js templates.                   -->
-<!-- See bbg_xiv.templateOptions in the file ".../js/bbg_xiv-gallery.js".                  -->
+<!-- See common.templateOptions in the file ".../js/common.js".                            -->
 
 <!-- Tabs Tab Template -->
 <script type="text/html" id="bbg_xiv-template_tabs_tab">
 <li<# if ( data.index === 0 ) { #> class=" active"<# } #>>
-  <a href="#bbg_xiv-tab_pane{{{ data.index }}}" data-toggle="tab"><# print(bbg_xiv.getTitle(data)); #></a>
+  <a href="#bbg_xiv-tab_pane{{{ data.index }}}" data-toggle="tab"><# print(data.common.getTitle(data)); #></a>
 </li>
 </script>
 
@@ -15,22 +15,22 @@
 <figure id="bbg_xiv-tab_pane{{{ data.index }}}" role="tabpanel" class="tab-pane fade<# if ( data.index === 0 ) { #> active in<# } #>">
   <a href="{{{ data.link }}}" target="_blank"<# if ( typeof data.gallery_index !== "undefined" ) { #> class="bbg_xiv-gallery_icon" data-gallery-index="{{{ data.gallery_index }}}"<# } #>>
     <img class="bbg_xiv-tabs_img img-rounded" src="<# print(data.common.getSrc(data, 'container', false, data.bandwidth)); #>"
-        srcset="<# print(bbg_xiv.getSrcset(data)); #>" sizes="<# print(bbg_xiv.getSizes(data,'container',false)); #>">
+        srcset="<# print(data.common.getSrcset(data)); #>" sizes="<# print(bbg_xiv.getSizes(data,'container',false)); #>">
   </a>
-  <figcaption><# print(bbg_xiv.getPostContent(data)); #></figcaption>
+  <figcaption><# print(data.common.getPostContent(data)); #></figcaption>
 </figure>
 </script>
 
 <!-- Justified Gallery Alt Overlay Template -->
 <script type="text/html" id="bbg_xiv-template_justified_alt_overlay">
     <div class="bbg_xiv-dense_alt_item bbg_xiv-dense_title">
-        <span class="bbg_xiv-item_name">Title: </span><span class="bbg_xiv-item_value"><# print(bbg_xiv.getTitle(data)); #></span>
+        <span class="bbg_xiv-item_name">Title: </span><span class="bbg_xiv-item_value"><# print(data.common.getTitle(data)); #></span>
     </div>
     <div class="bbg_xiv-dense_alt_item bbg_xiv-dense_caption">
-        <span class="bbg_xiv-item_name">Caption: </span><span class="bbg_xiv-item_value"><# print(bbg_xiv.getCaption(data,true)); #></span>
+        <span class="bbg_xiv-item_name">Caption: </span><span class="bbg_xiv-item_value"><# print(data.common.getCaption(data,true)); #></span>
     </div>
     <div class="bbg_xiv-dense_alt_item bbg_xiv-dense_alt">
-        <span class="bbg_xiv-item_name">Alt: </span><span class="bbg_xiv-item_value"><# print(bbg_xiv.getAlt(data,true)); #></span>
+        <span class="bbg_xiv-item_name">Alt: </span><span class="bbg_xiv-item_value"><# print(data.common.getAlt(data,true)); #></span>
     </div>
     <div class="bbg_xiv-dense_alt_item bbg_xiv-dense_alt">
         <span class="bbg_xiv-item_name">Mime Type: </span><span class="bbg_xiv-item_value">{{{ data.mime_type }}}</span>
@@ -53,7 +53,7 @@
         <# } #>
     </div>
     <div class="bbg_xiv-dense_alt_item bbg_xiv-dense_link">
-        <span class="bbg_xiv-item_name">Page: <a href="{{{ data.link }}}"><# print(bbg_xiv.getTitle(data)); #></a></span>
+        <span class="bbg_xiv-item_name">Page: <a href="{{{ data.link }}}"><# print(data.common.getTitle(data)); #></a></span>
     </div>
     <# } #>
 </script>

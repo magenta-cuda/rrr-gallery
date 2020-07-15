@@ -155,7 +155,7 @@ export default class Overlay extends React.Component {
         console.log('Overlay::render():alt=', alt, 'data=', data, 'bandwidth=', bandwidth)
         let   altHtml   = {__html: ''}
         if (alt) {
-            this.altOverlayView.model = {attributes: data}
+            this.altOverlayView.model = {attributes: {...data, common: common}}
             altHtml                   = {__html: this.altOverlayView.render(true)}
         }
         return (
