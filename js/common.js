@@ -48,6 +48,10 @@ const common = {
             bbg_xiv_interface:                         bbg_xiv.bbg_xiv_interface
         }
     },
+    // the fullSize parameter is the size of the non-iconic view of the image and should either "viewport" or "container"
+    // the icon parameter is a boolean indicating that the src is for a thumbnail
+    // getSrc() sets the src attribute of <img> HTML elements which will be ignored on modern browsers that support the srcset attribute
+    // i.e. the source selection logic of getSrc() will only be used on older browsers
     getSrc: (data, fullSize, icon, bandwidth) => {
         switch (bandwidth) {
         case "normal":

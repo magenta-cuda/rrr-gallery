@@ -567,76 +567,6 @@ console.log('bbg_xiv-gallery.js:loading...');
         }
     };
 
-    // the fullSize parameter is the size of the non-iconic view of the image and should either "viewport" or "container"
-    // the icon parameter is a boolean indicating that the src is for a thumbnail
-
-    // getSrc() sets the src attribute of <img> HTML elements which will be ignored on modern browsers that support the srcset attribute
-    // i.e. the source selection logic of getSrc() will only be used on older browsers
-
-    bbg_xiv.getSrc = function(data, fullSize, icon, bandwidth) {
-        switch (bandwidth) {
-        case "normal":
-            return data.source_url;
-        case "low":
-            if(icon){
-                return data.bbg_thumbnail_src[0];
-            }else{
-                if(fullSize==="viewport"){
-                    return data.bbg_large_src[0];
-                }else{
-                    return data.bbg_medium_large_src[0];
-                }
-            }
-            break;
-        case "very low":
-            if(icon){
-                return data.bbg_thumbnail_src[0];
-            }else{
-                if(fullSize==="viewport"){
-                    return data.bbg_medium_large_src[0];
-                }else{
-                    return data.bbg_medium_src[0];
-                }
-            }
-        }
-    };
-
-    bbg_xiv.getSrcset=function(data){
-        if(bbg_xiv.bbg_xiv_bandwidth!=='auto'){
-            // really should removeAttribute but this should work
-            return "";
-        }
-        return data.bbg_srcset;
-    };
-
-    bbg_xiv.getTitle=function(data){
-        return data.title.rendered.trim();
-    };
-
-    bbg_xiv.getCaption = function( data, noAlt ) {
-        var caption = jQuery(data.caption.rendered).text();
-        if ( ! caption && ! noAlt ) {
-            caption = bbg_xiv.getAlt( data, true );
-        }
-        return caption.trim();
-    };
-
-    bbg_xiv.getAlt = function( data, noCaption ) {
-        var alt = data.alt_text;
-        if (! alt && ! noCaption ) {
-            alt = bbg_xiv.getCaption( data, true );
-        }
-        return alt.trim();
-    };
-
-    bbg_xiv.getPostContent = function( data ) {
-        var postContent = data.bbg_post_content;
-        if( postContent ) {
-            return postContent;
-        }
-        return bbg_xiv.getCaption( data );
-    };
-    
     bbg_xiv.getSizes=function(data,fullSize,icon){
         if(bbg_xiv.bbg_xiv_bandwidth!=='auto'){
             // really should removeAttribute but this should work
@@ -662,47 +592,6 @@ console.log('bbg_xiv-gallery.js:loading...');
             return "50vw";
         }
     };
-
-/*
-    try{
-        window.localStorage.setItem("test","test");
-        window.localStorage.removeItem("test");
-        bbg_xiv.localStorageAvailable=true;
-    }catch(e){
-        bbg_xiv.localStorageAvailable=false;
-    }
- */
-
-/*
-    bbg_xiv.setCookie=function(name,value,expires){
-        if(bbg_xiv.localStorageAvailable){
-            localStorage.setItem(name,value);
-        }else{
-            var d=new Date();
-            d.setTime(d.getTime()+(expires*24*60*60*1000));
-            document.cookie=name+"="+value+"; expires="+d.toUTCString()+"; path=/";
-        }
-    };
-
-    bbg_xiv.getCookie=function(name){
-        if(bbg_xiv.localStorageAvailable){
-            return localStorage.getItem(name);
-        }else{
-            var cookie=document.cookie;
-            cookie += ";";
-            var start=cookie.indexOf(name+"=");
-            if(start===-1){
-                return null;
-            }
-            start+=name.length+1;
-            var end=cookie.indexOf(";",start);
-            if(end===-1){
-                return null;
-            }
-            return cookie.substring(start,end);
-        }
-    };
-*/
 
     bbg_xiv.calcBreakpoints=function(){
         var minFlexWidth=window.bbg_xiv.bbg_xiv_flex_min_width;
@@ -901,21 +790,6 @@ console.log('bbg_xiv-gallery.js:loading...');
     }
 
     jQuery(document).ready(function(){
-/*
-        const configuration = {
-            bbg_xiv_carousel_interval:                 bbg_xiv.bbg_xiv_carousel_interval,
-            bbg_xiv_flex_min_width:                    bbg_xiv.bbg_xiv_flex_min_width,
-            bbg_xiv_miro_row_height:                   bbg_xiv.bbg_xiv_miro_row_height,
-            bbg_xiv_max_search_results:                bbg_xiv.bbg_xiv_max_search_results,
-            bbg_xiv_flex_number_of_dense_view_columns: bbg_xiv.bbg_xiv_flex_number_of_dense_view_columns,
-            bbg_xiv_flex_min_width_for_caption:        bbg_xiv.bbg_xiv_flex_min_width_for_caption,
-            bbg_xiv_bandwidth:                         bbg_xiv.bbg_xiv_bandwidth,
-            bbg_xiv_interface:                         bbg_xiv.bbg_xiv_interface,
-            show:                                      false
-        }
-        console.log('configuration=', configuration)
-        mcRrr.createStore(configuration)
- */
         mcRrr.createStore()
         wp.api.loadPromise.done(() => {
             const id        = '10001'
