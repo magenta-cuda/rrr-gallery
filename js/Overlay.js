@@ -10,7 +10,6 @@ import common from './common.js'
 
 export default class Overlay extends React.Component {
     constructor(props) {
-        console.log('Overlay::constructor():props=', props)
         super(props)
         this.state                   = {alt: null, data: null}
         this.$outer                  = null
@@ -44,8 +43,6 @@ export default class Overlay extends React.Component {
         }
     }
     showOverlay(e, alt = null, img = null, data = null, bandwidth = null) {
-        console.log('Overlay::showOverlay():this.props=', this.props)
-        console.log('Overlay::showOverlay():alt=', alt, 'img=', img, 'data=', data)
         if ( parseFloat( jQuery(e.target).closest( 'div.caption' ).css( 'opacity' ) ) < 0.1 ) {
             // click was on an invisible button so ignore it
             return;
@@ -145,13 +142,10 @@ export default class Overlay extends React.Component {
         }
     }
     render() {
-        console.trace('render():')
         const alt       = this.state.alt
         const data      = this.state.data
         const bandwidth = this.state.bandwidth
         const srcSet    = !alt && data && data.bbg_srcset ? common.getSrcset(data)                  : ''
-        console.log('Overlay::render():this.props=', this.props)
-        console.log('Overlay::render():alt=', alt, 'data=', data, 'bandwidth=', bandwidth)
         let   altHtml   = {__html: ''}
         if (alt) {
             this.altOverlayView.model = {attributes: {...data, common: common}}
