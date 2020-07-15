@@ -51,26 +51,8 @@ console.log('bbg_xiv-gallery.js:loading...');
     bbg_xiv.helpOptionsUrl = "http://docs.magentacuda.com/#options";
     // Strings
     bbg_xiv.galleryOfGalleriesTitle=bbg_xiv_lang.galleryOfGalleriesTitle;
-    // use WordPress templating syntax; see .../wp-includes/js/wp-util.js
-    bbg_xiv.templateOptions={
-        evaluate:    /<#([\s\S]+?)#>/g,
-        interpolate: /\{\{\{([\s\S]+?)\}\}\}/g,
-        escape:      /\{\{([^\}]+?)\}\}(?!\})/g,
-        variable:    'data'
-    };
     
     bbg_xiv.galleries = {};   // state info for alternate galleries
-    
-    bbg_xiv.ImageView = Backbone.View.extend( {
-        render:function(srcOnly){
-            var html=this.template(this.model.attributes);
-            if(srcOnly){
-                return html;
-            }
-            this.$el.html(html);
-            return this;
-        }    
-    });
     
     bbg_xiv.postRenderFlexContainer = container => {
         const $flexContainer = jQuery(container)
