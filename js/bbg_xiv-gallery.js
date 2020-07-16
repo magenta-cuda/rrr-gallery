@@ -1,25 +1,9 @@
 // TODO: Cannot make this into a module as that changes the load order.
 
 /*
-    This program is free software; you can redistribute it and/or
-    modify it under the terms of the GNU General Public License
-    as published by the Free Software Foundation; either version 2
-    of the License, or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
-    Copyright 2015  Magenta Cuda
-*/
-
-/*
  * This is a Reactified and Reduxed version of BB Gallery.
+ *
+ * Most of the code in this file will eventually be replaced with code in React components.
  * 
  * This is a hybrid solution. Basically I have divided the state of the application into two domains:
  *
@@ -567,88 +551,8 @@ console.log('bbg_xiv-gallery.js:loading...');
         ];
     };
 
-/*
-    bbg_xiv.getOptionsFromCookie=function(){
-        // override options with cookie values if they exists
-        var cookie=bbg_xiv.getCookie("bbg_xiv");
-        if(cookie){
-            var options=JSON.parse(cookie);
-            var carousel_interval=options.bbg_xiv_carousel_interval;
-            if(jQuery.isNumeric(carousel_interval)&&carousel_interval>=1000){
-                bbg_xiv.bbg_xiv_carousel_interval=carousel_interval;
-            }
-            var flex_min_width=options.bbg_xiv_flex_min_width;
-            if(jQuery.isNumeric(flex_min_width)&&flex_min_width>=32&&flex_min_width<=1024){
-                bbg_xiv.bbg_xiv_flex_min_width=flex_min_width;
-            }
-            var miro_row_height = options.bbg_xiv_miro_row_height;
-            if ( jQuery.isNumeric( miro_row_height ) && miro_row_height >= 32 && miro_row_height <= 512 ) {
-                bbg_xiv.bbg_xiv_miro_row_height = miro_row_height;
-            }
-            var max_search_results=options.bbg_xiv_max_search_results;
-            if(jQuery.isNumeric(max_search_results)&&max_search_results>=1&&max_search_results<1048576){
-                bbg_xiv.bbg_xiv_max_search_results=max_search_results;
-            }
-            var flex_number_of_dense_view_columns=options.bbg_xiv_flex_number_of_dense_view_columns;
-            if(jQuery.isNumeric(flex_number_of_dense_view_columns)&&flex_number_of_dense_view_columns>=2&&flex_number_of_dense_view_columns<=32){
-                bbg_xiv.bbg_xiv_flex_number_of_dense_view_columns=flex_number_of_dense_view_columns;
-            }
-            if(typeof options.bbg_xiv_default_view==="string"){
-                bbg_xiv.bbg_xiv_default_view=options.bbg_xiv_default_view;
-                bbg_xiv.usingServerDefaultView=false;
-            }else{
-                bbg_xiv.usingServerDefaultView=true;
-            }
-            if(typeof options.bbg_xiv_bandwidth==="string"){
-                bbg_xiv.bbg_xiv_bandwidth=options.bbg_xiv_bandwidth;
-            }
-            if(typeof options.bbg_xiv_interface==="string"){
-                bbg_xiv.bbg_xiv_interface=options.bbg_xiv_interface;
-            }
-        }else{
-            bbg_xiv.usingServerDefaultView=true;
-            bbg_xiv.bbg_xiv_bandwidth="auto";
-            bbg_xiv.bbg_xiv_interface="auto";
-        }
-        var userAgent=navigator.userAgent;
-        if(userAgent.indexOf("Firefox")!==-1){
-            bbg_xiv.browser="Firefox";
-        }else{
-            bbg_xiv.browser="";
-        }
-        // compute bandwidth if bandwidth is set to auto - currently since this is not done reliably the user should set the bandwidth option manually
-        if(bbg_xiv.bbg_xiv_bandwidth==="auto"){
-            if(Modernizr.lowbandwidth){
-                // this uses navigator.connection which is only supported by Android
-                bbg_xiv.bandwidth="very low";
-            }else if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)){
-                // determining bandwidth by device type is not reliable!
-                bbg_xiv.bandwidth="very low";
-            }else{
-                bbg_xiv.bandwidth="low";
-            }
-        }else{
-            bbg_xiv.bandwidth=bbg_xiv.bbg_xiv_bandwidth;
-        }
-        // compute interface if interface is auto
-        if(bbg_xiv.bbg_xiv_interface==="auto"){
-            if(Modernizr.touchevents){
-                bbg_xiv.guiInterface = 'touch';
-            }else{
-                bbg_xiv.guiInterface = 'mouse';
-            }
-        }else{
-            bbg_xiv.guiInterface = bbg_xiv.bbg_xiv_interface;
-        }
-        // WP REST API requires that per_page be between 1 and 100 inclusive
-        bbg_xiv.wpRestApiMaxPerPage=100;
-    };
+//    bbg_xiv.calcBreakpoints();
 
-    bbg_xiv.getOptionsFromCookie();
-
-    bbg_xiv.calcBreakpoints();
-*/
-    
     jQuery(window).resize(function(){
         var breakpoints=bbg_xiv.breakpoints;
         jQuery("div.bbg_xiv-flex_container,div.bbg_xiv-gallery_container").each(function(){

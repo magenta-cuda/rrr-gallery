@@ -88,6 +88,10 @@ export default store => next => action => {
         // if (typeof show !== 'undefined') {
         //     action.configuration.show = show
         // }
+        // Since, the code in bbg_xiv_gallery.js still uses window.bbg_xiv for configuration data propagate
+        // action.configuration to window.bbg_xiv.
+        // TODO: When window.bbg_xiv becomes obsolete remove this.
+        Object.assign(window.bbg_xiv, action.configuration)
     }
     return next(action)
 }
